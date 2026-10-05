@@ -33,7 +33,7 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 - [ ] Crear el tablero (GitHub Project, vista Board) y añadirle los Issues — el token fine-grained no puede crearlo.
 - [ ] Activar GitHub Pro con el Student Developer Pack para proteger `main` (hoy GitHub no lo permite en repo privado gratis).
-- [ ] Asignar los Issues a cada compañero cuando acepte la invitación. Invitados (05/oct/26): Samuel `sagoncalves17-hash`, Aaron `AaronZarraga` (confirmado por Sebastian, reinvitado 05/oct/26), Manuel `marosaless`, y `Duende717` (es Samuel, confirmado 04/oct/26: Samuel tiene dos invitaciones, falta saber con cuál cuenta trabaja). German **no tiene invitación** todavía: falta su usuario de GitHub.
+- [ ] Asignar los Issues a cada compañero cuando acepte la invitación. Invitados (05/oct/26): Samuel `sagoncalves17-hash`, Aaron `AaronZarraga` (confirmado por Sebastian, reinvitado 05/oct/26), Manuel `marosaless`, y `Duende717` (es Samuel, confirmado 04/oct/26: Samuel tiene dos invitaciones, falta saber con cuál cuenta trabaja). German `gmalfonzo25-ucab` invitado 05/oct/26 (cuenta confirmada por commits con su correo UCAB). Manuel y Aaron ya aceptaron.
 
 - [ ] Invitar a Samuel, Aaron, German y Manuel como colaboradores del repo (faltan sus usuarios de GitHub).
 
