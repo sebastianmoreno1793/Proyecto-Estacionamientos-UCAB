@@ -2,6 +2,13 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 05/oct/26 — Fechas de entrega en GitHub
+
+- Con el Plan de Evaluación (IS PLAN DE CLASE V3) se crearon 6 milestones con fecha (Entrega 1 a 5 y
+  Revisión del Brief) y 7 Issues (#33–#39) con checklist, etiquetas `entrega` y `presentación`.
+- Calendario en `producto/calendario_de_entregas.md`. El contenido de las entregas 2–5 está por confirmar;
+  la tercera entrega dice "10/9" y se asumió 10/nov.
+
 ## 05/oct/26 — Mapa de historias con el estilo de Figma
 
 - Figuras 1 y 2 del Brief reemplazadas por el mapa en el estilo del Figma del equipo (épicas en rosado,

@@ -51,6 +51,20 @@ Si ves algo mal en lógica o en `docs/`, **no lo edites**: abre un Issue con la 
 - Tablero de Trello (Sprint 1, se actualiza solo desde GitHub): https://trello.com/b/WQSBIFTj/radar-de-estacionamientos-ucab-sprint-1
 - Mapa de historias (Figma): https://www.figma.com/board/sDRyvMoT5BDiuwwb2pPG2P/Mapa-de-historias-de-usuario---Equipo-3?node-id=0-1&p=f
 
+## Fechas de entrega
+
+Cada entrega es un **milestone** con su fecha y un **Issue** con la checklist de lo que falta
+(etiquetas `entrega` y `presentación`):
+
+| Fecha | Entrega | Puntos | Issue |
+|---|---|---|---|
+| mar 06/oct | Entrega 1 · Brief | 3 | #33 |
+| 13 y 15/oct | Revisión del Brief en clase | — | #34 |
+| mar 03/nov | Entrega 2 | 12 | #35 |
+| 10 y 12/nov | Entrega 3 | 9 | #36 |
+| mar 01/dic | Entrega 4 + Presentación de Táctica Arquitectónica | 13 + 3 | #37 · #38 |
+| 15 y 17/dic | Entrega 5 | 8 | #39 |
+
 ## Tareas: qué le falta a cada quien
 
 Cada historia de usuario es un **Issue**. La Iteración 1 (05/oct/26 → 16/oct/26) está en el
