@@ -3,7 +3,9 @@
 
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
+import { ESTACIONAMIENTOS } from "../data/estacionamientos.js";
 import { reiniciarAlmacen } from "../lib/almacen.js";
+import { CAPACIDAD_DE_EJEMPLO } from "../lib/datos_de_ejemplo.js";
 import { cambiarEstacionamiento, listarEstacionamientos } from "../lib/estacionamientos/datos.js";
 import {
   etiquetasUnicas,
@@ -64,6 +66,20 @@ describe("etiquetas para distinguir zonas con el mismo nombre", () => {
     const profesores = (await listarEstacionamientos()).filter((e) => e.soloProfesores);
     assert.ok(profesores.length > 0);
     assert.ok(profesores.every((e) => e.id.startsWith("prof-")));
+  });
+});
+
+describe("datos de ejemplo alineados con el mapa (HU 5.1)", () => {
+  // Si falla, alguien cambió `data/estacionamientos.js`: actualiza `lib/datos_de_ejemplo.js`.
+  test("cada estacionamiento del mapa tiene capacidad de ejemplo", () => {
+    const sinCapacidad = ESTACIONAMIENTOS.map((e) => e.id).filter((id) => !CAPACIDAD_DE_EJEMPLO[id]);
+    assert.deepEqual(sinCapacidad, []);
+  });
+
+  test("no hay capacidades de ejemplo para estacionamientos que ya no están en el mapa", () => {
+    const ids = new Set(ESTACIONAMIENTOS.map((e) => e.id));
+    const sobran = Object.keys(CAPACIDAD_DE_EJEMPLO).filter((id) => !ids.has(id));
+    assert.deepEqual(sobran, []);
   });
 });
 
