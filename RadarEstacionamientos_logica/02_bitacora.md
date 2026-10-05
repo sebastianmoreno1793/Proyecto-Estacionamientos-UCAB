@@ -2,6 +2,18 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 04/oct/26 — Plan de trabajo por etapas (Trello)
+
+- Se comparó el Brief con el ejemplo de la profesora: su tablero de Trello va por **etapas del proyecto**
+  (Inicio, Planificación, Ejecución, Seguimiento y Control), no por Por hacer / En proceso / Hecho.
+- Se creó `producto/tablero_trello_por_etapas.md` con las tarjetas, fechas y checklists de cada etapa,
+  listas para pegar en Trello. Las tarjetas de gestión (reuniones, monitoreo, cierre) son propuesta del equipo.
+- Brief: la sección 5 explica las etapas, numera la tabla de HU (Tabla 3), agrega la Tabla 4 de tareas
+  de gestión y se registró en el Histórico de Revisiones. Se actualizaron los números de página
+  de la tabla de contenido (todo corrió una página).
+- En el archivo del tablero se agregó la tabla para renombrar las HU de Trello con los nombres del Brief.
+- Falta: montar el tablero, nueva captura (Figura 3) y enlace público.
+
 ## 05/oct/26 — Lógica y código juntos en el repo
 
 - A pedido de Sebastian, el repo ahora tiene las dos carpetas visibles para el equipo: la raíz
