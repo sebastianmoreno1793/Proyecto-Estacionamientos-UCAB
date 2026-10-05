@@ -23,7 +23,7 @@ export async function reportarIncidencia(_estadoAnterior, formData) {
   revalidatePath("/incidencias");
   return {
     reporte: {
-      estacionamiento: estacionamientos.find((e) => e.id === incidencia.estacionamientoId).nombre,
+      estacionamiento: estacionamientos.find((e) => e.id === incidencia.estacionamientoId).etiqueta,
       tipo: nombreDelTipo(incidencia.tipo),
       hora: formatearFechaHora(incidencia.reportadaEn),
       estado: incidencia.estado,

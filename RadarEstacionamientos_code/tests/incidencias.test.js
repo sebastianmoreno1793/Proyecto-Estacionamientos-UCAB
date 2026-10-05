@@ -21,10 +21,10 @@ describe("reportar una incidencia", () => {
   test("queda registrada con la hora y como pendiente", async () => {
     const ahora = new Date("2026-10-12T13:45:00Z");
     const { incidencia } = await registrarIncidencia(
-      { estacionamientoId: "est-b", tipo: "conos_atravesados", reportadaPor: "usuario.prueba@ucab.edu.ve" },
+      { estacionamientoId: "est-playa", tipo: "conos_atravesados", reportadaPor: "usuario.prueba@ucab.edu.ve" },
       ahora,
     );
-    assert.equal(incidencia.estacionamientoId, "est-b");
+    assert.equal(incidencia.estacionamientoId, "est-playa");
     assert.equal(incidencia.tipo, "conos_atravesados");
     assert.equal(incidencia.estado, "pendiente");
     assert.equal(incidencia.reportadaEn, ahora.toISOString());
@@ -32,7 +32,7 @@ describe("reportar una incidencia", () => {
   });
 
   test("no se registra sin un tipo de problema válido", async () => {
-    const resultado = await registrarIncidencia({ estacionamientoId: "est-b", tipo: "otro" });
+    const resultado = await registrarIncidencia({ estacionamientoId: "est-playa", tipo: "otro" });
     assert.ok(resultado.error);
     assert.equal((await listarIncidencias()).length, 0);
   });
@@ -44,8 +44,8 @@ describe("reportar una incidencia", () => {
   });
 
   test("no se registra en un estacionamiento desactivado", async () => {
-    await cambiarEstacionamiento("est-c", { capacidad: "60", activo: false });
-    const resultado = await registrarIncidencia({ estacionamientoId: "est-c", tipo: "bateria_descargada" });
+    await cambiarEstacionamiento("est-labs", { capacidad: "40", activo: false });
+    const resultado = await registrarIncidencia({ estacionamientoId: "est-labs", tipo: "bateria_descargada" });
     assert.ok(resultado.error);
     assert.equal((await listarIncidencias()).length, 0);
   });
