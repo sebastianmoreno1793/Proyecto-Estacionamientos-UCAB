@@ -23,7 +23,9 @@
   criterio y enlace al Issue. El tablero de Germán no se modificó.
 - Automatización `.github/workflows/trello.yml`: Issue asignado → En proceso; PR con `Closes #N` →
   En revisión; Issue cerrado → Hecho; reabierto → Por hacer. Usa la app de Trello *GitHub Radar*.
-- Brief: enlace y captura de Trello actualizados; fila nueva en el histórico (05/oct/26).
+- Brief: **sin cambios por ahora.** Se había sobrescrito por error la versión con el plan por etapas
+  (commit 2a5ea42, otra sesión); se restauró. Falta decidir si el tablero va por etapas (como el
+  ejemplo de la profesora) o por estado, antes de cambiar enlace y captura en el Brief.
 
 ## 05/oct/26 — Lógica y código juntos en el repo
 
