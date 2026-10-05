@@ -8,6 +8,8 @@
   Revisión del Brief) y 7 Issues (#33–#39) con checklist, etiquetas `entrega` y `presentación`.
 - Calendario en `producto/calendario_de_entregas.md`. El contenido de las entregas 2–5 está por confirmar;
   la tercera entrega dice "10/9" y se asumió 10/nov.
+- En Trello se creó la lista **Entregas del proyecto** con 7 tarjetas fechadas (8:00 a.m., hora por confirmar),
+  con todo el equipo como miembro para que salgan en el Planner de cada uno.
 
 ## 05/oct/26 — Mapa de historias con el estilo de Figma
 
