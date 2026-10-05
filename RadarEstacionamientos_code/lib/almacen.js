@@ -4,6 +4,7 @@
 import { ESTACIONAMIENTOS } from "../data/estacionamientos.js";
 import { CAPACIDAD_DE_EJEMPLO, CAPACIDAD_POR_DEFECTO } from "./datos_de_ejemplo.js";
 import { etiquetasUnicas } from "./estacionamientos/reglas.js";
+import { EDIFICIOS } from "../data/edificios.js";
 
 function crearAlmacen() {
   const etiquetas = etiquetasUnicas(ESTACIONAMIENTOS);
@@ -17,6 +18,7 @@ function crearAlmacen() {
       activo: true,
     })),
     incidencias: [],
+    edificios: EDIFICIOS.map((e) => ({ ...e, ubicacion: e.ubicacion ? [...e.ubicacion] : null })),
   };
 }
 
