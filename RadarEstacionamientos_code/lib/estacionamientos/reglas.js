@@ -28,3 +28,17 @@ export function validarCapacidad(valor) {
 export function estacionamientosSugeribles(estacionamientos) {
   return estacionamientos.filter((e) => e.activo);
 }
+
+// Algunos lugares tienen varias zonas con el mismo nombre (Presambilito, Pádel). Para
+// distinguirlas en las listas, la etiqueta añade la zona sacada del id: la zona cuyo id
+// es la base de las demás es la "principal" (est-padel), y el resto toma lo que sigue
+// (est-padel-norte → "norte").
+export function etiquetasUnicas(estacionamientos) {
+  return estacionamientos.map((e) => {
+    const grupo = estacionamientos.filter((o) => o.nombre === e.nombre);
+    if (grupo.length === 1) return e.nombre;
+    const base = grupo.find((b) => grupo.every((o) => o === b || o.id.startsWith(`${b.id}-`)));
+    const zona = !base ? e.id : e === base ? "principal" : e.id.slice(base.id.length + 1);
+    return `${e.nombre} (${zona})`;
+  });
+}
