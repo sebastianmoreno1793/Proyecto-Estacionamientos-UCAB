@@ -24,6 +24,18 @@ test("cada estacionamiento tiene id único y nombre", () => {
   }
 });
 
+test("soloProfesores, si aparece, es true o false", () => {
+  for (const e of ESTACIONAMIENTOS) {
+    if ("soloProfesores" in e) assert.equal(typeof e.soloProfesores, "boolean", `${e.id}: soloProfesores inválido`);
+  }
+});
+
+test("pisos, si aparece, es un entero mayor que 0", () => {
+  for (const e of ESTACIONAMIENTOS) {
+    if ("pisos" in e) assert.ok(Number.isInteger(e.pisos) && e.pisos > 0, `${e.id}: pisos inválido`);
+  }
+});
+
 test("cada estacionamiento es un área con al menos 3 esquinas válidas", () => {
   for (const e of ESTACIONAMIENTOS) {
     assert.ok(e.poligono.length >= 3, `${e.id} tiene menos de 3 esquinas`);

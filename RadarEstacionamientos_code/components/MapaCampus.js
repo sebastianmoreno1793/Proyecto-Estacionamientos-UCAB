@@ -11,6 +11,10 @@ import {
   ESTACIONAMIENTOS,
 } from "@/data/estacionamientos";
 
+// Color del borde de cada estacionamiento (no es el semáforo).
+const COLOR_GENERAL = "#1d4ed8";
+const COLOR_PROFESORES = "#7c3aed";
+
 export default function MapaCampus() {
   const contenedor = useRef(null);
 
@@ -32,11 +36,11 @@ export default function MapaCampus() {
 
       const capas = ESTACIONAMIENTOS.map((est) =>
         L.polygon(est.poligono, {
-          color: "#1d4ed8",
+          color: est.soloProfesores ? COLOR_PROFESORES : COLOR_GENERAL,
           weight: 2,
           fillOpacity: 0.25,
         })
-          .bindTooltip(est.nombre, {
+          .bindTooltip(est.pisos ? `${est.nombre} · ${est.pisos} pisos` : est.nombre, {
             permanent: true,
             direction: "center",
             className: "etiqueta-estacionamiento",
@@ -57,11 +61,23 @@ export default function MapaCampus() {
   }, []);
 
   return (
-    <div
-      ref={contenedor}
-      className="mapa-campus"
-      role="region"
-      aria-label="Mapa del Campus Montalbán con los estacionamientos"
-    />
+    <div className="mapa-contenedor">
+      <div
+        ref={contenedor}
+        className="mapa-campus"
+        role="region"
+        aria-label="Mapa del Campus Montalbán con los estacionamientos"
+      />
+      <ul className="leyenda" aria-label="Leyenda">
+        <li>
+          <span className="muestra" style={{ borderColor: COLOR_GENERAL }} />
+          Estacionamiento
+        </li>
+        <li>
+          <span className="muestra" style={{ borderColor: COLOR_PROFESORES }} />
+          Solo profesores
+        </li>
+      </ul>
+    </div>
   );
 }
