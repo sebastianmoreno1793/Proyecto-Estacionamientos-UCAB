@@ -1,0 +1,20 @@
+# Dependencias y builds
+node_modules/
+.next/
+out/
+build/
+dist/
+.vercel/
+
+# Variables de entorno y credenciales
+.env
+.env.*
+!.env.example
+
+# Datos reales (nunca al repo)
+datos_privados/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
