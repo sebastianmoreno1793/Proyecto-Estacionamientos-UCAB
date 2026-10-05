@@ -33,10 +33,12 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 - [ ] Crear el tablero (GitHub Project, vista Board) y añadirle los Issues — el token fine-grained no puede crearlo.
 - [ ] Activar GitHub Pro con el Student Developer Pack para proteger `main` (hoy GitHub no lo permite en repo privado gratis).
-- [ ] Asignar los Issues a cada compañero cuando acepte la invitación (Manuel ya invitado; faltan usuarios de Samuel, Aaron y German).
+- [ ] Asignar los Issues a cada compañero cuando acepte la invitación. Invitados (05/oct/26): Samuel `sagoncalves17-hash`, Aaron `AaronZarraga`, Manuel `marosaless`, y `Duende717` (falta confirmar si es German).
 
 - [ ] Invitar a Samuel, Aaron, German y Manuel como colaboradores del repo (faltan sus usuarios de GitHub).
 
+- [ ] Montar en Trello las 4 etapas según `producto/tablero_trello_por_etapas.md` y renombrar las HU con los nombres del Brief.
 - [ ] Reemplazar el enlace de invitación de Trello por el enlace público del tablero.
+- [ ] Cambiar la Figura 3 del Brief por una captura nueva del tablero por etapas.
 - [ ] Actualizar el mapa de Figma para que coincida con el del Brief (10 épicas, R1 y R2).
 - [ ] Responder las preguntas de `preguntas_abiertas.md` que bloquean la Iteración 1.

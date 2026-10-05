@@ -59,5 +59,6 @@ propia lectura de las reglas.
 | `negocio/guia_profesora_como_se_elabora_el_brief.pdf` | Normas de la profesora para el Brief | Antes de tocar el Brief |
 | `negocio/normas_del_brief.md` | Resumen de esas normas como checklist | Para revisar el Brief rápido |
 | `producto/backlog_y_iteraciones.md` | Épicas, historias, R1/R2 y plan de la Iteración 1 | Para planificar o programar |
+| `producto/tablero_trello_por_etapas.md` | Tarjetas de Trello por etapa, con fechas y checklists | Para montar o revisar el tablero |
 | `arquitectura/stack_y_arquitectura.md` | Stack y decisiones técnicas (con lo que falta) | Antes de programar |
 | `para_claude_code/` | Lo que se copia a la carpeta de código | Solo vía `sincronizar.sh` |

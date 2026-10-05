@@ -14,4 +14,5 @@
 - [x] 3. Restricciones (pueden ser varias).
 - [x] 4. Rangos de calidad (no funcionales, en lenguaje del cliente).
 - [x] 5. Plan de trabajo de la primera iteración en Trello, público, con cada tarea y cuándo.
+- [ ] Tablero de Trello organizado por etapas, como el ejemplo de la profesora (ver `producto/tablero_trello_por_etapas.md`).
 - [ ] Enlace de Trello sin pedir autorización (hoy es enlace de invitación).
