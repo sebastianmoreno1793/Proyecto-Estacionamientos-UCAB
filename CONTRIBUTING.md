@@ -54,6 +54,17 @@ En GitHub, abre el **Pull Request** hacia `main`:
 - **Pull requests:** qué se subió, quién lo subió, cuándo y quién lo aprobó.
 - **Project (tablero):** Por hacer → En progreso → En revisión → Hecho.
 
+## Trello se actualiza solo
+
+No muevan las tarjetas de Trello a mano: GitHub las mueve.
+
+| En GitHub | Tarjeta en Trello |
+|---|---|
+| Te asignas el Issue | En proceso |
+| Abres el PR con `Closes #N` | En revisión |
+| Se cierra el Issue (PR unido) | Hecho |
+| Se reabre el Issue | Por hacer (Sprint 1) |
+
 ## Lo que no se sube nunca
 
 `.env`, contraseñas, tokens ni datos reales de personas (placas, correos, cédulas).

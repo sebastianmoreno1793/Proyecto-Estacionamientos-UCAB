@@ -27,18 +27,19 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 - Brief vigente: `entregables/BRIEF EQUIPO 3 15787.docx`
 - Mapa de historias (Figma): https://www.figma.com/board/sDRyvMoT5BDiuwwb2pPG2P/Mapa-de-historias-de-usuario---Equipo-3?node-id=0-1&p=f
-- Tablero Trello (Sprint 1): https://trello.com/invite/b/6ac2c21ec8be5977a37282c3/ATTI7e9359d5a69b8c8922b7bdbd3ba9d5a12ED21047/radar-de-estacionamientos-sprint-1
+- Tablero Trello (Sprint 1, administrado por Sebastian; se sincroniza desde GitHub): https://trello.com/b/WQSBIFTj/radar-de-estacionamientos-ucab-sprint-1
 
 ## Pendientes inmediatos
 
 - [ ] Crear el tablero (GitHub Project, vista Board) y añadirle los Issues — el token fine-grained no puede crearlo.
 - [ ] Activar GitHub Pro con el Student Developer Pack para proteger `main` (hoy GitHub no lo permite en repo privado gratis).
-- [ ] Asignar los Issues a cada compañero cuando acepte la invitación. Invitados (05/oct/26): Samuel `sagoncalves17-hash`, Aaron `AaronZarraga`, Manuel `marosaless`, y `Duende717` (falta confirmar si es German).
+- [ ] Asignar los Issues a cada compañero cuando acepte la invitación. Invitados (05/oct/26): Samuel `sagoncalves17-hash`, Aaron `AaronZarraga`, Manuel `marosaless`, y `Duende717` (es Samuel, confirmado 04/oct/26: Samuel tiene dos invitaciones, falta saber con cuál cuenta trabaja). German **no tiene invitación** todavía: falta su usuario de GitHub.
 
 - [ ] Invitar a Samuel, Aaron, German y Manuel como colaboradores del repo (faltan sus usuarios de GitHub).
 
 - [ ] Montar en Trello las 4 etapas según `producto/tablero_trello_por_etapas.md` y renombrar las HU con los nombres del Brief.
-- [ ] Reemplazar el enlace de invitación de Trello por el enlace público del tablero.
+- [ ] Generar el token de Trello y guardarlo como secreto `TRELLO_TOKEN` en GitHub (la clave `TRELLO_KEY` ya está).
+- [ ] Decidir si el tablero de Trello nuevo se hace público (la guía pide que la profesora lo vea sin autorización) e invitar al equipo.
 - [ ] Cambiar la Figura 3 del Brief por una captura nueva del tablero por etapas.
 - [ ] Actualizar el mapa de Figma para que coincida con el del Brief (10 épicas, R1 y R2).
 - [ ] Responder las preguntas de `preguntas_abiertas.md` que bloquean la Iteración 1.
