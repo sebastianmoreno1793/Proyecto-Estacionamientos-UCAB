@@ -1,5 +1,10 @@
 # Cómo trabajamos en este repo
 
+## 0. Dónde se trabaja
+
+El código va **siempre dentro de `RadarEstacionamientos_code/`**. La carpeta
+`RadarEstacionamientos_logica/` (Brief, decisiones) no se toca en las ramas de historias.
+
 ## 1. Tomar una tarea
 
 - Las tareas son los **Issues**. Cada historia de usuario es un Issue (`HU 4.1 · …`).
@@ -53,7 +58,7 @@ En GitHub, abre el **Pull Request** hacia `main`:
 
 `.env`, contraseñas, tokens ni datos reales de personas (placas, correos, cédulas).
 
-## `docs/` no se edita aquí
+## `RadarEstacionamientos_code/docs/` no se edita aquí
 
 Es una copia que se genera desde la carpeta de lógica del proyecto. Si algo está mal,
 abre un Issue con la etiqueta `documentación`.
