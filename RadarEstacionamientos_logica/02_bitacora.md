@@ -2,6 +2,12 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 05/oct/26 — Mapa de historias con el estilo de Figma
+
+- Figuras 1 y 2 del Brief reemplazadas por el mapa en el estilo del Figma del equipo (épicas en rosado,
+  Iteración 1 en verde agua, siguientes iteraciones en amarillo), con las 10 épicas y las HU de R1 y R2.
+- Se registró en el Histórico de Revisiones; la tabla de contenido se actualizó (9 páginas).
+
 ## 04/oct/26 — Plan de trabajo por etapas (Trello)
 
 - Se comparó el Brief con el ejemplo de la profesora: su tablero de Trello va por **etapas del proyecto**
