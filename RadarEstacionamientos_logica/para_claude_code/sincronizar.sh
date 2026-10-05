@@ -18,6 +18,7 @@ cp "$L"/decisiones/README.md "$D/decisiones/"
 # --- añade aquí SOLO los documentos que el ejecutor necesita para programar ---
 cp "$L"/arquitectura/stack_y_arquitectura.md "$D/"
 cp "$L"/producto/backlog_y_iteraciones.md "$D/"
+cp "$L"/producto/calendario_de_entregas.md "$D/"
 cp "$L"/negocio/problema_y_usuarios.md "$D/"
 # cp "$L"/negocio/reglas_de_negocio.md    "$D/"
 cp "$L"/para_claude_code/ciclo_de_sesiones.md "$D/"

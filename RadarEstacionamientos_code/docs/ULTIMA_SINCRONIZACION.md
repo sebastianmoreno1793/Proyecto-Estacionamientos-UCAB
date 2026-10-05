@@ -1,6 +1,6 @@
 # Última sincronización
 
-**2026-10-05 00:35**
+**2026-10-05 02:03**
 
 > Lo escribe `sincronizar.sh`. No lo edites.
 >
@@ -9,14 +9,4 @@
 
 ## Cambió en esta pasada
 
-- `CLAUDE.md`
-- `docs/backlog_y_iteraciones.md`
-- `docs/ciclo_de_sesiones.md`
-- `docs/decisiones/D-001-brief-en-lenguaje-de-negocio.md`
-- `docs/decisiones/D-002-deteccion-simulada.md`
-- `docs/decisiones/D-003-solo-web-con-correo-ucab.md`
-- `docs/decisiones/D-004-alcance-iteracion-1.md`
-- `docs/decisiones/D-005-sin-costos-adicionales.md`
-- `docs/decisiones/README.md`
-- `docs/problema_y_usuarios.md`
-- `docs/stack_y_arquitectura.md`
+- `docs/calendario_de_entregas.md`
