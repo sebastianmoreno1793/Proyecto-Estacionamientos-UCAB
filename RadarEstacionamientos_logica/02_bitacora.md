@@ -14,6 +14,17 @@
 - En el archivo del tablero se agregó la tabla para renombrar las HU de Trello con los nombres del Brief.
 - Falta: montar el tablero, nueva captura (Figura 3) y enlace público.
 
+## 05/oct/26 — Trello propio y conexión con GitHub
+
+- En el tablero de Germán todos (salvo él) eran observadores, sin permiso de edición. Se creó un
+  tablero nuevo administrado por Sebastian: *Radar de Estacionamientos UCAB - Sprint 1*
+  (trello.com/b/WQSBIFTj), en el workspace *Radar Estacionamientos UCAB*. Listas: Por hacer (Sprint 1),
+  En proceso, En revisión, Hecho y Siguientes iteraciones (R2); 32 tarjetas con responsable, fechas,
+  criterio y enlace al Issue. El tablero de Germán no se modificó.
+- Automatización `.github/workflows/trello.yml`: Issue asignado → En proceso; PR con `Closes #N` →
+  En revisión; Issue cerrado → Hecho; reabierto → Por hacer. Usa la app de Trello *GitHub Radar*.
+- Brief: enlace y captura de Trello actualizados; fila nueva en el histórico (05/oct/26).
+
 ## 05/oct/26 — Lógica y código juntos en el repo
 
 - A pedido de Sebastian, el repo ahora tiene las dos carpetas visibles para el equipo: la raíz

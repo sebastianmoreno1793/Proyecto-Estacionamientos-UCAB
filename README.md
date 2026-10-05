@@ -48,7 +48,7 @@ Si ves algo mal en lógica o en `docs/`, **no lo edites**: abre un Issue con la 
 
 ## Planificación
 
-- Tablero de Trello (Sprint 1): https://trello.com/invite/b/6ac2c21ec8be5977a37282c3/ATTI7e9359d5a69b8c8922b7bdbd3ba9d5a12ED21047/radar-de-estacionamientos-sprint-1
+- Tablero de Trello (Sprint 1, se actualiza solo desde GitHub): https://trello.com/b/WQSBIFTj/radar-de-estacionamientos-ucab-sprint-1
 - Mapa de historias (Figma): https://www.figma.com/board/sDRyvMoT5BDiuwwb2pPG2P/Mapa-de-historias-de-usuario---Equipo-3?node-id=0-1&p=f
 
 ## Tareas: qué le falta a cada quien
