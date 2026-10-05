@@ -28,8 +28,23 @@ Ingeniería de Software · Equipo 3 (NRC 15787) · Profesora María Pérez de Ov
 - Tablero de Trello (Sprint 1): https://trello.com/invite/b/6ac2c21ec8be5977a37282c3/ATTI7e9359d5a69b8c8922b7bdbd3ba9d5a12ED21047/radar-de-estacionamientos-sprint-1
 - Mapa de historias (Figma): https://www.figma.com/board/sDRyvMoT5BDiuwwb2pPG2P/Mapa-de-historias-de-usuario---Equipo-3?node-id=0-1&p=f
 
-## Reglas para trabajar juntos
+## Tareas: qué le falta a cada quien
 
-- Nadie sube directo a `main`: cada historia va en su rama (`hu-1.1-login`, `hu-4.2-semaforo`…)
-  y entra por Pull Request revisado por otro integrante.
-- Nunca se suben credenciales (`.env`) ni datos personales reales (placas, correos, cédulas).
+Cada historia de usuario es un **Issue**. La Iteración 1 (05/oct/26 → 16/oct/26) está en el
+milestone **Iteración 1**, con su barra de progreso.
+
+| Responsable | Issues de la Iteración 1 |
+|---|---|
+| Samuel Goncalves | #1 HU 1.1 · #2 HU 1.2 |
+| Aaron Zarraga | #3 HU 3.1 · #4 HU 3.2 · #5 HU 4.1 · #6 HU 4.2 |
+| German Alfonzo | #7 HU 5.1 · #8 HU 6.1 |
+| Manuel Rosales | #9 HU 7.2 · #10 HU 8.1 |
+| Sebastian Moreno | #11 HU 9.1 · #12 HU 10.1 |
+
+Las historias de R2 son los Issues #13 a #32 (milestone **Iteración 2**).
+
+## Cómo se sube el trabajo
+
+Una rama por historia → Pull Request con `Closes #N` → revisión de otro integrante → merge.
+Paso a paso en [`CONTRIBUTING.md`](CONTRIBUTING.md). Nunca se suben credenciales (`.env`)
+ni datos personales reales.
