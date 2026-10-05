@@ -18,7 +18,7 @@ export default function FormularioIncidencia({ estacionamientos }) {
           </option>
           {estacionamientos.map((e) => (
             <option key={e.id} value={e.id}>
-              {e.nombre}
+              {e.etiqueta}
             </option>
           ))}
         </select>
