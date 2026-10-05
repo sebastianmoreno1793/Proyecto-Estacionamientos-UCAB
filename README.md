@@ -16,12 +16,35 @@ Ingeniería de Software · Equipo 3 (NRC 15787) · Profesora María Pérez de Ov
 | Manuel Rosales | 7 Sugerencia de estacionamiento · 8 Avisos en el celular |
 | Sebastian Moreno | 9 Incidencias y vigilancia · 10 Administración y reportes |
 
-## Dónde está cada cosa
+## Cómo está organizado: método de dos sesiones
 
-- `docs/` — decisiones, backlog, plan de la Iteración 1 y stack. **Es una copia que se
-  genera desde la carpeta de lógica: no se edita aquí.** Si algo está mal, avisen a Sebastian.
-- `docs/backlog_y_iteraciones.md` — qué historia le toca a cada quien y cuándo.
-- `CLAUDE.md` — contexto para trabajar con Claude Code en este repo.
+El proyecto se divide en dos carpetas: **una para decidir y otra para programar.**
+
+```
+├── RadarEstacionamientos_logica/   ← se decide y se escribe (no hay código aquí)
+│   ├── README.md                   mapa de la carpeta y cómo trabajamos
+│   ├── 01_estado_del_proyecto.md   dónde estamos hoy
+│   ├── 02_bitacora.md              qué se hizo y por qué
+│   ├── decisiones/                 una ficha por decisión
+│   ├── entregables/                el Brief vigente (uno solo, se sobrescribe)
+│   ├── negocio/ producto/ arquitectura/
+│   └── para_claude_code/           lo que se copia a la carpeta de código
+│
+└── RadarEstacionamientos_code/     ← aquí se programa la aplicación
+    ├── CLAUDE.md                   contexto para programar con Claude Code
+    └── docs/                       copia de lógica (no se edita a mano)
+```
+
+| Carpeta | Para qué | Quién la cambia |
+|---|---|---|
+| `RadarEstacionamientos_logica/` | Brief, decisiones, backlog, estado del proyecto | Sebastian (sesión de lógica) |
+| `RadarEstacionamientos_code/` | El código de la aplicación | Todos, por Pull Request |
+| `RadarEstacionamientos_code/docs/` | Copia de lógica para quien programa | Solo `sincronizar.sh` |
+
+Si ves algo mal en lógica o en `docs/`, **no lo edites**: abre un Issue con la etiqueta `documentación`.
+
+- Qué historia le toca a cada quien: `RadarEstacionamientos_code/docs/backlog_y_iteraciones.md`.
+- El Brief: `RadarEstacionamientos_logica/entregables/BRIEF EQUIPO 3 15787.docx`.
 
 ## Planificación
 
