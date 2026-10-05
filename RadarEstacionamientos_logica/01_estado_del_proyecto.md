@@ -39,7 +39,8 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 - [ ] Montar en Trello las 4 etapas según `producto/tablero_trello_por_etapas.md` y renombrar las HU con los nombres del Brief.
 - [ ] Generar el token de Trello y guardarlo como secreto `TRELLO_TOKEN` en GitHub (la clave `TRELLO_KEY` ya está).
-- [ ] Decidir si el tablero de Trello nuevo se hace público (la guía pide que la profesora lo vea sin autorización) e invitar al equipo.
+- [x] Tablero de Trello nuevo público e integrantes agregados como miembros (05/oct/26).
+- [ ] Decidir si el tablero va por etapas (ejemplo de la profesora, `producto/tablero_trello_por_etapas.md`) o por estado, y luego actualizar enlace y Figura 3 del Brief.
 - [ ] Cambiar la Figura 3 del Brief por una captura nueva del tablero por etapas.
 - [ ] Actualizar el mapa de Figma para que coincida con el del Brief (10 épicas, R1 y R2).
 - [ ] Responder las preguntas de `preguntas_abiertas.md` que bloquean la Iteración 1.
