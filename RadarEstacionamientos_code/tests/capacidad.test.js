@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import { reiniciarAlmacen } from "../lib/almacen.js";
 import { cambiarEstacionamiento, listarEstacionamientos } from "../lib/estacionamientos/datos.js";
 import {
+  etiquetasUnicas,
   estacionamientosSugeribles,
   puestosLibres,
   validarCapacidad,
@@ -39,6 +40,33 @@ describe("validar la capacidad", () => {
   });
 });
 
+describe("etiquetas para distinguir zonas con el mismo nombre", () => {
+  test("un nombre que no se repite queda igual", () => {
+    assert.deepEqual(etiquetasUnicas([{ id: "est-labs", nombre: "Labs" }]), ["Labs"]);
+  });
+
+  test("las zonas repetidas se distinguen por el id", () => {
+    const etiquetas = etiquetasUnicas([
+      { id: "est-padel", nombre: "Pádel" },
+      { id: "est-padel-norte", nombre: "Pádel" },
+    ]);
+    assert.deepEqual(etiquetas, ["Pádel (principal)", "Pádel (norte)"]);
+  });
+
+  test("en el campus no quedan dos estacionamientos con la misma etiqueta", async () => {
+    reiniciarAlmacen();
+    const etiquetas = (await listarEstacionamientos()).map((e) => e.etiqueta);
+    assert.equal(new Set(etiquetas).size, etiquetas.length);
+  });
+
+  test("las zonas de profesores quedan marcadas", async () => {
+    reiniciarAlmacen();
+    const profesores = (await listarEstacionamientos()).filter((e) => e.soloProfesores);
+    assert.ok(profesores.length > 0);
+    assert.ok(profesores.every((e) => e.id.startsWith("prof-")));
+  });
+});
+
 describe("cambiar un estacionamiento", () => {
   beforeEach(() => reiniciarAlmacen());
 
@@ -50,29 +78,29 @@ describe("cambiar un estacionamiento", () => {
   });
 
   test("guarda la capacidad nueva y los puestos libres se calculan con ella", async () => {
-    const { estacionamiento } = await cambiarEstacionamiento("est-b", { capacidad: "50", activo: true });
+    const { estacionamiento } = await cambiarEstacionamiento("est-playa", { capacidad: "50", activo: true });
     assert.equal(estacionamiento.capacidad, 50);
     assert.equal(puestosLibres(estacionamiento), Math.max(0, 50 - estacionamiento.ocupados));
   });
 
   test("un estacionamiento desactivado no se sugiere", async () => {
-    await cambiarEstacionamiento("est-b", { capacidad: "80", activo: false });
+    await cambiarEstacionamiento("est-playa", { capacidad: "150", activo: false });
     const ids = estacionamientosSugeribles(await listarEstacionamientos()).map((e) => e.id);
-    assert.ok(!ids.includes("est-b"));
+    assert.ok(!ids.includes("est-playa"));
   });
 
   test("se puede volver a activar", async () => {
-    await cambiarEstacionamiento("est-b", { capacidad: "80", activo: false });
-    await cambiarEstacionamiento("est-b", { capacidad: "80", activo: true });
+    await cambiarEstacionamiento("est-playa", { capacidad: "150", activo: false });
+    await cambiarEstacionamiento("est-playa", { capacidad: "150", activo: true });
     const ids = estacionamientosSugeribles(await listarEstacionamientos()).map((e) => e.id);
-    assert.ok(ids.includes("est-b"));
+    assert.ok(ids.includes("est-playa"));
   });
 
   test("no cambia nada si la capacidad no es válida", async () => {
-    const antes = (await listarEstacionamientos()).find((e) => e.id === "est-b");
-    const resultado = await cambiarEstacionamiento("est-b", { capacidad: "0", activo: false });
+    const antes = (await listarEstacionamientos()).find((e) => e.id === "est-playa");
+    const resultado = await cambiarEstacionamiento("est-playa", { capacidad: "0", activo: false });
     assert.ok(resultado.error);
-    const despues = (await listarEstacionamientos()).find((e) => e.id === "est-b");
+    const despues = (await listarEstacionamientos()).find((e) => e.id === "est-playa");
     assert.deepEqual(despues, antes);
   });
 

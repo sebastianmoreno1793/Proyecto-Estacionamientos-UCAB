@@ -6,14 +6,17 @@ import { CAPACIDAD_MAXIMA, puestosLibres } from "@/lib/estacionamientos/reglas";
 import estilos from "../../formularios.module.css";
 
 export default function FilaEstacionamiento({ estacionamiento }) {
-  const { id, nombre, capacidad, ocupados, activo } = estacionamiento;
+  const { id, etiqueta, soloProfesores, capacidad, ocupados, activo } = estacionamiento;
   const [estado, accion, pendiente] = useActionState(guardarEstacionamiento, {});
 
   return (
     <li className={`${estilos.tarjeta} ${activo ? "" : estilos.inactivo}`}>
       <div className={estilos.encabezado}>
-        <h2>{nombre}</h2>
-        <span className={estilos.etiqueta}>{activo ? "Activo" : "Desactivado"}</span>
+        <h2>{etiqueta}</h2>
+        <span className={estilos.marcas}>
+          {soloProfesores && <span className={estilos.etiqueta}>Solo profesores</span>}
+          <span className={estilos.etiqueta}>{activo ? "Activo" : "Desactivado"}</span>
+        </span>
       </div>
       <p>
         {puestosLibres(estacionamiento)} libres de {capacidad} · {ocupados} ocupados

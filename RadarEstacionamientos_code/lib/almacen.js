@@ -3,12 +3,16 @@
 // Solo lo usan los módulos `datos.js`; al llegar la base de datos se cambian ellos y nada más.
 import { ESTACIONAMIENTOS } from "../data/estacionamientos.js";
 import { CAPACIDAD_DE_EJEMPLO, CAPACIDAD_POR_DEFECTO } from "./datos_de_ejemplo.js";
+import { etiquetasUnicas } from "./estacionamientos/reglas.js";
 
 function crearAlmacen() {
+  const etiquetas = etiquetasUnicas(ESTACIONAMIENTOS);
   return {
-    estacionamientos: ESTACIONAMIENTOS.map(({ id, nombre }) => ({
+    estacionamientos: ESTACIONAMIENTOS.map(({ id, nombre, soloProfesores = false }, i) => ({
       id,
       nombre,
+      etiqueta: etiquetas[i],
+      soloProfesores,
       ...(CAPACIDAD_DE_EJEMPLO[id] ?? CAPACIDAD_POR_DEFECTO),
       activo: true,
     })),

@@ -1,11 +1,22 @@
 // Capacidad y ocupación de EJEMPLO, no reales: falta confirmar la capacidad de cada
 // estacionamiento (preguntas_abiertas.md #4). Los ocupados los calculará la HU 4.1 a
 // partir de las entradas y salidas; aquí solo sirven para ver la página funcionando.
-// Los estacionamientos (id y nombre) salen de `data/estacionamientos.js` (HU 5.1).
+// Los estacionamientos (id, nombre, zonas de profesores) salen de `data/estacionamientos.js` (HU 5.1).
 export const CAPACIDAD_DE_EJEMPLO = {
-  "est-b": { capacidad: 80, ocupados: 66 },
-  "est-c": { capacidad: 60, ocupados: 58 },
-  "est-cincuentenario": { capacidad: 300, ocupados: 120 },
+  "est-playa": { capacidad: 150, ocupados: 120 },
+  "est-postgrado": { capacidad: 60, ocupados: 52 },
+  "est-centro-estudiantes": { capacidad: 80, ocupados: 30 },
+  "est-labs": { capacidad: 40, ocupados: 38 },
+  "est-cincuentenario": { capacidad: 100, ocupados: 60 },
+  "est-sambilito": { capacidad: 300, ocupados: 210 },
+  "est-presambilito-oeste": { capacidad: 30, ocupados: 12 },
+  "est-presambilito": { capacidad: 60, ocupados: 55 },
+  "est-presambilito-este": { capacidad: 30, ocupados: 29 },
+  "est-padel": { capacidad: 40, ocupados: 10 },
+  "est-padel-norte": { capacidad: 25, ocupados: 5 },
+  "prof-centro-cultural": { capacidad: 20, ocupados: 14 },
+  "prof-postgrado": { capacidad: 15, ocupados: 15 },
+  "prof-aulas": { capacidad: 20, ocupados: 8 },
 };
 
 // Para un estacionamiento que se agregue al mapa y todavía no tenga capacidad aquí.
