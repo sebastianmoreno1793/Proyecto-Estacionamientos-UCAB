@@ -94,7 +94,9 @@ body {
   .encabezado h1 {
     font-size: 1rem;
   }
-  .etiqueta-estacionamiento {
-    font-size: 0.7rem;
+  /* En celular las etiquetas son más compactas para que no se tapen. */
+  .leaflet-tooltip.etiqueta-estacionamiento {
+    font-size: 0.62rem;
+    padding: 1px 4px;
   }
 }

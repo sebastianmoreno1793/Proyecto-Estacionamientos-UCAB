@@ -20,13 +20,18 @@ export default function MapaCampus() {
 
   useEffect(() => {
     let mapa;
+    let observador;
     let cancelado = false;
 
     // Leaflet usa `window`, así que se carga solo en el navegador.
     import("leaflet").then(({ default: L }) => {
       if (cancelado || !contenedor.current) return;
 
-      mapa = L.map(contenedor.current).setView(CENTRO_CAMPUS, ZOOM_INICIAL);
+      // zoomSnap fraccionario: el campus cabe completo también en pantallas angostas.
+      mapa = L.map(contenedor.current, { zoomSnap: 0.25 }).setView(
+        CENTRO_CAMPUS,
+        ZOOM_INICIAL
+      );
 
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
@@ -49,13 +54,25 @@ export default function MapaCampus() {
       );
 
       // Encuadra todos los estacionamientos, en computador o en celular.
-      if (capas.length > 0) {
-        mapa.fitBounds(L.featureGroup(capas).getBounds(), { padding: [24, 24] });
-      }
+      const encuadrar = () => {
+        if (capas.length > 0) {
+          mapa.fitBounds(L.featureGroup(capas).getBounds(), { padding: [24, 24] });
+        }
+      };
+      encuadrar();
+
+      // Si cambia el tamaño de la pantalla (girar el celular, cambiar la
+      // ventana), el mapa se reajusta para que no queden estacionamientos cortados.
+      observador = new ResizeObserver(() => {
+        mapa.invalidateSize();
+        encuadrar();
+      });
+      observador.observe(contenedor.current);
     });
 
     return () => {
       cancelado = true;
+      if (observador) observador.disconnect();
       if (mapa) mapa.remove();
     };
   }, []);
