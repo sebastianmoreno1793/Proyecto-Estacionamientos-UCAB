@@ -40,6 +40,10 @@ export async function pedirPermisoNotificaciones() {
   if (permiso === 'granted') {
     localStorage.setItem('notificaciones_preferencia', 'activadas');
     await registrarServiceWorker();
+    if ('serviceWorker' in navigator) {
+      await navigator.serviceWorker.ready;
+    }
+    
     await enviarNotificacionPrueba();
   } else if (permiso === 'denied') {
     localStorage.setItem('notificaciones_preferencia', 'bloqueadas');
