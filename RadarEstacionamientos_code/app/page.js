@@ -1,3 +1,4 @@
+import BotonNotificaciones from "@/components/botonNotificaciones";
 import MapaCampus from "@/components/MapaCampus";
 
 export default function Inicio() {
@@ -8,6 +9,7 @@ export default function Inicio() {
         <p>Campus Montalbán</p>
       </header>
       <MapaCampus />
+      <BotonNotificaciones />
     </main>
   );
 }
