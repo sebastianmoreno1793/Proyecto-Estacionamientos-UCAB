@@ -2,6 +2,18 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 13/oct/26 — Brief (.docx) corregido y figuras del mapa regeneradas
+
+- Se corrigió `entregables/BRIEF EQUIPO 3 15787.docx` con lo de `producto/correcciones_brief_profesora.md`:
+  fila nueva en el Histórico de Revisiones (13/oct/26), Tabla 1 (Mapa de Impacto) con épica e historia por
+  integrante, criterios de aceptación de HU 4.1 (escribe), 4.2 (lee) y 5.4 (antes 10.1), Tabla 3 con los tres
+  nombres corregidos, frase de las cuatro actividades por historia y de las reuniones en Trello.
+- Figuras 1 y 2 (mapa de historias) regeneradas con el mismo estilo del Figma, con las 10 épicas renombradas
+  y todas las HU (nuevas: 2.5, 4.4, 5.4, 5.5, 9.3, 9.4). **Ojo:** son una imagen hecha por script, no una
+  exportación; el tablero de Figma en línea sigue con los nombres viejos hasta que el equipo lo edite.
+- Pendiente: actualizar el tablero de Figma, la captura de Trello (Figura 3) y la tabla de contenido
+  (clic derecho → Actualizar campo, porque cambió la paginación); revisar el .docx en Word.
+
 ## 13/oct/26 — Correcciones de la profesora al Brief
 
 - La profesora comentó el Google Doc del Brief el 09/oct/26 (12 comentarios). Detalle y resolución en
