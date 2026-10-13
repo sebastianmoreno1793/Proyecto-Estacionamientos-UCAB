@@ -32,3 +32,22 @@ Stack: `docs/stack_y_arquitectura.md`.
 ## Qué NO entra al repositorio
 
 Datos personales reales (placas, correos, cédulas) y credenciales (`.env`).
+
+## Mapa 3D del Campus
+
+- El componente `components/Mapa3D.js` usa Three.js para renderizar una maqueta 3D
+  del campus UCAB Montalbán con dimensiones y posiciones reales (`/simulacion`).
+- Fuentes: estacionamientos en `data/estacionamientos.js`; contorno, edificios, vías,
+  garita y relieve en `data/campus.js` (OpenStreetMap + SRTM). NUNCA inventes posiciones:
+  siempre convierte GPS → metros con `gpsAMetros` (`lib/mapa3d/geo.js`).
+- 1 unidad Three.js = 1 metro real. El campus mide ~930 m (E-O) × 610 m (N-S), ~20 ha.
+  La garita está en la esquina **noreste** (Av. Teherán) y el terreno **sube de norte a
+  sur** (~920 m en la Playa → ~975 m en las canchas).
+- **Antes de modificar el mapa 3D**, lee los skills:
+  - `.agents/skills/threejs-campus-3d/SKILL.md` — reglas de Three.js, conversión GPS,
+    patrones de código, performance.
+  - `.agents/skills/campus-ucab-datos/SKILL.md` — datos reales del campus: edificios,
+    topografía, vías y de dónde sacar lo que falte.
+- Para datos nuevos del campus, consulta **OpenStreetMap** antes que la web (la web casi no
+  tiene información de los edificios). Valida con `npm test` (`tests/mapa3d.test.js`).
+- Vista para el equipo, con capturas: `maqueta_3d/README.md`.
