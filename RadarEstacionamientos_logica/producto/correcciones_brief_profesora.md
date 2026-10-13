@@ -20,15 +20,15 @@
 
 ## Sección 1 · Tabla 1 (Mapa de Impacto) corregida
 
-La **Meta** es el objetivo de negocio (cómo se cumple el impacto) y las **épicas son los entregables**: van en la columna Entregable con la historia de la Iteración 1 y su responsable. Imagen de referencia: `tabla1_mapa_de_impacto_corregida.png`.
+La **Meta** es el objetivo de negocio (cómo se cumple el impacto) y las **épicas son los entregables**: van en la columna Entregable con las historias de la Iteración 1 (sin indicar responsables). Imagen de referencia: `tabla1_mapa_de_impacto_corregida.png`.
 
-| Meta | Personas | Impacto | Entregable (épica → historia y responsable) |
+| Meta | Personas | Impacto | Entregable (épica → historias) |
 |---|---|---|---|
-| Consultar estacionamientos | Estudiantes y profesores | Saben dónde hay puestos libres antes de entrar | **Gestión de estacionamientos (épica 5):** Ver el mapa del campus — HU 5.1 (German) · **Aforo (épica 4):** Actualizar el aforo — HU 4.1 · Consultar el semáforo — HU 4.2 (Aaron) · **Registro de entradas y salidas (épica 3):** HU 3.1 · HU 3.2 (Aaron) |
-| Llegar a clase a tiempo | Estudiantes y profesores | Llegan más rápido a su salón | **Sugerencia de estacionamiento (épica 7):** HU 7.2 (Manuel) · **Notificaciones (épica 8):** HU 8.1 (Manuel) · **Edificios y distancia a pie (épica 6):** HU 6.1 (German) |
-| Seguridad | Comunidad UCAB | Solo entra quien tiene correo UCAB y cada quien ve lo de su rol | **Autenticación y perfiles (épica 1):** HU 1.1 y HU 1.2 (Samuel) |
-| Seguridad | Conductores y Vigilancia | Los problemas se reportan y se atienden más rápido | **Gestión de incidencias (épica 9):** Reportar una incidencia — HU 9.1 (Sebastian) |
-| Administración | Planta Física | Controlan cuántos puestos hay y cuándo se llena el campus | **Gestión de estacionamientos (épica 5):** Habilitar y fijar capacidad — HU 5.4 (Sebastian) · **Reportes de afluencia (épica 10):** R2 |
+| Consultar estacionamientos | Estudiantes y profesores | Saben dónde hay puestos libres antes de entrar | **Gestión de estacionamientos (épica 5):** Ver el mapa del campus — HU 5.1 · **Aforo (épica 4):** Actualizar el aforo — HU 4.1 · Consultar el semáforo — HU 4.2 · **Registro de entradas y salidas (épica 3):** HU 3.1 · HU 3.2 |
+| Llegar a clase a tiempo | Estudiantes y profesores | Llegan más rápido a su salón | **Sugerencia de estacionamiento (épica 7):** HU 7.2 · **Notificaciones (épica 8):** HU 8.1 · **Edificios y distancia a pie (épica 6):** HU 6.1 |
+| Seguridad | Comunidad UCAB | Solo entra quien tiene correo UCAB y cada quien ve lo de su rol | **Autenticación y perfiles (épica 1):** HU 1.1 y HU 1.2 |
+| Seguridad | Conductores y Vigilancia | Los problemas se reportan y se atienden más rápido | **Gestión de incidencias (épica 9):** Reportar una incidencia — HU 9.1 |
+| Administración | Planta Física | Controlan cuántos puestos hay y cuándo se llena el campus | **Gestión de estacionamientos (épica 5):** Habilitar y fijar capacidad — HU 5.4 · **Reportes de afluencia (épica 10):** R2 |
 
 > Las metas se conservan como estaban; lo que cambia es el Entregable. Una épica puede servir a dos metas con historias distintas (épica 5).
 

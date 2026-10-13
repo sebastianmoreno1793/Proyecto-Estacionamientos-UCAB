@@ -14,6 +14,9 @@
 - Tabla 1 corregida: las **metas** quedan como estaban y las **épicas van en la columna Entregable** con su
   historia y responsable (aclaración de Sebastian: las épicas son los entregables, las metas son cómo se cumplen).
   Referencia visual: `producto/tabla1_mapa_de_impacto_corregida.png`.
+- Tabla 1 sin responsables (no se indica quién hace cada historia). Maquetación del .docx revisada con
+  LibreOffice (PDF de prueba): Histórico de Revisiones cabe en una página, se quitó la página en blanco tras la
+  Tabla 1 y ninguna tabla queda partida entre páginas; el documento pasó a 10 páginas.
 - Pendiente: actualizar el tablero de Figma, la captura de Trello (Figura 3) y la tabla de contenido
   (clic derecho → Actualizar campo, porque cambió la paginación); revisar el .docx en Word.
 
