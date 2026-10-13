@@ -2,6 +2,19 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 13/oct/26 — Correcciones de la profesora al Brief
+
+- La profesora comentó el Google Doc del Brief el 09/oct/26 (12 comentarios). Detalle y resolución en
+  `producto/correcciones_brief_profesora.md`; guía de defensa en `producto/guia_defensa_brief_y_comentarios.pdf`.
+- Backlog reestructurado conservando los números de HU e Issues: épicas renombradas (Gestión de estacionamientos,
+  Aforo, Gestión de incidencias, Notificaciones), HU 4.1 pasa a escritura y 4.2 a lectura, HU 10.1 → 5.4,
+  HU 9.3 → 4.4, HU 10.4 → 2.5. Nuevas: 5.5 (#46), 9.3 (#47), 9.4 (#48).
+- GitHub: etiquetas de épica renombradas, actividades por historia en los Issues de R1, Issues de R1 asignados
+  a su responsable, Issues 33–39 (entregas del curso, incluida la táctica) cerrados como "no planificados".
+  Los Issues de R2 no se asignaron: el workflow de Trello los movería a "En proceso".
+- Pendiente: pegar las correcciones en el Google Doc, actualizar Figma y Trello (renombrar, reuniones,
+  actividades, quitar entregas del curso) y confirmar con la profesora el destino de la épica 10.
+
 ## 05/oct/26 — Fechas de entrega en GitHub
 
 - Con el Plan de Evaluación (IS PLAN DE CLASE V3) se crearon 6 milestones con fecha (Entrega 1 a 5 y

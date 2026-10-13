@@ -1,6 +1,6 @@
 # Tablero de Trello por etapas — Iteración 1
 
-**Estado:** 🟢 Vigente — creado el 04/oct/26. Modelo: el ejemplo de la profesora ("Partes del Brief", tablero por etapas).
+**Estado:** 🟢 Vigente — creado el 04/oct/26; corregido el 13/oct/26 con los comentarios de la profesora. Modelo: el ejemplo de la profesora ("Partes del Brief", tablero por etapas).
 Fuente de las fechas: Brief v1.0, sección 5. Si cambia una fecha aquí, se cambia también en el Brief.
 
 > Las tarjetas de **gestión** (reuniones, monitoreo, cierre) son una **propuesta** para el equipo:
@@ -121,22 +121,29 @@ Aquí van las 12 HU que ya existen (se arrastran). Al moverlas, **se renombran**
 | HU 3.2 - Panel de simulación de sensores | HU 3.2 Simular sensores y placas | Aaron | 05/oct | 09/oct |
 | HU 5.1 (actual) | HU 5.1 Ver el mapa del campus con los estacionamientos | German | 05/oct | 09/oct |
 | HU 8.1 (actual) | HU 8.1 Activar las notificaciones | Manuel | 05/oct | 09/oct |
-| HU 10.1 (actual) | HU 10.1 Habilitar, inhabilitar y fijar la capacidad de los estacionamientos | Sebastian | 05/oct | 09/oct |
+| HU 10.1 (actual) | HU 5.4 Habilitar estacionamientos y fijar su capacidad (antes HU 10.1) | Sebastian | 05/oct | 09/oct |
 | HU 1.2 - Detección de rol | HU 1.2 Detectar si es estudiante o profesor | Samuel | 12/oct | 16/oct |
-| HU 4.1 - Cálculo de aforo | HU 4.1 Calcular los puestos libres de cada estacionamiento | Aaron | 12/oct | 16/oct |
-| HU 4.2 - Semáforo de colores | HU 4.2 Mostrar el semáforo de ocupación | Aaron | 12/oct | 16/oct |
+| HU 4.1 - Cálculo de aforo | HU 4.1 Actualizar el aforo con cada entrada o salida | Aaron | 12/oct | 16/oct |
+| HU 4.2 - Semáforo de colores | HU 4.2 Consultar el semáforo de ocupación | Aaron | 12/oct | 16/oct |
 | HU 6.1 (actual) | HU 6.1 Mantener el catálogo de edificios UCAB | German | 12/oct | 16/oct |
 | HU 7.2 (actual) | HU 7.2 Sugerir el estacionamiento libre más cercano | Manuel | 12/oct | 16/oct |
 | HU 9.1 (actual) | HU 9.1 Reportar una incidencia | Sebastian | 12/oct | 16/oct |
 
-**Checklist igual para cada HU** (pegar en todas):
+**Actividades por historia** (corrección de la profesora: "las actividades por historia están incompletas").
+Cada tarjeta de HU lleva esta checklist con sus fechas; semana 1 = HU que empiezan el 05/oct, semana 2 = las que empiezan el 12/oct:
 ```
-Criterio de aceptación entendido (Brief 2.1)
-Desarrollo terminado
-Probado contra el criterio de aceptación
-Revisado por otro integrante
-Publicado en la versión de prueba
+Diseño: pantalla o flujo y datos que usa (05–06/oct · 12–13/oct)
+Desarrollo (06–08/oct · 13–15/oct)
+Pruebas contra el criterio de aceptación, en computador y celular (08–09/oct · 15–16/oct)
+Revisión del Pull Request por otro integrante y cierre (09/oct · 16/oct)
 ```
+
+> **Trazabilidad** (corrección de la profesora): el nombre de cada tarjeta debe ser **igual** al de la historia del Backlog
+> (mismo código y nombre) y al de su Issue en GitHub. Si cambia el Backlog, se renombra aquí.
+
+> **Qué NO va en este tablero** (corrección de la profesora): las tácticas arquitectónicas y las entregas, exámenes o actividades
+> de la materia no son tareas del producto. Se retiran del Trello del Brief; el calendario del curso vive solo en
+> `calendario_de_entregas.md`.
 
 ## ETAPA 4: SEGUIMIENTO Y CONTROL  (05/oct/26 → 16/oct/26)
 
@@ -149,11 +156,14 @@ Cierre de la Iteración 1 y retrospectiva
 ```
 
 **Reuniones de seguimiento semanales del equipo** — 05/oct → 16/oct · Equipo 3
+Cada reunión es **una tarjeta propia** con fecha (corrección de la profesora: "¿no se van a reunir nunca?"):
 ```
-Reunión de arranque (05/oct)
-Seguimiento de la semana 1 (09/oct)
-Seguimiento de la semana 2 (16/oct)
+Reunión de arranque de la Iteración 1 — 05/oct
+Reunión de seguimiento, semana 1 — 09/oct
+Reunión de seguimiento, semana 2 — 16/oct
+Reunión de cierre y retrospectiva — 16/oct
 ```
+Cada tarjeta lleva como checklist: *qué se hizo · qué falta · bloqueos · acuerdos*.
 *(Días propuestos; el equipo los confirma.)*
 
 **Monitoreo del cronograma y control de riesgos** — 05/oct → 16/oct · Equipo 3
