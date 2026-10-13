@@ -11,6 +11,9 @@
 - Figuras 1 y 2 (mapa de historias) regeneradas con el mismo estilo del Figma, con las 10 épicas renombradas
   y todas las HU (nuevas: 2.5, 4.4, 5.4, 5.5, 9.3, 9.4). **Ojo:** son una imagen hecha por script, no una
   exportación; el tablero de Figma en línea sigue con los nombres viejos hasta que el equipo lo edite.
+- Tabla 1 corregida: las **metas** quedan como estaban y las **épicas van en la columna Entregable** con su
+  historia y responsable (aclaración de Sebastian: las épicas son los entregables, las metas son cómo se cumplen).
+  Referencia visual: `producto/tabla1_mapa_de_impacto_corregida.png`.
 - Pendiente: actualizar el tablero de Figma, la captura de Trello (Figura 3) y la tabla de contenido
   (clic derecho → Actualizar campo, porque cambió la paginación); revisar el .docx en Word.
 

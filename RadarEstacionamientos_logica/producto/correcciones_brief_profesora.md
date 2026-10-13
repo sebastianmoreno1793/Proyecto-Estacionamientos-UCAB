@@ -20,18 +20,17 @@
 
 ## Sección 1 · Tabla 1 (Mapa de Impacto) corregida
 
-| Meta (épica) | Personas | Impacto | Entregable (historia de la Iteración 1 y quién la hace) |
-|---|---|---|---|
-| Gestión de estacionamientos (épica 5) | Estudiantes y profesores | Saben dónde hay puestos libres antes de entrar | Ver el mapa del campus — HU 5.1 (German) · Habilitar y fijar capacidad — HU 5.4 (Sebastian) |
-| Aforo (épica 4) | Estudiantes, profesores y Planta Física | Ven el semáforo al día y los puestos libres son confiables | Actualizar el aforo — HU 4.1 · Consultar el semáforo — HU 4.2 (Aaron) |
-| Registro de entradas y salidas (épica 3) | Vigilancia | Cada entrada y salida queda registrada | Recibir avisos — HU 3.1 · Simular sensores y placas — HU 3.2 (Aaron) |
-| Sugerencia de estacionamiento (épica 7) | Estudiantes y profesores | Llegan más rápido a su salón | Sugerir el más cercano — HU 7.2 (Manuel) |
-| Notificaciones (épica 8) | Estudiantes y profesores | Se enteran del estacionamiento sugerido sin abrir el sistema | Activar las notificaciones — HU 8.1 (Manuel) |
-| Edificios y distancia a pie (épica 6) | Estudiantes y profesores | Saben cuánto caminarán hasta su edificio | Mantener el catálogo de edificios — HU 6.1 (German) |
-| Autenticación y perfiles (épica 1) | Comunidad UCAB | Solo entra quien tiene correo UCAB y cada quien ve lo de su rol | HU 1.1 y HU 1.2 (Samuel) |
-| Gestión de incidencias (épica 9) | Conductores y Vigilancia | Los problemas se reportan y se atienden más rápido | Reportar una incidencia — HU 9.1 (Sebastian) |
+La **Meta** es el objetivo de negocio (cómo se cumple el impacto) y las **épicas son los entregables**: van en la columna Entregable con la historia de la Iteración 1 y su responsable. Imagen de referencia: `tabla1_mapa_de_impacto_corregida.png`.
 
-> Se quitó "Llegar a clase a tiempo" como meta (no era medible ni propia del sistema); su impacto quedó en las épicas 7 y 8.
+| Meta | Personas | Impacto | Entregable (épica → historia y responsable) |
+|---|---|---|---|
+| Consultar estacionamientos | Estudiantes y profesores | Saben dónde hay puestos libres antes de entrar | **Gestión de estacionamientos (épica 5):** Ver el mapa del campus — HU 5.1 (German) · **Aforo (épica 4):** Actualizar el aforo — HU 4.1 · Consultar el semáforo — HU 4.2 (Aaron) · **Registro de entradas y salidas (épica 3):** HU 3.1 · HU 3.2 (Aaron) |
+| Llegar a clase a tiempo | Estudiantes y profesores | Llegan más rápido a su salón | **Sugerencia de estacionamiento (épica 7):** HU 7.2 (Manuel) · **Notificaciones (épica 8):** HU 8.1 (Manuel) · **Edificios y distancia a pie (épica 6):** HU 6.1 (German) |
+| Seguridad | Comunidad UCAB | Solo entra quien tiene correo UCAB y cada quien ve lo de su rol | **Autenticación y perfiles (épica 1):** HU 1.1 y HU 1.2 (Samuel) |
+| Seguridad | Conductores y Vigilancia | Los problemas se reportan y se atienden más rápido | **Gestión de incidencias (épica 9):** Reportar una incidencia — HU 9.1 (Sebastian) |
+| Administración | Planta Física | Controlan cuántos puestos hay y cuándo se llena el campus | **Gestión de estacionamientos (épica 5):** Habilitar y fijar capacidad — HU 5.4 (Sebastian) · **Reportes de afluencia (épica 10):** R2 |
+
+> Las metas se conservan como estaban; lo que cambia es el Entregable. Una épica puede servir a dos metas con historias distintas (épica 5).
 
 ## Sección 2 · Reparto de épicas
 
