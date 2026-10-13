@@ -2,8 +2,11 @@
 
 ## 0. Dónde se trabaja
 
-El código va **siempre dentro de `RadarEstacionamientos_code/`**. La carpeta
+El código de la aplicación va **siempre dentro de `RadarEstacionamientos_code/`**. La carpeta
 `RadarEstacionamientos_logica/` (Brief, decisiones) no se toca en las ramas de historias.
+
+El simulador 3D va en `RadarEstacionamientos_simulador/`. Es una extensión aparte: **solo usa
+la API pública de la app** (como Postman) y la app nunca importa nada de él.
 
 ## 1. Tomar una tarea
 

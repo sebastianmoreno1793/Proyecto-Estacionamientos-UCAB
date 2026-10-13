@@ -33,21 +33,15 @@ Stack: `docs/stack_y_arquitectura.md`.
 
 Datos personales reales (placas, correos, cédulas) y credenciales (`.env`).
 
-## Mapa 3D del Campus
+## API para sensores, Postman y el simulador
 
-- El componente `components/Mapa3D.js` usa Three.js para renderizar una maqueta 3D
-  del campus UCAB Montalbán con dimensiones y posiciones reales (`/simulacion`).
-- Fuentes: estacionamientos en `data/estacionamientos.js`; contorno, edificios, vías,
-  garita y relieve en `data/campus.js` (OpenStreetMap + SRTM). NUNCA inventes posiciones:
-  siempre convierte GPS → metros con `gpsAMetros` (`lib/mapa3d/geo.js`).
-- 1 unidad Three.js = 1 metro real. El campus mide ~930 m (E-O) × 610 m (N-S), ~20 ha.
-  La garita está en la esquina **noreste** (Av. Teherán) y el terreno **sube de norte a
-  sur** (~920 m en la Playa → ~975 m en las canchas).
-- **Antes de modificar el mapa 3D**, lee los skills:
-  - `.agents/skills/threejs-campus-3d/SKILL.md` — reglas de Three.js, conversión GPS,
-    patrones de código, performance.
-  - `.agents/skills/campus-ucab-datos/SKILL.md` — datos reales del campus: edificios,
-    topografía, vías y de dónde sacar lo que falte.
-- Para datos nuevos del campus, consulta **OpenStreetMap** antes que la web (la web casi no
-  tiene información de los edificios). Valida con `npm test` (`tests/mapa3d.test.js`).
-- Vista para el equipo, con capturas: `maqueta_3d/README.md`.
+- La app expone los caminos reales (D-002: lo simulado entra por el mismo camino que lo real):
+  `POST /api/avisos` (sensores, HU 3.1/4.1), `POST /api/garita/lecturas` (lector de placas,
+  HU 3.2), `POST /api/incidencias` (HU 9.1), `PATCH /api/estacionamientos/:id` (HU 5.4),
+  `GET /api/estacionamientos` y el canal en vivo `GET /api/eventos` (HU 4.3).
+- Avisos y lecturas piden el encabezado `x-clave-sensor` (`CLAVE_SENSORES`, ver `.env.example`).
+- Al canal en vivo y a la API pública **nunca** van placas ni correos (`vistaPublica`).
+- `POST /api/pruebas/reiniciar` existe solo en desarrollo.
+- **La simulación NO vive aquí**: está en `../RadarEstacionamientos_simulador/` (maqueta 3D,
+  menú de pruebas, colección de Postman) y solo usa esta API. No agregues código "para el
+  simulador" en esta app.
