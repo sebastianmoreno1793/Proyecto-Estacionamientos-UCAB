@@ -1,6 +1,6 @@
 # Backlog e iteraciones
 
-**Estado:** 🟢 Vigente — corregido el 13/oct/26 según los comentarios de la profesora (Google Doc del Brief, 09/oct/26). Si cambia el Brief, se cambia aquí también.
+**Estado:** 🟢 Vigente — corregido el 13/oct/26 (dos rondas) según los comentarios de la profesora (Google Doc del Brief, 09/oct/26) y lo hablado en clase. Si cambia el Brief, se cambia aquí también.
 
 ## Cómo se lee
 
@@ -22,6 +22,7 @@
 | 8 Notificaciones | Manuel | 8.1 Activar notificaciones | 8.2 Aviso en la garita · 8.3 Abrir mapa sugerido |
 | 9 Gestión de incidencias (CRUD) | Sebastian | 9.1 Reportar incidencia (crear) | 9.2 Atender: cambiar estado (actualizar) · 9.3 Ver listado y estado (leer) · 9.4 Corregir o eliminar (eliminar) |
 | 10 Reportes de afluencia | Sebastian | — | 10.2 Gráficos por hora y día · 10.3 Reportes PDF/CSV |
+| 11 Ranking de puntos *(nueva, pedida por la profesora; sin responsable)* | por asignar | — | 11.1 Calificar un estacionamiento · 11.2 Escribir comentarios · 11.3 Ganar puntos por reportar y calificar · 11.4 Ver el ranking de usuarios *(historias propuestas, por confirmar)* |
 
 > **Por confirmar con la profesora (martes 13/oct):** ella escribió "Administración es simplemente Incidencias con su CRUD". Se interpretó así: lo administrativo se repartió (capacidad → épica 5, catálogo NRC → épica 2) y las incidencias quedaron como CRUD completo. La épica 10 quedó solo con los reportes de afluencia; si ella prefiere eliminarla, 10.2 y 10.3 pasarían a la épica 4 (Aforo).
 
@@ -35,6 +36,6 @@
 | Manuel | HU 8.1 | HU 7.2 |
 | Sebastian | HU 5.4 (antes 10.1) | HU 9.1 |
 
-**Actividades por historia** (van en cada Issue y en cada tarjeta de Trello): diseño → desarrollo → pruebas contra el criterio de aceptación → revisión del Pull Request. Fechas de la semana 1: 05–06 / 06–08 / 08–09 / 09/oct; de la semana 2: 12–13 / 13–15 / 15–16 / 16/oct.
+**Actividades por historia** (checklist de cada tarjeta de Trello, según la pizarra de la clase del 13/oct): Especificar (criterio 1, 2 y 3) → Diseñar (interfaz, arquitectura, algoritmos, estructura de datos) → Implementar → Probar → Corregir → Probar de nuevo → Desplegar. *Las cuatro partes de "Diseñar" se leyeron de la foto de la pizarra: confirmar con el equipo.*
 
 Los criterios de aceptación de cada historia están en el Brief (sección 2.1) y en su Issue.

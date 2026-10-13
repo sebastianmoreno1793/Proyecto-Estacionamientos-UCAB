@@ -2,6 +2,20 @@
 
 **Estado:** 🟡 Listo para pegar en el Google Doc del equipo (el Brief vive allá; esta carpeta no puede editarlo). Fecha de los comentarios: 09/oct/26. Se hablan en clase el martes 13/oct.
 
+## Segunda ronda (13/oct/26, comentarios que faltaban + clase)
+
+| Comentario | Resolución |
+|---|---|
+| "Orden: puestos, seguridad, ranking, administración, estacionamiento" | Tabla 1 con las metas en ese orden (nombres del Doc de la profesora). |
+| "Crear una épica de puntos por ranking" | Épica 11 **Ranking de puntos** (11.1–11.4, R2, sin responsable). Figura 2 ahora cubre las épicas 6 a 11. |
+| Rangos de calidad: "solo dejar 4" | Se quitaron *navegador moderno* (ya está en Restricciones) y *muchos usuarios a la vez* (mismo tipo que el primero). Quedan 4. |
+| Trello: "modificar la estructura" (pizarra) | Tablero por etapas: Inicio, Planificación, Ejecución, Seguimiento y Control, Cierre (+ Backlog). Ver `tablero_trello_por_etapas.md`. |
+| Trello: "arreglar que la profe pueda dejar comentarios" | Pendiente: ver permiso del tablero (hoy solo comentan los miembros). |
+| Actividades por historia incompletas | Checklist de 12 ítems por historia (especificar, diseñar, implementar, probar, corregir, probar, desplegar). |
+| Enlace de Trello en el Brief | Pasa al enlace público del tablero (`trello.com/b/WQSBIFTj/...`), ya no el de invitación. |
+
+## Primera ronda (09/oct/26)
+
 ## Qué comentó y cómo se resolvió
 
 | Comentario | Resolución |

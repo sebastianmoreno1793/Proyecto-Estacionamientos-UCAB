@@ -1,190 +1,31 @@
 # Tablero de Trello por etapas — Iteración 1
 
-**Estado:** 🟢 Vigente — creado el 04/oct/26; corregido el 13/oct/26 con los comentarios de la profesora. Modelo: el ejemplo de la profesora ("Partes del Brief", tablero por etapas).
-Fuente de las fechas: Brief v1.0, sección 5. Si cambia una fecha aquí, se cambia también en el Brief.
+**Estado:** 🟢 Vigente — reestructurado el 13/oct/26 según la pizarra de la clase y los comentarios de la profesora.
+Tablero público: https://trello.com/b/WQSBIFTj/radar-de-estacionamientos-ucab-sprint-1 · Captura: `trello_tablero_por_etapas.png`.
+Las fechas son las del Brief (sección 5, Tabla 3 y Tabla 4): si cambia una aquí, cambia allá.
 
-> Las tarjetas de **gestión** (reuniones, monitoreo, cierre) son una **propuesta** para el equipo:
-> los días de reunión están por confirmar entre todos.
+## Listas (en este orden)
 
-## Cómo montarlo rápido
+| Lista | Qué contiene |
+|---|---|
+| ETAPA 1: INICIO | Brief del proyecto (Entrega 1) · Definición del alcance · Identificación de stakeholders · Conformación del equipo y reparto de épicas |
+| ETAPA 2: PLANIFICACIÓN | Herramientas del equipo · Mapa de Impacto · Mapa de Historias (R1 y R2) · Criterios de aceptación · Sesión de planificación · **Maqueta general** y **Arquitectura base** (de la pizarra; 12–14/oct, por confirmar) |
+| ETAPA 3: EJECUCIÓN (Iteración 1) | Las 12 historias de la Tabla 3, cada una con su checklist de actividades |
+| ETAPA 4: SEGUIMIENTO Y CONTROL | Reuniones 1 (05/10), 2 (09/10) y 3 (13/10) · Monitoreo del cronograma y riesgos · Control de calidad |
+| ETAPA 5: CIERRE | Cierre de la Iteración 1 y retrospectiva (16/10) |
+| BACKLOG (siguientes iteraciones) | Las historias R2 con los mismos códigos y nombres del Backlog (incluye 5.5, 9.3, 9.4 y la épica 11) |
 
-1. En el tablero "Radar de Estacionamientos - Sprint 1", crear 4 listas **en este orden**:
-   `ETAPA 1: INICIO` · `ETAPA 2: PLANIFICACIÓN` · `ETAPA 3: EJECUCIÓN` · `ETAPA 4: SEGUIMIENTO Y CONTROL`.
-2. **Tarjetas de un golpe:** copiar el bloque "Tarjetas" de cada etapa y pegarlo en "Añade una tarjeta".
-   Trello pregunta si se crea una tarjeta por línea → **Sí**.
-3. **Checklists de un golpe:** dentro de la tarjeta, *Checklist* → pegar el bloque de ítems en el primer ítem;
-   Trello crea un ítem por línea.
-4. En cada tarjeta: fechas (*Fechas* → inicio y vencimiento), miembro y etiqueta.
-   Las de etapas 1 y 2 ya terminadas se marcan con el check de la fecha (queda en verde) y la checklist completa.
-5. Las 12 tarjetas de HU que ya existen en "Por hacer (Sprint 1)" se **arrastran** a `ETAPA 3: EJECUCIÓN`
-   (no hace falta crearlas de nuevo). Luego se borran o archivan las listas Por hacer / En proceso / Hecho.
-6. Etiquetas: una por persona para las HU (como ya están) y una **"Gestión"** para las tarjetas del equipo.
-7. Para el enlace del Brief: *Compartir* → copiar el **enlace del tablero** (`trello.com/b/...`), no el de invitación.
-8. Tomar la captura con las 4 etapas visibles (sin el panel "Bandeja de entrada" abierto).
+## Actividades por historia (checklist "Actividades de la historia")
 
----
+Especificar: criterio de aceptación 1, 2 y 3 · Diseñar: interfaz, arquitectura, algoritmos, estructura de datos ·
+Implementar · Probar · Corregir · Probar de nuevo · Desplegar. *(Leído de la pizarra; confirmar el detalle de "Diseñar".)*
 
-## ETAPA 1: INICIO  (29/sep/26 → 04/oct/26 · terminada)
+## Estado de cada historia
 
-**Tarjetas** (pegar tal cual):
-```
-Definición del alcance del Radar de Estacionamientos
-Identificación de stakeholders
-Conformación del equipo y reparto de épicas
-```
+Ya no hay listas Por hacer / En proceso / Hecho: el estado va en **etiquetas** (En proceso, En revisión, Hecho) y en el
+check de la fecha. Las listas viejas están archivadas (Trello → Menú → Elementos archivados).
 
-**Definición del alcance del Radar de Estacionamientos** — 29/sep → 30/sep · Equipo 3 · ✅
-```
-Describir el problema: encontrar puesto al llegar al campus
-Delimitar el campus Montalbán como único alcance físico
-Definir las restricciones del producto
-Acordar qué queda fuera de la Iteración 1
-```
+## Pendientes
 
-**Identificación de stakeholders** — 29/sep → 30/sep · Equipo 3 · ✅
-```
-Estudiantes
-Profesores
-Vigilancia
-Planta Física (administración)
-Profesora María Pérez de Ovalles (cliente)
-```
-
-**Conformación del equipo y reparto de épicas** — 29/sep · Equipo 3 · ✅
-```
-Samuel: épicas 1 y 2
-Aaron: épicas 3 y 4
-German: épicas 5 y 6
-Manuel: épicas 7 y 8
-Sebastian: épicas 9 y 10
-```
-
-## ETAPA 2: PLANIFICACIÓN  (29/sep/26 → 05/oct/26)
-
-**Tarjetas**:
-```
-Mapa de Impacto
-Mapa de Historias de Usuario (R1 y R2)
-Criterios de aceptación de la Iteración 1
-Sesión de planificación de la Iteración 1
-Preparación de herramientas del equipo
-```
-
-**Mapa de Impacto** — 29/sep → 04/oct · Equipo 3 · ✅
-```
-Metas
-Personas
-Impactos
-Entregables
-```
-
-**Mapa de Historias de Usuario (R1 y R2)** — 29/sep → 04/oct · Equipo 3
-```
-10 épicas con su responsable
-Historias R1 (Iteración 1)
-Historias R2 (siguientes iteraciones)
-Mapa publicado en Figma
-Figma igual al mapa del Brief
-```
-*(El último ítem sigue pendiente.)*
-
-**Criterios de aceptación de la Iteración 1** — 04/oct · Equipo 3 · ✅
-```
-Un criterio por cada una de las 12 historias
-Redactados en lenguaje de negocio
-```
-
-**Sesión de planificación de la Iteración 1** — 04/oct · Equipo 3 · ✅
-```
-Elegir las 12 historias de R1
-Asignar responsables
-Fijar fechas: semana 1 (05–09/oct) y semana 2 (12–16/oct)
-```
-
-**Preparación de herramientas del equipo** — 04/oct → 05/oct · Sebastian
-```
-Repositorio en GitHub
-Issues de la Iteración 1 y 2
-Tablero de Trello público
-Invitar a los integrantes al repositorio
-```
-
-## ETAPA 3: EJECUCIÓN  (05/oct/26 → 16/oct/26)
-
-Aquí van las 12 HU que ya existen (se arrastran). Al moverlas, **se renombran** con el nombre del Brief
-(lenguaje de negocio; el de Trello hoy es técnico y se verá en la captura). Fechas iguales a la Tabla 3 del Brief:
-
-| Nombre actual en Trello | Renombrar a (nombre del Brief) | Miembro | Inicio | Vence |
-|---|---|---|---|---|
-| HU 1.1 - Login institucional | HU 1.1 Entrar con el correo de la UCAB | Samuel | 05/oct | 09/oct |
-| HU 3.1 - API de avisos de entrada/salida | HU 3.1 Recibir avisos de entrada y salida | Aaron | 05/oct | 09/oct |
-| HU 3.2 - Panel de simulación de sensores | HU 3.2 Simular sensores y placas | Aaron | 05/oct | 09/oct |
-| HU 5.1 (actual) | HU 5.1 Ver el mapa del campus con los estacionamientos | German | 05/oct | 09/oct |
-| HU 8.1 (actual) | HU 8.1 Activar las notificaciones | Manuel | 05/oct | 09/oct |
-| HU 10.1 (actual) | HU 5.4 Habilitar estacionamientos y fijar su capacidad (antes HU 10.1) | Sebastian | 05/oct | 09/oct |
-| HU 1.2 - Detección de rol | HU 1.2 Detectar si es estudiante o profesor | Samuel | 12/oct | 16/oct |
-| HU 4.1 - Cálculo de aforo | HU 4.1 Actualizar el aforo con cada entrada o salida | Aaron | 12/oct | 16/oct |
-| HU 4.2 - Semáforo de colores | HU 4.2 Consultar el semáforo de ocupación | Aaron | 12/oct | 16/oct |
-| HU 6.1 (actual) | HU 6.1 Mantener el catálogo de edificios UCAB | German | 12/oct | 16/oct |
-| HU 7.2 (actual) | HU 7.2 Sugerir el estacionamiento libre más cercano | Manuel | 12/oct | 16/oct |
-| HU 9.1 (actual) | HU 9.1 Reportar una incidencia | Sebastian | 12/oct | 16/oct |
-
-**Actividades por historia** (corrección de la profesora: "las actividades por historia están incompletas").
-Cada tarjeta de HU lleva esta checklist con sus fechas; semana 1 = HU que empiezan el 05/oct, semana 2 = las que empiezan el 12/oct:
-```
-Diseño: pantalla o flujo y datos que usa (05–06/oct · 12–13/oct)
-Desarrollo (06–08/oct · 13–15/oct)
-Pruebas contra el criterio de aceptación, en computador y celular (08–09/oct · 15–16/oct)
-Revisión del Pull Request por otro integrante y cierre (09/oct · 16/oct)
-```
-
-> **Trazabilidad** (corrección de la profesora): el nombre de cada tarjeta debe ser **igual** al de la historia del Backlog
-> (mismo código y nombre) y al de su Issue en GitHub. Si cambia el Backlog, se renombra aquí.
-
-> **Qué NO va en este tablero** (corrección de la profesora): las tácticas arquitectónicas y las entregas, exámenes o actividades
-> de la materia no son tareas del producto. Se retiran del Trello del Brief; el calendario del curso vive solo en
-> `calendario_de_entregas.md`.
-
-## ETAPA 4: SEGUIMIENTO Y CONTROL  (05/oct/26 → 16/oct/26)
-
-**Tarjetas**:
-```
-Reuniones de seguimiento semanales del equipo
-Monitoreo del cronograma y control de riesgos
-Control de calidad de las historias terminadas
-Cierre de la Iteración 1 y retrospectiva
-```
-
-**Reuniones de seguimiento semanales del equipo** — 05/oct → 16/oct · Equipo 3
-Cada reunión es **una tarjeta propia** con fecha (corrección de la profesora: "¿no se van a reunir nunca?"):
-```
-Reunión de arranque de la Iteración 1 — 05/oct
-Reunión de seguimiento, semana 1 — 09/oct
-Reunión de seguimiento, semana 2 — 16/oct
-Reunión de cierre y retrospectiva — 16/oct
-```
-Cada tarjeta lleva como checklist: *qué se hizo · qué falta · bloqueos · acuerdos*.
-*(Días propuestos; el equipo los confirma.)*
-
-**Monitoreo del cronograma y control de riesgos** — 05/oct → 16/oct · Equipo 3
-```
-Revisar cada semana qué tarjetas van atrasadas
-Sensores y lector de placas simulados (la UCAB no confirma acceso)
-Responder las preguntas abiertas que bloquean la Iteración 1
-Todos los integrantes con acceso al repositorio
-```
-
-**Control de calidad de las historias terminadas** — 12/oct → 16/oct · Equipo 3
-```
-Cada HU cumple su criterio de aceptación
-El mapa se ve bien en computador y en celular
-Los colores del semáforo son correctos
-Ningún dato de placas visible para otros usuarios
-```
-
-**Cierre de la Iteración 1 y retrospectiva** — 16/oct · Equipo 3
-```
-Revisar qué historias quedaron terminadas
-Pasar lo pendiente a la Iteración 2
-Qué salió bien y qué mejorar
-```
+- Permiso para que la profesora comente (hoy: solo miembros).
+- `.github/workflows/trello.yml` aún mueve tarjetas entre las listas archivadas: hay que cambiarlo a etiquetas.

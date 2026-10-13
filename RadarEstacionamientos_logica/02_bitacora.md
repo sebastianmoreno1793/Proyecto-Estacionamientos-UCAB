@@ -2,6 +2,23 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 13/oct/26 — Segunda ronda: Trello por etapas, épica de ranking y rangos de calidad
+
+- Se leyeron en el Google Doc de la profesora los comentarios que faltaban (orden de metas, épica de ranking,
+  "solo dejar 4" rangos, estructura de Trello, comentarios en Trello) y se vio la pizarra de la clase del 13/oct.
+  El audio de la clase se transcribió con el reconocimiento de voz de macOS: salió parcial y con ruido, así que
+  la fuente fiable fue la foto de la pizarra y el Doc.
+- **Trello** (tablero público WQSBIFTj) reestructurado con la sesión de Sebastian: listas ETAPA 1 Inicio, 2 Planificación,
+  3 Ejecución (12 HU), 4 Seguimiento y Control, 5 Cierre y Backlog (27 HU, con las nuevas 5.5, 9.3, 9.4 y 11.1–11.4).
+  Cada HU lleva checklist de 12 actividades. Listas "Entregas del proyecto", "Por hacer/En proceso/En revisión/Hecho" y
+  "Siguientes iteraciones" **archivadas** (se pueden restaurar). Etiquetas nuevas: En proceso, En revisión, Hecho, Gestión.
+- **Brief (.docx)**: Tabla 1 en el orden pedido y con meta Ranking; épica 11 y Figuras 1 y 2 regeneradas; 4 rangos de
+  calidad; Tabla 4 por 5 etapas (con Maqueta general y Arquitectura base, fechas propuestas 12–14/oct por confirmar);
+  texto de actividades; Figura 3 nueva (captura del tablero); enlace público de Trello; fila del 13/oct ampliada.
+- **Pendiente**: Figma (sin herramienta para editarlo; el tablero sigue con 5 columnas viejas), permiso de comentarios
+  de la profesora en Trello, pegar el Brief corregido en el Google Doc (el Doc en línea es la versión del 06/oct),
+  y ajustar `.github/workflows/trello.yml`, que mueve tarjetas entre listas que ya no existen.
+
 ## 13/oct/26 — Brief (.docx) corregido y figuras del mapa regeneradas
 
 - Se corrigió `entregables/BRIEF EQUIPO 3 15787.docx` con lo de `producto/correcciones_brief_profesora.md`:
