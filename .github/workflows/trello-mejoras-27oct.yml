@@ -152,7 +152,9 @@ jobs:
             // 9) Arquitectura base: la arquitectura dual quedó documentada
             const arq = tarjeta(/^Arquitectura base$/);
             if (arq) {
-              await ponerDesc(arq, 'Dos sistemas: **la app del Radar** (lo que usa la comunidad UCAB) y **la maqueta 3D del Campus Montalbán**, que simula los sensores y el lector de placas y le manda las señales a la app solo por su API pública. Documentado en el repositorio: `RadarEstacionamientos_logica/arquitectura/arquitectura_dual_app_y_maqueta.md` (decisión D-006).');
+              const textoArq = 'Dos sistemas: **la app del Radar** (lo que usa la comunidad UCAB) y **la maqueta 3D del Campus Montalbán**, que simula los sensores y el lector de placas y le manda las señales a la app solo por su API pública. Documentado en el repositorio: `RadarEstacionamientos_logica/arquitectura/arquitectura_dual_app_y_maqueta.md` (decisión D-006).';
+              if (!(arq.desc || '').includes('maqueta 3D'))
+                await escribir('agregar la arquitectura dual a Arquitectura base', 'PUT', `/cards/${arq.id}`, { desc: `${(arq.desc || '').trim()}\n\n**Arquitectura (27/10/2026):** ${textoArq}`.trim() });
               for (const k of await checklists(arq)) for (const it of k.checkItems)
                 if (it.name === 'Documentar la arquitectura' && it.state !== 'complete')
                   await escribir('marcar "Documentar la arquitectura"', 'PUT', `/cards/${arq.id}/checkItem/${it.id}`, { state: 'complete' });
