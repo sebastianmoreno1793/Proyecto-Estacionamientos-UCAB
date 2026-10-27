@@ -52,7 +52,7 @@ jobs:
             const tarjeta = (re) => cards.find(c => re.test(c.name));
             const checklists = async (card) => leer(`/cards/${card.id}/checklists`, { fields: 'name', checkItems: 'all' });
             const asegurarChecklist = async (card, nombre, items) => {
-              const chk = await checklists(card);
+              const chk = card.id === 'ensayo' ? [] : await checklists(card);
               if (chk.some(k => k.name === nombre)) { core.info(`Ya tiene "${nombre}": ${card.name}`); return; }
               const nueva = await escribir(`checklist "${nombre}" en ${card.name}`, 'POST', `/cards/${card.id}/checklists`, { name: nombre });
               for (const it of items) await escribir(`  ítem: ${it}`, 'POST', `/checklists/${nueva.id}/checkItems`, { name: it });
