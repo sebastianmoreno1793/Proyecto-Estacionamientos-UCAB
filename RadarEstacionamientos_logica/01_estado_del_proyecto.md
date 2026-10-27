@@ -45,12 +45,12 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 - [ ] Cada integrante especifica una HU en su tarjeta de Trello (Card, Conversación y Criterios) con su diagrama de actividades como imagen o PDF.
 - [ ] Tarjeta «Requisitos No Funcionales» con los 4 RNF (ISO 25010, testeables), acordados en equipo.
-- [ ] Llenar las tarjetas de reuniones (la profesora preguntó dos veces si nos reunimos) y agendar una antes del 03/nov.
-- [ ] Renombrar el tablero «EQUIPO 87 3» y enviar el enlace a mperezpu@ucab.edu.ve.
-- [ ] Renombrar los Issues de GitHub con los nombres del Brief aprobado (lista en `producto/revision_27oct_equipo_vs_profesora.md` §3).
+- [ ] Llenar la minuta de las Reuniones 1–3 (asistentes y acuerdos) y hacer la Reunión 4 antes del 03/nov. Las tarjetas ya tienen objetivo y checklist «Minuta» (27/oct).
+- [x] Tablero renombrado «EQUIPO 87 3 · Radar de Estacionamientos UCAB» (27/oct). Falta enviar el enlace a mperezpu@ucab.edu.ve el 03/nov.
+- [x] Issues de GitHub renombrados con los nombres del Brief aprobado; #14 (HU 2.1) pasó a Iteración 1 y #2 (HU 1.2) a Iteración 2 (27/oct).
 - [ ] Revisar y fusionar los PR #44 y #45; abrir y fusionar el PR de la maqueta 3D.
 - [ ] Preguntar a la profesora por la «Actividad 4 A» de la Unidad 9.
-- [ ] Ajustar `.github/workflows/trello.yml`: mueve tarjetas a listas que ya no existen (Por hacer, En proceso, Hecho).
+- [ ] Borrar la rama `trello-mejoras-27oct` cuando ya no haga falta: su workflow escribe en Trello con cada push a esa rama (no duplica nada, pero no hay que tocarla).
 
 ### De antes
 

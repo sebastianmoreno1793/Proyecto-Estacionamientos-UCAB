@@ -116,5 +116,26 @@ Lo que falta:
 9. **Maqueta y arquitectura:** la tarjeta «Arquitectura base» puede enlazar
    `arquitectura/arquitectura_dual_app_y_maqueta.md` y marcar lo ya decidido.
 
-> Los cambios en Trello y en los Issues de GitHub los ve todo el equipo y la profesora. Se
-> aplican cuando Sebastian lo apruebe.
+### Aplicado el 27/oct/26 (con la aprobación de Sebastian)
+
+Con el workflow `.github/workflows/trello-mejoras-27oct.yml` (rama `trello-mejoras-27oct`): primero
+un ensayo y después la escritura. Se verificó contra el tablero público.
+
+- ✅ Tablero renombrado «EQUIPO 87 3 · Radar de Estacionamientos UCAB» (punto 7).
+- ✅ Responsable como miembro en las 20 tarjetas HU (punto 3). German tiene dos cuentas en Trello: se
+  usó «Germán Matheo Alfonzo Marczuk».
+- ✅ «Especificar · Criterio 1–3» desmarcados en 5.1, 5.4 y 9.1 (punto 4).
+- ✅ Checklist «Especificación ERS · Segunda Entrega (03/11/2026)» en 1.1, 4.1, 5.1, 8.1 y 9.1, con
+  «Especificada por» (punto 2 y §4). Si alguien elige otra HU, se mueve la checklist.
+- ✅ Tarjeta «Requisitos No Funcionales (ERS §2) · Segunda Entrega» con los 4 RNF **propuestos**
+  y la casilla «Acordar los 4 RNF en equipo».
+- ✅ Reuniones 1–3 con objetivo y checklist «Minuta» (asistentes y acuerdos **por completar**: no
+  hay registro de lo que se habló). Reunión 4 creada para antes del 03/nov (punto 1).
+- ✅ Cierre de la Iteración 1 con la checklist «Retrospectiva» (punto 6).
+- ✅ Arquitectura base: se agregó la arquitectura dual y se marcó «Documentar la arquitectura» (punto 9).
+- ✅ HU 2.1 marcada como R1 en su descripción.
+- ⏸️ Sin hacer: crear el «Sprint 2» (punto 5), porque sus fechas las decide el equipo. Las tarjetas
+  sueltas de entregas (punto 8) siguen en la lista archivada: no se ven.
+
+**GitHub (27/oct):** los 9 Issues de §3 se renombraron; #14 (HU 2.1) pasó a «Iteración 1» y quedó
+asignado a Samuel; #2 (HU 1.2) pasó a «Iteración 2».

@@ -19,6 +19,13 @@
 - **Revisión del equipo:** el repo no tiene cambios desde el 13/oct. Los PR #44 (German) y #45 (Manuel)
   siguen abiertos sin revisión. Ninguna HU tiene especificación en Trello y las reuniones están vacías.
   Plan de mejora del Trello en la misma revisión (§5).
+- **Aplicado (con aprobación de Sebastian):** Issues renombrados y milestones de 1.2 y 2.1 movidos. En
+  Trello, con el workflow `trello-mejoras-27oct` (primero ensayo, luego escritura): tablero «EQUIPO 87 3»,
+  miembros en las HU, casillas «Especificar» desmarcadas donde no hay especificación, checklist de
+  especificación ERS en las 5 HU del reparto, tarjeta de RNF, minutas de reuniones, Reunión 4 y
+  retrospectiva. Detalle en la revisión del 27/oct.
+- **Corrección:** `trello.yml` sí funciona (desde el 13/oct usa etiquetas de estado, no listas). Al abrir
+  el PR #49, la HU 3.2 quedó «En revisión», y al asignar #14, la HU 2.1 quedó «En proceso».
 
 ## 13/oct/26 — Segunda ronda: Trello por etapas, épica de ranking y rangos de calidad
 
