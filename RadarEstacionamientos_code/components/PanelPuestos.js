@@ -44,7 +44,22 @@ function useCifraAnimada(valor) {
   return mostrado;
 }
 
-export default function PanelPuestos({ estacionamientos, conexion, elegido, onElegir }) {
+// «Hace 3 min»: cuándo llegó el último dato, para que nadie tome cifras viejas como actuales.
+function haceCuanto(hora, ahora) {
+  const segundos = Math.max(0, Math.round((ahora - hora) / 1000));
+  if (segundos < 60) return "hace menos de un minuto";
+  const minutos = Math.round(segundos / 60);
+  return minutos === 1 ? "hace 1 minuto" : `hace ${minutos} minutos`;
+}
+
+export default function PanelPuestos({ estacionamientos, conexion, actualizado, elegido, onElegir }) {
+  const [ahora, setAhora] = useState(() => Date.now());
+  useEffect(() => {
+    if (conexion === "en-vivo") return;
+    const reloj = setInterval(() => setAhora(Date.now()), 15000);
+    setAhora(Date.now());
+    return () => clearInterval(reloj);
+  }, [conexion]);
   const [abierto, setAbierto] = useState(true);
   const activos = estacionamientos.filter((e) => e.activo);
   const totalLibres = activos.reduce((suma, e) => suma + e.libres, 0);
@@ -66,7 +81,7 @@ export default function PanelPuestos({ estacionamientos, conexion, elegido, onEl
             <span className="cifra" aria-hidden="true">
               {estacionamientos.length ? total : "—"}
             </span>
-            <span aria-live="polite">
+            <span className="panel-total-texto" aria-live="polite">
               <span className="oculto-visual">{totalLibres} </span>puestos libres en el campus
             </span>
           </span>
@@ -74,6 +89,7 @@ export default function PanelPuestos({ estacionamientos, conexion, elegido, onEl
         </button>
         <span className={`estado-conexion estado-${conexion}`}>
           <span className="punto" aria-hidden="true" /> {TEXTO_CONEXION[conexion]}
+          {conexion !== "en-vivo" && actualizado && ` · cifras de ${haceCuanto(actualizado, ahora)}`}
         </span>
       </header>
 
@@ -99,7 +115,7 @@ export default function PanelPuestos({ estacionamientos, conexion, elegido, onEl
                 <span className="panel-libres">
                   {e.activo ? (
                     <>
-                      <span className="cifra">{e.libres}</span> libres
+                      <span className="cifra">{e.libres}</span> {e.libres === 1 ? "libre" : "libres"}
                     </>
                   ) : (
                     "Cerrado"

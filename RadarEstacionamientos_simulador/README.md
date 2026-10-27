@@ -56,6 +56,14 @@ Si la app base corre en otra dirección o con otra clave de sensores, copia `.en
 - **Marcadores:** azul es un carro del simulador; rosa, un aviso que llegó de afuera (Postman, otro simulador).
 - **Lo que pasa en la app también se ve:** si alguien reporta una incidencia desde el formulario de la app o el administrador cierra un estacionamiento, el simulador lo muestra al instante.
 
+## La maqueta para la app (`/maqueta`)
+
+http://localhost:3001/maqueta fotografía la escena con estilo de maqueta física (grama, árboles,
+techos de teja y concreto, puestos pintados), en cámara casi cenital, y con **Exportar** guarda
+`exportes/maqueta-campus.jpg` y `exportes/maqueta-campus.json` (dónde cae cada estacionamiento y
+edificio en la imagen). Se copian a la app: `public/maqueta/campus.jpg` y `data/maqueta.json`.
+Necesita la app base corriendo (le pide los estacionamientos). Ver D-007 › Maqueta.
+
 ## Postman
 
 Importa `postman/Radar_UCAB_app_base.postman_collection.json`. Trae los avisos de sensores, el

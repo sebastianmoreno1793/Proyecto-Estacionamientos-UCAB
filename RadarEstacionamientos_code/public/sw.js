@@ -8,11 +8,11 @@
 //
 // Al cambiar este archivo, sube VERSION para que los teléfonos reciban la versión nueva.
 
-const VERSION = "radar-v1";
+const VERSION = "radar-v2";
 const CACHE_SHELL = `${VERSION}-shell`;
 const CACHE_ESTATICOS = `${VERSION}-estaticos`;
 const SIN_CONEXION = "/sin-conexion";
-const SHELL = ["/", SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png"];
+const SHELL = ["/", SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
 
 self.addEventListener("install", (evento) => {
   evento.waitUntil(caches.open(CACHE_SHELL).then((cache) => cache.addAll(SHELL)));

@@ -4,7 +4,7 @@
 
 > ## ⭐ Obligatorias para todo el equipo (27/oct/26, Sebastian)
 >
-> Toda pantalla, estilo o funcionalidad que se agregue al Radar sigue estas dos decisiones.
+> Toda pantalla, estilo o funcionalidad que se agregue al Radar sigue estas decisiones.
 > Un PR que no las cumpla no se fusiona. Para cambiarlas se propone una decisión nueva; no se
 > cambian en el código.
 >
@@ -12,6 +12,8 @@
 >   `DESIGN.md`. Se revisa con la skill `impeccable` (`/impeccable critique`).
 > - **[D-008](D-008-la-app-es-una-pwa.md) · El Radar es una PWA instalable.** Un solo service
 >   worker (`public/sw.js`); los datos en vivo nunca salen de la caché.
+> - **[D-009](D-009-semaforo-hay-o-no-hay-puesto.md) · Semáforo de dos estados:** verde = hay puesto,
+>   rojo = no hay puesto, gris = cerrado. Nada de amarillo ni naranja.
 
 | Ficha | Decisión | Estado |
 |---|---|---|
@@ -23,3 +25,4 @@
 | [D-006](D-006-arquitectura-dual-app-y-maqueta-3d.md) | Dos sistemas: la app del Radar y la maqueta 3D del campus que le manda las señales | 🟢 Tomada (falta aprobación del equipo) |
 | ⭐ [D-007](D-007-diseno-ios-institucional-ucab.md) | La app se ve como una app de iOS institucional de la UCAB (`producto/DESIGN.md`) | 🟢 Tomada · obligatoria |
 | ⭐ [D-008](D-008-la-app-es-una-pwa.md) | El Radar es una PWA instalable, con un solo service worker | 🟢 Tomada · obligatoria |
+| ⭐ [D-009](D-009-semaforo-hay-o-no-hay-puesto.md) | Semáforo de dos estados: hay puesto (verde) o no hay puesto (rojo); reemplaza al de cuatro colores | 🟢 Tomada · obligatoria |

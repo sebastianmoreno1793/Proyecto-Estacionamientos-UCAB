@@ -6,7 +6,8 @@ detalle está en el Brief y en `../negocio/problema_y_usuarios.md`.
 ## Qué es
 
 Una **PWA** (D-008) que le dice a la comunidad UCAB **dónde hay puestos libres** en el Campus
-Montalbán, en vivo, con un semáforo de ocupación. Además, permite reportar problemas en un
+Montalbán, en vivo, sobre una maqueta del campus vista desde arriba, con un semáforo de dos
+estados: verde si hay puesto, rojo si no hay (D-009). Además, permite reportar problemas en un
 estacionamiento y le da a Planta Física el control de la capacidad.
 
 ## Quién la usa y dónde
@@ -30,4 +31,5 @@ estacionamiento completo (restricción del Brief). No es una app nativa.
 
 ## Personalidad visual
 
-Institucional UCAB y de iOS, sobria. El color fuerte es solo el semáforo. Ver `DESIGN.md`.
+Institucional UCAB y de iOS, sobria, con una maqueta «cuchi» del campus como protagonista. El
+color fuerte es solo el semáforo (verde o rojo). Ver `DESIGN.md`.

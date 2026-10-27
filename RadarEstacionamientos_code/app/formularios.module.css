@@ -29,6 +29,7 @@
 }
 
 .ayuda {
+  max-width: 62ch;
   color: var(--tinta-2);
   font-size: 15px;
   line-height: 20px;
@@ -141,7 +142,7 @@
   padding: 0 20px;
   border: none;
   border-radius: var(--radio-control);
-  background: var(--azul);
+  background: var(--azul-boton);
   color: #fff;
   cursor: pointer;
   transition: transform 140ms ease, background-color 140ms ease;

@@ -84,7 +84,7 @@ Sebastian, pendiente de acordar en equipo):
 | Rango de calidad del Brief | Característica → subcaracterística ISO 25010 | RNF testeable (propuesta) |
 |---|---|---|
 | El mapa carga y se actualiza en pocos segundos | Eficiencia de desempeño → comportamiento temporal | El mapa con la ocupación de los 14 estacionamientos se muestra en ≤ 3 s en 4G, y un cambio de ocupación aparece en ≤ 5 s después del aviso del sensor |
-| Se entiende de un vistazo | Capacidad de interacción → auto-descriptividad | 9 de cada 10 usuarios de prueba identifican el estacionamiento con más puestos libres en ≤ 10 s sin ayuda, solo con los colores del semáforo |
+| Se entiende de un vistazo | Capacidad de interacción → auto-descriptividad | 9 de cada 10 usuarios de prueba identifican un estacionamiento con puesto en ≤ 10 s sin ayuda, solo con el semáforo de dos estados (D-009) |
 | Si un sensor falla, se oculta solo ese estacionamiento | Fiabilidad → tolerancia a fallos | Si un estacionamiento no recibe avisos por 10 min, se muestra «sin datos» y los demás siguen actualizándose |
 | Seguro con los datos según el rol | Seguridad → confidencialidad | Un usuario sin rol de vigilancia o administración que pide las placas de otro recibe «acceso denegado» (100 % de los intentos en la prueba) |
 
@@ -156,4 +156,6 @@ Se revisó la app corriendo, en computador y en celular, contra el Brief y los r
 | 8 | **«Sin datos»** (RNF 3, tolerancia a fallos): un estacionamiento cuyo sensor calla no se marca | ⏳ Pendiente (HU 4.4, R2): guardar la hora del último aviso |
 | 9 | HU 7.2 «Sugerir el más cercano» (Manuel) sin código; depende del catálogo de edificios (PR #44) | ⏳ Pendiente |
 | 10 | El PR #45 (HU 8.1) trae su propio `sw.js` | ⏳ Debe quitarlo y usar el de D-008, que ya trae sus manejadores `push` y `notificationclick` |
-| 11 | Falta correr `/impeccable critique` sobre el mapa y los formularios | ⏳ Pendiente (la skill ya está en el repo) |
+| 11 | Crítica `/impeccable critique` | ✅ Corrida el 27/oct (26/40); sus P1 resueltos. Queda el P2 de la administración (muro de 14 formularios sin confirmar el cierre) |
+| 12 | El semáforo de cuatro colores confundía (90 libres en amarillo) | ✅ D-009: hay o no hay puesto |
+| 13 | El mapa de calles competía con el semáforo | ✅ Maqueta del campus vista desde arriba (D-007) |

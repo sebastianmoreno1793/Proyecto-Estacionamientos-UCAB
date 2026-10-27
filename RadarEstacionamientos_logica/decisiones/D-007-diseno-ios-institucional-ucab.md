@@ -31,13 +31,18 @@ Sebastian ya tiene un sistema de diseño probado en dos PWA propias:
 
 ## Decisión
 
-**Estructura iOS, identidad institucional UCAB y color solo con significado.** Las reglas
-completas están en `producto/DESIGN.md`. Las que no se pueden romper son estas:
+**Estructura iOS, identidad institucional UCAB, una maqueta del campus en vez de un mapa de
+calles y color solo con significado.** Las reglas completas están en `producto/DESIGN.md`. Las
+que no se pueden romper son estas:
+
+0. **La pantalla de inicio es una maqueta del campus vista desde arriba** (estática, con
+   texturas, como una maqueta física de arquitectura), con el semáforo encima. No se usan mapas
+   de calles. La imagen sale del render del simulador (`/maqueta`); ver `DESIGN.md › Maqueta`.
 
 1. **Una Voz:** el **Azul Montalbán** (`#1d4f91`) es el único color que invita a tocar.
-2. **Color con significado:** verde, amarillo, naranja y rojo son **solo el semáforo de
-   ocupación** (y el rojo, también los errores). Gris es «cerrado» o «sin datos». Nada
-   decorativo de esos colores.
+2. **Color con significado:** verde y rojo son **solo el semáforo** (hay o no hay puesto,
+   D-009; el rojo, también los errores). Gris es «cerrado» o «sin datos». Nada decorativo de
+   esos colores.
 3. **Oro escaso:** el Oro de Sello (`#c8962e`) solo aparece en la marca (el punto del radar).
 4. **Fuente del sistema** (SF Pro en Apple, Roboto en Android). Las cifras que cambian (puestos
    libres, porcentajes, horas) van en **cifras tabulares**. No se descargan fuentes.
@@ -51,7 +56,7 @@ completas están en `producto/DESIGN.md`. Las que no se pueden romper son estas:
    abajo (340 ms); las cifras cuentan. Todo se apaga con «reducir movimiento».
 9. **Tema claro y oscuro**, los dos diseñados (el oscuro sigue al sistema).
 10. **Accesible:** contraste 4,5:1 para el texto, foco visible, y el estado nunca solo por
-    color (el semáforo también se dice en texto: «Casi lleno», «12 libres»).
+    color (el semáforo también se dice en texto: «No hay puesto», «12 libres»).
 
 **Cómo se revisa:** con la skill **`impeccable`** (instalada en cada computadora; no va en el
 repo). Antes de pedir revisión de un PR con interfaz, se corre `/impeccable critique` sobre la

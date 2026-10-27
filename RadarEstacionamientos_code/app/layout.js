@@ -1,4 +1,3 @@
-import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import MenuPrincipal from "@/components/MenuPrincipal";
 import RegistroPWA from "@/components/RegistroPWA";

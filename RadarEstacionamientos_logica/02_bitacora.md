@@ -2,6 +2,20 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 27/oct/26 — ⭐ Semáforo de dos estados (D-009) y maqueta del campus en la app
+
+- **D-009:** el semáforo pasa a **hay puesto (verde) / no hay puesto (rojo)**, gris si está cerrado. Se
+  quitan amarillo, naranja y los textos «Se está llenando», «Casi lleno» y «Lleno». Cambiado en la
+  idea de negocio, `CONTEXTO.md`, `DESIGN.md`, D-007, el código, las pruebas, el simulador, el Issue #6
+  y la tarjeta HU 4.2 de Trello. El Brief no fija colores, así que no cambia.
+- **Maqueta en vez de mapa de calles** (guía de Sebastian: maqueta física de urbanismo y render de
+  viviendas): nueva página `/maqueta` del simulador que exporta la imagen y la proyección; la app
+  dibuja el semáforo encima en SVG, con píldoras que se tocan, gestos, «Alejar · Acercar · Ver
+  todo», rótulos de edificios y tarjeta. Se quitó Leaflet.
+- **Crítica `impeccable`** (dos evaluaciones independientes): 26/40. P1 resueltos: total en tinta,
+  contraste de píldoras y botones en oscuro, datos viejos apagados con «cifras de hace N minutos»,
+  pestañas de 11 px y punto «En vivo» sin color ni pulso.
+
 ## 27/oct/26 — ⭐ Diseño iOS institucional (D-007), PWA (D-008) y semáforo en el mapa (HU 4.2)
 
 - **Decisiones obligatorias para el equipo**, destacadas en `decisiones/README.md`: D-007 (diseño,

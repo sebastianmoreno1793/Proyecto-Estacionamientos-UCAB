@@ -20,6 +20,7 @@ inicio de sesión todavía sin decidir.
 ## Por decidir (ver `../preguntas_abiertas.md`)
 
 - Base de datos.
-- Librería de mapa (Google Maps vs. Leaflet + OpenStreetMap) — ligada a D-005.
+- ~~Librería de mapa~~ → resuelto (27/oct/26): no hay mapa de calles. La pantalla de inicio es una
+  imagen de la maqueta del campus con el semáforo en SVG encima (D-007), sin librerías ni costo.
 - Mecanismo de inicio de sesión con correo institucional.
 - ~~Canal de actualización en vivo del mapa~~ → resuelto en código: `GET /api/eventos` (lo usan la app y la maqueta).

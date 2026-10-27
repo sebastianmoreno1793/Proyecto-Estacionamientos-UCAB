@@ -1,6 +1,6 @@
 # Última sincronización
 
-**2026-10-27 19:00**
+**2026-10-27 19:19**
 
 > Lo escribe `sincronizar.sh`. No lo edites.
 >
@@ -12,5 +12,7 @@
 - `CONTEXTO.md`
 - `docs/arquitectura_dual_app_y_maqueta.md`
 - `docs/decisiones/D-007-diseno-ios-institucional-ucab.md`
-- `docs/decisiones/D-008-la-app-es-una-pwa.md`
+- `docs/decisiones/D-009-semaforo-hay-o-no-hay-puesto.md`
 - `docs/decisiones/README.md`
+- `docs/problema_y_usuarios.md`
+- `docs/stack_y_arquitectura.md`

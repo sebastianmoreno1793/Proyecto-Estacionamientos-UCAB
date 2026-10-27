@@ -63,13 +63,9 @@ import {
 } from "@/lib/mapa3d/geo";
 import { crearGrafo, nodoMasCercano, rutaDesdeGarita, rutaHaciaGarita } from "@/lib/mapa3d/rutas";
 
-// Reglas de color del semáforo del proyecto:
-// Verde < 50%, Amarillo 50% a < 80%, Naranja 80% a < 95%, Rojo ≥ 95%
-function obtenerColorSemaforo(porcentaje) {
-  if (porcentaje < 50) return 0x22c55e; // Verde
-  if (porcentaje < 80) return 0xeab308; // Amarillo
-  if (porcentaje < 95) return 0xf97316; // Naranja
-  return 0xef4444; // Rojo
+// Semáforo del proyecto (D-009): verde = hay puesto (libres ≥ 1), rojo = no hay puesto.
+function obtenerColorSemaforo(libres) {
+  return libres > 0 ? 0x2f9e57 : 0xd93a2e;
 }
 
 // Genera una textura de lona/canvas 2D para colocar texto nítido en el mundo 3D
@@ -85,10 +81,7 @@ function crearTexturaCartel(nombre, libres, porcentaje) {
   ctx.fill();
 
   // Borde según el semáforo
-  let colorHex = "#22c55e";
-  if (porcentaje >= 95) colorHex = "#ef4444";
-  else if (porcentaje >= 80) colorHex = "#f97316";
-  else if (porcentaje >= 50) colorHex = "#eab308";
+  const colorHex = libres > 0 ? "#2f9e57" : "#d93a2e"; // D-009: hay o no hay puesto
 
   ctx.strokeStyle = colorHex;
   ctx.lineWidth = 12;
@@ -1240,7 +1233,7 @@ export default function Mapa3D({ estacionamientos = [], ultimoEvento = null, onD
           }
           cartel.material.map = textura;
           cartel.material.needsUpdate = true;
-          const colorLuz = activo ? obtenerColorSemaforo(porcentaje) : 0x64748b;
+          const colorLuz = activo ? obtenerColorSemaforo(libres) : 0x64748b;
           baliza.material.color.setHex(colorLuz);
           baliza.material.emissive.setHex(colorLuz);
           baliza.material.emissiveIntensity = activo ? 0.8 : 0.15;

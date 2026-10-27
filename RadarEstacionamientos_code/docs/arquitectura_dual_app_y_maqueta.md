@@ -92,6 +92,14 @@ cerrados con conos.
 **Dónde está:** `RadarEstacionamientos_simulador/` (Next.js + Three.js, puerto 3001), con
 capturas, pruebas (`npm test`) y una colección de Postman.
 
+### La maqueta también le da su imagen a la app
+
+La pantalla de inicio de la app es una **maqueta del campus vista desde arriba** (D-007). Esa
+imagen la produce el simulador en su página `/maqueta`: fotografía la escena 3D con estilo de
+maqueta física y exporta `campus.jpg` y la proyección (`maqueta.json`), que se copian a
+`RadarEstacionamientos_code/public/maqueta/` y `data/`. Es un **archivo**, no código: la app no
+importa nada del simulador ni lo necesita corriendo.
+
 ## El contrato entre los dos
 
 1. **Una sola puerta.** La maqueta solo usa la API pública de la app, como lo haría Postman,

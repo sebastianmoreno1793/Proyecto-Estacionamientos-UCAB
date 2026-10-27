@@ -1,36 +1,32 @@
-// HU 4.2 Consultar el semáforo de ocupación.
+// HU 4.2 Consultar el semáforo de ocupación (D-009: hay o no hay puesto).
 // Se corre con: npm test
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { nivelDelSemaforo, porcentajeDeOcupacion } from "../lib/estacionamientos/reglas.js";
+import { nivelDelSemaforo, puestosLibres } from "../lib/estacionamientos/reglas.js";
 
-const nivel = (porcentaje, activo = true) => nivelDelSemaforo({ porcentaje, activo }).nivel;
+const nivel = (libres, activo = true) => nivelDelSemaforo({ libres, activo }).nivel;
 
-test("verde por debajo de 50 %", () => {
-  assert.equal(nivel(0), "verde");
-  assert.equal(nivel(49), "verde");
+test("verde (hay puesto) con al menos un puesto libre", () => {
+  assert.equal(nivel(1), "hay");
+  assert.equal(nivel(90), "hay");
 });
 
-test("amarillo de 50 % a menos de 80 %", () => {
-  assert.equal(nivel(50), "amarillo");
-  assert.equal(nivel(79), "amarillo");
-});
-
-test("naranja de 80 % a menos de 95 %", () => {
-  assert.equal(nivel(80), "naranja");
-  assert.equal(nivel(94), "naranja");
-});
-
-test("rojo de 95 % en adelante", () => {
-  assert.equal(nivel(95), "rojo");
-  assert.equal(nivel(100), "rojo");
+test("rojo (no hay puesto) sin puestos libres", () => {
+  assert.equal(nivel(0), "no-hay");
 });
 
 test("un estacionamiento desactivado sale como cerrado, aunque tenga puestos", () => {
   assert.equal(nivel(10, false), "cerrado");
 });
 
-test("el porcentaje redondeado cae en el color correcto (Playa: 120 de 150 = 80 %)", () => {
-  assert.equal(nivel(porcentajeDeOcupacion({ capacidad: 150, ocupados: 120 })), "naranja");
+test("el color lo deciden los libres, no el porcentaje: 1 libre de 300 sigue en verde", () => {
+  const libres = puestosLibres({ capacidad: 300, ocupados: 299 });
+  assert.equal(nivel(libres), "hay");
+});
+
+test("cada estado se dice también en texto", () => {
+  assert.equal(nivelDelSemaforo({ libres: 3 }).texto, "Hay puesto");
+  assert.equal(nivelDelSemaforo({ libres: 0 }).texto, "No hay puesto");
+  assert.equal(nivelDelSemaforo({ libres: 3, activo: false }).texto, "Cerrado");
 });

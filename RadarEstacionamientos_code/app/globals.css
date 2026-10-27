@@ -5,6 +5,7 @@
   color-scheme: light dark;
 
   --azul: #1d4f91; /* Azul Montalbán: el único color de acción (Una Voz) */
+  --azul-boton: #1d4f91; /* fondo de botones con texto blanco (≥ 4,5:1 en claro y oscuro) */
   --azul-hondo: #163d72;
   --azul-carnet: #12315c;
   --bruma-carnet: #c9d7ec;
@@ -35,8 +36,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --azul: #4a86d8;
-    --azul-hondo: #3b74c4;
+    --azul: #6a9ee6; /* texto y enlaces azules sobre fondo oscuro */
+    --azul-boton: #2f6bbd;
+    --azul-hondo: #275ca6;
     --fondo: #000000;
     --superficie: #1c1c1e;
     --hundida: #2c2c2e;
@@ -238,7 +240,7 @@ a {
     justify-content: center;
     gap: 2px;
     padding: 0 2px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
     color: var(--tinta-2);
     border-radius: 0;
@@ -280,12 +282,6 @@ a {
   min-height: 0;
   min-width: 0;
   display: flex;
-}
-
-.mapa-campus {
-  flex: 1;
-  min-height: 0;
-  background: var(--hundida);
 }
 
 .mapa-aviso {
@@ -332,64 +328,192 @@ a {
 
 .muestra-profesores {
   border-style: dashed;
+  border-color: var(--tinta-2);
   background: transparent;
 }
 
-.etiqueta-estacionamiento.leaflet-tooltip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 0;
-  border: none;
-  background: none;
-  box-shadow: none;
-  white-space: nowrap;
+/* ---------- Maqueta (D-007): imagen del campus con el semáforo encima ---------- */
+
+.maqueta {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #bdb789; /* el color del borde de la imagen: si no llena, no se nota el corte */
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.etiqueta-estacionamiento.leaflet-tooltip::before {
-  display: none;
+.maqueta:active {
+  cursor: grabbing;
 }
 
-.pildora {
-  min-width: 28px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--color);
-  color: #fff;
-  border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 16px;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
+.maqueta-lienzo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
 }
 
-.pildora-nombre {
-  padding: 1px 6px;
-  border-radius: 6px;
-  background: var(--superficie);
-  color: var(--tinta);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
-  font-size: 12px;
-  font-weight: 600;
+.maqueta-lienzo.animada {
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.maqueta-lienzo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  -webkit-user-drag: none;
+}
+
+.maqueta-lienzo svg {
+  position: absolute;
+  inset: 0;
+}
+
+.zona-estacionamiento {
+  fill: var(--relleno);
+  fill-opacity: 0.5;
+  stroke: var(--borde);
+  stroke-width: 4;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill-opacity 200ms ease;
+}
+
+.zona-estacionamiento:hover {
+  fill-opacity: 0.65;
+}
+
+.zona-estacionamiento.elegida {
+  fill-opacity: 0.7;
+  stroke: #ffffff;
+  stroke-width: 5;
 }
 
 /* El estacionamiento late una vez cuando llega un aviso de su sensor. */
-.latido {
+.zona-estacionamiento.latido {
   animation: latido 700ms ease-out 1;
 }
 
 @keyframes latido {
-  0% {
-    fill-opacity: 0.45;
+  0%,
+  100% {
+    fill-opacity: 0.5;
   }
   35% {
-    fill-opacity: 0.85;
+    fill-opacity: 0.9;
   }
-  100% {
-    fill-opacity: 0.45;
+}
+
+/* Píldora con los libres: se puede tocar y no cambia de tamaño al acercar. */
+.pildora {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(var(--escala));
+  transform-origin: center;
+  min-width: 34px;
+  min-height: 30px;
+  padding: 4px 10px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: var(--color);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 27, 45, 0.3);
+  font: inherit;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pildora b {
+  font-weight: 800;
+}
+
+/* Vista general: círculos chicos solo con el número, para que no se tapen entre sí. */
+.pildora.compacta {
+  min-width: 28px;
+  min-height: 28px;
+  padding: 3px 6px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.pildora.elegida {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+  z-index: 2;
+}
+
+.rotulo-edificio {
+  position: absolute;
+  transform: translate(-50%, -140%) scale(var(--escala));
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f1b2d;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(15, 27, 45, 0.2);
+}
+
+/* Sin conexión, las cifras pueden ser viejas: el semáforo se apaga para no engañar. */
+.datos-viejos .zona-estacionamiento,
+.datos-viejos .pildora {
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.maqueta-controles {
+  position: absolute;
+  z-index: 1000;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  background: var(--barra-translucida);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-radius: var(--radio-celda);
+  box-shadow: var(--flotante);
+  overflow: hidden;
+}
+
+.maqueta-controles button {
+  min-height: 44px;
+  padding: 0 12px;
+  border: none;
+  background: none;
+  color: var(--azul);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--pulsar);
+}
+
+.maqueta-controles button + button {
+  border-left: 0.5px solid var(--separador);
+}
+
+.maqueta-controles button:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-color-scheme: dark) {
+  .maqueta {
+    background: #8e8a6a;
+  }
+
+  .maqueta-lienzo img {
+    filter: brightness(0.8) saturate(0.9);
   }
 }
 
@@ -439,7 +563,7 @@ a {
   line-height: 1.1;
 }
 
-.panel-total span {
+.panel-total-texto {
   font-size: 15px;
   color: var(--tinta-2);
 }
@@ -468,9 +592,7 @@ a {
 }
 
 .estado-en-vivo .punto {
-  background: #2f9e57;
-  box-shadow: 0 0 0 0 rgba(47, 158, 87, 0.5);
-  animation: en-vivo 2s ease-out infinite;
+  background: var(--tinta);
 }
 
 .estado-sin-conexion .punto,
@@ -478,13 +600,9 @@ a {
   background: var(--error);
 }
 
-@keyframes en-vivo {
-  0% {
-    box-shadow: 0 0 0 0 rgba(47, 158, 87, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 0 8px rgba(47, 158, 87, 0);
-  }
+.estado-sin-conexion,
+.estado-reconectando {
+  color: var(--error);
 }
 
 .panel-lista {
@@ -660,7 +778,7 @@ a {
   padding: 0 16px;
   border: none;
   border-radius: var(--radio-control);
-  background: var(--azul);
+  background: var(--azul-boton);
   color: #fff;
   font: inherit;
   font-weight: 600;
@@ -686,6 +804,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   width: 100%;
   min-height: 50px;
   border: none;
@@ -814,22 +933,6 @@ a {
 @media (max-width: 767px) {
   .aviso-flotante {
     bottom: calc(var(--alto-pestanas) + var(--seguro-abajo) + 12px);
-  }
-}
-
-/* ---------- Leaflet en tema oscuro: el mapa base se oscurece, no los colores del semáforo. ---------- */
-@media (prefers-color-scheme: dark) {
-  .leaflet-tile-pane {
-    filter: brightness(0.62) contrast(1.1) saturate(0.6);
-  }
-
-  .leaflet-container {
-    background: #1c1c1e;
-  }
-
-  .leaflet-control-attribution {
-    background: rgba(28, 28, 30, 0.8) !important;
-    color: #a1a1a6;
   }
 }
 
