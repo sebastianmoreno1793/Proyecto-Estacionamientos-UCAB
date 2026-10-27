@@ -168,4 +168,63 @@ jobs:
                 desc: h42.desc.replace(criterioViejo, 'Cada estacionamiento se muestra en **verde si tiene al menos un puesto libre** («Hay puesto») y en **rojo si no tiene ninguno** («No hay puesto»); si está cerrado, en gris. Siempre con el texto de su estado y la cantidad de libres. *(Cambió el 27/10/2026, decisión D-009: antes eran cuatro colores por porcentaje.)*'),
               });
 
+            // 11) Segunda Entrega: cinco tareas por integrante (producto/plan_segunda_entrega.md).
+            const miembro = (n) => members.find((m) => m.username === quien[n]);
+            const reparto2 = [
+              { n: 'Samuel', hu: 'HU 1.1', rnf: 'RNF 4 · Confidencialidad', reg: 'Minuta de la Reunión 1', rev: 'Aaron (HU 4.1)', issue: 52 },
+              { n: 'Aaron', hu: 'HU 4.1', rnf: 'RNF 3 · Tolerancia a fallos', reg: 'Minuta de la Reunión 2', rev: 'German (HU 5.1)', issue: 53 },
+              { n: 'German', hu: 'HU 5.1', rnf: 'RNF 1 · Comportamiento temporal', reg: 'Minuta de la Reunión 3', rev: 'Manuel (HU 8.1)', issue: 54 },
+              { n: 'Manuel', hu: 'HU 8.1', rnf: 'RNF 2 · Auto-descriptividad', reg: 'Retrospectiva de la Iteración 1', rev: 'Sebastian (HU 9.1)', issue: 55 },
+              { n: 'Sebastian', hu: 'HU 9.1', rnf: null, reg: 'Convocar la Reunión 4 y escribir su minuta', rev: 'Samuel (HU 1.1)', issue: 56 },
+            ];
+            const nombreEntrega = 'Segunda Entrega · Documentación del Sprint 1 (03/11/2026)';
+            let entrega = cards.find((c) => !c.closed && c.name === nombreEntrega);
+            if (!entrega && seguimiento) entrega = await escribir(`crear tarjeta "${nombreEntrega}"`, 'POST', '/cards', {
+              idList: seguimiento.id, name: nombreEntrega, due: '2026-11-03T12:00:00.000Z', idLabels: [etq('Gestión')?.id].filter(Boolean).join(','),
+              idMembers: reparto2.map((r) => miembro(r.n)?.id).filter(Boolean).join(','),
+              desc: [
+                'Cada integrante tiene **cinco tareas**, la misma carga. Se califica: card con un solo verbo (1 pt) + diagrama de actividades (3 pts) + 4 RNF (2 pts c/u) = **12**.',
+                '',
+                '**Fechas:** jue 29/10 borrador de la especificación · sáb 31/10 diagrama adjunto (PNG/PDF) y RNF · dom 01/11 Reunión 4 con revisión cruzada · lun 02/11 correcciones y minutas · mar 03/11 Sebastian envía el enlace del tablero «EQUIPO 87 3» a mperezpu@ucab.edu.ve.',
+                '',
+                'Detalle de cada tarea: Issues #52 a #56 en GitHub y `RadarEstacionamientos_logica/producto/plan_segunda_entrega.md`.',
+              ].join('\n'),
+            });
+            for (const r of reparto2) {
+              if (!entrega) break;
+              const m = miembro(r.n);
+              const fechas = { esp: '2026-10-29T23:00:00.000Z', diag: '2026-10-31T23:00:00.000Z', reunion: '2026-11-01T23:00:00.000Z', reg: '2026-11-02T23:00:00.000Z', envio: '2026-11-03T11:00:00.000Z' };
+              const items = [
+                [`1 · Especificar la ${r.hu} (Card con un solo verbo, Conversación y 3 criterios)`, fechas.esp],
+                [`2 · Diagrama de actividades de la ${r.hu}, adjunto como imagen o PDF`, fechas.diag],
+                r.rnf ? [`3 · Redactar el ${r.rnf} (ISO 25010, medible y testeable)`, fechas.diag] : ['3 · Revisión final, envío del enlace a la profesora y fusión de los PR', fechas.envio],
+                [`4 · ${r.reg}`, fechas.reg],
+                [`5 · Revisar a ${r.rev} en la Reunión 4`, fechas.reunion],
+              ];
+              const nombreLista = `${r.n} · Issue #${r.issue}`;
+              const chk = entrega.id === 'ensayo' ? [] : await checklists(entrega);
+              if (chk.some((k) => k.name === nombreLista)) { core.info(`Ya tiene "${nombreLista}"`); continue; }
+              const nueva = await escribir(`checklist "${nombreLista}" en la Segunda Entrega`, 'POST', `/cards/${entrega.id}/checklists`, { name: nombreLista });
+              for (const [texto, due] of items) await escribir(`  ítem: ${texto}`, 'POST', `/checklists/${nueva.id}/checkItems`, { name: texto, due, ...(m ? { idMember: m.id } : {}) });
+            }
+
+            // Responsable de cada RNF y de cada minuta.
+            if (rnf && rnf.id !== 'ensayo') {
+              const responsables = { 'RNF 1': 'German', 'RNF 2': 'Manuel', 'RNF 3': 'Aaron', 'RNF 4': 'Samuel' };
+              for (const k of await checklists(rnf)) for (const it of k.checkItems) {
+                const clave = Object.keys(responsables).find((c) => it.name.startsWith(c));
+                if (clave && !it.name.includes('(')) await escribir(`responsable de ${clave}`, 'PUT', `/cards/${rnf.id}/checkItem/${it.id}`, { name: `${it.name} (${responsables[clave]})`, ...(miembro(responsables[clave]) ? { idMember: miembro(responsables[clave]).id } : {}) });
+              }
+              for (const n of Object.values(responsables)) {
+                const m = miembro(n);
+                if (m && !(rnf.idMembers ?? []).includes(m.id)) await escribir(`miembro ${n} en la tarjeta de RNF`, 'POST', `/cards/${rnf.id}/idMembers`, { value: m.id });
+              }
+            }
+            const minutas = [[/^Reunión 1\b/, 'Samuel'], [/^Reunión 2\b/, 'Aaron'], [/^Reunión 3\b/, 'German'], [/^Cierre de la Iteración 1/, 'Manuel'], [/^Reunión 4\b/, 'Sebastian']];
+            for (const [re, n] of minutas) {
+              const c = cards.find((x) => !x.closed && re.test(x.name)) ?? (re.test(nombreR4) ? r4 : null);
+              const m = miembro(n);
+              if (c && m && c.id !== 'ensayo' && !(c.idMembers ?? []).includes(m.id)) await escribir(`${n} escribe la minuta de "${c.name}"`, 'POST', `/cards/${c.id}/idMembers`, { value: m.id });
+            }
+
             core.info(aplicar ? 'Listo.' : 'Fin del ensayo. Para escribir, sube un commit con [aplicar] en el mensaje.');
