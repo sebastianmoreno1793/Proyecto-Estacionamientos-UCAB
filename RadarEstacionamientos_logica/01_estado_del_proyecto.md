@@ -48,6 +48,9 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 ### Para la Segunda Entrega (03/nov)
 
+**Repartido el 27/oct:** cinco tareas por integrante en `producto/plan_segunda_entrega.md` (Issues del milestone «Entrega 2» y tarjeta de Trello «Segunda Entrega»).
+
+
 - [ ] Cada integrante especifica una HU en su tarjeta de Trello (Card, Conversación y Criterios) con su diagrama de actividades como imagen o PDF.
 - [ ] Tarjeta «Requisitos No Funcionales» con los 4 RNF (ISO 25010, testeables), acordados en equipo.
 - [ ] Llenar la minuta de las Reuniones 1–3 (asistentes y acuerdos) y hacer la Reunión 4 antes del 03/nov. Las tarjetas ya tienen objetivo y checklist «Minuta» (27/oct).
