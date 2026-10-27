@@ -160,4 +160,12 @@ jobs:
                   await escribir('marcar "Documentar la arquitectura"', 'PUT', `/cards/${arq.id}/checkItem/${it.id}`, { state: 'complete' });
             }
 
+            // 10) D-009: el semáforo de la HU 4.2 pasa a dos estados (hay o no hay puesto).
+            const h42 = hu('4.2');
+            const criterioViejo = /Cada estacionamiento se muestra en verde \(menos de 50% ocupado\)[^\n]*/;
+            if (h42 && criterioViejo.test(h42.desc))
+              await escribir('criterio de la HU 4.2 → hay o no hay puesto (D-009)', 'PUT', `/cards/${h42.id}`, {
+                desc: h42.desc.replace(criterioViejo, 'Cada estacionamiento se muestra en **verde si tiene al menos un puesto libre** («Hay puesto») y en **rojo si no tiene ninguno** («No hay puesto»); si está cerrado, en gris. Siempre con el texto de su estado y la cantidad de libres. *(Cambió el 27/10/2026, decisión D-009: antes eran cuatro colores por porcentaje.)*'),
+              });
+
             core.info(aplicar ? 'Listo.' : 'Fin del ensayo. Para escribir, sube un commit con [aplicar] en el mensaje.');
