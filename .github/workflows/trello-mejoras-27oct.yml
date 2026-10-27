@@ -1,0 +1,161 @@
+# Mejoras del tablero de Trello pedidas por la profesora (revisión del 27/oct/26).
+# Se ejecuta al subir esta rama. Es un ensayo salvo que el último commit diga [aplicar].
+# Detalle y motivos: RadarEstacionamientos_logica/producto/revision_27oct_equipo_vs_profesora.md §5.
+# Es idempotente: si se corre dos veces, no duplica nada.
+name: Trello - mejoras del 27/oct
+
+on:
+  push:
+    branches: [trello-mejoras-27oct]
+
+permissions:
+  contents: read
+
+jobs:
+  mejorar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          TRELLO_KEY: ${{ secrets.TRELLO_KEY }}
+          TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
+          TRELLO_BOARD: WQSBIFTj
+          MENSAJE: ${{ github.event.head_commit.message }}
+        with:
+          script: |
+            const { TRELLO_KEY, TRELLO_TOKEN, TRELLO_BOARD, MENSAJE } = process.env;
+            const aplicar = (MENSAJE || '').includes('[aplicar]');
+            if (!TRELLO_KEY || !TRELLO_TOKEN) { core.setFailed('Faltan los secretos TRELLO_KEY / TRELLO_TOKEN.'); return; }
+            core.info(aplicar ? 'MODO: APLICAR (escribe en Trello)' : 'MODO: ENSAYO (no escribe nada)');
+
+            const auth = `key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`;
+            const call = async (method, path, params = {}) => {
+              const qs = new URLSearchParams(params).toString();
+              const r = await fetch(`https://api.trello.com/1${path}?${qs}${qs ? '&' : ''}${auth}`, { method });
+              if (!r.ok) throw new Error(`Trello ${method} ${path}: ${r.status} ${(await r.text()).slice(0, 160)}`);
+              return r.json();
+            };
+            const leer = (path, params) => call('GET', path, params);
+            const escribir = async (que, method, path, params) => {
+              core.info(`${aplicar ? 'HACE' : 'HARÍA'}: ${que}`);
+              return aplicar ? call(method, path, params) : { id: 'ensayo' };
+            };
+
+            const lists = await leer(`/boards/${TRELLO_BOARD}/lists`, { fields: 'name,closed' });
+            const cards = (await leer(`/boards/${TRELLO_BOARD}/cards`, { fields: 'name,desc,idList,idLabels,idMembers' }));
+            const labels = await leer(`/boards/${TRELLO_BOARD}/labels`, { fields: 'name' });
+            const members = await leer(`/boards/${TRELLO_BOARD}/members`, { fields: 'fullName,username' });
+            const board = await leer(`/boards/${TRELLO_BOARD}`, { fields: 'name' });
+            const lista = (inicio) => lists.find(l => !l.closed && l.name.startsWith(inicio));
+            const etq = (n) => labels.find(l => l.name === n);
+            const hu = (cod) => cards.find(c => new RegExp(`^HU ${cod.replace('.', '\\.')}(?!\\d)`).test(c.name));
+            const tarjeta = (re) => cards.find(c => re.test(c.name));
+            const checklists = async (card) => leer(`/cards/${card.id}/checklists`, { fields: 'name', checkItems: 'all' });
+            const asegurarChecklist = async (card, nombre, items) => {
+              const chk = await checklists(card);
+              if (chk.some(k => k.name === nombre)) { core.info(`Ya tiene "${nombre}": ${card.name}`); return; }
+              const nueva = await escribir(`checklist "${nombre}" en ${card.name}`, 'POST', `/cards/${card.id}/checklists`, { name: nombre });
+              for (const it of items) await escribir(`  ítem: ${it}`, 'POST', `/checklists/${nueva.id}/checkItems`, { name: it });
+            };
+            const ponerDesc = async (card, desc) => {
+              if ((card.desc || '').trim()) { core.info(`Ya tiene descripción: ${card.name}`); return; }
+              await escribir(`descripción de ${card.name}`, 'PUT', `/cards/${card.id}`, { desc });
+            };
+
+            // 1) Identificar el tablero como pide la Segunda Entrega
+            const nombreTablero = 'EQUIPO 87 3 · Radar de Estacionamientos UCAB';
+            if (board.name !== nombreTablero) await escribir(`renombrar el tablero "${board.name}" -> "${nombreTablero}"`, 'PUT', `/boards/${board.id}`, { name: nombreTablero });
+
+            // 2) Responsable como miembro de cada tarjeta HU (según su etiqueta de color)
+            const quien = { Samuel: 'samuelalexandergoncalvesgoncalves', Aaron: 'aaronjosezarragagonzalez',
+              German: 'germanmatheoalfonzomarczuk', Manuel: 'manuelalejandrorosaleschacon', Sebastian: 'sebastianandresmorenomartinez' };
+            for (const c of cards.filter(c => !c.closed && /^HU \d/.test(c.name))) {
+              for (const [n, user] of Object.entries(quien)) {
+                const l = etq(n), m = members.find(x => x.username === user);
+                if (l && m && c.idLabels.includes(l.id) && !c.idMembers.includes(m.id))
+                  await escribir(`miembro ${m.fullName} en ${c.name}`, 'POST', `/cards/${c.id}/idMembers`, { value: m.id });
+              }
+            }
+
+            // 3) Casillas honestas: "Especificar" sin marcar donde todavía no hay especificación
+            for (const cod of ['5.1', '5.4', '9.1']) {
+              const c = hu(cod); if (!c) continue;
+              for (const k of await checklists(c)) for (const it of k.checkItems)
+                if (it.name.startsWith('Especificar') && it.state === 'complete')
+                  await escribir(`desmarcar "${it.name}" en HU ${cod}`, 'PUT', `/cards/${c.id}/checkItem/${it.id}`, { state: 'incomplete' });
+            }
+
+            // 4) Especificación como actividad (Plantilla ERS): una HU por integrante
+            const reparto = { '1.1': 'Samuel Goncalves', '4.1': 'Aaron Zarraga', '5.1': 'German Alfonzo', '8.1': 'Manuel Rosales', '9.1': 'Sebastian Moreno' };
+            for (const [cod, nombre] of Object.entries(reparto)) {
+              const c = hu(cod); if (!c) { core.warning(`No hay HU ${cod}`); continue; }
+              await asegurarChecklist(c, 'Especificación ERS · Segunda Entrega (03/11/2026)', [
+                `Especificada por: ${nombre}`,
+                '1. Historia de Usuario: Como / Quiero / Para (un solo verbo)',
+                '2. Conversación: épica, escenario de uso, reglas de negocio, alcance, dependencias y restricciones',
+                '3. Criterios de aceptación',
+                'Diagrama de actividades adjunto como imagen o PDF (no enlace a la herramienta de diagramación)',
+              ]);
+            }
+
+            // 5) HU 2.1 pasó a la Iteración 1 en el Brief aprobado
+            const h21 = hu('2.1');
+            if (h21 && /Release:\*\* R2 · fechas por definir/.test(h21.desc))
+              await escribir('HU 2.1 pasa a R1 en la descripción', 'PUT', `/cards/${h21.id}`, { desc: h21.desc.replace('**Release:** R2 · fechas por definir', '**Release:** R1 · Iteración 1 (12–16/10/2026; reemplaza a la HU 1.2)') });
+
+            // 6) Actividad adicional: Requisitos No Funcionales (ERS §2)
+            const ejec = lista('ETAPA 3');
+            const nombreRNF = 'Requisitos No Funcionales (ERS §2) · Segunda Entrega';
+            let rnf = cards.find(c => !c.closed && c.name === nombreRNF);
+            if (!rnf && ejec) rnf = await escribir(`crear tarjeta "${nombreRNF}"`, 'POST', '/cards', {
+              idList: ejec.id, name: nombreRNF, due: '2026-11-03T12:00:00.000Z', idLabels: [etq('Gestión')?.id].filter(Boolean).join(','),
+              desc: [
+                'Los 4 RNF salen de los rangos de calidad del Brief. Cada uno con su subcaracterística ISO 25010 y medible, para que un probador pueda hacer un caso de prueba objetivo.',
+                '',
+                '**Propuesta (por acordar en equipo):**',
+                '1. **Eficiencia de desempeño → comportamiento temporal.** El mapa con la ocupación de todos los estacionamientos se muestra en 3 segundos o menos con conexión 4G, y un cambio de ocupación aparece en 5 segundos o menos después del aviso del sensor.',
+                '2. **Capacidad de interacción → auto-descriptividad.** 9 de cada 10 usuarios de prueba identifican el estacionamiento con más puestos libres en 10 segundos o menos, sin ayuda, solo con los colores del semáforo.',
+                '3. **Fiabilidad → tolerancia a fallos.** Si un estacionamiento no recibe avisos de su sensor durante 10 minutos, se muestra como «sin datos» y los demás siguen actualizándose.',
+                '4. **Seguridad → confidencialidad.** Un usuario sin rol de vigilancia o administración que intenta ver las placas de otro usuario recibe «acceso denegado» en el 100 % de los intentos.',
+              ].join('\n'),
+            });
+            if (rnf) await asegurarChecklist(rnf, 'RNF', ['Acordar los 4 RNF en equipo', 'RNF 1 · Comportamiento temporal', 'RNF 2 · Auto-descriptividad', 'RNF 3 · Tolerancia a fallos', 'RNF 4 · Confidencialidad']);
+
+            // 7) Reuniones con minuta
+            const minuta = ['Asistentes', 'Temas tratados', 'Acuerdos', 'Responsables y fechas de cada acuerdo'];
+            const reuniones = [
+              [/^Reunión 1\b/, '**Objetivo:** planificar el Sprint 1: reparto de épicas e historias de la Iteración 1 (05/10 → 16/10).\n\n**Asistentes:** por completar\n**Acuerdos:** por completar'],
+              [/^Reunión 2\b/, '**Objetivo:** seguimiento de la semana 1 del Sprint 1.\n\n**Asistentes:** por completar\n**Acuerdos:** por completar'],
+              [/^Reunión 3\b/, '**Objetivo:** seguimiento y revisión del Brief con la profesora. Correcciones: épicas con nombre de capacidad, épica de Ranking, solo 4 rangos de calidad, Trello por etapas, historias CRUD.\n\n**Asistentes:** por completar\n**Acuerdos:** por completar'],
+            ];
+            for (const [re, desc] of reuniones) {
+              const c = tarjeta(re); if (!c) { core.warning(`No hay ${re}`); continue; }
+              await ponerDesc(c, desc);
+              await asegurarChecklist(c, 'Minuta', minuta);
+            }
+            const seguimiento = lista('ETAPA 4');
+            const nombreR4 = 'Reunión 4 · Preparación de la Segunda Entrega (antes del 03/11/2026)';
+            let r4 = cards.find(c => !c.closed && c.name === nombreR4);
+            if (!r4 && seguimiento) r4 = await escribir(`crear tarjeta "${nombreR4}"`, 'POST', '/cards', {
+              idList: seguimiento.id, name: nombreR4, due: '2026-11-02T12:00:00.000Z', idLabels: [etq('Gestión')?.id].filter(Boolean).join(','),
+              desc: '**Objetivo:** revisar entre todos la especificación de cada HU (Card, Conversación y Criterios), los diagramas de actividades y los 4 RNF antes de enviar el tablero a la profesora.\n\n**Asistentes:** por completar\n**Acuerdos:** por completar',
+            });
+            if (r4) await asegurarChecklist(r4, 'Minuta', minuta);
+
+            // 8) Cierre de la Iteración 1: retrospectiva
+            const cierre = tarjeta(/^Cierre de la Iteración 1/);
+            if (cierre) {
+              await ponerDesc(cierre, '**Retrospectiva del Sprint 1** (16/10/2026): qué salió bien, qué no y qué cambiamos en el Sprint 2.');
+              await asegurarChecklist(cierre, 'Retrospectiva', ['Qué salió bien', 'Qué no salió bien', 'Qué cambiamos en el Sprint 2']);
+            }
+
+            // 9) Arquitectura base: la arquitectura dual quedó documentada
+            const arq = tarjeta(/^Arquitectura base$/);
+            if (arq) {
+              await ponerDesc(arq, 'Dos sistemas: **la app del Radar** (lo que usa la comunidad UCAB) y **la maqueta 3D del Campus Montalbán**, que simula los sensores y el lector de placas y le manda las señales a la app solo por su API pública. Documentado en el repositorio: `RadarEstacionamientos_logica/arquitectura/arquitectura_dual_app_y_maqueta.md` (decisión D-006).');
+              for (const k of await checklists(arq)) for (const it of k.checkItems)
+                if (it.name === 'Documentar la arquitectura' && it.state !== 'complete')
+                  await escribir('marcar "Documentar la arquitectura"', 'PUT', `/cards/${arq.id}/checkItem/${it.id}`, { state: 'complete' });
+            }
+
+            core.info(aplicar ? 'Listo.' : 'Fin del ensayo. Para escribir, sube un commit con [aplicar] en el mensaje.');
