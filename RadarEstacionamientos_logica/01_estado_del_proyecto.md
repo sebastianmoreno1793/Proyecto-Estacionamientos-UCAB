@@ -1,6 +1,6 @@
 # Estado del proyecto
 
-**Estado:** 🟢 Vigente — es la única fuente de las cifras del proyecto. Actualizado: 04/oct/26.
+**Estado:** 🟢 Vigente — es la única fuente de las cifras del proyecto. Actualizado: 27/oct/26.
 
 ## Equipo 3 (NRC 15787)
 
@@ -16,9 +16,19 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 ## Dónde estamos
 
-- **Fase:** Brief terminado (versión 1.0, revisado contra la guía de la profesora el 04/oct/26).
-- **Iteración 1:** 05/oct/26 → 16/oct/26, 12 historias (ver `producto/backlog_y_iteraciones.md`).
-- **Código:** sin código todavía. el repo de GitHub incluye lógica y código; el código irá en `RadarEstacionamientos_code/`.
+- **Brief aprobado:** «OK con el brief» (profesora en Trello, 19/oct/26), nota 2,1/3. La versión
+  aprobada es el Google Doc de Samuel del 16–17/oct
+  (https://docs.google.com/document/d/11RHWEd0lgparq8xaIide1dya6_3Fqi7DAFOERzXE6lw). El 27/oct se
+  copió como `entregables/BRIEF EQUIPO 3 15787.docx`.
+- **Iteración 1** (05/oct → 16/oct): 12 historias, con la 2.1 en lugar de la 1.2 (ver D-004).
+  Fusionadas en `main`: 5.1, 5.4 y 9.1. PR abiertos: #44 (6.1) y #45 (8.1). La maqueta 3D (3.2) está
+  en la rama `hu-3.2-mapa-3d-campus`. Detalle: `producto/revision_27oct_equipo_vs_profesora.md`.
+- **Arquitectura:** dos sistemas, la app y la maqueta 3D (D-006,
+  `arquitectura/arquitectura_dual_app_y_maqueta.md`).
+- **Próximo:** Segunda Entrega el **mar 03/nov** (12 pts): cada uno especifica una HU en Trello con
+  su diagrama de actividades, más los 4 RNF. Checklist en `negocio/modulo7/README.md`.
+- **Material de la profesora:** `negocio/modulo7/` (instrucciones, plantillas, anuncios, comentarios y
+  láminas de todas las unidades).
 
 ## Herramientas y enlaces
 
@@ -30,6 +40,19 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 - Tablero Trello (Sprint 1, administrado por Sebastian; se sincroniza desde GitHub): https://trello.com/b/WQSBIFTj/radar-de-estacionamientos-ucab-sprint-1
 
 ## Pendientes inmediatos
+
+### Para la Segunda Entrega (03/nov)
+
+- [ ] Cada integrante especifica una HU en su tarjeta de Trello (Card, Conversación y Criterios) con su diagrama de actividades como imagen o PDF.
+- [ ] Tarjeta «Requisitos No Funcionales» con los 4 RNF (ISO 25010, testeables), acordados en equipo.
+- [ ] Llenar las tarjetas de reuniones (la profesora preguntó dos veces si nos reunimos) y agendar una antes del 03/nov.
+- [ ] Renombrar el tablero «EQUIPO 87 3» y enviar el enlace a mperezpu@ucab.edu.ve.
+- [ ] Renombrar los Issues de GitHub con los nombres del Brief aprobado (lista en `producto/revision_27oct_equipo_vs_profesora.md` §3).
+- [ ] Revisar y fusionar los PR #44 y #45; abrir y fusionar el PR de la maqueta 3D.
+- [ ] Preguntar a la profesora por la «Actividad 4 A» de la Unidad 9.
+- [ ] Ajustar `.github/workflows/trello.yml`: mueve tarjetas a listas que ya no existen (Por hacer, En proceso, Hecho).
+
+### De antes
 
 - [ ] Crear el tablero (GitHub Project, vista Board) y añadirle los Issues — el token fine-grained no puede crearlo.
 - [ ] Activar GitHub Pro con el Student Developer Pack para proteger `main` (hoy GitHub no lo permite en repo privado gratis).

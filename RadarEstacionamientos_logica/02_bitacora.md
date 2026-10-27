@@ -2,6 +2,24 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 27/oct/26 — Módulo 7 completo, Brief aprobado al repo y arquitectura dual
+
+- **Módulo 7:** se revisó el curso entero (https://modulo7.ucab.edu.ve/courses/3675). El texto de las
+  instrucciones de las entregas, las plantillas (Brief, ERS, CP), los anuncios, los comentarios de la
+  profesora y las láminas Genially de 16 unidades quedó en `negocio/modulo7/`. Novedades: **Plan de
+  Clase V5** (Segundo Examen sáb 05/dic) e **Instrucciones de la Segunda Entrega** (HU especificadas y
+  RNF en Trello, una HU por integrante, diagrama de actividades como enlace fácil).
+- **Brief:** la profesora lo aprobó en Trello el 19/oct («OK con el brief»). La versión aprobada era el
+  Google Doc corregido por Samuel el 16–17/oct, no el `.docx` del 13/oct que había en el repo. Se exportó
+  el Doc y se sobrescribió `entregables/BRIEF EQUIPO 3 15787.docx` (regla 6).
+- **Trazabilidad:** el backlog se alineó con los nombres del Brief aprobado (CRUD). Los Issues de GitHub
+  siguen con los nombres viejos: la lista de cambios está en `producto/revision_27oct_equipo_vs_profesora.md`.
+- **Arquitectura dual (D-006):** se especificó la separación entre la app del Radar y la maqueta 3D
+  del campus (`arquitectura/arquitectura_dual_app_y_maqueta.md`).
+- **Revisión del equipo:** el repo no tiene cambios desde el 13/oct. Los PR #44 (German) y #45 (Manuel)
+  siguen abiertos sin revisión. Ninguna HU tiene especificación en Trello y las reuniones están vacías.
+  Plan de mejora del Trello en la misma revisión (§5).
+
 ## 13/oct/26 — Segunda ronda: Trello por etapas, épica de ranking y rangos de calidad
 
 - Se leyeron en el Google Doc de la profesora los comentarios que faltaban (orden de metas, épica de ranking,

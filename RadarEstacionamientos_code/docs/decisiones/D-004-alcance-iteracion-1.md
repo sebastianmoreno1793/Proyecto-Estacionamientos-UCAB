@@ -9,6 +9,12 @@
 Del 05/oct/26 al 16/oct/26: HU 1.1, 1.2, 3.1, 3.2, 4.1, 4.2, 5.1, 6.1, 7.2, 8.1, 9.1 y 10.1.
 Detalle por persona y fechas en `backlog_y_iteraciones.md`.
 
+## Cambio del 16/oct/26
+
+En la corrección del Brief que aprobó la profesora, Samuel cambió la **HU 1.2** (Detectar si es
+estudiante o profesor) por la **HU 2.1** (Registrar mis vehículos). La HU 10.1 es ahora la
+**5.4**. Siguen siendo 12 historias.
+
 ## Por qué
 
 Cada integrante trabaja en sus propias épicas y la iteración muestra el recorrido
