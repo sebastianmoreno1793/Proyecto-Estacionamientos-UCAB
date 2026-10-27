@@ -25,6 +25,10 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
   en la rama `hu-3.2-mapa-3d-campus`. Detalle: `producto/revision_27oct_equipo_vs_profesora.md`.
 - **Arquitectura:** dos sistemas, la app y la maqueta 3D (D-006,
   `arquitectura/arquitectura_dual_app_y_maqueta.md`).
+- ⭐ **Diseño y PWA obligatorios** para todo el equipo: D-007 (`producto/DESIGN.md`) y D-008.
+  El mapa ya muestra el semáforo en vivo (HU 4.2) en la rama `hu-4.2-semaforo-diseno-pwa`.
+- **Bloquean el despliegue:** inicio de sesión real (HU 1.1) y base de datos (los datos viven en
+  memoria). Ver la revisión del 27/oct, §6.
 - **Próximo:** Segunda Entrega el **mar 03/nov** (12 pts): cada uno especifica una HU en Trello con
   su diagrama de actividades, más los 4 RNF. Checklist en `negocio/modulo7/README.md`.
 - **Material de la profesora:** `negocio/modulo7/` (instrucciones, plantillas, anuncios, comentarios y

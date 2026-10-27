@@ -14,6 +14,23 @@ export function porcentajeDeOcupacion({ capacidad, ocupados }) {
   return Math.round((Math.min(capacidad, Math.max(0, ocupados)) / capacidad) * 100);
 }
 
+// HU 4.2: colores del semáforo según el criterio de aceptación de la historia.
+// Verde menos de 50 %, amarillo de 50 % a menos de 80 %, naranja de 80 % a menos de 95 % y
+// rojo de 95 % en adelante. Un estacionamiento desactivado no tiene semáforo: está cerrado.
+// Los colores son los de DESIGN.md (D-007) y no se usan para nada más.
+export const SEMAFORO = [
+  { nivel: "verde", desde: 0, texto: "Hay puestos", color: "#2f9e57" },
+  { nivel: "amarillo", desde: 50, texto: "Se está llenando", color: "#e0a800" },
+  { nivel: "naranja", desde: 80, texto: "Casi lleno", color: "#e8730c" },
+  { nivel: "rojo", desde: 95, texto: "Lleno", color: "#d93a2e" },
+];
+export const CERRADO = { nivel: "cerrado", texto: "Cerrado", color: "#8e8e93" };
+
+export function nivelDelSemaforo({ porcentaje, activo = true }) {
+  if (!activo) return CERRADO;
+  return SEMAFORO.findLast((n) => porcentaje >= n.desde) ?? SEMAFORO[0];
+}
+
 export const TIPOS_DE_MOVIMIENTO = ["ENTRADA", "SALIDA"];
 
 // HU 4.1: una entrada ocupa un puesto y una salida lo libera. Un aviso que rompería los

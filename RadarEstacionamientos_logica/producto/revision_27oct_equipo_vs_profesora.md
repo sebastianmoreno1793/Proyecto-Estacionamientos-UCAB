@@ -139,3 +139,21 @@ un ensayo y después la escritura. Se verificó contra el tablero público.
 
 **GitHub (27/oct):** los 9 Issues de §3 se renombraron; #14 (HU 2.1) pasó a «Iteración 1» y quedó
 asignado a Samuel; #2 (HU 1.2) pasó a «Iteración 2».
+
+## 6. Huecos del producto (segunda pasada, 27/oct/26)
+
+Se revisó la app corriendo, en computador y en celular, contra el Brief y los rangos de calidad.
+
+| # | Hueco | Estado |
+|---|---|---|
+| 1 | **El mapa de inicio no mostraba la ocupación.** Dibujaba los estacionamientos desde un archivo fijo, sin semáforo ni puestos libres, aunque la API ya los calculaba (HU 4.2, de Aaron, sin código) | ✅ Resuelto en la rama `hu-4.2-semaforo-diseno-pwa`: semáforo en el mapa, píldora con los libres, lista ordenada, total del campus y tarjeta del estacionamiento |
+| 2 | **El mapa no se actualizaba solo** (el canal en vivo existía, pero nadie lo escuchaba) | ✅ El mapa escucha `GET /api/eventos`: el aviso del sensor cambia la cifra en menos de 1 s y el estacionamiento late. Indicador «En vivo / Reconectando / Sin conexión» |
+| 3 | **No era PWA** (el Brief pide web, y el conductor la usa desde el celular) | ✅ D-008: manifest, íconos, service worker único, «Actualizar» y página «Sin conexión» |
+| 4 | **Diseño sin guía**: menú que se rompía en el celular, emoji como íconos, cada pantalla con su estilo | ✅ D-007 + `DESIGN.md`: estilo iOS institucional, pestañas abajo en el celular, íconos SVG, claro y oscuro |
+| 5 | Reportar desde el mapa obligaba a buscar otra vez el estacionamiento | ✅ «Reportar un problema aquí» lo deja elegido |
+| 6 | **Sin inicio de sesión real** (HU 1.1, Samuel): en producción no hay usuario, así que **nadie puede reportar** | ⏳ Pendiente. Bloquea el despliegue |
+| 7 | **Los datos viven en memoria** y se pierden al reiniciar. En Vercel cada instancia tiene su propia memoria: el canal en vivo **no funcionaría desplegado** | ⏳ Pendiente: decidir la base de datos (`preguntas_abiertas.md`). Bloquea el despliegue |
+| 8 | **«Sin datos»** (RNF 3, tolerancia a fallos): un estacionamiento cuyo sensor calla no se marca | ⏳ Pendiente (HU 4.4, R2): guardar la hora del último aviso |
+| 9 | HU 7.2 «Sugerir el más cercano» (Manuel) sin código; depende del catálogo de edificios (PR #44) | ⏳ Pendiente |
+| 10 | El PR #45 (HU 8.1) trae su propio `sw.js` | ⏳ Debe quitarlo y usar el de D-008, que ya trae sus manejadores `push` y `notificationclick` |
+| 11 | Falta correr `/impeccable critique` sobre el mapa y los formularios | ⏳ Pendiente (la skill ya está en el repo) |

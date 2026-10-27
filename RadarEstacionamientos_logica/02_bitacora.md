@@ -2,6 +2,23 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 27/oct/26 — ⭐ Diseño iOS institucional (D-007), PWA (D-008) y semáforo en el mapa (HU 4.2)
+
+- **Decisiones obligatorias para el equipo**, destacadas en `decisiones/README.md`: D-007 (diseño,
+  con `producto/DESIGN.md` y `producto/PRODUCT.md`, que salen de Thinkdy y del movimiento de Te
+  Cambio) y D-008 (PWA con un solo service worker). La skill `impeccable` se copió a
+  la carpeta de skills de cada computadora; la plantilla de PR y `CONTRIBUTING.md` lo exigen.
+- **Logo nuevo**: radar (anillos y barrido) con la «P» de estacionamiento y el punto dorado
+  (`producto/marca/`). Se generó con Quick Look desde SVG.
+- **Referencias**: Pinterest («parking app ui design») sin iniciar sesión: se tomó el patrón de mapa
+  a pantalla completa con tarjeta flotante y tres datos en columnas.
+- **Código** (rama `hu-4.2-semaforo-diseno-pwa`): mapa con semáforo y en vivo, lista de puestos (hoja
+  en el celular), tarjeta del estacionamiento, pestañas de iOS, formularios agrupados, manifest,
+  íconos, `public/sw.js`, aviso «Actualizar», página «Sin conexión» y reporte con el estacionamiento
+  elegido. 49 pruebas en verde; probado a 320, 375 y 800 px, claro y oscuro, con un aviso de
+  sensor en vivo.
+- **Huecos que quedan** (inicio de sesión, base de datos, «sin datos»): revisión del 27/oct, §6.
+
 ## 27/oct/26 — Módulo 7 completo, Brief aprobado al repo y arquitectura dual
 
 - **Módulo 7:** se revisó el curso entero (https://modulo7.ucab.edu.ve/courses/3675). El texto de las

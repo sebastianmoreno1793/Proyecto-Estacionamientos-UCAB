@@ -5,14 +5,14 @@ import { reportarIncidencia } from "../acciones";
 import { TIPOS_DE_INCIDENCIA } from "@/lib/incidencias/reglas";
 import estilos from "../../formularios.module.css";
 
-export default function FormularioIncidencia({ estacionamientos }) {
+export default function FormularioIncidencia({ estacionamientos, elegido = "" }) {
   const [estado, accion, pendiente] = useActionState(reportarIncidencia, {});
 
   return (
     <form action={accion} className={estilos.tarjeta}>
       <label className={estilos.campo}>
         Estacionamiento
-        <select name="estacionamientoId" defaultValue="" required>
+        <select name="estacionamientoId" defaultValue={elegido} required>
           <option value="" disabled>
             Elige el estacionamiento
           </option>
