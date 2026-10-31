@@ -1,26 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
-  pedirPermisoNotificaciones, 
-  obtenerEstadoNotificaciones, 
-  enviarNotificacionPrueba 
-} from '@/lib/notificaciones/gestorNotificaciones';
+import { gestorNotificaciones } from '@/lib/notificaciones/gestorNotificaciones';
 
 export default function BotonNotificaciones() {
   const [estadoPermiso, setEstadoPermiso] = useState('default');
 
   useEffect(() => {
-    setEstadoPermiso(obtenerEstadoNotificaciones());
+    setEstadoPermiso(gestorNotificaciones.obtenerEstadoPermiso());
   }, []);
 
   const manejarSolicitud = async () => {
-    const nuevoEstado = await pedirPermisoNotificaciones();
+    const nuevoEstado = await gestorNotificaciones.pedirPermiso();
     setEstadoPermiso(nuevoEstado);
   };
 
   const manejarNotificacionPrueba = async () => {
-    await enviarNotificacionPrueba();
+    await gestorNotificaciones.enviarNotificacionPrueba();
   };
 
   if (estadoPermiso === 'unsupported') {
