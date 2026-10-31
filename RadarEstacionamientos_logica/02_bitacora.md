@@ -2,6 +2,54 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 13/oct/26 — Segunda ronda: Trello por etapas, épica de ranking y rangos de calidad
+
+- Se leyeron en el Google Doc de la profesora los comentarios que faltaban (orden de metas, épica de ranking,
+  "solo dejar 4" rangos, estructura de Trello, comentarios en Trello) y se vio la pizarra de la clase del 13/oct.
+  El audio de la clase se transcribió con el reconocimiento de voz de macOS: salió parcial y con ruido, así que
+  la fuente fiable fue la foto de la pizarra y el Doc.
+- **Trello** (tablero público WQSBIFTj) reestructurado con la sesión de Sebastian: listas ETAPA 1 Inicio, 2 Planificación,
+  3 Ejecución (12 HU), 4 Seguimiento y Control, 5 Cierre y Backlog (27 HU, con las nuevas 5.5, 9.3, 9.4 y 11.1–11.4).
+  Cada HU lleva checklist de 12 actividades. Listas "Entregas del proyecto", "Por hacer/En proceso/En revisión/Hecho" y
+  "Siguientes iteraciones" **archivadas** (se pueden restaurar). Etiquetas nuevas: En proceso, En revisión, Hecho, Gestión.
+- **Brief (.docx)**: Tabla 1 en el orden pedido y con meta Ranking; épica 11 y Figuras 1 y 2 regeneradas; 4 rangos de
+  calidad; Tabla 4 por 5 etapas (con Maqueta general y Arquitectura base, fechas propuestas 12–14/oct por confirmar);
+  texto de actividades; Figura 3 nueva (captura del tablero); enlace público de Trello; fila del 13/oct ampliada.
+- **Pendiente**: Figma (sin herramienta para editarlo; el tablero sigue con 5 columnas viejas), permiso de comentarios
+  de la profesora en Trello, pegar el Brief corregido en el Google Doc (el Doc en línea es la versión del 06/oct),
+  y ajustar `.github/workflows/trello.yml`, que mueve tarjetas entre listas que ya no existen.
+
+## 13/oct/26 — Brief (.docx) corregido y figuras del mapa regeneradas
+
+- Se corrigió `entregables/BRIEF EQUIPO 3 15787.docx` con lo de `producto/correcciones_brief_profesora.md`:
+  fila nueva en el Histórico de Revisiones (13/oct/26), Tabla 1 (Mapa de Impacto) con épica e historia por
+  integrante, criterios de aceptación de HU 4.1 (escribe), 4.2 (lee) y 5.4 (antes 10.1), Tabla 3 con los tres
+  nombres corregidos, frase de las cuatro actividades por historia y de las reuniones en Trello.
+- Figuras 1 y 2 (mapa de historias) regeneradas con el mismo estilo del Figma, con las 10 épicas renombradas
+  y todas las HU (nuevas: 2.5, 4.4, 5.4, 5.5, 9.3, 9.4). **Ojo:** son una imagen hecha por script, no una
+  exportación; el tablero de Figma en línea sigue con los nombres viejos hasta que el equipo lo edite.
+- Tabla 1 corregida: las **metas** quedan como estaban y las **épicas van en la columna Entregable** con su
+  historia y responsable (aclaración de Sebastian: las épicas son los entregables, las metas son cómo se cumplen).
+  Referencia visual: `producto/tabla1_mapa_de_impacto_corregida.png`.
+- Tabla 1 sin responsables (no se indica quién hace cada historia). Maquetación del .docx revisada con
+  LibreOffice (PDF de prueba): Histórico de Revisiones cabe en una página, se quitó la página en blanco tras la
+  Tabla 1 y ninguna tabla queda partida entre páginas; el documento pasó a 10 páginas.
+- Pendiente: actualizar el tablero de Figma, la captura de Trello (Figura 3) y la tabla de contenido
+  (clic derecho → Actualizar campo, porque cambió la paginación); revisar el .docx en Word.
+
+## 13/oct/26 — Correcciones de la profesora al Brief
+
+- La profesora comentó el Google Doc del Brief el 09/oct/26 (12 comentarios). Detalle y resolución en
+  `producto/correcciones_brief_profesora.md`; guía de defensa en `producto/guia_defensa_brief_y_comentarios.pdf`.
+- Backlog reestructurado conservando los números de HU e Issues: épicas renombradas (Gestión de estacionamientos,
+  Aforo, Gestión de incidencias, Notificaciones), HU 4.1 pasa a escritura y 4.2 a lectura, HU 10.1 → 5.4,
+  HU 9.3 → 4.4, HU 10.4 → 2.5. Nuevas: 5.5 (#46), 9.3 (#47), 9.4 (#48).
+- GitHub: etiquetas de épica renombradas, actividades por historia en los Issues de R1, Issues de R1 asignados
+  a su responsable, Issues 33–39 (entregas del curso, incluida la táctica) cerrados como "no planificados".
+  Los Issues de R2 no se asignaron: el workflow de Trello los movería a "En proceso".
+- Pendiente: pegar las correcciones en el Google Doc, actualizar Figma y Trello (renombrar, reuniones,
+  actividades, quitar entregas del curso) y confirmar con la profesora el destino de la épica 10.
+
 ## 05/oct/26 — Fechas de entrega en GitHub
 
 - Con el Plan de Evaluación (IS PLAN DE CLASE V3) se crearon 6 milestones con fecha (Entrega 1 a 5 y

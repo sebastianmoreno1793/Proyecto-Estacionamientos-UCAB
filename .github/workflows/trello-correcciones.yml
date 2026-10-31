@@ -1,0 +1,136 @@
+# Aplica en Trello las correcciones de la profesora al Brief (13/oct/26). Se ejecuta a mano, una sola vez.
+#   - Renombra las tarjetas que cambiaron de código o de nombre (HU 4.1, 4.2, 10.1 -> 5.4, 9.2, 9.3 -> 4.4, 10.4 -> 2.5).
+#   - Agrega la checklist "Actividades de la historia" a las 12 tarjetas de la Iteración 1.
+#   - Crea las tarjetas nuevas HU 5.5, 9.3 y 9.4.
+#   - Archiva la lista "Entregas del proyecto" (entregas de la materia, no del producto). El archivo se puede deshacer en Trello.
+# Por defecto es un ensayo: solo muestra lo que haría. Para aplicar, ejecutar con "aplicar" = true.
+# Secretos necesarios: TRELLO_KEY y TRELLO_TOKEN (el token necesita permiso de escritura).
+name: Trello - correcciones de la profesora
+
+on:
+  workflow_dispatch:
+    inputs:
+      aplicar:
+        description: "true = escribir en Trello; false = solo ensayo"
+        required: true
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  corregir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          TRELLO_KEY: ${{ secrets.TRELLO_KEY }}
+          TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
+          TRELLO_BOARD: WQSBIFTj
+          APLICAR: ${{ github.event.inputs.aplicar }}
+        with:
+          script: |
+            const { TRELLO_KEY, TRELLO_TOKEN, TRELLO_BOARD } = process.env;
+            const aplicar = process.env.APLICAR === 'true';
+            if (!TRELLO_KEY || !TRELLO_TOKEN) { core.setFailed('Faltan los secretos TRELLO_KEY / TRELLO_TOKEN.'); return; }
+            core.info(aplicar ? 'MODO: APLICAR (escribe en Trello)' : 'MODO: ENSAYO (no escribe nada)');
+
+            const auth = `key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`;
+            const call = async (method, path, params = {}) => {
+              const qs = new URLSearchParams(params).toString();
+              const url = `https://api.trello.com/1${path}?${qs}${qs ? '&' : ''}${auth}`;
+              const r = await fetch(url, { method });
+              if (!r.ok) throw new Error(`Trello ${method} ${path}: ${r.status} ${(await r.text()).slice(0, 120)}`);
+              return r.json();
+            };
+            const leer = (path, params) => call('GET', path, params);
+            const escribir = async (descripcion, method, path, params) => {
+              core.info(`${aplicar ? 'HACE' : 'HARÍA'}: ${descripcion}`);
+              if (aplicar) return call(method, path, params);
+              return { id: 'ensayo' };
+            };
+
+            const lists = await leer(`/boards/${TRELLO_BOARD}/lists`, { fields: 'name,closed' });
+            const cards = await leer(`/boards/${TRELLO_BOARD}/cards`, { fields: 'name,desc,idList,idLabels' });
+            const labels = await leer(`/boards/${TRELLO_BOARD}/labels`, { fields: 'name' });
+            const etiqueta = (n) => labels.find(l => l.name === n);
+
+            // 1) Renombrar tarjetas (se busca por código o por texto, así se puede repetir sin duplicar)
+            const renombres = [
+              { busca: c => /^HU 4\.1\b/.test(c.name), nombre: 'HU 4.1 · Actualizar el aforo con cada entrada o salida',
+                desc: [[/Cuando entra un carro[\s\S]*?capacidad del estacionamiento\./, 'Cada vez que un sensor avisa una entrada o una salida, el sistema actualiza el aforo del estacionamiento: los puestos libres bajan en uno con cada entrada y suben en uno con cada salida, y el cambio queda registrado con la hora. Nunca hay menos de cero puestos libres ni más que la capacidad.']] },
+              { busca: c => /^HU 4\.2\b/.test(c.name), nombre: 'HU 4.2 · Consultar el semáforo de ocupación' },
+              { busca: c => /^HU 10\.1\b/.test(c.name) || /^HU 5\.4\b/.test(c.name), nombre: 'HU 5.4 · Habilitar estacionamientos y fijar su capacidad (antes HU 10.1)',
+                desc: [[/Épica:\*\*\s*10\b/, 'Épica:** 5 (antes 10)']] },
+              { busca: c => /^HU 9\.2\b/.test(c.name), nombre: 'HU 9.2 · Atender una incidencia: cambiar su estado (vigilancia)' },
+              { busca: c => /^HU (9\.3|4\.4)\b/.test(c.name) && /no tienen datos/.test(c.name), nombre: 'HU 4.4 · Ver qué estacionamientos no tienen datos (antes HU 9.3)',
+                desc: [[/Épica:\*\*\s*9\b/, 'Épica:** 4 (antes 9)'], [/Sebastian Moreno/, 'Aaron Zarraga']],
+                etiquetas: { quita: 'Sebastian', pone: 'Aaron' } },
+              { busca: c => /^HU (10\.4|2\.5)\b/.test(c.name), nombre: 'HU 2.5 · Cargar el catálogo de NRC (antes HU 10.4)',
+                desc: [[/Épica:\*\*\s*10\b/, 'Épica:** 2 (antes 10)'], [/Sebastian Moreno/, 'Samuel Goncalves']],
+                etiquetas: { quita: 'Sebastian', pone: 'Samuel' } },
+            ];
+            for (const r of renombres) {
+              const card = cards.find(c => !c.closed && r.busca(c));
+              if (!card) { core.warning(`No se encontró la tarjeta para "${r.nombre}"`); continue; }
+              const params = {};
+              if (card.name !== r.nombre) params.name = r.nombre;
+              if (r.desc) {
+                let d = card.desc || '';
+                for (const [de, a] of r.desc) d = d.replace(de, a);
+                if (d !== card.desc) params.desc = d;
+              }
+              if (Object.keys(params).length) await escribir(`renombrar/actualizar "${card.name}" -> "${r.nombre}"`, 'PUT', `/cards/${card.id}`, params);
+              else core.info(`Ya está al día: "${r.nombre}"`);
+              if (r.etiquetas) {
+                const quita = etiqueta(r.etiquetas.quita), pone = etiqueta(r.etiquetas.pone);
+                if (quita && card.idLabels.includes(quita.id)) await escribir(`quitar etiqueta ${quita.name} de "${r.nombre}"`, 'DELETE', `/cards/${card.id}/idLabels/${quita.id}`);
+                if (pone && !card.idLabels.includes(pone.id)) await escribir(`poner etiqueta ${pone.name} en "${r.nombre}"`, 'POST', `/cards/${card.id}/idLabels`, { value: pone.id });
+              }
+            }
+
+            // 2) Checklist "Actividades de la historia" en las 12 tarjetas de la Iteración 1
+            const semana1 = ['1.1', '3.1', '3.2', '5.1', '8.1', '10.1'];
+            const semana2 = ['1.2', '4.1', '4.2', '6.1', '7.2', '9.1'];
+            const fechas = {
+              1: ['05–06/oct', '06–08/oct', '08–09/oct', '09/oct'],
+              2: ['12–13/oct', '13–15/oct', '15–16/oct', '16/oct'],
+            };
+            const items = (f) => [
+              `Diseño: pantalla o flujo y datos que usa (${f[0]})`,
+              `Desarrollo (${f[1]})`,
+              `Pruebas contra el criterio de aceptación, en computador y celular (${f[2]})`,
+              `Revisión del Pull Request por otro integrante y cierre (${f[3]})`,
+            ];
+            const todos = [...semana1.map(c => [c, 1]), ...semana2.map(c => [c, 2])];
+            for (const [codigo, sem] of todos) {
+              const alt = codigo === '10.1' ? '(?:10\\.1|5\\.4)' : codigo.replace('.', '\\.');
+              const card = cards.find(c => new RegExp(`^HU ${alt}\\b`).test(c.name));
+              if (!card) { core.warning(`No hay tarjeta HU ${codigo}`); continue; }
+              const chk = await leer(`/cards/${card.id}/checklists`, { fields: 'name' });
+              if (chk.some(k => k.name === 'Actividades de la historia')) { core.info(`HU ${codigo}: ya tiene la checklist`); continue; }
+              const nueva = await escribir(`crear checklist en HU ${codigo}`, 'POST', `/cards/${card.id}/checklists`, { name: 'Actividades de la historia' });
+              for (const it of items(fechas[sem])) await escribir(`  ítem: ${it}`, 'POST', `/checklists/${nueva.id}/checkItems`, { name: it });
+            }
+
+            // 3) Tarjetas nuevas (HU 5.5, 9.3 y 9.4) en la lista Backlog
+            const backlog = lists.find(l => l.name === 'Backlog' && !l.closed);
+            const nuevas = [
+              { n: 'HU 5.5 · Crear, modificar y quitar estacionamientos', who: 'German', d: '**Responsable:** German Alfonzo\n**Épica:** 5 · **Release:** R2\n\n**Criterio de aceptación:**\nEl administrador puede crear un estacionamiento nuevo (nombre, ubicación en el mapa y capacidad), modificar sus datos y quitarlo. El mapa muestra los cambios.' },
+              { n: 'HU 9.3 · Ver el listado y el estado de las incidencias', who: 'Sebastian', d: '**Responsable:** Sebastian Moreno\n**Épica:** 9 · **Release:** R2\n\n**Criterio de aceptación:**\nVigilancia ve la lista de incidencias con estacionamiento, tipo, hora y estado, y puede filtrarla por estado. El conductor ve las incidencias que reportó.' },
+              { n: 'HU 9.4 · Corregir o eliminar una incidencia', who: 'Sebastian', d: '**Responsable:** Sebastian Moreno\n**Épica:** 9 · **Release:** R2\n\n**Criterio de aceptación:**\nEl conductor puede corregir el tipo de una incidencia que reportó o eliminarla mientras esté pendiente. Vigilancia puede eliminar una incidencia reportada por error.' },
+            ];
+            if (!backlog) core.warning('No existe la lista "Backlog"');
+            for (const t of nuevas) {
+              if (!backlog) break;
+              if (cards.some(c => !c.closed && c.name === t.n)) { core.info(`Ya existe: ${t.n}`); continue; }
+              const ids = ['R2', t.who].map(etiqueta).filter(Boolean).map(l => l.id).join(',');
+              await escribir(`crear tarjeta "${t.n}" en Backlog`, 'POST', '/cards', { idList: backlog.id, name: t.n, desc: t.d, idLabels: ids });
+            }
+
+            // 4) Archivar la lista de entregas de la materia (se puede restaurar desde "Elementos archivados")
+            const entregas = lists.find(l => l.name === 'Entregas del proyecto' && !l.closed);
+            if (entregas) await escribir('archivar la lista "Entregas del proyecto"', 'PUT', `/lists/${entregas.id}/closed`, { value: 'true' });
+            else core.info('La lista "Entregas del proyecto" ya no está activa.');
+
+            core.info(aplicar ? 'Listo.' : 'Fin del ensayo. Ejecuta de nuevo con aplicar = true para escribir.');

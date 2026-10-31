@@ -1,8 +1,9 @@
-# Mueve la tarjeta "HU X.Y" del tablero de Trello según lo que pasa en GitHub.
-#   Issue asignado              -> En proceso
-#   PR abierto con "Closes #N"  -> En revisión
-#   Issue cerrado               -> Hecho
-#   Issue reabierto             -> Por hacer (Sprint 1)
+# Marca el estado de la tarjeta "HU X.Y" del tablero de Trello según lo que pasa en GitHub.
+# El tablero está organizado por etapas, así que el estado va en una etiqueta (no en una lista):
+#   Issue asignado              -> etiqueta "En proceso"
+#   PR abierto con "Closes #N"  -> etiqueta "En revisión"
+#   Issue cerrado               -> etiqueta "Hecho" y fecha cumplida
+#   Issue reabierto             -> sin etiqueta de estado (por hacer)
 # Secretos necesarios: TRELLO_KEY y TRELLO_TOKEN (Settings > Secrets and variables > Actions).
 name: Sincronizar con Trello
 
@@ -41,7 +42,7 @@ jobs:
             const ev = context.eventName, act = context.payload.action;
             let destino, issues = [];
             if (ev === 'issues') {
-              destino = { assigned: 'En proceso', closed: 'Hecho', reopened: 'Por hacer (Sprint 1)' }[act];
+              destino = { assigned: 'En proceso', closed: 'Hecho', reopened: null }[act];
               issues = [context.payload.issue];
             } else {
               destino = 'En revisión';
@@ -51,20 +52,25 @@ jobs:
               if (!issues.length) { core.info('El PR no dice "Closes #N": no se mueve ninguna tarjeta.'); return; }
             }
 
-            // 2) Buscar listas y tarjetas del tablero
-            const lists = await trello(`/boards/${TRELLO_BOARD}/lists?fields=name`);
-            const lista = lists.find(l => l.name === destino);
-            if (!lista) { core.setFailed(`No existe la lista "${destino}" en Trello.`); return; }
-            const cards = await trello(`/boards/${TRELLO_BOARD}/cards?fields=name,idList`);
+            // 2) Buscar etiquetas de estado y tarjetas del tablero
+            const ESTADOS = ['En proceso', 'En revisión', 'Hecho'];
+            const labels = await trello(`/boards/${TRELLO_BOARD}/labels?fields=name`);
+            const etq = (n) => labels.find(l => l.name === n);
+            if (destino && !etq(destino)) { core.setFailed(`No existe la etiqueta "${destino}" en Trello.`); return; }
+            const cards = await trello(`/boards/${TRELLO_BOARD}/cards?fields=name,idLabels`);
 
-            // 3) Mover cada tarjeta "HU X.Y"
+            // 3) Cambiar el estado de cada tarjeta "HU X.Y"
             for (const issue of issues) {
               const m = issue.title.match(/HU\s*(\d+\.\d+)/i);
               if (!m) { core.info(`#${issue.number} no tiene código HU.`); continue; }
               const re = new RegExp(`^HU\\s*${m[1].replace('.', '\\.')}(?!\\d)`, 'i');
               const card = cards.find(c => re.test(c.name));
               if (!card) { core.warning(`No hay tarjeta "HU ${m[1]}" en Trello.`); continue; }
-              if (card.idList === lista.id) { core.info(`HU ${m[1]} ya está en "${destino}".`); continue; }
-              await trello(`/cards/${card.id}?idList=${lista.id}&pos=top`, 'PUT');
-              core.info(`HU ${m[1]} → "${destino}"`);
+              for (const n of ESTADOS) {
+                const l = etq(n);
+                if (l && n !== destino && card.idLabels.includes(l.id)) await trello(`/cards/${card.id}/idLabels/${l.id}`, 'DELETE');
+              }
+              if (destino && !card.idLabels.includes(etq(destino).id)) await trello(`/cards/${card.id}/idLabels?value=${etq(destino).id}`, 'POST');
+              await trello(`/cards/${card.id}?dueComplete=${destino === 'Hecho'}`, 'PUT');
+              core.info(`HU ${m[1]} → ${destino || 'por hacer'}`);
             }
