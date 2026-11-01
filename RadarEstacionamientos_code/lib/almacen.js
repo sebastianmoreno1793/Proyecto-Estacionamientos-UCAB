@@ -6,6 +6,10 @@ import { CAPACIDAD_DE_EJEMPLO, CAPACIDAD_POR_DEFECTO } from "./datos_de_ejemplo.
 import { etiquetasUnicas } from "./estacionamientos/reglas.js";
 import { EDIFICIOS } from "../data/edificios.js";
 
+function copiarEdificios() {
+  return EDIFICIOS.map((e) => ({ ...e, ubicacion: e.ubicacion ? [...e.ubicacion] : null }));
+}
+
 function crearAlmacen() {
   const etiquetas = etiquetasUnicas(ESTACIONAMIENTOS);
   return {
@@ -18,13 +22,19 @@ function crearAlmacen() {
       activo: true,
     })),
     incidencias: [],
-    edificios: EDIFICIOS.map((e) => ({ ...e, ubicacion: e.ubicacion ? [...e.ubicacion] : null })),
+    movimientos: [], // HU 3.1: avisos de entrada y salida de los sensores
+    lecturasDePlaca: [], // HU 3.2: placas que lee el lector de la garita
+    edificios: copiarEdificios(), // HU 6.1: catálogo de edificios UCAB
   };
 }
 
 // En globalThis para que sobreviva a las recargas de `next dev`.
 export function obtenerAlmacen() {
   globalThis.__radarAlmacen ??= crearAlmacen();
+  // Si `next dev` ya tenía un almacén de antes de agregar una lista, se completa.
+  globalThis.__radarAlmacen.movimientos ??= [];
+  globalThis.__radarAlmacen.lecturasDePlaca ??= [];
+  globalThis.__radarAlmacen.edificios ??= copiarEdificios();
   return globalThis.__radarAlmacen;
 }
 

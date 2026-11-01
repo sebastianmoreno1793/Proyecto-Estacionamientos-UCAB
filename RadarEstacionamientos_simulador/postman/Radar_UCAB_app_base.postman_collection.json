@@ -1,0 +1,407 @@
+{
+  "info": {
+    "name": "Radar UCAB · App base (como si fuera real)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Llamadas a la API pública de la app base (RadarEstacionamientos_code). Son las mismas que usan los sensores, el lector de placas de la garita, los usuarios y el simulador 3D. Si el simulador está abierto (http://localhost:3001), dibuja lo que mandes desde aquí (marcador rosa).\n\nVariables: urlBase, claveSensor (la de CLAVE_SENSORES; en desarrollo, clave-de-desarrollo) y estacionamiento (un id de data/estacionamientos.js)."
+  },
+  "variable": [
+    {
+      "key": "urlBase",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "claveSensor",
+      "value": "clave-de-desarrollo"
+    },
+    {
+      "key": "estacionamiento",
+      "value": "est-playa"
+    }
+  ],
+  "item": [
+    {
+      "name": "Sensores y garita (HU 3.1, 3.2, 4.1)",
+      "item": [
+        {
+          "name": "Aviso: entra un carro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/avisos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "avisos"
+              ]
+            },
+            "description": "El sensor del estacionamiento ve entrar un carro. Baja un puesto libre. 409 si está lleno o desactivado. idAviso evita contar dos veces el mismo aviso.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"ENTRADA\",\n  \"idAviso\": \"{{$guid}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Aviso: sale un carro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/avisos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "avisos"
+              ]
+            },
+            "description": "Sube un puesto libre. 409 si no hay carros dentro.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"SALIDA\",\n  \"idAviso\": \"{{$guid}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lector de placas: entra a la garita",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/garita/lecturas",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "garita",
+                "lecturas"
+              ]
+            },
+            "description": "La placa queda registrada con la hora (solo la ve el personal autorizado en «Actividad de la garita»).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"AB123CD\",\n  \"sentido\": \"ENTRADA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Conductores (HU 9.1)",
+      "item": [
+        {
+          "name": "Reportar: conos atravesados",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"conos_atravesados\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Reportar: batería descargada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"bateria_descargada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Reportar: vehículo mal estacionado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"vehiculo_mal_estacionado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Ver incidencias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Administración (HU 5.4)",
+      "item": [
+        {
+          "name": "Cerrar un estacionamiento",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Abrir un estacionamiento",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cambiar la capacidad",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacidad\": 200\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultas",
+      "item": [
+        {
+          "name": "Estado de los estacionamientos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos"
+              ]
+            },
+            "description": "Capacidad, ocupados, libres, porcentaje del semáforo, si está activo y su forma."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pruebas (solo en desarrollo)",
+      "item": [
+        {
+          "name": "Reiniciar la app base",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/pruebas/reiniciar",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "pruebas",
+                "reiniciar"
+              ]
+            },
+            "description": "Vuelve a los datos de ejemplo y borra incidencias, avisos y placas. En producción no existe."
+          }
+        }
+      ]
+    }
+  ]
+}

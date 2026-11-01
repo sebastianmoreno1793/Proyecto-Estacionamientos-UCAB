@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { listarEstacionamientos } from "@/lib/estacionamientos/datos";
-import { registrarIncidencia } from "@/lib/incidencias/datos";
+import { emitir } from "@/lib/eventos_en_vivo";
+import { registrarIncidencia, vistaPublica } from "@/lib/incidencias/datos";
 import { nombreDelTipo } from "@/lib/incidencias/reglas";
 import { formatearFechaHora } from "@/lib/fechas";
 import { obtenerUsuarioActual } from "@/lib/sesion";
@@ -19,6 +20,7 @@ export async function reportarIncidencia(_estadoAnterior, formData) {
   if (resultado.error) return { error: resultado.error };
 
   const { incidencia } = resultado;
+  emitir("INCIDENCIA", { incidencia: vistaPublica(incidencia) });
   const estacionamientos = await listarEstacionamientos();
   revalidatePath("/incidencias");
   return {

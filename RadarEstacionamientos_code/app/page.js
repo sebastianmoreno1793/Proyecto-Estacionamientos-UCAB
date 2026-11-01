@@ -1,13 +1,15 @@
-import MapaCampus from "@/components/MapaCampus";
+import { redirect } from "next/navigation";
+import MaquetaCampus from "@/components/MaquetaCampus";
+import { obtenerUsuarioActual } from "@/lib/sesion";
 
-export default function Inicio() {
+// HU 1.1: solo entra quien inició sesión con su correo UCAB. «Salir» está en el menú.
+export default async function Inicio() {
+  if (!(await obtenerUsuarioActual())) redirect("/entrar");
+
   return (
     <main className="pagina">
-      <header className="encabezado">
-        <h1>Radar de Estacionamientos UCAB</h1>
-        <p>Campus Montalbán</p>
-      </header>
-      <MapaCampus />
+      <h1 className="oculto-visual">Maqueta del Campus Montalbán: dónde hay puesto</h1>
+      <MaquetaCampus />
     </main>
   );
 }
