@@ -8,6 +8,32 @@ export function puestosLibres({ capacidad, ocupados }) {
   return Math.min(capacidad, Math.max(0, capacidad - ocupados));
 }
 
+// Porcentaje para el semáforo (HU 4.2). Nunca pasa de 100, igual que los libres nunca bajan de 0.
+export function porcentajeDeOcupacion({ capacidad, ocupados }) {
+  if (!(capacidad > 0)) return 100;
+  return Math.round((Math.min(capacidad, Math.max(0, ocupados)) / capacidad) * 100);
+}
+
+export const TIPOS_DE_MOVIMIENTO = ["ENTRADA", "SALIDA"];
+
+// HU 4.1: una entrada ocupa un puesto y una salida lo libera. Un aviso que rompería los
+// límites (lleno, vacío) o que llega de un estacionamiento desactivado se rechaza.
+export function aplicarMovimiento(estacionamiento, tipo) {
+  if (!TIPOS_DE_MOVIMIENTO.includes(tipo)) {
+    return { error: "El tipo debe ser ENTRADA o SALIDA.", motivo: "tipo" };
+  }
+  const { etiqueta, nombre, activo, capacidad, ocupados } = estacionamiento;
+  const cual = etiqueta ?? nombre;
+  if (!activo) return { error: `${cual} está desactivado.`, motivo: "desactivado" };
+  if (tipo === "ENTRADA" && ocupados >= capacidad) {
+    return { error: `${cual} está lleno.`, motivo: "lleno" };
+  }
+  if (tipo === "SALIDA" && ocupados <= 0) {
+    return { error: `En ${cual} no hay carros para salir.`, motivo: "vacio" };
+  }
+  return { ocupados: ocupados + (tipo === "ENTRADA" ? 1 : -1) };
+}
+
 export function validarCapacidad(valor) {
   const texto = String(valor ?? "").trim();
   if (!/^\d+$/.test(texto)) {

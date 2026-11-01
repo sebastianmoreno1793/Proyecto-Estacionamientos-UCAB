@@ -1,5 +1,6 @@
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
+import MenuPrincipal from "@/components/MenuPrincipal";
 
 export const metadata = {
   title: "Radar de Estacionamientos UCAB",
@@ -15,7 +16,12 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        <div className="app">
+          <MenuPrincipal />
+          <div className="app-contenido">{children}</div>
+        </div>
+      </body>
     </html>
   );
 }

@@ -11,31 +11,94 @@ body {
   background: #f8fafc;
 }
 
-.pagina {
+/* Menú arriba y la página debajo, ocupando el resto de la pantalla. */
+.app {
   display: flex;
   flex-direction: column;
   height: 100dvh;
 }
 
-.encabezado {
+.app-contenido {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+}
+
+.pagina {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 0 12px;
-  padding: 12px 16px;
+  gap: 6px 16px;
+  padding: 8px 16px;
   background: #0b3d91;
   color: #fff;
 }
 
-.encabezado h1 {
-  margin: 0;
-  font-size: 1.15rem;
+.menu-marca {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.encabezado p {
-  margin: 0;
-  font-size: 0.9rem;
+.menu-marca span {
+  font-weight: 400;
+  font-size: 0.85rem;
   opacity: 0.85;
+  margin-left: 6px;
+}
+
+.menu-enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
+.menu-enlace {
+  color: #dbeafe;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.menu-enlace:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.menu-enlace[aria-current="page"] {
+  background: #fff;
+  color: #0b3d91;
+  font-weight: 600;
+}
+
+.menu-usuario {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  text-transform: capitalize;
+}
+
+/* Para lectores de pantalla: está en la página pero no se ve. */
+.oculto-visual {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* El mapa ocupa todo el espacio que queda, en computador y en celular. */
@@ -91,8 +154,16 @@ body {
 }
 
 @media (max-width: 480px) {
-  .encabezado h1 {
-    font-size: 1rem;
+  .menu {
+    padding: 6px 10px;
+  }
+  .menu-marca span,
+  .menu-usuario {
+    display: none;
+  }
+  .menu-enlace {
+    padding: 4px 8px;
+    font-size: 0.82rem;
   }
   /* En celular las etiquetas son más compactas para que no se tapen. */
   .leaflet-tooltip.etiqueta-estacionamiento {
