@@ -164,10 +164,32 @@ a {
 
 .menu-usuario {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: 13px;
   color: var(--bruma-carnet);
-  text-transform: capitalize;
   white-space: nowrap;
+}
+
+.menu-usuario span {
+  text-transform: capitalize;
+}
+
+/* Enlaces y «Salir» del usuario: texto blanco subrayado, con el área táctil de 44 px (D-007). */
+.menu-usuario a,
+.menu-usuario button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 /* Pestañas: arriba en computador, abajo y fijas en el celular. */

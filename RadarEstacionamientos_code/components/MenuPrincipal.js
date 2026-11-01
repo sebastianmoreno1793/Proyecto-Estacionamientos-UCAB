@@ -1,4 +1,5 @@
 import EnlacesMenu from "./EnlacesMenu";
+import { salir } from "@/app/cuenta/acciones";
 import { esAdministrador, obtenerUsuarioActual } from "@/lib/sesion";
 
 // Menú de la app, en todas las páginas (D-007): la marca en Azul Carnet arriba y las pestañas,
@@ -29,9 +30,12 @@ export default async function MenuPrincipal() {
       </a>
       <EnlacesMenu enlaces={enlaces} />
       {usuario && (
-        <span className="menu-usuario" title={usuario.correo}>
-          {usuario.rol}
-        </span>
+        <div className="menu-usuario">
+          <span title={usuario.correo}>{usuario.rol}</span>
+          <form action={salir}>
+            <button type="submit">Salir</button>
+          </form>
+        </div>
       )}
     </header>
   );
