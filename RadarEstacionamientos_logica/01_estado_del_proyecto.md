@@ -1,6 +1,6 @@
 # Estado del proyecto
 
-**Estado:** 🟢 Vigente — es la única fuente de las cifras del proyecto. Actualizado: 27/oct/26.
+**Estado:** 🟢 Vigente — es la única fuente de las cifras del proyecto. Actualizado: 01/nov/26.
 
 ## Equipo 3 (NRC 15787)
 
@@ -49,6 +49,8 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 ### Para la Segunda Entrega (03/nov)
 
 **Repartido el 27/oct:** cinco tareas por integrante en `producto/plan_segunda_entrega.md` (Issues del milestone «Entrega 2» y tarjeta de Trello «Segunda Entrega»).
+
+**Al 01/nov:** German terminó (HU 5.1, diagrama, RNF 1). La HU 9.1 de Sebastian está en Trello con su diagrama. Samuel, Aaron y Manuel no han subido nada. Detalle: `producto/segunda_entrega/revision_equipo_01nov.md`.
 
 
 - [ ] Cada integrante especifica una HU en su tarjeta de Trello (Card, Conversación y Criterios) con su diagrama de actividades como imagen o PDF.

@@ -2,6 +2,25 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 01/nov/26 — Segunda Entrega: HU 9.1 especificada y revisión del equipo
+
+- **HU 9.1 · Crear una incidencia:** Card («quiero **crear** una incidencia»), Conversación con las
+  seis partes y tres criterios Dado/cuando/entonces, comprobados contra el código de `main` (48/48
+  pruebas). Diagrama de actividades en PNG y PDF (carriles Conductor y Sistema, guardas y uniones).
+  Todo en `producto/segunda_entrega/` y **subido a Trello** (descripción, PNG, checklist 5/5 y tareas 1–2 de Sebastian marcadas en «Segunda Entrega»). Comentarios de revisión dejados en las tarjetas de Samuel (HU 1.1) y German (HU 5.1).
+- **Revisión del tablero** (`producto/segunda_entrega/revision_equipo_01nov.md`): solo German
+  terminó (HU 5.1, diagrama y RNF 1). Samuel, Aaron y Manuel no tienen ni la HU ni el RNF: 6 de los
+  12 pts en riesgo por los RNF. La HU 5.1 todavía dice OpenStreetMap (contradice D-007).
+- Convocatoria, orden del día y minuta propuesta de la **Reunión 4**, y borrador del correo a la
+  profesora con la checklist de revisión final.
+- Revisión del código con `gh` como `sebastianmoreno1793`: ensayo de fusión de todos los PR (84/84
+  pruebas). El #58 (HU 1.1) dejaba al simulador sin sesión (401/403): arreglo en la rama
+  `simulador-reenvia-sesion` (el puente reenvía la cookie), probado de punta a punta. El #45 no se
+  fusiona todavía (trae a #58/#59, su propio `sw.js`, Tailwind). Revisiones comentadas en #58, #59,
+  #45 y #44. Detalle: `producto/segunda_entrega/revision_equipo_01nov.md` §5–6.
+- Autorrevisión: «Desplegar» estaba marcado en las HU 9.1 y 5.4 sin que la app esté desplegada; se
+  desmarcó. El enlace del correo a la profesora usaba el nombre viejo del tablero; corregido.
+
 ## 27/oct/26 — ⭐ Semáforo de dos estados (D-009) y maqueta del campus en la app
 
 - **D-009:** el semáforo pasa a **hay puesto (verde) / no hay puesto (rojo)**, gris si está cerrado. Se

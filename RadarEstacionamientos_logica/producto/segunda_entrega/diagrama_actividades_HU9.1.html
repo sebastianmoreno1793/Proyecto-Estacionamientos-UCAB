@@ -1,0 +1,110 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Diagrama de actividades HU 9.1</title>
+<style>
+body{margin:0;background:#fff}
+svg{display:block;font-family:Inter,"Helvetica Neue",Helvetica,Arial,sans-serif}
+.titulo{font-size:26px;font-weight:700;fill:#1f2937;text-anchor:middle}
+.carril{fill:#fff;stroke:#94a3b8;stroke-width:2}
+.cabecera{fill:#e2e8f0;stroke:#94a3b8;stroke-width:2}
+.divisor{stroke:#94a3b8;stroke-width:2}
+.carril-t{font-size:21px;font-weight:700;fill:#1f2937;text-anchor:middle}
+.accion{fill:#eef2fb;stroke:#1f2937;stroke-width:2}
+.rombo{fill:#fff7ed;stroke:#1f2937;stroke-width:2}
+.t{font-size:19px;fill:#1f2937;text-anchor:middle}
+.pregunta{font-size:18px;font-style:italic;fill:#475569}
+.guarda{font-size:18px;font-weight:700;fill:#9a3412}
+.flecha{fill:none;stroke:#1f2937;stroke-width:2.5}
+.inicio{fill:#1f2937}
+.fin-borde{fill:#fff;stroke:#1f2937;stroke-width:3}
+@page{size:1520px 2400px;margin:0}</style></head><body>
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="2400" viewBox="0 0 1520 2400">
+<defs><marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/></marker></defs>
+<text x="760.0" y="52" class="titulo">Diagrama de actividades · HU 9.1 · Crear una incidencia</text>
+<rect x="20" y="90" width="1480" height="2290" class="carril"/>
+<rect x="20" y="90" width="1480" height="64" class="cabecera"/>
+<line x1="720" y1="90" x2="720" y2="2380" class="divisor"/>
+<line x1="20" y1="154" x2="1500" y2="154" class="divisor"/>
+<text x="370.0" y="130" class="carril-t">Conductor (estudiante o profesor)</text>
+<text x="1110.0" y="130" class="carril-t">Sistema (Radar de Estacionamientos)</text>
+<circle cx="420" cy="200" r="22" class="inicio"/>
+<path d="M 420,222 L 420,240" class="flecha" marker-end="url(#punta)"/>
+<rect x="270.0" y="240.0" width="300" height="90" rx="22" class="accion"/>
+<text x="420" y="280.0" class="t">Abre la opción</text>
+<text x="420" y="304.0" class="t">«Reportar»</text>
+<path d="M 570,285 L 1110,285 L 1110,370" class="flecha" marker-end="url(#punta)"/>
+<rect x="960.0" y="370.0" width="300" height="80" rx="22" class="accion"/>
+<text x="1110" y="405.0" class="t">Verifica la sesión</text>
+<text x="1110" y="429.0" class="t">del usuario</text>
+<path d="M 1110,450 L 1110,490" class="flecha" marker-end="url(#punta)"/>
+<polygon points="1110,490 1150,530 1110,570 1070,530" class="rombo"/>
+<text x="1162" y="508" class="pregunta" text-anchor="start">¿Tiene sesión iniciada?</text>
+<path d="M 1070,530 L 960,530" class="flecha" marker-end="url(#punta)"/>
+<text x="1015.0" y="516" class="guarda" text-anchor="middle">[sin sesión]</text>
+<rect x="740.0" y="490.0" width="220" height="80" rx="22" class="accion"/>
+<text x="850" y="525.0" class="t">Pide iniciar sesión</text>
+<text x="850" y="549.0" class="t">(HU 1.1)</text>
+<path d="M 850,570 L 850,640 L 420,640 L 420,680" class="flecha" marker-end="url(#punta)"/>
+<rect x="270.0" y="680.0" width="300" height="80" rx="22" class="accion"/>
+<text x="420" y="715.0" class="t">Inicia sesión con su</text>
+<text x="420" y="739.0" class="t">correo institucional</text>
+<path d="M 1110,570 L 1110,680" class="flecha" marker-end="url(#punta)"/>
+<text x="1124" y="630" class="guarda" text-anchor="start">[con sesión]</text>
+<polygon points="1110,680 1150,720 1110,760 1070,720" class="rombo"/>
+<path d="M 570,720 L 1070,720" class="flecha" marker-end="url(#punta)"/>
+<path d="M 1110,760 L 1110,800" class="flecha" marker-end="url(#punta)"/>
+<rect x="950.0" y="800.0" width="320" height="90" rx="22" class="accion"/>
+<text x="1110" y="828.0" class="t">Muestra el formulario con los</text>
+<text x="1110" y="852.0" class="t">estacionamientos abiertos y los</text>
+<text x="1110" y="876.0" class="t">tres tipos de problema</text>
+<path d="M 1110,890 L 1110,915 L 420,915 L 420,960" class="flecha" marker-end="url(#punta)"/>
+<polygon points="420,960 460,1000 420,1040 380,1000" class="rombo"/>
+<path d="M 420,1040 L 420,1080" class="flecha" marker-end="url(#punta)"/>
+<rect x="270.0" y="1080.0" width="300" height="80" rx="22" class="accion"/>
+<text x="420" y="1127.0" class="t">Elige el estacionamiento</text>
+<path d="M 420,1160 L 420,1200" class="flecha" marker-end="url(#punta)"/>
+<rect x="270.0" y="1200.0" width="300" height="80" rx="22" class="accion"/>
+<text x="420" y="1247.0" class="t">Elige el tipo de problema</text>
+<path d="M 420,1280 L 420,1320" class="flecha" marker-end="url(#punta)"/>
+<polygon points="420,1320 460,1360 420,1400 380,1360" class="rombo"/>
+<text x="472" y="1338" class="pregunta" text-anchor="start">¿Envía el reporte?</text>
+<path d="M 380,1360 L 240,1360" class="flecha" marker-end="url(#punta)"/>
+<text x="370" y="1346" class="guarda" text-anchor="end">[cancelar]</text>
+<rect x="40.0" y="1320.0" width="200" height="80" rx="22" class="accion"/>
+<text x="140" y="1355.0" class="t">Cierra el formulario</text>
+<text x="140" y="1379.0" class="t">sin reportar</text>
+<path d="M 420,1400 L 420,1460" class="flecha" marker-end="url(#punta)"/>
+<text x="434" y="1436" class="guarda" text-anchor="start">[enviar]</text>
+<rect x="270.0" y="1460.0" width="300" height="80" rx="22" class="accion"/>
+<text x="420" y="1507.0" class="t">Pulsa «Enviar reporte»</text>
+<path d="M 570,1500 L 1110,1500 L 1110,1560" class="flecha" marker-end="url(#punta)"/>
+<rect x="960.0" y="1560.0" width="300" height="80" rx="22" class="accion"/>
+<text x="1110" y="1595.0" class="t">Valida el estacionamiento</text>
+<text x="1110" y="1619.0" class="t">y el tipo de problema</text>
+<path d="M 1110,1640 L 1110,1680" class="flecha" marker-end="url(#punta)"/>
+<polygon points="1110,1680 1150,1720 1110,1760 1070,1720" class="rombo"/>
+<text x="1058" y="1698" class="pregunta" text-anchor="end">¿Datos completos?</text>
+<path d="M 1150,1720 L 1280,1720" class="flecha" marker-end="url(#punta)"/>
+<text x="1215.0" y="1706" class="guarda" text-anchor="middle">[falta un dato]</text>
+<rect x="1280.0" y="1680.0" width="200" height="80" rx="22" class="accion"/>
+<text x="1380" y="1715.0" class="t">Indica qué falta</text>
+<text x="1380" y="1739.0" class="t">elegir</text>
+<path d="M 1380,1680 L 1380,1000 L 460,1000" class="flecha" marker-end="url(#punta)"/>
+<path d="M 1110,1760 L 1110,1820" class="flecha" marker-end="url(#punta)"/>
+<text x="1124" y="1796" class="guarda" text-anchor="start">[datos completos]</text>
+<rect x="950.0" y="1820.0" width="320" height="90" rx="22" class="accion"/>
+<text x="1110" y="1848.0" class="t">Registra la incidencia con la</text>
+<text x="1110" y="1872.0" class="t">fecha, la hora y el estado</text>
+<text x="1110" y="1896.0" class="t">«pendiente»</text>
+<path d="M 1110,1910 L 1110,1950" class="flecha" marker-end="url(#punta)"/>
+<rect x="950.0" y="1950.0" width="320" height="90" rx="22" class="accion"/>
+<text x="1110" y="1978.0" class="t">Muestra la confirmación con el</text>
+<text x="1110" y="2002.0" class="t">estacionamiento, el tipo, la</text>
+<text x="1110" y="2026.0" class="t">hora y el estado</text>
+<path d="M 1110,2040 L 1110,2110 L 570,2110" class="flecha" marker-end="url(#punta)"/>
+<rect x="270.0" y="2070.0" width="300" height="80" rx="22" class="accion"/>
+<text x="420" y="2117.0" class="t">Lee la confirmación</text>
+<path d="M 420,2150 L 420,2210" class="flecha" marker-end="url(#punta)"/>
+<polygon points="420,2210 460,2250 420,2290 380,2250" class="rombo"/>
+<path d="M 140,1400 L 140,2250 L 380,2250" class="flecha" marker-end="url(#punta)"/>
+<path d="M 420,2290 L 420,2318" class="flecha" marker-end="url(#punta)"/>
+<circle cx="420" cy="2342" r="22" class="fin-borde"/><circle cx="420" cy="2342" r="14" class="inicio"/>
+</svg></body></html>
