@@ -2,6 +2,19 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 01/nov/26 (noche) — Fusiones en main
+
+- Fusionados en `main`, en orden: #49 (maqueta 3D), #50 (docs), #51 (semáforo, D-007, D-008), #60
+  (el puente del simulador reenvía la sesión), #58 (HU 1.1), #59 (HU 2.1) y #44 (HU 6.1). Cierran
+  los Issues #1, #14 y #8. `main` queda con 84/84 pruebas en la app, 19/19 en el simulador y el
+  build limpio.
+- Conflictos resueltos en las ramas de cada PR: `app/page.js` (maqueta + redirección a
+  `/entrar`), «Salir» y «Mis vehículos» pasan al menú principal, y `lib/almacen.js` junta
+  movimientos, lecturas de placa y edificios.
+- #61 (abierto): en el celular, «Salir» quedaba cortado en el menú; se ocultan el rol y el
+  subtítulo por debajo de 480 px. Falta que otro integrante lo revise y lo fusione.
+- **No se fusionó el #45** (HU 8.1): sigue con los problemas comentados en el PR.
+
 ## 01/nov/26 — Segunda Entrega: HU 9.1 especificada y revisión del equipo
 
 - **HU 9.1 · Crear una incidencia:** Card («quiero **crear** una incidencia»), Conversación con las

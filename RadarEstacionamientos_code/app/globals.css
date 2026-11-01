@@ -192,6 +192,14 @@ a {
   cursor: pointer;
 }
 
+/* En el celular no caben el rol ni el subtítulo junto a «Mis vehículos» y «Salir». */
+@media (max-width: 479px) {
+  .menu-usuario span,
+  .menu-marca small {
+    display: none;
+  }
+}
+
 /* Pestañas: arriba en computador, abajo y fijas en el celular. */
 .pestanas {
   display: flex;
