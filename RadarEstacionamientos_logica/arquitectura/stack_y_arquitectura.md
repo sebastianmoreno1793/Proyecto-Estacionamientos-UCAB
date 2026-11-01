@@ -9,9 +9,17 @@ inicio de sesión todavía sin decidir.
 - Repositorio en **GitHub**, despliegue en **Vercel**.
 - Herramientas: VS Code. Planificación del sprint en **Trello**.
 
+## Dos sistemas (D-006)
+
+- **App del Radar** (`RadarEstacionamientos_code/`, puerto 3000): el producto para la persona.
+- **Maqueta 3D del campus** (`RadarEstacionamientos_simulador/`, puerto 3001, Three.js con datos
+  de OpenStreetMap y SRTM): le manda a la app las señales de sensores, garita, incidencias y
+  administración, solo por su API pública.
+- Especificación: `arquitectura_dual_app_y_maqueta.md`.
+
 ## Por decidir (ver `../preguntas_abiertas.md`)
 
 - Base de datos.
 - Librería de mapa (Google Maps vs. Leaflet + OpenStreetMap) — ligada a D-005.
 - Mecanismo de inicio de sesión con correo institucional.
-- Canal de actualización en vivo del mapa (para R2, HU 4.3 / 5.2).
+- ~~Canal de actualización en vivo del mapa~~ → resuelto en código: `GET /api/eventos` (lo usan la app y la maqueta).

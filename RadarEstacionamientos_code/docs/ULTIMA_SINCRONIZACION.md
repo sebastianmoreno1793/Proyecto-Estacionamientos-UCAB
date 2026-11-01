@@ -1,6 +1,6 @@
 # Última sincronización
 
-**2026-10-05 02:03**
+**2026-10-27 18:35**
 
 > Lo escribe `sincronizar.sh`. No lo edites.
 >
@@ -9,4 +9,4 @@
 
 ## Cambió en esta pasada
 
-- `docs/calendario_de_entregas.md`
+- `docs/arquitectura_dual_app_y_maqueta.md`
