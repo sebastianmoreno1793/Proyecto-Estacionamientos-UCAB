@@ -198,3 +198,29 @@ form.tarjeta > .boton {
 .exito:empty {
   display: none;
 }
+
+/* HU 6.1 · campos de texto y botones secundarios */
+.campo input[type="text"] {
+  font: inherit;
+  padding: 8px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: #fff;
+  color: inherit;
+  min-width: 120px;
+}
+
+.botonSecundario {
+  font: inherit;
+  padding: 8px 16px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: #fff;
+  color: inherit;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.peligro {
+  background: var(--error);
+}
