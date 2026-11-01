@@ -38,6 +38,12 @@ igual que lo haría Postman, un sensor o una persona. La app no sabe que el simu
    npm run dev          # http://localhost:3001
    ```
 
+3. **Entra a la app** en el mismo navegador: http://localhost:3000/entrar con
+   `usuario.prueba@ucab.edu.ve` / `prueba123` (administrador, solo existe en desarrollo). Las
+   incidencias, la administración y el reinicio van con esa sesión (HU 1.1); sin ella, la app
+   responde 401 o 403 y el Registro lo muestra en rojo. La garita y los sensores no la necesitan:
+   usan la clave de sensores.
+
 Si la app base corre en otra dirección o con otra clave de sensores, copia `.env.example` como
 `.env.local` y cámbialas.
 
@@ -70,6 +76,10 @@ Importa `postman/Radar_UCAB_app_base.postman_collection.json`. Trae los avisos d
 lector de placas, las incidencias, la administración, las consultas y el reinicio. Las variables
 son `urlBase`, `claveSensor` y `estacionamiento`. Lo que mandes desde Postman llega a la app
 base como si fuera real, y el simulador lo dibuja.
+
+Las incidencias, la administración y el reinicio piden sesión: entra a la app en el navegador,
+copia el valor de la cookie `radar_sesion` (herramientas del navegador › Aplicación › Cookies) y
+agrégala en Postman como encabezado `Cookie: radar_sesion=<valor>`.
 
 ## Cómo se ve
 
