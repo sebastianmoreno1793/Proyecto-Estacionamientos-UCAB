@@ -8,6 +8,16 @@ El código de la aplicación va **siempre dentro de `RadarEstacionamientos_code/
 El simulador 3D va en `RadarEstacionamientos_simulador/`. Es una extensión aparte: **solo usa
 la API pública de la app** (como Postman) y la app nunca importa nada de él.
 
+## 0.1 ⭐ Diseño y PWA (obligatorio)
+
+Toda pantalla sigue **D-007** y **D-008** (`RadarEstacionamientos_logica/decisiones/`):
+
+- Lee `RadarEstacionamientos_code/DESIGN.md` antes de hacer una pantalla (es una página).
+- Revisa tu pantalla con la skill **impeccable** antes de abrir el PR: desde
+  la raíz del repo, `/impeccable critique <ruta de la página>`. Arregla los P1.
+- No agregues librerías de componentes (Material, Bootstrap) ni fuentes descargadas.
+- Hay **un solo service worker** (`public/sw.js`). Si tu HU necesita algo de él, agrégalo ahí.
+
 ## 1. Tomar una tarea
 
 - Las tareas son los **Issues**. Cada historia de usuario es un Issue (`HU 4.1 · …`).

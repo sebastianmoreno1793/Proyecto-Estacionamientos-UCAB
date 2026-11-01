@@ -19,7 +19,9 @@ congestionan las vías internas. No saben dónde se acaba de liberar un puesto.
 
 ## Reglas del negocio
 
-- Semáforo: verde < 50%, amarillo 50% a < 80%, naranja 80% a < 95%, rojo ≥ 95%.
+- Semáforo de dos estados (D-009, 27/oct/26): **verde = hay puesto** (al menos 1 libre), **rojo = no hay
+  puesto** (0 libres), gris = cerrado. Siempre con el texto y la cantidad de libres. El porcentaje de
+  ocupación es un dato, no decide el color.
 - La ocupación se mide por estacionamiento completo, no por puesto.
 - Solo campus Montalbán; catálogo de NRC solo de la Escuela de Ingeniería.
 - El aula de cada NRC no es pública: el usuario elige el edificio.

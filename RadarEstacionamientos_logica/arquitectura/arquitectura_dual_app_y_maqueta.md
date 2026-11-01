@@ -51,15 +51,15 @@ profesores, vigilancia y administración.
 mapa, semáforo de ocupación, sugerencia del más cercano, notificaciones, incidencias (CRUD) y
 administración de estacionamientos.
 
-**Lo que tiene que cumplir para la persona.** Esto es lo que pediste: muy interactiva y con
-buen diseño de uso. Cada punto apunta a los rangos de calidad del Brief:
+**Lo que tiene que cumplir para la persona.** Muy interactiva y con buen diseño de uso; las
+reglas obligatorias están en ⭐ D-007 (`../producto/DESIGN.md`) y ⭐ D-008 (PWA). Cada punto apunta a los rangos de calidad del Brief:
 
 | Lo que se busca | Cómo se nota | Rango de calidad del Brief → ISO 25010 |
 |---|---|---|
 | Se entiende de un vistazo | Colores del semáforo, números grandes, lenguaje del campus («la Playa», «Sambilito») | Capacidad de interacción → auto-descriptividad |
 | Responde al instante | El mapa cambia solo cuando entra o sale un carro, sin recargar | Eficiencia de desempeño → comportamiento temporal |
 | Se usa con una mano en el carro | Pensada primero para el celular: botones grandes, pocos toques para reportar | Capacidad de interacción → operabilidad |
-| Evita errores | Formularios con listas cerradas (tipo de incidencia, estacionamiento); se confirma antes de enviar | Capacidad de interacción → protección contra errores de usuario |
+| Evita errores | Formularios con listas cerradas (tipo de incidencia, estacionamiento); desde el mapa, el estacionamiento llega ya elegido | Capacidad de interacción → protección contra errores de usuario |
 | No se cae si falla un sensor | Ese estacionamiento sale «sin datos» y el resto sigue | Fiabilidad → tolerancia a fallos |
 | Cada quien ve lo suyo | Las placas solo las ven su dueño y el personal autorizado | Seguridad → confidencialidad |
 
@@ -91,6 +91,14 @@ cerrados con conos.
 
 **Dónde está:** `RadarEstacionamientos_simulador/` (Next.js + Three.js, puerto 3001), con
 capturas, pruebas (`npm test`) y una colección de Postman.
+
+### La maqueta también le da su imagen a la app
+
+La pantalla de inicio de la app es una **maqueta del campus vista desde arriba** (D-007). Esa
+imagen la produce el simulador en su página `/maqueta`: fotografía la escena 3D con estilo de
+maqueta física y exporta `campus.jpg` y la proyección (`maqueta.json`), que se copian a
+`RadarEstacionamientos_code/public/maqueta/` y `data/`. Es un **archivo**, no código: la app no
+importa nada del simulador ni lo necesita corriendo.
 
 ## El contrato entre los dos
 

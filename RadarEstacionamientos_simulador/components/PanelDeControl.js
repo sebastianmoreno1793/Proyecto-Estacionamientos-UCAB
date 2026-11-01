@@ -15,13 +15,10 @@ const PESTANAS = [
   { id: "postman", texto: "🔌 Postman" },
 ];
 
-// Mismos cortes que el semáforo de la app (verde < 50, amarillo < 80, naranja < 95, rojo).
+// El mismo semáforo de la app (D-009): verde = hay puesto, rojo = no hay puesto, gris = cerrado.
 function colorSemaforo(e) {
-  if (!e.activo) return "#64748b";
-  if (e.porcentaje < 50) return "#22c55e";
-  if (e.porcentaje < 80) return "#eab308";
-  if (e.porcentaje < 95) return "#f97316";
-  return "#ef4444";
+  if (!e.activo) return "#8e8e93";
+  return e.libres > 0 ? "#2f9e57" : "#d93a2e";
 }
 
 function BarraOcupacion({ estacionamiento }) {

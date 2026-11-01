@@ -1,16 +1,22 @@
-import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import MenuPrincipal from "@/components/MenuPrincipal";
+import RegistroPWA from "@/components/RegistroPWA";
 
 export const metadata = {
   title: "Radar de Estacionamientos UCAB",
   description:
     "Estacionamientos con puestos libres en la UCAB Montalbán, con semáforo de ocupación.",
+  applicationName: "Radar UCAB",
+  // PWA en iPhone (D-008): pantalla completa con la barra de estado sobre el Azul Carnet.
+  appleWebApp: { capable: true, title: "Radar UCAB", statusBarStyle: "black-translucent" },
+  formatDetection: { telephone: false },
 };
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#12315c",
 };
 
 export default function RootLayout({ children }) {
@@ -21,6 +27,7 @@ export default function RootLayout({ children }) {
           <MenuPrincipal />
           <div className="app-contenido">{children}</div>
         </div>
+        <RegistroPWA />
       </body>
     </html>
   );

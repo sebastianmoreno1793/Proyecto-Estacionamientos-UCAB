@@ -14,6 +14,23 @@ export function porcentajeDeOcupacion({ capacidad, ocupados }) {
   return Math.round((Math.min(capacidad, Math.max(0, ocupados)) / capacidad) * 100);
 }
 
+// HU 4.2 · Semáforo de dos estados (D-009): verde si hay al menos un puesto libre, rojo si no
+// hay ninguno. El porcentaje ya no decide el color. Un estacionamiento desactivado no tiene
+// semáforo: está cerrado. `color` lleva texto blanco encima (≥ 4,5:1); `relleno` es para áreas.
+export const SEMAFORO = [
+  { nivel: "hay", texto: "Hay puesto", color: "#1e7b4f", relleno: "#2f9e57" },
+  { nivel: "no-hay", texto: "No hay puesto", color: "#b42318", relleno: "#d93a2e" },
+];
+export const CERRADO = { nivel: "cerrado", texto: "Cerrado", color: "#6c6c70", relleno: "#8e8e93" };
+
+export function nivelDelSemaforo({ libres, activo = true }) {
+  if (!activo) return CERRADO;
+  return libres > 0 ? SEMAFORO[0] : SEMAFORO[1];
+}
+
+// «1 libre», «12 libres».
+export const textoLibres = (n) => `${n} ${n === 1 ? "libre" : "libres"}`;
+
 export const TIPOS_DE_MOVIMIENTO = ["ENTRADA", "SALIDA"];
 
 // HU 4.1: una entrada ocupa un puesto y una salida lo libera. Un aviso que rompería los

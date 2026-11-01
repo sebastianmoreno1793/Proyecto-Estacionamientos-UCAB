@@ -97,16 +97,15 @@ function losa(pts, abajo, arriba) {
 
 ---
 
-## 4. Semáforo de ocupación (NO modificar)
+## 4. Semáforo de ocupación (D-009, NO modificar)
 
 ```
-Verde   → ocupación < 50%
-Amarillo → ocupación 50% a < 80%
-Naranja  → ocupación 80% a < 95%
-Rojo     → ocupación ≥ 95%
+Verde → hay puesto (libres ≥ 1)
+Rojo  → no hay puesto (libres = 0)
+Gris  → cerrado (desactivado)
 ```
 
-Las funciones `obtenerColorSemaforo()` y `crearTexturaCartel()` se mantienen sin cambios.
+`obtenerColorSemaforo(libres)` y `crearTexturaCartel()` siguen esta regla. Nada de amarillo ni naranja.
 - El cartel es un `Sprite` sobre un tótem, en el punto interior del polígono. Su tamaño
   cambia con la distancia para leerse siempre.
 - El cartel mide 512 px de ancho: los nombres largos se acortan con `nombreParaCartel`

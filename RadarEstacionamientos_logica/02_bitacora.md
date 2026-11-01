@@ -2,6 +2,56 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 01/nov/26 — Segunda Entrega: HU 9.1 especificada y revisión del equipo
+
+- **HU 9.1 · Crear una incidencia:** Card («quiero **crear** una incidencia»), Conversación con las
+  seis partes y tres criterios Dado/cuando/entonces, comprobados contra el código de `main` (48/48
+  pruebas). Diagrama de actividades en PNG y PDF (carriles Conductor y Sistema, guardas y uniones).
+  Todo en `producto/segunda_entrega/` y **subido a Trello** (descripción, PNG, checklist 5/5 y tareas 1–2 de Sebastian marcadas en «Segunda Entrega»). Comentarios de revisión dejados en las tarjetas de Samuel (HU 1.1) y German (HU 5.1).
+- **Revisión del tablero** (`producto/segunda_entrega/revision_equipo_01nov.md`): solo German
+  terminó (HU 5.1, diagrama y RNF 1). Samuel, Aaron y Manuel no tienen ni la HU ni el RNF: 6 de los
+  12 pts en riesgo por los RNF. La HU 5.1 todavía dice OpenStreetMap (contradice D-007).
+- Convocatoria, orden del día y minuta propuesta de la **Reunión 4**, y borrador del correo a la
+  profesora con la checklist de revisión final.
+- Revisión del código con `gh` como `sebastianmoreno1793`: ensayo de fusión de todos los PR (84/84
+  pruebas). El #58 (HU 1.1) dejaba al simulador sin sesión (401/403): arreglo en la rama
+  `simulador-reenvia-sesion` (el puente reenvía la cookie), probado de punta a punta. El #45 no se
+  fusiona todavía (trae a #58/#59, su propio `sw.js`, Tailwind). Revisiones comentadas en #58, #59,
+  #45 y #44. Detalle: `producto/segunda_entrega/revision_equipo_01nov.md` §5–6.
+- Autorrevisión: «Desplegar» estaba marcado en las HU 9.1 y 5.4 sin que la app esté desplegada; se
+  desmarcó. El enlace del correo a la profesora usaba el nombre viejo del tablero; corregido.
+
+## 27/oct/26 — ⭐ Semáforo de dos estados (D-009) y maqueta del campus en la app
+
+- **D-009:** el semáforo pasa a **hay puesto (verde) / no hay puesto (rojo)**, gris si está cerrado. Se
+  quitan amarillo, naranja y los textos «Se está llenando», «Casi lleno» y «Lleno». Cambiado en la
+  idea de negocio, `CONTEXTO.md`, `DESIGN.md`, D-007, el código, las pruebas, el simulador, el Issue #6
+  y la tarjeta HU 4.2 de Trello. El Brief no fija colores, así que no cambia.
+- **Maqueta en vez de mapa de calles** (guía de Sebastian: maqueta física de urbanismo y render de
+  viviendas): nueva página `/maqueta` del simulador que exporta la imagen y la proyección; la app
+  dibuja el semáforo encima en SVG, con píldoras que se tocan, gestos, «Alejar · Acercar · Ver
+  todo», rótulos de edificios y tarjeta. Se quitó Leaflet.
+- **Crítica `impeccable`** (dos evaluaciones independientes): 26/40. P1 resueltos: total en tinta,
+  contraste de píldoras y botones en oscuro, datos viejos apagados con «cifras de hace N minutos»,
+  pestañas de 11 px y punto «En vivo» sin color ni pulso.
+
+## 27/oct/26 — ⭐ Diseño iOS institucional (D-007), PWA (D-008) y semáforo en el mapa (HU 4.2)
+
+- **Decisiones obligatorias para el equipo**, destacadas en `decisiones/README.md`: D-007 (diseño,
+  con `producto/DESIGN.md` y `producto/PRODUCT.md`, que salen de Thinkdy y del movimiento de Te
+  Cambio) y D-008 (PWA con un solo service worker). La skill `impeccable` se copió a
+  la carpeta de skills de cada computadora; la plantilla de PR y `CONTRIBUTING.md` lo exigen.
+- **Logo nuevo**: radar (anillos y barrido) con la «P» de estacionamiento y el punto dorado
+  (`producto/marca/`). Se generó con Quick Look desde SVG.
+- **Referencias**: Pinterest («parking app ui design») sin iniciar sesión: se tomó el patrón de mapa
+  a pantalla completa con tarjeta flotante y tres datos en columnas.
+- **Código** (rama `hu-4.2-semaforo-diseno-pwa`): mapa con semáforo y en vivo, lista de puestos (hoja
+  en el celular), tarjeta del estacionamiento, pestañas de iOS, formularios agrupados, manifest,
+  íconos, `public/sw.js`, aviso «Actualizar», página «Sin conexión» y reporte con el estacionamiento
+  elegido. 49 pruebas en verde; probado a 320, 375 y 800 px, claro y oscuro, con un aviso de
+  sensor en vivo.
+- **Huecos que quedan** (inicio de sesión, base de datos, «sin datos»): revisión del 27/oct, §6.
+
 ## 27/oct/26 — Módulo 7 completo, Brief aprobado al repo y arquitectura dual
 
 - **Módulo 7:** se revisó el curso entero (https://modulo7.ucab.edu.ve/courses/3675). El texto de las

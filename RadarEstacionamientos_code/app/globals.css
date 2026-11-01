@@ -1,3 +1,57 @@
+/* Sistema de diseño del Radar (D-007): ver DESIGN.md en esta carpeta.
+   Los valores salen de ahí; si cambia uno, se cambia primero en DESIGN.md. */
+
+:root {
+  color-scheme: light dark;
+
+  --azul: #1d4f91; /* Azul Montalbán: el único color de acción (Una Voz) */
+  --azul-boton: #1d4f91; /* fondo de botones con texto blanco (≥ 4,5:1 en claro y oscuro) */
+  --azul-hondo: #163d72;
+  --azul-carnet: #12315c;
+  --bruma-carnet: #c9d7ec;
+  --oro: #c8962e; /* Oro de Sello: solo el punto del radar */
+
+  --fondo: #f2f2f7;
+  --superficie: #ffffff;
+  --hundida: #e9e9ee;
+  --relleno: rgba(118, 118, 128, 0.12);
+  --separador: rgba(60, 60, 67, 0.18);
+  --tinta: #0f1b2d;
+  --tinta-2: #6c6c70;
+  --error: #b42318;
+  --logro: #1e7b4f;
+
+  --flotante: 0 10px 30px rgba(19, 35, 58, 0.18);
+  --barra-translucida: rgba(249, 249, 251, 0.86);
+
+  --radio-campo: 10px;
+  --radio-celda: 12px;
+  --radio-control: 14px;
+  --radio-hoja: 22px;
+
+  --alto-pestanas: 56px;
+  --seguro-abajo: env(safe-area-inset-bottom, 0px);
+  --pulsar: transform 140ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --azul: #6a9ee6; /* texto y enlaces azules sobre fondo oscuro */
+    --azul-boton: #2f6bbd;
+    --azul-hondo: #275ca6;
+    --fondo: #000000;
+    --superficie: #1c1c1e;
+    --hundida: #2c2c2e;
+    --relleno: rgba(118, 118, 128, 0.24);
+    --separador: rgba(84, 84, 88, 0.6);
+    --tinta: #f2f2f7;
+    --tinta-2: #a1a1a6;
+    --error: #ff6b5e;
+    --logro: #3ccf7a;
+    --barra-translucida: rgba(28, 28, 30, 0.86);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -6,12 +60,46 @@ html,
 body {
   margin: 0;
   height: 100%;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #0f172a;
-  background: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, Roboto, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.3;
+  color: var(--tinta);
+  background: var(--fondo);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-wrap: anywhere;
 }
 
-/* Menú arriba y la página debajo, ocupando el resto de la pantalla. */
+body {
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--azul);
+}
+
+:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: 2px;
+}
+
+.cifra {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+/* Para lectores de pantalla: está en la página pero no se ve. */
+.oculto-visual {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Estructura: marca arriba, contenido y pestañas ---------- */
+
 .app {
   display: flex;
   flex-direction: column;
@@ -36,72 +124,151 @@ body {
 .menu {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  padding: 8px 16px;
-  background: #0b3d91;
+  gap: 8px 20px;
+  padding: 10px 16px;
+  padding-top: max(10px, env(safe-area-inset-top));
+  background: var(--azul-carnet);
   color: #fff;
 }
 
 .menu-marca {
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.05rem;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.menu-marca span {
-  font-weight: 400;
-  font-size: 0.85rem;
-  opacity: 0.85;
-  margin-left: 6px;
-}
-
-.menu-enlaces {
+  flex: none;
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  flex: 1;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  min-width: 0;
 }
 
-.menu-enlace {
-  color: #dbeafe;
-  padding: 6px 10px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 0.9rem;
+.menu-marca img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  flex: none;
+}
+
+.menu-marca strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
   white-space: nowrap;
 }
 
-.menu-enlace:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-
-.menu-enlace[aria-current="page"] {
-  background: #fff;
-  color: #0b3d91;
-  font-weight: 600;
+.menu-marca small {
+  display: block;
+  font-size: 13px;
+  color: var(--bruma-carnet);
+  white-space: nowrap;
 }
 
 .menu-usuario {
-  font-size: 0.8rem;
-  opacity: 0.85;
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--bruma-carnet);
   text-transform: capitalize;
-}
-
-/* Para lectores de pantalla: está en la página pero no se ve. */
-.oculto-visual {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
   white-space: nowrap;
 }
 
-/* El mapa ocupa todo el espacio que queda, en computador y en celular. */
+/* Pestañas: arriba en computador, abajo y fijas en el celular. */
+.pestanas {
+  display: flex;
+  gap: 4px;
+}
+
+.pestana {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  color: var(--bruma-carnet);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: var(--pulsar), background-color 140ms ease;
+}
+
+.pestana svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.pestana:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.pestana[aria-current="page"] {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+.pestana:active,
+.boton-pulsable:active {
+  transform: scale(0.97);
+}
+
+/* Hasta tableta (menos de 1024 px), las pestañas son la barra de abajo de iOS. */
+@media (max-width: 1023px) {
+  .menu {
+    padding-top: max(8px, env(safe-area-inset-top));
+    padding-bottom: 8px;
+  }
+
+  .pestanas {
+    position: fixed;
+    z-index: 1200;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(var(--alto-pestanas) + var(--seguro-abajo));
+    padding: 4px 4px var(--seguro-abajo);
+    background: var(--barra-translucida);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-top: 0.5px solid var(--separador);
+    justify-content: space-around;
+  }
+
+  .pestana {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 0 2px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--tinta-2);
+    border-radius: 0;
+  }
+
+  .pestana:hover {
+    background: none;
+    color: var(--tinta-2);
+  }
+
+  .pestana[aria-current="page"] {
+    background: none;
+    color: var(--azul);
+  }
+
+  .pestana svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* El contenido no queda debajo de las pestañas. */
+  .app-contenido {
+    padding-bottom: calc(var(--alto-pestanas) + var(--seguro-abajo));
+  }
+}
+
+/* ---------- Mapa ---------- */
+
 .mapa-contenedor {
   position: relative;
   flex: 1;
@@ -109,65 +276,672 @@ body {
   display: flex;
 }
 
-.mapa-campus {
+.mapa-zona {
+  position: relative;
   flex: 1;
   min-height: 0;
-  width: 100%;
+  min-width: 0;
+  display: flex;
+}
+
+.mapa-aviso {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: var(--tinta-2);
+  font-size: 15px;
+  z-index: 500;
 }
 
 .leyenda {
   position: absolute;
-  right: 10px;
-  bottom: 24px;
   z-index: 1000; /* por encima de las capas de Leaflet */
+  top: 12px;
+  right: 12px;
   margin: 0;
-  padding: 8px 10px;
+  padding: 8px 12px;
   list-style: none;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-  font-size: 0.8rem;
+  background: var(--barra-translucida);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-radius: var(--radio-celda);
+  box-shadow: var(--flotante);
+  font-size: 13px;
+  color: var(--tinta);
 }
 
 .leyenda li {
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.leyenda li + li {
-  margin-top: 4px;
+  gap: 8px;
+  min-height: 20px;
 }
 
 .muestra {
-  width: 14px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border: 2px solid;
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
 }
 
-.etiqueta-estacionamiento {
-  font-size: 0.8rem;
+.muestra-profesores {
+  border-style: dashed;
+  border-color: var(--tinta-2);
+  background: transparent;
+}
+
+/* ---------- Maqueta (D-007): imagen del campus con el semáforo encima ---------- */
+
+.maqueta {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #bdb789; /* el color del borde de la imagen: si no llena, no se nota el corte */
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.maqueta:active {
+  cursor: grabbing;
+}
+
+.maqueta-lienzo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+
+.maqueta-lienzo.animada {
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.maqueta-lienzo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  -webkit-user-drag: none;
+}
+
+.maqueta-lienzo svg {
+  position: absolute;
+  inset: 0;
+}
+
+.zona-estacionamiento {
+  fill: var(--relleno);
+  fill-opacity: 0.5;
+  stroke: var(--borde);
+  stroke-width: 4;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill-opacity 200ms ease;
+}
+
+.zona-estacionamiento:hover {
+  fill-opacity: 0.65;
+}
+
+.zona-estacionamiento.elegida {
+  fill-opacity: 0.7;
+  stroke: #ffffff;
+  stroke-width: 5;
+}
+
+/* El estacionamiento late una vez cuando llega un aviso de su sensor. */
+.zona-estacionamiento.latido {
+  animation: latido 700ms ease-out 1;
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    fill-opacity: 0.5;
+  }
+  35% {
+    fill-opacity: 0.9;
+  }
+}
+
+/* Píldora con los libres: se puede tocar y no cambia de tamaño al acercar. */
+.pildora {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(var(--escala));
+  transform-origin: center;
+  min-width: 34px;
+  min-height: 30px;
+  padding: 4px 10px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: var(--color);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 27, 45, 0.3);
+  font: inherit;
+  font-size: 14px;
+  line-height: 18px;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pildora b {
+  font-weight: 800;
+}
+
+/* Vista general: círculos chicos solo con el número, para que no se tapen entre sí. */
+.pildora.compacta {
+  min-width: 28px;
+  min-height: 28px;
+  padding: 3px 6px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.pildora.elegida {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+  z-index: 2;
+}
+
+.rotulo-edificio {
+  position: absolute;
+  transform: translate(-50%, -140%) scale(var(--escala));
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f1b2d;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(15, 27, 45, 0.2);
+}
+
+/* Sin conexión, las cifras pueden ser viejas: el semáforo se apaga para no engañar. */
+.datos-viejos .zona-estacionamiento,
+.datos-viejos .pildora {
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.maqueta-controles {
+  position: absolute;
+  z-index: 1000;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  background: var(--barra-translucida);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-radius: var(--radio-celda);
+  box-shadow: var(--flotante);
+  overflow: hidden;
+}
+
+.maqueta-controles button {
+  min-height: 44px;
+  padding: 0 12px;
+  border: none;
+  background: none;
+  color: var(--azul);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--pulsar);
+}
+
+.maqueta-controles button + button {
+  border-left: 0.5px solid var(--separador);
+}
+
+.maqueta-controles button:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-color-scheme: dark) {
+  .maqueta {
+    background: #8e8a6a;
+  }
+
+  .maqueta-lienzo img {
+    filter: brightness(0.8) saturate(0.9);
+  }
+}
+
+/* Panel de puestos: a la izquierda en computador, hoja que sube en el celular. */
+.panel-puestos {
+  order: -1;
+  width: 360px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--fondo);
+  border-right: 0.5px solid var(--separador);
+}
+
+.panel-encabezado {
+  padding: 16px 16px 8px;
+}
+
+.panel-alternar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.panel-agarradera {
+  display: none;
+}
+
+.panel-total {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-total .cifra {
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.panel-total-texto {
+  font-size: 15px;
+  color: var(--tinta-2);
+}
+
+.panel-flecha {
+  display: none;
+  font-size: 15px;
+  color: var(--azul);
+  font-weight: 600;
+}
+
+.estado-conexion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--tinta-2);
+}
+
+.estado-conexion .punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tinta-2);
+}
+
+.estado-en-vivo .punto {
+  background: var(--tinta);
+}
+
+.estado-sin-conexion .punto,
+.estado-reconectando .punto {
+  background: var(--error);
+}
+
+.estado-sin-conexion,
+.estado-reconectando {
+  color: var(--error);
+}
+
+.panel-lista {
+  list-style: none;
+  margin: 8px 16px 16px;
+  padding: 0;
+  overflow-y: auto;
+  min-height: 0;
+  background: var(--superficie);
+  border-radius: var(--radio-celda);
+}
+
+.panel-lista li + li .panel-item {
+  border-top: 0.5px solid var(--separador);
+}
+
+.panel-item {
+  display: grid;
+  grid-template-columns: 14px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--pulsar), background-color 140ms ease;
+}
+
+.panel-lista li:first-child .panel-item {
+  border-radius: var(--radio-celda) var(--radio-celda) 0 0;
+}
+
+.panel-lista li:last-child .panel-item {
+  border-radius: 0 0 var(--radio-celda) var(--radio-celda);
+}
+
+.panel-item:hover {
+  background: var(--relleno);
+}
+
+.panel-item:active {
+  transform: scale(0.97);
+}
+
+.panel-item[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--azul) 12%, transparent);
+}
+
+.panel-punto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.panel-nombre {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.panel-nombre small {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--tinta-2);
+}
+
+.panel-libres {
+  font-size: 15px;
+  color: var(--tinta-2);
   white-space: nowrap;
 }
 
-@media (max-width: 480px) {
-  .menu {
-    padding: 6px 10px;
+.panel-libres .cifra {
+  font-size: 20px;
+  color: var(--tinta);
+}
+
+/* Tarjeta del estacionamiento elegido: flota sobre el mapa. */
+.tarjeta-estacionamiento {
+  position: absolute;
+  z-index: 1100;
+  left: 16px;
+  bottom: 16px;
+  width: min(380px, calc(100% - 32px));
+  padding: 16px;
+  background: var(--superficie);
+  border-radius: var(--radio-hoja);
+  box-shadow: var(--flotante);
+  animation: subir 340ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.tarjeta-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tarjeta-cabecera h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.nivel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--tinta-2);
+}
+
+.nivel span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.boton-texto {
+  min-height: 44px;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  color: var(--azul);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tarjeta-datos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 16px 0;
+  padding: 12px 0;
+  border-top: 0.5px solid var(--separador);
+  border-bottom: 0.5px solid var(--separador);
+}
+
+.tarjeta-datos div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tarjeta-datos div + div {
+  padding-left: 12px;
+  border-left: 0.5px solid var(--separador);
+}
+
+.tarjeta-datos dt {
+  font-size: 13px;
+  color: var(--tinta-2);
+}
+
+.tarjeta-datos dd {
+  margin: 0;
+  font-size: 22px;
+}
+
+.boton-principal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radio-control);
+  background: var(--azul-boton);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--pulsar), background-color 140ms ease;
+}
+
+.boton-principal:hover {
+  background: var(--azul-hondo);
+}
+
+.boton-principal:active {
+  transform: scale(0.97);
+}
+
+.boton-principal svg {
+  width: 20px;
+  height: 20px;
+}
+
+.boton-secundario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 50px;
+  border: none;
+  border-radius: var(--radio-control);
+  background: var(--relleno);
+  color: var(--azul);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes subir {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
   }
-  .menu-marca span,
-  .menu-usuario {
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .mapa-contenedor {
+    flex-direction: column;
+  }
+
+  .leyenda {
+    top: 8px;
+    right: 8px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  /* En el celular, la lista es una hoja que sube desde abajo, sobre el mapa. */
+  .panel-puestos {
+    order: 0;
+    position: absolute;
+    z-index: 1050;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 58%;
+    border-right: none;
+    border-radius: var(--radio-hoja) var(--radio-hoja) 0 0;
+    box-shadow: var(--flotante);
+    animation: subir 340ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+
+  .panel-cerrado {
+    max-height: none;
+  }
+
+  .panel-encabezado {
+    padding: 6px 16px 8px;
+  }
+
+  .panel-agarradera {
+    display: block;
+    width: 36px;
+    height: 5px;
+    margin: 0 auto 6px;
+    border-radius: 3px;
+    background: var(--separador);
+  }
+
+  .panel-flecha {
+    display: inline;
+  }
+
+  .panel-total .cifra {
+    font-size: 28px;
+  }
+
+  /* Con la lista abierta, cada fila ya dice su nivel en texto: la leyenda se oculta. */
+  .mapa-contenedor:has(.panel-puestos:not(.panel-cerrado)):not(.con-tarjeta) .leyenda {
     display: none;
   }
-  .menu-enlace {
-    padding: 4px 8px;
-    font-size: 0.82rem;
+
+  /* En el celular, la tarjeta del elegido reemplaza a la hoja de la lista. */
+  .con-tarjeta .panel-puestos {
+    display: none;
   }
-  /* En celular las etiquetas son más compactas para que no se tapen. */
-  .leaflet-tooltip.etiqueta-estacionamiento {
-    font-size: 0.62rem;
-    padding: 1px 4px;
+
+  .tarjeta-estacionamiento {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+  }
+}
+
+/* ---------- Avisos (toast) ---------- */
+
+.aviso-flotante {
+  position: fixed;
+  z-index: 2000;
+  left: 50%;
+  bottom: calc(16px + var(--seguro-abajo));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(420px, calc(100% - 32px));
+  padding: 12px 12px 12px 16px;
+  background: var(--superficie);
+  color: var(--tinta);
+  border-radius: var(--radio-control);
+  box-shadow: var(--flotante);
+  font-size: 15px;
+  animation: subir 340ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.aviso-flotante p {
+  flex: 1;
+  margin: 0;
+}
+
+.aviso-flotante .boton-principal {
+  width: auto;
+  min-height: 44px;
+}
+
+@media (max-width: 767px) {
+  .aviso-flotante {
+    bottom: calc(var(--alto-pestanas) + var(--seguro-abajo) + 12px);
+  }
+}
+
+/* ---------- Reducir movimiento: todo se apaga. ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Icono } from "./Iconos";
 
 export default function EnlacesMenu({ enlaces }) {
   const ruta = usePathname();
   return (
-    <nav aria-label="Menú principal" className="menu-enlaces">
+    <nav aria-label="Menú principal" className="pestanas">
       {enlaces.map(({ href, texto, icono }) => (
-        <Link key={href} href={href} className="menu-enlace" aria-current={ruta === href ? "page" : undefined}>
-          <span aria-hidden="true">{icono}</span> {texto}
+        <Link key={href} href={href} className="pestana" aria-current={ruta === href ? "page" : undefined}>
+          <Icono nombre={icono} />
+          <span>{texto}</span>
         </Link>
       ))}
     </nav>

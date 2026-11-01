@@ -1,6 +1,6 @@
 # Estado del proyecto
 
-**Estado:** 🟢 Vigente — es la única fuente de las cifras del proyecto. Actualizado: 27/oct/26.
+**Estado:** 🟢 Vigente — es la única fuente de las cifras del proyecto. Actualizado: 01/nov/26.
 
 ## Equipo 3 (NRC 15787)
 
@@ -25,6 +25,11 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
   en la rama `hu-3.2-mapa-3d-campus`. Detalle: `producto/revision_27oct_equipo_vs_profesora.md`.
 - **Arquitectura:** dos sistemas, la app y la maqueta 3D (D-006,
   `arquitectura/arquitectura_dual_app_y_maqueta.md`).
+- ⭐ **Decisiones obligatorias** para todo el equipo: D-007 (diseño y maqueta, `producto/DESIGN.md`),
+  D-008 (PWA) y D-009 (semáforo de dos estados: hay o no hay puesto). La maqueta con el semáforo
+  en vivo (HU 4.2) está en la rama `hu-4.2-semaforo-diseno-pwa`.
+- **Bloquean el despliegue:** inicio de sesión real (HU 1.1) y base de datos (los datos viven en
+  memoria). Ver la revisión del 27/oct, §6.
 - **Próximo:** Segunda Entrega el **mar 03/nov** (12 pts): cada uno especifica una HU en Trello con
   su diagrama de actividades, más los 4 RNF. Checklist en `negocio/modulo7/README.md`.
 - **Material de la profesora:** `negocio/modulo7/` (instrucciones, plantillas, anuncios, comentarios y
@@ -42,6 +47,11 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 ## Pendientes inmediatos
 
 ### Para la Segunda Entrega (03/nov)
+
+**Repartido el 27/oct:** cinco tareas por integrante en `producto/plan_segunda_entrega.md` (Issues del milestone «Entrega 2» y tarjeta de Trello «Segunda Entrega»).
+
+**Al 01/nov:** German terminó (HU 5.1, diagrama, RNF 1). La HU 9.1 de Sebastian está en Trello con su diagrama. Samuel, Aaron y Manuel no han subido nada. Detalle: `producto/segunda_entrega/revision_equipo_01nov.md`.
+
 
 - [ ] Cada integrante especifica una HU en su tarjeta de Trello (Card, Conversación y Criterios) con su diagrama de actividades como imagen o PDF.
 - [ ] Tarjeta «Requisitos No Funcionales» con los 4 RNF (ISO 25010, testeables), acordados en equipo.

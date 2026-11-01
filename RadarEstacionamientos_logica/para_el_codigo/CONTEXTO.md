@@ -12,8 +12,16 @@ Ingeniería de Software, Equipo 3.
 - Sensores y lector de placas son **simulados**; los avisos simulados entran por el mismo
   camino que entrarían los reales (`docs/decisiones/D-002-deteccion-simulada.md`).
 - Solo entran correos @est.ucab.edu.ve y @ucab.edu.ve (`docs/decisiones/D-003-solo-web-con-correo-ucab.md`).
-- Semáforo: verde < 50%, amarillo 50% a < 80%, naranja 80% a < 95%, rojo ≥ 95%.
+- ⭐ Semáforo (D-009): **verde = hay puesto** (libres ≥ 1), **rojo = no hay puesto** (libres = 0), gris =
+  cerrado. Nada de amarillo ni naranja. Lo decide `nivelDelSemaforo` con los libres, no el porcentaje.
 - Puestos libres: nunca menos de 0 ni más que la capacidad.
+- ⭐ **Diseño (D-007, obligatorio):** toda interfaz sigue `DESIGN.md` (raíz de esta carpeta): iOS
+  institucional, Azul Montalbán como único color de acción, los colores del semáforo solo para
+  la ocupación, fuente del sistema, 44 px mínimo, botones con texto, claro y oscuro, celular
+  primero (320 y 375 px). Antes de terminar una pantalla corre `/impeccable critique` (skill
+  instalada en cada computadora) y arregla los P1. Contexto de producto: `PRODUCT.md`.
+- ⭐ **PWA (D-008, obligatorio):** un solo service worker, `public/sw.js`; nadie registra otro.
+  `/api/*` nunca sale de la caché. Lo que necesite una HU del service worker se agrega ahí.
 
 ## Qué construir ahora
 

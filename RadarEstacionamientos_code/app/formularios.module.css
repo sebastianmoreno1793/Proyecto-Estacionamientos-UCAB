@@ -1,11 +1,9 @@
+/* Páginas de formulario y listas (D-007, DESIGN.md): una columna de hasta 640 px, título
+   grande de iOS y listas agrupadas sobre el fondo gris. Los colores vienen de globals.css. */
+
 .pagina {
-  --texto-suave: #475569;
-  --borde: #cbd5e1;
-  --acento: #0b3d91;
-  --error: #b42318;
-  --exito: #157f3b;
   width: 100%;
-  max-width: 720px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 24px 16px 48px;
   display: flex;
@@ -19,22 +17,31 @@
   margin: 0;
 }
 
+.pagina h1 {
+  font-size: 34px;
+  line-height: 41px;
+  font-weight: 700;
+}
+
 .pagina h2 {
-  font-size: 1.1rem;
+  font-size: 17px;
+  font-weight: 600;
 }
 
 .ayuda {
-  color: var(--texto-suave);
-  line-height: 1.5;
+  max-width: 62ch;
+  color: var(--tinta-2);
+  font-size: 15px;
+  line-height: 20px;
 }
 
 .tarjeta {
-  border: 1px solid var(--borde);
-  border-radius: 12px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  background: var(--superficie);
+  border-radius: var(--radio-celda);
 }
 
 .lista {
@@ -58,59 +65,105 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 16px;
+  gap: 12px 16px;
 }
 
 .campo {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 14px;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  flex: 1;
+  min-width: 140px;
 }
 
+/* 16 px o más: el iPhone no hace zoom al tocar el campo. */
 .campo input[type="number"],
 .campo select {
   font: inherit;
-  padding: 8px;
-  border: 1px solid var(--borde);
-  border-radius: 8px;
-  background: #fff;
-  color: inherit;
-  min-width: 120px;
+  font-size: 17px;
+  font-weight: 400;
+  min-height: 48px;
+  padding: 0 12px;
+  border: none;
+  border-radius: var(--radio-campo);
+  background: var(--relleno);
+  color: var(--tinta);
+  width: 100%;
 }
 
 .opciones {
+  margin: 0;
+  padding: 0;
   border: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .opciones legend {
-  font-size: 14px;
-  margin-bottom: 4px;
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Las opciones son filas de una lista agrupada, con círculo de selección. */
+.opciones .casilla {
+  min-height: 50px;
+  padding: 0 4px;
+  border-top: 0.5px solid var(--separador);
+}
+
+.opciones .casilla:first-of-type {
+  border-top: none;
 }
 
 .casilla {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.casilla input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--azul);
+  flex: none;
 }
 
 .boton {
   font: inherit;
-  padding: 8px 16px;
+  font-weight: 600;
+  min-height: 50px;
+  padding: 0 20px;
   border: none;
-  border-radius: 8px;
-  background: var(--acento);
+  border-radius: var(--radio-control);
+  background: var(--azul-boton);
   color: #fff;
   cursor: pointer;
-  align-self: flex-start;
+  transition: transform 140ms ease, background-color 140ms ease;
+}
+
+.boton:hover {
+  background: var(--azul-hondo);
+}
+
+.boton:active {
+  transform: scale(0.97);
 }
 
 .boton:disabled {
   opacity: 0.6;
   cursor: wait;
+}
+
+/* En un formulario de una columna, el botón principal ocupa todo el ancho. */
+form.tarjeta > .boton {
+  width: 100%;
 }
 
 .marcas {
@@ -119,20 +172,29 @@
 }
 
 .etiqueta {
-  font-size: 12px;
-  padding: 2px 8px;
+  font-size: 13px;
+  padding: 2px 10px;
   border-radius: 999px;
-  border: 1px solid var(--borde);
+  background: var(--relleno);
+  color: var(--tinta-2);
+  white-space: nowrap;
 }
 
 .inactivo {
-  color: var(--texto-suave);
+  opacity: 0.7;
 }
 
 .error {
   color: var(--error);
+  font-size: 15px;
 }
 
 .exito {
-  color: var(--exito);
+  color: var(--logro);
+  font-size: 15px;
+}
+
+.error:empty,
+.exito:empty {
+  display: none;
 }
