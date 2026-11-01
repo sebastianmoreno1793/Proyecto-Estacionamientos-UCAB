@@ -1,7 +1,9 @@
 // Puente entre el navegador del simulador y la app base. El simulador NO toca la app por
 // dentro: todo pasa por la misma API pública que usarían los sensores, el lector de placas
 // o un usuario. La clave de los sensores se agrega aquí, en el servidor, para que nunca
-// llegue al navegador.
+// llegue al navegador. Lo que hace una persona (incidencias, administración, reinicio) va con
+// la sesión de quien entró a la app en este navegador (HU 1.1): las cookies no distinguen
+// puerto, así que la de localhost:3000 también llega aquí, y se reenvía tal cual.
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +27,9 @@ async function reenviar(request, { params }) {
   if (!ruta) return Response.json({ error: `Ruta no permitida: ${request.method} /api/${camino}` }, { status: 404 });
 
   const encabezados = { "content-type": "application/json" };
+  const cookie = request.headers.get("cookie");
   if (ruta.sensor) encabezados["x-clave-sensor"] = CLAVE_SENSORES;
+  else if (cookie) encabezados.cookie = cookie;
 
   try {
     const respuesta = await fetch(new URL(`/api/${camino}`, URL_APP_BASE), {
