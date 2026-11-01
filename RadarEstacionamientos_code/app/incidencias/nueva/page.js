@@ -5,18 +5,21 @@ import estilos from "../../formularios.module.css";
 
 export const metadata = { title: "Reportar una incidencia" };
 
-// HU 9.1 Reportar una incidencia.
-export default async function PaginaNuevaIncidencia() {
+// HU 9.1 Crear una incidencia. Desde la tarjeta del mapa llega con
+// `?estacionamiento=<id>`: ese estacionamiento ya viene elegido (un toque menos).
+export default async function PaginaNuevaIncidencia({ searchParams }) {
   await connection();
   const estacionamientos = await listarEstacionamientosActivos();
+  const { estacionamiento } = await searchParams;
+  const elegido = estacionamientos.some((e) => e.id === estacionamiento) ? estacionamiento : "";
 
   return (
     <main className={estilos.pagina}>
-      <h1>Reportar una incidencia</h1>
+      <h1>Reportar</h1>
       <p className={estilos.ayuda}>
         Avisa a vigilancia si ves un problema en un estacionamiento.
       </p>
-      <FormularioIncidencia estacionamientos={estacionamientos} />
+      <FormularioIncidencia estacionamientos={estacionamientos} elegido={elegido} />
     </main>
   );
 }

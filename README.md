@@ -30,9 +30,13 @@ El proyecto se divide en dos carpetas: **una para decidir y otra para programar.
 │   ├── negocio/ producto/ arquitectura/
 │   └── para_el_codigo/           lo que se copia a la carpeta de código
 │
-└── RadarEstacionamientos_code/     ← aquí se programa la aplicación
-    ├── CONTEXTO.md                   contexto para programar
-    └── docs/                       copia de lógica (no se edita a mano)
+├── RadarEstacionamientos_code/     ← aquí se programa la aplicación
+│   ├── CONTEXTO.md                   contexto para programar
+│   └── docs/                       copia de lógica (no se edita a mano)
+│
+└── RadarEstacionamientos_simulador/ ← mundo virtual 3D que "usa" la app desde afuera
+    ├── README.md                   cómo abrirlo, capturas y menú de pruebas
+    └── postman/                    colección para llamar a la app como si fuera real
 ```
 
 | Carpeta | Para qué | Quién la cambia |
@@ -40,6 +44,7 @@ El proyecto se divide en dos carpetas: **una para decidir y otra para programar.
 | `RadarEstacionamientos_logica/` | Brief, decisiones, backlog, estado del proyecto | Sebastian (sesión de lógica) |
 | `RadarEstacionamientos_code/` | El código de la aplicación | Todos, por Pull Request |
 | `RadarEstacionamientos_code/docs/` | Copia de lógica para quien programa | Solo `sincronizar.sh` |
+| `RadarEstacionamientos_simulador/` | Maqueta 3D del campus que genera avisos, placas e incidencias contra la app por su API | Todos, por Pull Request |
 
 Si ves algo mal en lógica o en `docs/`, **no lo edites**: abre un Issue con la etiqueta `documentación`.
 

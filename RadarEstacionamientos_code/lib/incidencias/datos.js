@@ -1,5 +1,10 @@
 import { obtenerAlmacen } from "../almacen.js";
-import { ESTADO_PENDIENTE, validarReporte } from "./reglas.js";
+import { ESTADO_PENDIENTE, nombreDelTipo, validarReporte } from "./reglas.js";
+
+// Lo que se puede mostrar o emitir de una incidencia: sin el correo de quien la reportó.
+export function vistaPublica({ id, estacionamientoId, tipo, estado, reportadaEn }) {
+  return { id, estacionamientoId, tipo, nombreTipo: nombreDelTipo(tipo), estado, reportadaEn };
+}
 
 // HU 9.1: el reporte queda registrado con la hora y como pendiente.
 export async function registrarIncidencia({ estacionamientoId, tipo, reportadaPor }, ahora = new Date()) {

@@ -18,3 +18,9 @@ datos_privados/
 .DS_Store
 Thumbs.db
 *.log
+
+# Impeccable: sesiones del overlay en vivo (la crítica sí se guarda)
+.impeccable/live/
+
+# Render de la maqueta (lo que se usa se copia a la app)
+RadarEstacionamientos_simulador/exportes/

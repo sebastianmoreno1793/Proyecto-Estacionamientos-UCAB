@@ -1,7 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { cambiarEstacionamiento } from "@/lib/estacionamientos/datos";
+import { cambiarEstacionamiento, vistaPublica } from "@/lib/estacionamientos/datos";
+import { emitir } from "@/lib/eventos_en_vivo";
 import { esAdministrador, obtenerUsuarioActual } from "@/lib/sesion";
 
 export async function guardarEstacionamiento(_estadoAnterior, formData) {
@@ -16,6 +17,7 @@ export async function guardarEstacionamiento(_estadoAnterior, formData) {
   });
   if (resultado.error) return { error: resultado.error };
 
+  emitir("ESTACIONAMIENTO", { estacionamiento: vistaPublica(resultado.estacionamiento) });
   revalidatePath("/admin/estacionamientos");
   return { mensaje: "Cambios guardados." };
 }

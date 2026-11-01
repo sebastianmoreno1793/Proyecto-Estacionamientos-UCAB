@@ -17,12 +17,17 @@ function crearAlmacen() {
       activo: true,
     })),
     incidencias: [],
+    movimientos: [], // HU 3.1: avisos de entrada y salida de los sensores
+    lecturasDePlaca: [], // HU 3.2: placas que lee el lector de la garita
   };
 }
 
 // En globalThis para que sobreviva a las recargas de `next dev`.
 export function obtenerAlmacen() {
   globalThis.__radarAlmacen ??= crearAlmacen();
+  // Si `next dev` ya tenía un almacén de antes de agregar una lista, se completa.
+  globalThis.__radarAlmacen.movimientos ??= [];
+  globalThis.__radarAlmacen.lecturasDePlaca ??= [];
   return globalThis.__radarAlmacen;
 }
 

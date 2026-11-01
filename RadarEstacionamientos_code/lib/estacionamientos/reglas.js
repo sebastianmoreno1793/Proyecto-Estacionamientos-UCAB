@@ -8,6 +8,49 @@ export function puestosLibres({ capacidad, ocupados }) {
   return Math.min(capacidad, Math.max(0, capacidad - ocupados));
 }
 
+// Porcentaje para el semáforo (HU 4.2). Nunca pasa de 100, igual que los libres nunca bajan de 0.
+export function porcentajeDeOcupacion({ capacidad, ocupados }) {
+  if (!(capacidad > 0)) return 100;
+  return Math.round((Math.min(capacidad, Math.max(0, ocupados)) / capacidad) * 100);
+}
+
+// HU 4.2 · Semáforo de dos estados (D-009): verde si hay al menos un puesto libre, rojo si no
+// hay ninguno. El porcentaje ya no decide el color. Un estacionamiento desactivado no tiene
+// semáforo: está cerrado. `color` lleva texto blanco encima (≥ 4,5:1); `relleno` es para áreas.
+export const SEMAFORO = [
+  { nivel: "hay", texto: "Hay puesto", color: "#1e7b4f", relleno: "#2f9e57" },
+  { nivel: "no-hay", texto: "No hay puesto", color: "#b42318", relleno: "#d93a2e" },
+];
+export const CERRADO = { nivel: "cerrado", texto: "Cerrado", color: "#6c6c70", relleno: "#8e8e93" };
+
+export function nivelDelSemaforo({ libres, activo = true }) {
+  if (!activo) return CERRADO;
+  return libres > 0 ? SEMAFORO[0] : SEMAFORO[1];
+}
+
+// «1 libre», «12 libres».
+export const textoLibres = (n) => `${n} ${n === 1 ? "libre" : "libres"}`;
+
+export const TIPOS_DE_MOVIMIENTO = ["ENTRADA", "SALIDA"];
+
+// HU 4.1: una entrada ocupa un puesto y una salida lo libera. Un aviso que rompería los
+// límites (lleno, vacío) o que llega de un estacionamiento desactivado se rechaza.
+export function aplicarMovimiento(estacionamiento, tipo) {
+  if (!TIPOS_DE_MOVIMIENTO.includes(tipo)) {
+    return { error: "El tipo debe ser ENTRADA o SALIDA.", motivo: "tipo" };
+  }
+  const { etiqueta, nombre, activo, capacidad, ocupados } = estacionamiento;
+  const cual = etiqueta ?? nombre;
+  if (!activo) return { error: `${cual} está desactivado.`, motivo: "desactivado" };
+  if (tipo === "ENTRADA" && ocupados >= capacidad) {
+    return { error: `${cual} está lleno.`, motivo: "lleno" };
+  }
+  if (tipo === "SALIDA" && ocupados <= 0) {
+    return { error: `En ${cual} no hay carros para salir.`, motivo: "vacio" };
+  }
+  return { ocupados: ocupados + (tipo === "ENTRADA" ? 1 : -1) };
+}
+
 export function validarCapacidad(valor) {
   const texto = String(valor ?? "").trim();
   if (!/^\d+$/.test(texto)) {
