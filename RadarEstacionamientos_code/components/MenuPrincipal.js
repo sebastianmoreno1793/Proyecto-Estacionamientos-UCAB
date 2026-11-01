@@ -1,3 +1,4 @@
+import Link from "next/link";
 import EnlacesMenu from "./EnlacesMenu";
 import { salir } from "@/app/cuenta/acciones";
 import { esAdministrador, obtenerUsuarioActual } from "@/lib/sesion";
@@ -32,6 +33,7 @@ export default async function MenuPrincipal() {
       {usuario && (
         <div className="menu-usuario">
           <span title={usuario.correo}>{usuario.rol}</span>
+          <Link href="/vehiculos">Mis vehículos</Link>
           <form action={salir}>
             <button type="submit">Salir</button>
           </form>
