@@ -73,12 +73,6 @@ export default function BotonNotificaciones() {
     );
   };
 
-
-  if (estadoPermiso === 'unsupported') {
-    return <p className="text-sm text-gray-500">Las notificaciones no están soportadas en este navegador.</p>;
-  }
-
-
   return (
     <div className={styles.contenedor}>
       <section
