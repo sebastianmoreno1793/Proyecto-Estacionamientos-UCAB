@@ -50,7 +50,7 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 **Repartido el 27/oct:** cinco tareas por integrante en `producto/plan_segunda_entrega.md` (Issues del milestone «Entrega 2» y tarjeta de Trello «Segunda Entrega»).
 
-**Al 01/nov:** German terminó (HU 5.1, diagrama, RNF 1). La HU 9.1 de Sebastian está en Trello con su diagrama. Samuel, Aaron y Manuel no han subido nada. Detalle: `producto/segunda_entrega/revision_equipo_01nov.md`.
+**Al 02/nov:** las cinco HU están especificadas con su diagrama y los 4 RNF están en su versión final (revisada por Sebastian). Quedan correcciones de diagrama para Samuel, German y Manuel (comentadas en sus tarjetas), las minutas de las Reuniones 2, 3 y 4 y la retrospectiva. Detalle: `producto/segunda_entrega/revision_y_propuestas_02nov.md`.
 
 
 - [ ] Cada integrante especifica una HU en su tarjeta de Trello (Card, Conversación y Criterios) con su diagrama de actividades como imagen o PDF.

@@ -32,8 +32,9 @@ revisión final de abajo.
 
 - [x] El tablero se llama «EQUIPO 87 3 · Radar de Estacionamientos UCAB», es público y la
       profesora es miembro (comprobado el 01/nov). El enlace del correo ya lleva ese nombre.
-- [ ] Las cinco HU tienen la checklist «Especificación ERS» en 5/5 y el diagrama **adjunto**
-      (PNG o PDF), no un enlace.
+- [ ] Las cinco HU tienen la checklist «Especificación ERS» en 5/5, la tabla de 3 columnas con el
+      Autor, el diagrama **adjunto** (PNG) y su enlace de viewer.diagrams.net, que abre sin pasos
+      previos (acuerdo del equipo del 03/nov).
 - [ ] Cada card tiene **un solo verbo** en el «quiero».
 - [ ] Los diagramas respetan D-009 si mencionan el semáforo (solo hay puesto / no hay puesto).
 - [ ] La tarjeta de RNF tiene los 4 en final: «El sistema debe…», característica y
