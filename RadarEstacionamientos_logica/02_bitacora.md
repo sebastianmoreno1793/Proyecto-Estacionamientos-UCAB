@@ -2,6 +2,22 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 09/nov/26 — Sprint 1 completo para la defensa (rama `sprint-1-completo`)
+
+- **HU 8.1 (Manuel):** su código del PR #45 entra limpio (sin el merge de la 2.1 ni su `sw.js`) y
+  con las correcciones de la revisión: sin Tailwind, «Permitir / Bloquear» como dicen CA1–CA3,
+  control en «Mis vehículos» para activarlas después y sin `alert()`.
+- **HU 7.2 (hecha por Sebastian; era de Manuel):** `GET /api/sugerencia?edificio=<id>`, pantalla
+  `/sugerencia` con `fetch` y pestaña «Sugerir». La Garita pasa a abrirse desde «Administrar».
+- **Revisión completa** de botones, conexiones `fetch`/API, Postman y lógica contra los criterios.
+  Lo más importante: la HU 4.1 ahora registra los avisos rechazados (RN3/RN4), la HU 5.4 ya no
+  cierra un estacionamiento al cambiar solo la capacidad, el service worker no guarda páginas con
+  placas, y los formularios no se borran cuando hay un error.
+- **Postman:** 28 peticiones en el orden de la demostración, con pruebas y casos de error.
+  Para la demo: dejar vacío `SALTAR_INICIO_DE_SESION` y copiar la cookie en `{{sesion}}`.
+- Pruebas: 129/129 en la app y 19/19 en el simulador; build limpio. Incluye el PR #61 (menú en el
+  celular). **Falta:** que el equipo revise la rama y se fusione en `main`.
+
 ## 03/nov/26 — Segunda Entrega: correcciones de la revisión del equipo (HU 9.1 y RNF)
 
 - **Tabla de 3 columnas de la HU 9.1** con el Autor (`HU9.1_especificacion_tabla.png`), como las HU 1.1 y 4.1.
