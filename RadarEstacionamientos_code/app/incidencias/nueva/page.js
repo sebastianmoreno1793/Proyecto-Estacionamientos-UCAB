@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { obtenerUsuarioActual } from "@/lib/sesion";
 import FormularioIncidencia from "./FormularioIncidencia";
 import { listarEstacionamientosActivos } from "@/lib/estacionamientos/datos";
-import estilos from "../../formularios.module.css";
 
 export const metadata = { title: "Reportar una incidencia" };
 
@@ -17,11 +16,8 @@ export default async function PaginaNuevaIncidencia({ searchParams }) {
   const elegido = estacionamientos.some((e) => e.id === estacionamiento) ? estacionamiento : "";
 
   return (
-    <main className={estilos.pagina}>
+    <main className="pantalla">
       <h1>Reportar</h1>
-      <p className={estilos.ayuda}>
-        Avisa a vigilancia si ves un problema en un estacionamiento.
-      </p>
       <FormularioIncidencia estacionamientos={estacionamientos} elegido={elegido} />
     </main>
   );

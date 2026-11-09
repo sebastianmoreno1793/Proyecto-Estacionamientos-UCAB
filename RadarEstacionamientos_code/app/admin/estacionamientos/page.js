@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NavAdmin from "@/components/NavAdmin";
 import { connection } from "next/server";
 import FilaEstacionamiento from "./FilaEstacionamiento";
 import { listarEstacionamientos } from "@/lib/estacionamientos/datos";
@@ -25,22 +25,8 @@ export default async function PaginaEstacionamientos() {
 
   return (
     <main className={estilos.pagina}>
-      <div className={estilos.encabezado}>
-        <h1>Estacionamientos</h1>
-        <nav aria-label="Administración" className={estilos.marcas}>
-          <Link href="/admin/edificios" className={estilos.botonSecundario}>
-            Edificios
-          </Link>
-          <Link href="/admin/actividad" className={estilos.botonSecundario}>
-            Garita
-          </Link>
-        </nav>
-      </div>
-      <p className={estilos.ayuda}>
-        Cambia cuántos puestos tiene cada estacionamiento o desactívalo. Los puestos libres
-        se calculan con la nueva capacidad, y un estacionamiento desactivado no se sugiere
-        a los conductores.
-      </p>
+      <h1>Administrar</h1>
+      <NavAdmin />
       <ul className={estilos.lista}>
         {estacionamientos.map((e) => (
           <FilaEstacionamiento key={e.id} estacionamiento={e} />

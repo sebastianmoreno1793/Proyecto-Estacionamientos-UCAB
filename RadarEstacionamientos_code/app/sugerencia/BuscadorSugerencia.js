@@ -87,7 +87,7 @@ export default function BuscadorSugerencia({ edificios }) {
               </div>
             </dl>
             <p className={estilos.ayuda}>Distancia en línea recta desde el edificio.</p>
-            <Link href={`/?estacionamiento=${encodeURIComponent(resultado.sugerido.id)}`} className="boton-secundario">
+            <Link href={`/mapa?estacionamiento=${encodeURIComponent(resultado.sugerido.id)}`} className="boton-secundario">
               Ver en el mapa
             </Link>
           </section>

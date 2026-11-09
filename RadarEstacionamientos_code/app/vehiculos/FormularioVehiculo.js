@@ -1,22 +1,28 @@
 "use client";
 
+// HU 2.1 Registrar mis vehículos. Va dentro de Perfil, plegado detrás de «Agregar vehículo»
+// (abierto si todavía no tiene ninguno). La acción valida en el servidor (acciones.js).
+
 import { useActionState } from "react";
 import { agregarVehiculo } from "./acciones";
 import estilos from "../formularios.module.css";
 
-export default function FormularioVehiculo() {
+export default function FormularioVehiculo({ abierto = false }) {
   const [estado, accion, pendiente] = useActionState(agregarVehiculo, {});
+  const valores = estado.valores ?? {};
 
   return (
-    <form action={accion} className={estilos.tarjeta}>
-      <h2>Agregar un vehículo</h2>
-      <div className={estilos.campos}>
+    <details className="tarjeta-grande" open={abierto || Boolean(estado.error)}>
+      <summary className="nombre-puesto" style={{ cursor: "pointer", listStyle: "none" }}>
+        + Agregar vehículo
+      </summary>
+      <form action={accion} className={estilos.campos} style={{ marginTop: 12 }}>
         <label className={estilos.campo}>
           Placa
           <input
             type="text"
             name="placa"
-            defaultValue={estado.valores?.placa ?? ""}
+            defaultValue={valores.placa ?? ""}
             autoCapitalize="characters"
             autoComplete="off"
             placeholder="AB123CD"
@@ -29,7 +35,7 @@ export default function FormularioVehiculo() {
           <input
             type="text"
             name="marca"
-            defaultValue={estado.valores?.marca ?? ""}
+            defaultValue={valores.marca ?? ""}
             placeholder="Toyota"
             maxLength={30}
             required
@@ -40,7 +46,7 @@ export default function FormularioVehiculo() {
           <input
             type="text"
             name="modelo"
-            defaultValue={estado.valores?.modelo ?? ""}
+            defaultValue={valores.modelo ?? ""}
             placeholder="Corolla"
             maxLength={30}
             required
@@ -51,22 +57,19 @@ export default function FormularioVehiculo() {
           <input
             type="text"
             name="color"
-            defaultValue={estado.valores?.color ?? ""}
+            defaultValue={valores.color ?? ""}
             placeholder="Gris"
             maxLength={30}
             required
           />
         </label>
-      </div>
-
-      <button type="submit" className={estilos.boton} disabled={pendiente}>
-        {pendiente ? "Guardando…" : "Registrar vehículo"}
-      </button>
-
-      <div aria-live="polite">
-        {estado.error && <p className={estilos.error}>{estado.error}</p>}
-        {estado.mensaje && <p className={estilos.exito}>{estado.mensaje}</p>}
-      </div>
-    </form>
+        <button type="submit" className="accion centrada" disabled={pendiente}>
+          {pendiente ? "Guardando…" : "Guardar vehículo"}
+        </button>
+        <p className="mensaje-error" role="alert" style={{ width: "100%" }}>
+          {estado.error}
+        </p>
+      </form>
+    </details>
   );
 }

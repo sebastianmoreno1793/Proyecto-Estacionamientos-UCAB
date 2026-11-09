@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NavAdmin from "@/components/NavAdmin";
 import { connection } from "next/server";
 import { listarEstacionamientos } from "@/lib/estacionamientos/datos";
 import { listarIncidencias } from "@/lib/incidencias/datos";
@@ -26,19 +26,15 @@ export default async function PaginaIncidencias() {
 
   return (
     <main className={estilos.pagina}>
-      <h1>Incidencias</h1>
-      <p className={estilos.ayuda}>
-        {incidencias.length === 0
-          ? "No hay incidencias reportadas."
-          : `${incidencias.length} reportada${incidencias.length === 1 ? "" : "s"}, la más reciente primero.`}{" "}
-        <Link href="/incidencias/nueva">Reportar una incidencia</Link>
-      </p>
+      <h1>Administrar</h1>
+      <NavAdmin />
+      {incidencias.length === 0 && <p className={estilos.ayuda}>Sin incidencias.</p>}
       <ul className={estilos.lista}>
         {incidencias.map((i) => (
           <li key={i.id} className={estilos.tarjeta}>
             <div className={estilos.encabezado}>
               <h2>{nombreDelTipo(i.tipo)}</h2>
-              <span className={estilos.etiqueta}>{i.estado}</span>
+              <span className={estilos.etiqueta}>{i.estado === "pendiente" ? "Pendiente" : i.estado}</span>
             </div>
             <p>
               {etiquetas[i.estacionamientoId] ?? i.estacionamientoId} · {formatearFechaHora(i.reportadaEn)}

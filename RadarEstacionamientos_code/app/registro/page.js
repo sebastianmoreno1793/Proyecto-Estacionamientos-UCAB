@@ -13,7 +13,7 @@ export default async function PaginaRegistro() {
     <main className={estilos.pagina}>
       <h1>Crear cuenta</h1>
       <p className={estilos.ayuda}>
-        El Radar es solo para la comunidad UCAB. Regístrate con tu correo @est.ucab.edu.ve o @ucab.edu.ve.
+        Con tu correo @est.ucab.edu.ve o @ucab.edu.ve.
       </p>
       <FormularioCuenta modo="registro" />
     </main>

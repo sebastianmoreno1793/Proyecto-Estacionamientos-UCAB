@@ -7,14 +7,13 @@
 //    CA1: «Permitir» → activadas + una notificación de prueba.
 //    CA2: «Bloquear» → bloqueadas, sin prueba, y se le dice cómo activarlas después.
 //    CA3: si ya respondió, no vuelve a salir en este navegador.
-//  - modo="perfil" (en «Mis vehículos», que hace de perfil): siempre visible, para activarlas después.
+//  - modo="perfil" (en Perfil): un interruptor siempre visible, para activarlas o apagarlas después.
 //
 // Toda la lógica (permiso del navegador, preferencia guardada, Service Worker) está en
 // lib/notificaciones/gestorNotificaciones.js; este componente solo muestra el estado.
 
 import { useEffect, useState } from "react";
 import { GestorNotificaciones, gestorNotificaciones } from "@/lib/notificaciones/gestorNotificaciones";
-import estilos from "@/app/formularios.module.css";
 
 export default function BotonNotificaciones({ modo = "perfil" }) {
   // null mientras no sabemos el estado (el servidor no tiene `Notification`).
@@ -73,10 +72,7 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
       return (
         <div className="aviso-flotante" role="status">
           {/* CA2: se le indica cómo activarlas desde la configuración del navegador. */}
-          <p>
-            No te enviaremos notificaciones. Si cambias de idea, actívalas en «Mis vehículos» o permítelas en la
-            configuración de tu navegador.
-          </p>
+          <p>Sin notificaciones. Puedes activarlas en Perfil o en la configuración de tu navegador.</p>
           <button type="button" className="boton-texto" onClick={() => setRecienBloqueadas(false)}>
             Entendido
           </button>
@@ -86,7 +82,7 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
     if (!gestorNotificaciones.debeMostrarSolicitud()) return null; // CA3 (la regla vive en el gestor)
     return (
       <div className="aviso-flotante" role="dialog" aria-label="Activar las notificaciones">
-        <p>¿Te avisamos cuando haya puesto o una incidencia en tu estacionamiento?</p>
+        <p>Notificaciones del Radar</p>
         <button type="button" className="boton-texto" onClick={bloquear}>
           Bloquear
         </button>
@@ -97,46 +93,55 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
     );
   }
 
-  // ---------- En el perfil: siempre se puede ver y cambiar ----------
+  // ---------- En el perfil: un interruptor (D-007 v2) ----------
+  // Encendido = el navegador dio permiso y el usuario no las bloqueó en el Radar.
+  const encendidas = estadoPermiso === "granted" && preferencia !== GestorNotificaciones.PREFERENCIA_BLOQUEADAS;
+
+  function cambiar(evento) {
+    if (!evento.target.checked) return bloquear(); // apagar: «Bloquear» del Radar (CA2)
+    if (estadoPermiso === "granted") {
+      gestorNotificaciones.guardarPreferencia(GestorNotificaciones.PREFERENCIA_ACTIVADAS);
+      setPreferencia(GestorNotificaciones.PREFERENCIA_ACTIVADAS);
+      return;
+    }
+    activar(); // pide el permiso al navegador y manda la prueba (CA1)
+  }
+
   return (
-    <section className={estilos.tarjeta} aria-labelledby="titulo-notificaciones">
-      <h2 id="titulo-notificaciones">Notificaciones</h2>
+    <section className="tarjeta-grande" aria-labelledby="titulo-notificaciones">
+      <label className="fila">
+        <span id="titulo-notificaciones" className="nombre-puesto">
+          Notificaciones
+        </span>
+        <input
+          type="checkbox"
+          role="switch"
+          className="conmutador"
+          checked={encendidas}
+          onChange={cambiar}
+          disabled={ocupado || estadoPermiso === "unsupported" || estadoPermiso === "denied"}
+        />
+      </label>
 
-      {estadoPermiso === "unsupported" && (
-        <p className={estilos.ayuda}>Este navegador no permite notificaciones web.</p>
-      )}
-
-      {estadoPermiso === "default" && (
-        <>
-          <p className={estilos.ayuda}>
-            Actívalas para enterarte de la disponibilidad de puestos y de las incidencias.
-          </p>
-          <button type="button" className={estilos.botonSecundario} onClick={activar} disabled={ocupado}>
-            {ocupado ? "Activando…" : "Activar notificaciones"}
-          </button>
-        </>
-      )}
-
-      {estadoPermiso === "granted" && (
-        <>
-          <p className={estilos.ayuda}>Las notificaciones están activadas.</p>
-          <button type="button" className={estilos.botonSecundario} onClick={probar} disabled={ocupado}>
-            {ocupado ? "Enviando…" : "Enviar una de prueba"}
-          </button>
-        </>
-      )}
-
+      {estadoPermiso === "unsupported" && <span className="suave">Este navegador no las permite.</span>}
       {estadoPermiso === "denied" && (
-        <p className={estilos.ayuda}>
-          Las bloqueaste en el navegador. Para activarlas, permite las notificaciones de este sitio en los ajustes del
-          navegador y vuelve a esta página.
-        </p>
+        <span className="suave">Bloqueadas en el navegador. Permítelas en su configuración.</span>
       )}
-
-      {/* Sin verde: en el Radar el verde solo significa «hay puesto» (DESIGN.md, Regla Color con Significado). */}
-      <p className={estilos.ayuda} role="status">
+      {encendidas && (
+        <button
+          type="button"
+          className="boton-texto"
+          style={{ alignSelf: "flex-start" }}
+          onClick={probar}
+          disabled={ocupado}
+        >
+          {ocupado ? "Enviando…" : "Enviar una de prueba"}
+        </button>
+      )}
+      {/* Sin verde: en el Radar el verde solo significa «hay puesto». */}
+      <span className="suave" role="status">
         {mensaje}
-      </p>
+      </span>
     </section>
   );
 }

@@ -1,52 +1,122 @@
 "use client";
 
-import { useActionState } from "react";
+// HU 9.1 Crear una incidencia (D-007 v2: como armar un pedido en dos toques).
+//  1. El tipo de problema: tres mosaicos grandes (un toque).
+//  2. El estacionamiento: chips con los abiertos (CA3: los cerrados no aparecen).
+//  3. «Enviar reporte». La acción (acciones.js) valida en el servidor: si falta algo, dice qué
+//     falta (CA2); si todo está bien, queda «pendiente» con la hora (CA1) y se muestra la
+//     confirmación con el tipo, el lugar, la hora y la línea de estado.
+
+import { useActionState, useEffect, useState } from "react";
+import Link from "next/link";
 import { reportarIncidencia } from "../acciones";
 import { TIPOS_DE_INCIDENCIA } from "@/lib/incidencias/reglas";
-import estilos from "../../formularios.module.css";
+import { Icono } from "@/components/Iconos";
+
+// Color e ícono de cada tipo. Ninguno es verde ni rojo: esos son del semáforo.
+const ASPECTO = {
+  conos_atravesados: { color: "coral", icono: "conos" },
+  bateria_descargada: { color: "ambar", icono: "bateria" },
+  vehiculo_mal_estacionado: { color: "lavanda", icono: "carro", ancho: true },
+};
 
 export default function FormularioIncidencia({ estacionamientos, elegido = "" }) {
   const [estado, accion, pendiente] = useActionState(reportarIncidencia, {});
+  const [confirmacion, setConfirmacion] = useState(null);
+  const [vuelta, setVuelta] = useState(0); // cambia la key del formulario para empezar de cero
 
+  useEffect(() => {
+    if (estado.reporte) setConfirmacion(estado.reporte);
+  }, [estado]);
+
+  if (confirmacion) {
+    const aspecto = ASPECTO[confirmacion.tipoId] ?? ASPECTO.vehiculo_mal_estacionado;
+    return (
+      <section className="pantalla" style={{ padding: 0 }} aria-live="polite" aria-labelledby="reporte-titulo">
+        <div className={`tarjeta-grande ${aspecto.color}`}>
+          <Icono nombre={aspecto.icono} />
+          <span id="reporte-titulo" className="titulo-tarjeta">
+            {confirmacion.tipo}
+          </span>
+          <span>
+            {confirmacion.estacionamiento} · {confirmacion.hora}
+          </span>
+        </div>
+        <ol className="linea-estado">
+          <li className="hecho">
+            <span className="marca">
+              <Icono nombre="check" />
+            </span>
+            Enviado
+          </li>
+          <li>
+            <span className="marca" />
+            Pendiente
+          </li>
+          <li className="futuro">
+            <span className="marca" />
+            Atendido
+          </li>
+        </ol>
+        <Link href="/" className="accion centrada">
+          Listo
+        </Link>
+        <button
+          type="button"
+          className="fila-enlace"
+          onClick={() => {
+            setConfirmacion(null);
+            setVuelta((n) => n + 1);
+          }}
+        >
+          Reportar otro
+          <Icono nombre="flecha" />
+        </button>
+      </section>
+    );
+  }
+
+  const valores = estado.valores ?? {};
   return (
-    <form action={accion} className={estilos.tarjeta}>
-      <label className={estilos.campo}>
-        Estacionamiento
-        <select name="estacionamientoId" defaultValue={estado.valores?.estacionamientoId ?? elegido} required>
-          <option value="" disabled>
-            Elige el estacionamiento
-          </option>
-          {estacionamientos.map((e) => (
-            <option key={e.id} value={e.id}>
-              {e.etiqueta}
-            </option>
-          ))}
-        </select>
-      </label>
+    <form key={vuelta} action={accion} className="pantalla" style={{ padding: 0 }}>
+      <fieldset className="mosaicos">
+        <legend className="oculto-visual">Tipo de problema</legend>
+        {TIPOS_DE_INCIDENCIA.map((t) => {
+          const aspecto = ASPECTO[t.id];
+          return (
+            <label key={t.id} className={`mosaico ${aspecto.color}${aspecto.ancho ? " ancho" : ""}`}>
+              <input type="radio" name="tipo" value={t.id} defaultChecked={valores.tipo === t.id} required />
+              <Icono nombre={aspecto.icono} />
+              {t.nombre}
+            </label>
+          );
+        })}
+      </fieldset>
 
-      <fieldset className={estilos.opciones}>
-        <legend>¿Qué problema hay?</legend>
-        {TIPOS_DE_INCIDENCIA.map((t) => (
-          <label key={t.id} className={estilos.casilla}>
-            <input type="radio" name="tipo" value={t.id} defaultChecked={estado.valores?.tipo === t.id} required />
-            {t.nombre}
+      <fieldset className="chips">
+        <legend className="oculto-visual">Estacionamiento</legend>
+        {estacionamientos.map((e) => (
+          <label key={e.id} className="chip">
+            <input
+              type="radio"
+              name="estacionamientoId"
+              value={e.id}
+              defaultChecked={(valores.estacionamientoId ?? elegido) === e.id}
+              required
+            />
+            {e.etiqueta}
           </label>
         ))}
       </fieldset>
 
-      <button type="submit" className={estilos.boton} disabled={pendiente}>
-        {pendiente ? "Enviando…" : "Enviar reporte"}
-      </button>
+      <p className="mensaje-error" role="alert">
+        {estado.error}
+      </p>
 
-      <div aria-live="polite">
-        {estado.error && <p className={estilos.error}>{estado.error}</p>}
-        {estado.reporte && (
-          <p className={estilos.exito}>
-            Reporte enviado ({estado.reporte.hora}): {estado.reporte.tipo} en{" "}
-            {estado.reporte.estacionamiento}. Estado: {estado.reporte.estado === "pendiente" ? "Pendiente" : estado.reporte.estado}.
-          </p>
-        )}
-      </div>
+      <button type="submit" className="accion" disabled={pendiente}>
+        {pendiente ? "Enviando…" : "Enviar reporte"}
+        <Icono nombre="flecha" />
+      </button>
     </form>
   );
 }

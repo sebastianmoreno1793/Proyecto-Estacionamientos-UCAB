@@ -41,3 +41,16 @@ export function validarRegistro({ correo, contrasena, confirmacion }) {
   if (contrasena !== confirmacion) return { error: "Las contraseñas no coinciden." };
   return {};
 }
+
+// Iniciales para el círculo del perfil: «sebastian.moreno@est.ucab.edu.ve» → «SM».
+export function inicialesDe(correo) {
+  const usuario = normalizarCorreo(correo).split("@")[0];
+  const partes = usuario.split(/[._-]+/).filter(Boolean);
+  const letras = partes.length > 1 ? partes[0][0] + partes[1][0] : usuario.slice(0, 2);
+  return letras.toUpperCase() || "?";
+}
+
+// Nombre corto de un edificio para los chips del Inicio: «Edificio de Aulas» → «Aulas».
+export function nombreCorto(nombre) {
+  return String(nombre ?? "").replace(/^Edificio\s+(de\s+)?/i, "") || nombre;
+}

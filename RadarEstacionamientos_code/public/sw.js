@@ -8,14 +8,14 @@
 //
 // Al cambiar este archivo, sube VERSION para que los teléfonos reciban la versión nueva.
 
-const VERSION = "radar-v3";
+const VERSION = "radar-v4";
 const CACHE_SHELL = `${VERSION}-shell`;
 const CACHE_ESTATICOS = `${VERSION}-estaticos`;
 const SIN_CONEXION = "/sin-conexion";
 // Páginas con datos personales (placas, correos, incidencias): nunca se guardan en el teléfono,
 // así no quedan a la vista de otra persona después de «Salir».
 const PRIVADAS = ["/admin", "/vehiculos", "/incidencias", "/cuenta", "/sugerencia"];
-const SHELL = ["/", SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
+const SHELL = ["/", "/mapa", SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
 
 self.addEventListener("install", (evento) => {
   evento.waitUntil(caches.open(CACHE_SHELL).then((cache) => cache.addAll(SHELL)));

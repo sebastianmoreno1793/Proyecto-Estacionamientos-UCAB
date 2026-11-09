@@ -8,12 +8,17 @@ colors:
   azul-carnet: "#12315c"
   bruma-carnet: "#c9d7ec"
   oro-de-sello: "#c8962e"
-  fondo-agrupado: "#f2f2f7"
+  fondo-agrupado: "#f4f4f6"
+  noche: "#16161a"
+  lavanda: "#cecbf6"
+  ambar: "#fac775"
+  cielo: "#b5d4f4"
+  coral: "#f5c4b3"
   superficie: "#ffffff"
   superficie-hundida: "#e9e9ee"
   separador: "rgba(60, 60, 67, 0.18)"
-  tinta: "#0f1b2d"
-  tinta-secundaria: "#6c6c70"
+  tinta: "#111114"
+  tinta-secundaria: "#6b6b76"
   hay-puesto: "#1e7b4f"
   hay-puesto-relleno: "#2f9e57"
   no-hay-puesto: "#b42318"
@@ -56,6 +61,35 @@ dorado del radar.
 
 Modo de la superficie (`impeccable`): **Operate**. Prima que se pueda escanear, que sea
 consistente y que se comporte como espera la gente; el estilo se nota en los detalles.
+
+## ⭐ Versión 2 (09/nov/26): «menos texto, más toque»
+
+Sebastian la decidió después de revisar apps de estacionamiento de Europa (EasyPark, PayByPhone,
+Parclick), apps venezolanas (Yummy, **Cashea**) y referencias de Pinterest (Scoopa, «Popular Food»,
+«My Spots», el anillo «8.8»). Lo que cambia frente a la versión 1 (lo demás sigue igual):
+
+1. **Un solo diseño en web y en teléfono.** La app es una columna de teléfono (máximo 520 px),
+   también en el computador. Ya no hay barra de pestañas arriba ni panel a la izquierda.
+2. **Barra de pestañas flotante:** una píldora oscura abajo con **cuatro pestañas** (Inicio, Mapa,
+   Reportar, Perfil). La activa se vuelve blanca y muestra su nombre; las otras, solo el ícono
+   (el nombre sigue ahí para los lectores de pantalla).
+3. **Fondo claro y letra negra gruesa, como Cashea.** Títulos de 34 px en peso 800; la marca ya no
+   va en una barra Azul Carnet. El **Azul Carnet** queda para la acción principal (píldora) y el
+   círculo del perfil.
+4. **Sin textos que expliquen el sistema** («los libres se calculan…», fechas, «¿Qué pasa?»).
+   Cada pantalla dice solo lo que el usuario necesita para actuar.
+5. **Inicio:** chips de edificios → tarjeta oscura con la sugerencia (HU 7.2) → total en grande
+   con un anillo verde/rojo (HU 4.2) → cuadrícula de dos columnas con un estacionamiento por
+   tarjeta. La maqueta pasa a la pestaña **Mapa**.
+6. **Reportar (como armar un pedido en Scoopa):** tres mosaicos pastel de un toque para el tipo,
+   chips para el lugar y «Enviar reporte». La confirmación muestra el tipo, el lugar, la hora y
+   una línea de estado (Enviado · Pendiente · Atendido).
+7. **Perfil:** vehículos, interruptor de notificaciones, Administrar (solo administrador) y Salir.
+   **Administrar** usa chips (Puestos, Incidencias, Garita, Edificios) y la capacidad se cambia
+   con «−» / «+», sin botón «Guardar».
+8. **Pastel con significado:** lavanda, ámbar, cielo y coral identifican **tipos** (por ejemplo,
+   el tipo de incidencia). **El verde y el rojo siguen siendo solo del semáforo (D-009)**; los
+   interruptores encendidos son azules, no verdes.
 
 ## Colores
 
@@ -175,6 +209,9 @@ mayúsculas encima de títulos · fuentes descargadas.
 ## Referencias
 
 - Thinkdy (`~/UCAB/App-Estudio/DESIGN.md`) y Te Cambio (D-007 de ese proyecto), de Sebastian.
+- Versión 2 (09/nov/26): Cashea, Yummy, EasyPark, PayByPhone, Parclick y pines de Pinterest
+  (Scoopa, «Popular Food», «My Spots», «Elegant Concept Fitness», el anillo «8.8»). Se tomaron los
+  patrones (pasos cortos, chips, tarjetas grandes, cifras grandes, barra flotante), no los diseños.
 - Pinterest, búsqueda «parking app ui design» (27/oct/26): se tomó solo el patrón (vista a
   pantalla completa con tarjeta flotante, tres datos en columnas y leyenda corta), no un diseño
   en particular.

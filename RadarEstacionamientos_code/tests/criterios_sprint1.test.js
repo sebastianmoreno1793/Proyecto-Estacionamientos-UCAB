@@ -21,6 +21,7 @@ import { validarLectura } from "../lib/garita/reglas.js";
 import { listarIncidencias, registrarIncidencia } from "../lib/incidencias/datos.js";
 import { GestorNotificaciones } from "../lib/notificaciones/gestorNotificaciones.js";
 import { registrarUsuario, reiniciarUsuarios } from "../lib/usuarios/datos.js";
+import { inicialesDe, nombreCorto } from "../lib/usuarios/reglas.js";
 import { listarVehiculosDe, registrarVehiculo, reiniciarVehiculos } from "../lib/vehiculos/datos.js";
 import { esPlacaValida } from "../lib/vehiculos/reglas.js";
 
@@ -218,5 +219,19 @@ describe("HU 9.1 · Crear una incidencia", () => {
 
   test("RN: sin usuario no se registra", async () => {
     assert.ok((await registrarIncidencia({ estacionamientoId: "est-playa", tipo: "conos_atravesados" })).error);
+  });
+});
+
+describe("Rediseño · textos cortos", () => {
+  test("iniciales del perfil", () => {
+    assert.equal(inicialesDe("sebastian.moreno@est.ucab.edu.ve"), "SM");
+    assert.equal(inicialesDe("usuario.prueba@ucab.edu.ve"), "UP");
+    assert.equal(inicialesDe("ana@ucab.edu.ve"), "AN");
+  });
+
+  test("nombre corto del edificio", () => {
+    assert.equal(nombreCorto("Edificio de Aulas"), "Aulas");
+    assert.equal(nombreCorto("Edificio Cincuentenario"), "Cincuentenario");
+    assert.equal(nombreCorto("Aula Magna"), "Aula Magna");
   });
 });

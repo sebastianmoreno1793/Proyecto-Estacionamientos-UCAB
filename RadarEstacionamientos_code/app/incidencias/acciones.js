@@ -27,6 +27,7 @@ export async function reportarIncidencia(_estadoAnterior, formData) {
   return {
     reporte: {
       estacionamiento: estacionamientos.find((e) => e.id === incidencia.estacionamientoId).etiqueta,
+      tipoId: incidencia.tipo,
       tipo: nombreDelTipo(incidencia.tipo),
       hora: formatearFechaHora(incidencia.reportadaEn),
       estado: incidencia.estado,

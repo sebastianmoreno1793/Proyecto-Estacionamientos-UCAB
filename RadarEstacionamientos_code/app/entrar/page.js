@@ -11,8 +11,7 @@ export default async function PaginaEntrar() {
 
   return (
     <main className={estilos.pagina}>
-      <h1>Radar de Estacionamientos UCAB</h1>
-      <p className={estilos.ayuda}>Entra con tu correo institucional para ver los puestos libres.</p>
+      <h1>Entrar</h1>
       <FormularioCuenta modo="entrar" />
     </main>
   );

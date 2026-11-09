@@ -19,6 +19,6 @@ export async function agregarVehiculo(_estadoAnterior, formData) {
   // y así el usuario no tiene que volver a escribir todo.
   if (resultado.error) return { error: resultado.error, valores: Object.fromEntries(formData) };
 
-  revalidatePath("/vehiculos");
+  revalidatePath("/perfil"); // la lista de Mis vehículos está en Perfil
   return { mensaje: `Vehículo ${resultado.vehiculo.placa} registrado.` };
 }

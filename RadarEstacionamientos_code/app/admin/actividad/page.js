@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import NavAdmin from "@/components/NavAdmin";
 import { listarAvisosRechazados, listarEstacionamientos, listarMovimientos } from "@/lib/estacionamientos/datos";
 import { listarLecturasDePlaca } from "@/lib/garita/datos";
 import { formatearFechaHora } from "@/lib/fechas";
@@ -36,10 +37,8 @@ export default async function PaginaActividad() {
 
   return (
     <main className={estilos.pagina}>
-      <h1>Actividad de la garita</h1>
-      <p className={estilos.ayuda}>
-        Los últimos avisos de los sensores y las placas que leyó la garita. Se actualiza al recargar.
-      </p>
+      <h1>Administrar</h1>
+      <NavAdmin />
 
       <section className={estilos.tarjeta}>
         <h2>Entradas y salidas ({movimientos.length})</h2>
