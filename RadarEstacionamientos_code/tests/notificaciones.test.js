@@ -60,13 +60,13 @@ describe("Notificacion", () => {
     const notificacion = new Notificacion({
       titulo: "Radar UCAB 🚗",
       cuerpo: "Hay un puesto libre",
-      icono: "/favicon.ico",
+      icono: "/icono-192.png",
       url: "/",
     });
 
     assert.deepEqual(notificacion.aOpcionesDeVisualizacion(), {
       body: "Hay un puesto libre",
-      icon: "/favicon.ico",
+      icon: "/icono-192.png",
       data: { url: "/" },
     });
   });
@@ -141,5 +141,17 @@ describe("GestorNotificaciones", () => {
 
     await gestor.enviarNotificacionPrueba();
     assert.equal(notificacionesMostradas.length, 0);
+  });
+
+  test("rechaza con un error controlado si el Service Worker no queda listo", async () => {
+    const { apis } = crearApis();
+    apis.timeoutServiceWorkerMs = 5;
+    apis.navigatorApi.serviceWorker.ready = new Promise(() => {});
+    const gestor = new GestorNotificaciones(apis);
+
+    await assert.rejects(
+      gestor.registrarServiceWorker(),
+      /tiempo de espera para activar el Service Worker/,
+    );
   });
 });

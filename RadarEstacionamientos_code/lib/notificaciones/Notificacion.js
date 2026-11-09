@@ -5,7 +5,7 @@ export class Notificacion {
   /**
    * @param {{ titulo: string, cuerpo: string, icono?: string, url?: string }} datos
    */
-  constructor({ titulo, cuerpo, icono = "/favicon.ico", url = "/" }) {
+  constructor({ titulo, cuerpo, icono = "/icono-192.png", url = "/" }) {
     this.titulo = titulo;
     this.cuerpo = cuerpo;
     this.icono = icono;
@@ -43,7 +43,7 @@ export class Notificacion {
       titulo: "Radar UCAB 🚗",
       cuerpo:
         "¡Notificaciones configuradas correctamente! Te avisaremos cuando haya puestos disponibles.",
-      icono: "/favicon.ico",
+      icono: "/icono-192.png",
       url: "/",
     });
   }

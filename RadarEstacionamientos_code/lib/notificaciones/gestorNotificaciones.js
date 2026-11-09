@@ -1,5 +1,24 @@
 import { Notificacion } from "./Notificacion.js";
 
+function esperarConTiempoLimite(promesa, limiteMs) {
+  return new Promise((resolve, reject) => {
+    const temporizador = setTimeout(() => {
+      reject(new Error("Se agotó el tiempo de espera para activar el Service Worker."));
+    }, limiteMs);
+
+    Promise.resolve(promesa).then(
+      (valor) => {
+        clearTimeout(temporizador);
+        resolve(valor);
+      },
+      (error) => {
+        clearTimeout(temporizador);
+        reject(error);
+      },
+    );
+  });
+}
+
 /**
  * Coordina permiso del navegador, preferencia en localStorage,
  * registro del Service Worker y el envío de notificaciones (HU 8.1).
@@ -14,7 +33,7 @@ export class GestorNotificaciones {
   static RUTA_SERVICE_WORKER = "/sw.js";
 
   /**
-   * @param {{ notificationApi?: object, navigatorApi?: object, almacenamiento?: Storage, avisar?: Function } | null} apis
+   * @param {{ notificationApi?: object, navigatorApi?: object, almacenamiento?: Storage, avisar?: Function, timeoutServiceWorkerMs?: number } | null} apis
    */
   constructor(apis = null) {
     this.apis = apis;
@@ -47,11 +66,17 @@ export class GestorNotificaciones {
   #avisar(mensaje) {
     if (this.apis?.avisar) {
       this.apis.avisar(mensaje);
-      return;
     }
-    if (typeof alert === "function") {
-      alert(mensaje);
+  }
+
+  #esperarServiceWorkerListo() {
+    const serviceWorker = this.#navegador()?.serviceWorker;
+    if (!serviceWorker) {
+      throw new Error("Este navegador no permite registrar un Service Worker.");
     }
+
+    const limiteMs = this.apis?.timeoutServiceWorkerMs ?? 10000;
+    return esperarConTiempoLimite(serviceWorker.ready, limiteMs);
   }
 
   soportaNotificaciones() {
@@ -86,20 +111,24 @@ export class GestorNotificaciones {
 
   /**
    * Registra `/sw.js` y espera a que el worker quede activo.
-   * @returns {Promise<ServiceWorkerRegistration|null>}
+   * @returns {Promise<ServiceWorkerRegistration>}
    */
   async registrarServiceWorker() {
-    if (!this.soportaServiceWorker()) return null;
+    if (!this.soportaServiceWorker()) {
+      throw new Error("Este navegador no permite registrar un Service Worker.");
+    }
 
     try {
-      const registro = await this.#navegador().serviceWorker.register(
+      const serviceWorker = this.#navegador().serviceWorker;
+      const registro = await serviceWorker.register(
         GestorNotificaciones.RUTA_SERVICE_WORKER,
       );
-      await this.#navegador().serviceWorker.ready;
-      return registro;
+      return (await this.#esperarServiceWorkerListo()) ?? registro;
     } catch (error) {
-      console.error("Error al registrar el Service Worker:", error);
-      return null;
+      const detalle = error instanceof Error ? error.message : String(error);
+      throw new Error(`No se pudo registrar o activar el Service Worker. ${detalle}`, {
+        cause: error,
+      });
     }
   }
 
@@ -111,7 +140,7 @@ export class GestorNotificaciones {
     if (!this.soportaServiceWorker()) return;
     if (this.obtenerEstadoPermiso() !== "granted") return;
 
-    const registro = await this.#navegador().serviceWorker.ready;
+    const registro = await this.#esperarServiceWorkerListo();
     await Notificacion.dePrueba().mostrarEn(registro);
   }
 
