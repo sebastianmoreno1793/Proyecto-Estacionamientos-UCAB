@@ -21,8 +21,8 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
   (https://docs.google.com/document/d/11RHWEd0lgparq8xaIide1dya6_3Fqi7DAFOERzXE6lw). El 27/oct se
   copió como `entregables/BRIEF EQUIPO 3 15787.docx`.
 - **Iteración 1** (05/oct → 16/oct): 12 historias, con la 2.1 en lugar de la 1.2 (ver D-004).
-  Fusionadas en `main`: 5.1, 5.4 y 9.1. PR abiertos: #44 (6.1) y #45 (8.1). La maqueta 3D (3.2) está
-  en la rama `hu-3.2-mapa-3d-campus`. Detalle: `producto/revision_27oct_equipo_vs_profesora.md`.
+  Fusionadas en `main` (01/nov): 1.1, 2.1, 3.1, 3.2, 4.1, 4.2, 5.1, 5.4, 6.1 y 9.1. Queda abierto el
+  #45 (8.1), con correcciones pendientes, y la 7.2 sin código. Detalle: `producto/revision_27oct_equipo_vs_profesora.md`.
 - **Arquitectura:** dos sistemas, la app y la maqueta 3D (D-006,
   `arquitectura/arquitectura_dual_app_y_maqueta.md`).
 - ⭐ **Decisiones obligatorias** para todo el equipo: D-007 (diseño y maqueta, `producto/DESIGN.md`),
