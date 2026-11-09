@@ -18,10 +18,10 @@ export default function BotonNotificaciones() {
     setOcupado(true);
     setMensaje('');
     try {
-    const nuevoEstado = await gestorNotificaciones.pedirPermiso();
-    setEstadoPermiso(nuevoEstado);
+      const nuevoEstado = await gestorNotificaciones.pedirPermiso();
+      setEstadoPermiso(nuevoEstado);
 
-    if (nuevoEstado === 'denied') {
+      if (nuevoEstado === 'denied') {
         setMensaje('El navegador bloqueó las notificaciones. Puedes permitirlas en sus ajustes y volver a comprobarlo desde este menú.');
       } else if (nuevoEstado === 'default') {
         setMensaje('No se activaron las notificaciones. Puedes intentarlo de nuevo desde este menú cuando quieras.');
@@ -50,17 +50,17 @@ export default function BotonNotificaciones() {
     setMensaje('');
     try {
       await gestorNotificaciones.registrarServiceWorker();
-    await gestorNotificaciones.enviarNotificacionPrueba();
+      await gestorNotificaciones.enviarNotificacionPrueba();
       setMensaje('Notificación de prueba enviada.');
-      } catch (error) {
-        const detalle = error instanceof Error ? error.message : 'Ocurrió un error inesperado.';
-        setMensaje(`No se pudo enviar la notificación de prueba. ${detalle}`);
-        console.error('Error al enviar la notificación de prueba:', error);
-      } finally {
-        setOcupado(false);
-      }
-    };
-    
+    } catch (error) {
+      const detalle = error instanceof Error ? error.message : 'Ocurrió un error inesperado.';
+      setMensaje(`No se pudo enviar la notificación de prueba. ${detalle}`);
+      console.error('Error al enviar la notificación de prueba:', error);
+    } finally {
+      setOcupado(false);
+    }
+  };
+
   const revisarPermiso = () => {
     const nuevoEstado = gestorNotificaciones.obtenerEstadoPermiso();
     setEstadoPermiso(nuevoEstado);
@@ -95,10 +95,10 @@ export default function BotonNotificaciones() {
           <div className={styles.opciones}>
             <p className={styles.ayuda}>
               Actívalas para enterarte de la disponibilidad y de novedades del campus.
-              Si lo dejas para después, puedes volver a este menú para habilitarlas.     
+              Si lo dejas para después, puedes volver a este menú para habilitarlas.
             </p>
-          <button 
-className={styles.accion}
+            <button
+              className={styles.accion}
               type="button"
               onClick={manejarSolicitud}
               disabled={ocupado}
