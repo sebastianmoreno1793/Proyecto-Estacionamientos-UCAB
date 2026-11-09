@@ -54,6 +54,11 @@ export default function MaquetaCampus() {
   const [actualizado, setActualizado] = useState(null);
   const [error, setError] = useState(null);
   const [elegido, setElegido] = useState(null);
+  // HU 7.2: «Ver en el mapa» llega con /?estacionamiento=<id> y ese queda elegido al abrir.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("estacionamiento");
+    if (id) setElegido(id);
+  }, []);
   const [latiendo, setLatiendo] = useState(null);
   const [vista, setVista] = useState(null); // { x, y, s }
   const [animar, setAnimar] = useState(false);

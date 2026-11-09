@@ -17,7 +17,8 @@ export async function reportarIncidencia(_estadoAnterior, formData) {
     tipo: formData.get("tipo"),
     reportadaPor: usuario.correo,
   });
-  if (resultado.error) return { error: resultado.error };
+  // Con el error vuelven los valores elegidos (React 19 vacía el formulario tras enviar).
+  if (resultado.error) return { error: resultado.error, valores: Object.fromEntries(formData) };
 
   const { incidencia } = resultado;
   emitir("INCIDENCIA", { incidencia: vistaPublica(incidencia) });

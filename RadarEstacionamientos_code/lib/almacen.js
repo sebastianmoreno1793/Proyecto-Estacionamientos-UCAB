@@ -23,6 +23,7 @@ function crearAlmacen() {
     })),
     incidencias: [],
     movimientos: [], // HU 3.1: avisos de entrada y salida de los sensores
+    avisosRechazados: [], // HU 4.1: avisos que no cambiaron el aforo (rechazados o anomalías)
     lecturasDePlaca: [], // HU 3.2: placas que lee el lector de la garita
     edificios: copiarEdificios(), // HU 6.1: catálogo de edificios UCAB
   };
@@ -33,6 +34,7 @@ export function obtenerAlmacen() {
   globalThis.__radarAlmacen ??= crearAlmacen();
   // Si `next dev` ya tenía un almacén de antes de agregar una lista, se completa.
   globalThis.__radarAlmacen.movimientos ??= [];
+  globalThis.__radarAlmacen.avisosRechazados ??= [];
   globalThis.__radarAlmacen.lecturasDePlaca ??= [];
   globalThis.__radarAlmacen.edificios ??= copiarEdificios();
   return globalThis.__radarAlmacen;

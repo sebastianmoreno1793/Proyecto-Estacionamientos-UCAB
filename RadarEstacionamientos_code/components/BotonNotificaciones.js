@@ -31,13 +31,22 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
 
   async function activar() {
     setOcupado(true);
-    const nuevoEstado = await gestorNotificaciones.pedirPermiso();
-    setEstadoPermiso(nuevoEstado);
-    setPreferencia(gestorNotificaciones.obtenerPreferencia());
-    if (nuevoEstado === "granted") setMensaje("Listo: te enviamos una notificación de prueba.");
-    // Si las bloquea en el diálogo del navegador, también se le dice cómo activarlas (CA2).
-    if (nuevoEstado === "denied") setRecienBloqueadas(true);
-    setOcupado(false);
+    try {
+      const nuevoEstado = await gestorNotificaciones.pedirPermiso();
+      setEstadoPermiso(nuevoEstado);
+      setPreferencia(gestorNotificaciones.obtenerPreferencia());
+      if (nuevoEstado === "granted") {
+        setMensaje(
+          gestorNotificaciones.pruebaEnviada
+            ? "Listo: te enviamos una notificación de prueba."
+            : "Quedaron activadas, pero no se pudo mostrar la notificación de prueba.",
+        );
+      }
+      // Si las bloquea en el diálogo del navegador, también se le dice cómo activarlas (CA2).
+      if (nuevoEstado === "denied") setRecienBloqueadas(true);
+    } finally {
+      setOcupado(false); // siempre se libera el botón, aunque algo falle
+    }
   }
 
   function bloquear() {
@@ -47,8 +56,13 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
   }
 
   async function probar() {
-    const enviada = await gestorNotificaciones.enviarNotificacionPrueba();
-    setMensaje(enviada ? "Notificación de prueba enviada." : "No se pudo enviar la notificación de prueba.");
+    setOcupado(true);
+    try {
+      const enviada = await gestorNotificaciones.enviarNotificacionPrueba();
+      setMensaje(enviada ? "Notificación de prueba enviada." : "No se pudo enviar la notificación de prueba.");
+    } finally {
+      setOcupado(false);
+    }
   }
 
   if (estadoPermiso === null) return null;
@@ -58,14 +72,18 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
     if (recienBloqueadas) {
       return (
         <div className="aviso-flotante" role="status">
-          <p>Listo, no te enviaremos notificaciones. Puedes activarlas cuando quieras en «Mis vehículos».</p>
+          {/* CA2: se le indica cómo activarlas desde la configuración del navegador. */}
+          <p>
+            No te enviaremos notificaciones. Si cambias de idea, actívalas en «Mis vehículos» o permítelas en la
+            configuración de tu navegador.
+          </p>
           <button type="button" className="boton-texto" onClick={() => setRecienBloqueadas(false)}>
             Entendido
           </button>
         </div>
       );
     }
-    if (estadoPermiso !== "default" || preferencia) return null;
+    if (!gestorNotificaciones.debeMostrarSolicitud()) return null; // CA3 (la regla vive en el gestor)
     return (
       <div className="aviso-flotante" role="dialog" aria-label="Activar las notificaciones">
         <p>¿Te avisamos cuando haya puesto o una incidencia en tu estacionamiento?</p>
@@ -73,7 +91,7 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
           Bloquear
         </button>
         <button type="button" className="boton-principal" onClick={activar} disabled={ocupado}>
-          Permitir
+          {ocupado ? "Activando…" : "Permitir"}
         </button>
       </div>
     );
@@ -94,7 +112,7 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
             Actívalas para enterarte de la disponibilidad de puestos y de las incidencias.
           </p>
           <button type="button" className={estilos.botonSecundario} onClick={activar} disabled={ocupado}>
-            Activar notificaciones
+            {ocupado ? "Activando…" : "Activar notificaciones"}
           </button>
         </>
       )}
@@ -102,16 +120,16 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
       {estadoPermiso === "granted" && (
         <>
           <p className={estilos.ayuda}>Las notificaciones están activadas.</p>
-          <button type="button" className={estilos.botonSecundario} onClick={probar}>
-            Enviar una de prueba
+          <button type="button" className={estilos.botonSecundario} onClick={probar} disabled={ocupado}>
+            {ocupado ? "Enviando…" : "Enviar una de prueba"}
           </button>
         </>
       )}
 
       {estadoPermiso === "denied" && (
         <p className={estilos.ayuda}>
-          Las bloqueaste en el navegador. Para activarlas, permite las notificaciones de este sitio
-          en los ajustes del navegador y vuelve a esta página.
+          Las bloqueaste en el navegador. Para activarlas, permite las notificaciones de este sitio en los ajustes del
+          navegador y vuelve a esta página.
         </p>
       )}
 

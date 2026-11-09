@@ -44,6 +44,9 @@ export function validarEdificio({ nombre, latitud, longitud }, edificios, idActu
   if (limpio.length < LARGO_MINIMO_NOMBRE) {
     return { error: "Escribe el nombre del edificio." };
   }
+  if (!/[a-z0-9]/.test(normalizarNombre(limpio))) {
+    return { error: "El nombre debe tener letras o números." };
+  }
   if (limpio.length > LARGO_MAXIMO_NOMBRE) {
     return { error: `El nombre no puede pasar de ${LARGO_MAXIMO_NOMBRE} caracteres.` };
   }

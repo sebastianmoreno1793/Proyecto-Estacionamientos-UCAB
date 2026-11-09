@@ -59,6 +59,7 @@ describe("criterio de aceptación: el más cercano con puestos libres", () => {
   test("si todo está lleno o cerrado, lo dice en vez de sugerir", () => {
     const { error } = sugerirMasCercano(EDIFICIO, [{ ...cerca, libres: 0 }, { ...lejos, activo: false }]);
     assert.match(error, /no hay puestos libres/);
+    assert.equal(sugerirMasCercano(EDIFICIO, [{ ...cerca, libres: 0 }]).motivo, "sin_puestos");
   });
 
   test("si el edificio no tiene ubicación, lo dice", () => {

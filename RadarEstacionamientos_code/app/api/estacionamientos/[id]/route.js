@@ -16,6 +16,10 @@ export async function PATCH(request, { params }) {
   const { id } = await params;
   const cuerpo = await request.json().catch(() => null);
   if (!cuerpo) return NextResponse.json({ error: "El cuerpo debe ser JSON." }, { status: 400 });
+  // «activo» tiene que ser true o false. Con Boolean("false") quedaría abierto sin querer.
+  if (cuerpo.activo !== undefined && typeof cuerpo.activo !== "boolean") {
+    return NextResponse.json({ error: "«activo» debe ser true o false (sin comillas)." }, { status: 400 });
+  }
 
   const actual = (await listarEstacionamientos()).find((e) => e.id === id);
   if (!actual) return NextResponse.json({ error: "Ese estacionamiento no existe." }, { status: 404 });

@@ -14,7 +14,10 @@ export default function PaginaMaqueta() {
 
   useEffect(() => {
     fetch("/api/base/estacionamientos")
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`La app base respondió ${r.status}`);
+        return r.json();
+      })
       .then(({ estacionamientos }) => {
         setEstacionamientos(estacionamientos);
         setEstado("Dibujando la maqueta…");

@@ -18,7 +18,8 @@ export async function guardarEdificioNuevo(_estadoAnterior, formData) {
   if (!esAdministrador(await obtenerUsuarioActual())) return SOLO_ADMIN;
 
   const resultado = await agregarEdificio(leerFormulario(formData));
-  if (resultado.error) return { error: resultado.error };
+  // Con el error vuelven los valores escritos (React 19 vacía el formulario tras enviar).
+  if (resultado.error) return { error: resultado.error, valores: leerFormulario(formData) };
 
   revalidatePath("/admin/edificios");
   return { mensaje: `Se agregó "${resultado.edificio.nombre}".`, version: Date.now() };
@@ -28,7 +29,7 @@ export async function guardarEdificio(_estadoAnterior, formData) {
   if (!esAdministrador(await obtenerUsuarioActual())) return SOLO_ADMIN;
 
   const resultado = await modificarEdificio(formData.get("id"), leerFormulario(formData));
-  if (resultado.error) return { error: resultado.error };
+  if (resultado.error) return { error: resultado.error, valores: leerFormulario(formData) };
 
   revalidatePath("/admin/edificios");
   return { mensaje: "Cambios guardados." };

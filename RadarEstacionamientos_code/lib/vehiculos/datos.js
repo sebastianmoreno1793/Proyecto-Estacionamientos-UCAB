@@ -2,6 +2,7 @@
 // (igual que lib/almacen.js). Al reiniciar el servidor se pierden.
 import { randomUUID } from "node:crypto";
 import { normalizarPlaca, validarVehiculo } from "./reglas.js";
+import { normalizarCorreo } from "../usuarios/reglas.js";
 
 function obtenerVehiculos() {
   globalThis.__radarVehiculos ??= [];
@@ -16,6 +17,7 @@ export function reiniciarVehiculos() {
 // en el sistema, porque el lector de la garita identifica al vehículo por ella.
 export async function registrarVehiculo(dueno, datos) {
   if (!dueno) return { error: "Inicia sesión para registrar tus vehículos." };
+  dueno = normalizarCorreo(dueno); // «ANA@…» y «ana@…» son la misma persona
   const validacion = validarVehiculo(datos);
   if (validacion.error) return { error: validacion.error };
 
@@ -32,7 +34,7 @@ export async function registrarVehiculo(dueno, datos) {
 // Cada usuario solo ve sus propios vehículos (rango de calidad de seguridad del Brief).
 export async function listarVehiculosDe(dueno) {
   return obtenerVehiculos()
-    .filter((v) => v.dueno === dueno)
+    .filter((v) => v.dueno === normalizarCorreo(dueno))
     .map((v) => ({ ...v }));
 }
 

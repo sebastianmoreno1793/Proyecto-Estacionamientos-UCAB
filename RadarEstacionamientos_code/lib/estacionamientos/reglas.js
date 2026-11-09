@@ -41,7 +41,7 @@ export function aplicarMovimiento(estacionamiento, tipo) {
   }
   const { etiqueta, nombre, activo, capacidad, ocupados } = estacionamiento;
   const cual = etiqueta ?? nombre;
-  if (!activo) return { error: `${cual} está desactivado.`, motivo: "desactivado" };
+  if (!activo) return { error: `${cual} está cerrado.`, motivo: "desactivado" };
   if (tipo === "ENTRADA" && ocupados >= capacidad) {
     return { error: `${cual} está lleno.`, motivo: "lleno" };
   }
@@ -58,7 +58,7 @@ export function validarCapacidad(valor) {
   }
   const capacidad = Number(texto);
   if (capacidad < 1) {
-    return { error: "La capacidad debe ser de al menos 1 puesto. Para cerrarlo, desactívalo." };
+    return { error: "La capacidad debe ser de al menos 1 puesto. Para cerrarlo, desmarca «Activo»." };
   }
   if (capacidad > CAPACIDAD_MAXIMA) {
     return { error: `La capacidad no puede pasar de ${CAPACIDAD_MAXIMA} puestos.` };
@@ -66,8 +66,8 @@ export function validarCapacidad(valor) {
   return { capacidad };
 }
 
-// HU 10.1: un estacionamiento desactivado no se sugiere. La HU 7.2 parte de esta lista
-// y le añade lo suyo (puestos libres y cercanía al edificio).
+// HU 5.4: un estacionamiento cerrado no se sugiere. La HU 7.2 (lib/sugerencia/reglas.js) parte
+// de esta lista y le añade lo suyo (puestos libres, no solo profesores y cercanía al edificio).
 export function estacionamientosSugeribles(estacionamientos) {
   return estacionamientos.filter((e) => e.activo);
 }

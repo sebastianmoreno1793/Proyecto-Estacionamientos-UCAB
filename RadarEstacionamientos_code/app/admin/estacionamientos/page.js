@@ -7,7 +7,7 @@ import estilos from "../../formularios.module.css";
 
 export const metadata = { title: "Estacionamientos · Administración" };
 
-// HU 10.1 Habilitar, inhabilitar y fijar la capacidad de los estacionamientos.
+// HU 5.4 (antes 10.1) Modificar la capacidad y el estado de un estacionamiento.
 export default async function PaginaEstacionamientos() {
   await connection();
   const usuario = await obtenerUsuarioActual();
@@ -27,7 +27,14 @@ export default async function PaginaEstacionamientos() {
     <main className={estilos.pagina}>
       <div className={estilos.encabezado}>
         <h1>Estacionamientos</h1>
-        <Link href="/admin/actividad">Ver la garita</Link>
+        <nav aria-label="Administración" className={estilos.marcas}>
+          <Link href="/admin/edificios" className={estilos.botonSecundario}>
+            Edificios
+          </Link>
+          <Link href="/admin/actividad" className={estilos.botonSecundario}>
+            Garita
+          </Link>
+        </nav>
       </div>
       <p className={estilos.ayuda}>
         Cambia cuántos puestos tiene cada estacionamiento o desactívalo. Los puestos libres

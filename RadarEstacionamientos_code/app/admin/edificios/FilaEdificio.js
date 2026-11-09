@@ -23,7 +23,7 @@ export default function FilaEdificio({ edificio }) {
 
       <form action={guardar} className={estilos.campos}>
         <input type="hidden" name="id" value={edificio.id} />
-        <CamposEdificio edificio={edificio} />
+        <CamposEdificio edificio={edificio} valores={estado.valores} />
         <button type="submit" className={estilos.boton} disabled={guardando}>
           {guardando ? "Guardando…" : "Guardar"}
         </button>

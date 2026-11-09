@@ -13,9 +13,12 @@ export function nombreDelTipo(tipo) {
 }
 
 // Solo se reporta sobre estacionamientos activos: los desactivados no aparecen en la lista.
+// CA2: si falta algo, dice todo lo que falta elegir (no solo lo primero).
 export function validarReporte({ estacionamientoId, tipo }, estacionamientos) {
-  const existe = estacionamientos.some((e) => e.id === estacionamientoId && e.activo);
-  if (!existe) return { error: "Elige un estacionamiento de la lista." };
-  if (!nombreDelTipo(tipo)) return { error: "Elige el tipo de problema." };
+  const faltan = [];
+  if (!estacionamientos.some((e) => e.id === estacionamientoId && e.activo))
+    faltan.push("un estacionamiento de la lista");
+  if (!nombreDelTipo(tipo)) faltan.push("el tipo de problema");
+  if (faltan.length) return { error: `Elige ${faltan.join(" y ")}.`, faltan };
   return { estacionamientoId, tipo };
 }

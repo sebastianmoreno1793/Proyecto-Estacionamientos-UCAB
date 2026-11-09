@@ -8,10 +8,13 @@
 //
 // Al cambiar este archivo, sube VERSION para que los teléfonos reciban la versión nueva.
 
-const VERSION = "radar-v2";
+const VERSION = "radar-v3";
 const CACHE_SHELL = `${VERSION}-shell`;
 const CACHE_ESTATICOS = `${VERSION}-estaticos`;
 const SIN_CONEXION = "/sin-conexion";
+// Páginas con datos personales (placas, correos, incidencias): nunca se guardan en el teléfono,
+// así no quedan a la vista de otra persona después de «Salir».
+const PRIVADAS = ["/admin", "/vehiculos", "/incidencias", "/cuenta", "/sugerencia"];
 const SHELL = ["/", SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
 
 self.addEventListener("install", (evento) => {
@@ -38,14 +41,19 @@ self.addEventListener("fetch", (evento) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return; // mapas de OpenStreetMap: siempre a la red
   if (url.pathname.startsWith("/api/")) return; // datos en vivo: nunca de la caché
+  // Datos que pide Next al navegar con <Link> (encabezado RSC): siempre a la red, si no se verían viejos.
+  if (request.headers.get("RSC") || url.searchParams.has("_rsc")) return;
+  if (PRIVADAS.some((ruta) => url.pathname.startsWith(ruta))) return;
 
   // Páginas: primero la red (para ver lo último); sin red, la copia guardada o «Sin conexión».
   if (request.mode === "navigate") {
     evento.respondWith(
       fetch(request)
         .then((respuesta) => {
-          const copia = respuesta.clone();
-          caches.open(CACHE_SHELL).then((cache) => cache.put(request, copia));
+          if (respuesta.ok && respuesta.type === "basic") {
+            const copia = respuesta.clone();
+            caches.open(CACHE_SHELL).then((cache) => cache.put(request, copia));
+          }
           return respuesta;
         })
         .catch(async () => (await caches.match(request)) ?? (await caches.match(SIN_CONEXION))),
@@ -89,10 +97,16 @@ self.addEventListener("fetch", (evento) => {
 // ---------- Notificaciones (HU 8.1, Manuel Rosales) ----------
 
 self.addEventListener("push", (evento) => {
-  const datos = evento.data ? evento.data.json() : {};
+  // Mismos nombres que lib/notificaciones/Notificacion.js (titulo, cuerpo, url). Acepta texto plano.
+  let datos = {};
+  try {
+    datos = evento.data ? evento.data.json() : {};
+  } catch {
+    datos = { cuerpo: evento.data?.text() };
+  }
   evento.waitUntil(
     self.registration.showNotification(datos.titulo || "Radar UCAB", {
-      body: datos.mensaje || "Hay novedades en los estacionamientos.",
+      body: datos.cuerpo || datos.mensaje || "Hay novedades en los estacionamientos.",
       icon: "/icono-192.png",
       badge: "/icono-192.png",
       data: { url: datos.url || "/" },

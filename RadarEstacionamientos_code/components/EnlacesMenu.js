@@ -9,7 +9,12 @@ export default function EnlacesMenu({ enlaces }) {
   return (
     <nav aria-label="Menú principal" className="pestanas">
       {enlaces.map(({ href, texto, icono }) => (
-        <Link key={href} href={href} className="pestana" aria-current={ruta === href ? "page" : undefined}>
+        <Link
+          key={href}
+          href={href}
+          className="pestana"
+          aria-current={ruta === href || (href.startsWith("/admin") && ruta.startsWith("/admin")) ? "page" : undefined}
+        >
           <Icono nombre={icono} />
           <span>{texto}</span>
         </Link>

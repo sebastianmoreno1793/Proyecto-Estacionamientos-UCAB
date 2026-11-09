@@ -86,8 +86,9 @@
   min-width: 140px;
 }
 
-/* 16 px o más: el iPhone no hace zoom al tocar el campo. */
-.campo input[type="number"],
+/* 16 px o más: el iPhone no hace zoom al tocar el campo. Vale para todos los campos
+   (texto, correo, contraseña, número) menos casillas y círculos de selección. */
+.campo input:not([type="checkbox"]):not([type="radio"]),
 .campo select {
   font: inherit;
   font-size: 17px;
@@ -203,32 +204,39 @@ form.tarjeta > .boton {
 }
 
 .error:empty,
-.exito:empty {
+.exito:empty,
+.ayuda:empty {
   display: none;
 }
 
-/* HU 6.1 · campos de texto y botones secundarios */
-.campo input[type="text"] {
-  font: inherit;
-  padding: 8px;
-  border: 1px solid var(--borde);
-  border-radius: 8px;
-  background: #fff;
-  color: inherit;
-  min-width: 120px;
-}
-
+/* Botón secundario (DESIGN.md): relleno gris translúcido con texto azul. Sirve en claro y oscuro. */
 .botonSecundario {
   font: inherit;
-  padding: 8px 16px;
-  border: 1px solid var(--borde);
-  border-radius: 8px;
-  background: #fff;
-  color: inherit;
+  font-weight: 600;
+  min-height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radio-control);
+  background: var(--relleno);
+  color: var(--azul);
   cursor: pointer;
   align-self: flex-start;
+  /* También sirve en enlaces (<Link>) con forma de botón. */
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 
-.peligro {
+.botonSecundario:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.peligro,
+.peligro:hover {
   background: var(--error);
+}
+
+.peligro:hover {
+  filter: brightness(0.9);
 }

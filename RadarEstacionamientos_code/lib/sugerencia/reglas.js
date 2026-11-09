@@ -5,6 +5,8 @@
 // sugiere el estacionamiento con puestos libres más cercano a ese edificio, sin tomar en
 // cuenta todavía su horario». El horario es la HU 7.1 y los puestos docentes la 7.3 (R2).
 
+import { estacionamientosSugeribles } from "../estacionamientos/reglas.js";
+
 const RADIO_DE_LA_TIERRA_M = 6371000;
 
 // Distancia en línea recta, en metros, entre dos puntos [latitud, longitud] (fórmula de
@@ -27,22 +29,23 @@ export function centroDelPoligono(poligono) {
 // Elige la sugerencia.
 //   edificio          { id, nombre, ubicacion: [lat, lon] | null }
 //   estacionamientos  [{ id, nombre, activo, libres, soloProfesores, poligono }]
-// Devuelve { sugerido, distancia, alternativas } o { error } si no hay nada que sugerir.
+// Devuelve { sugerido, distancia, alternativas } o { error, motivo } si no hay nada que sugerir.
+//   motivo: "no_existe" (no hay tal edificio) · "sin_ubicacion" · "sin_puestos" (todo lleno o cerrado)
 export function sugerirMasCercano(edificio, estacionamientos) {
-  if (!edificio) return { error: "Ese edificio no existe." };
+  if (!edificio) return { error: "Ese edificio no existe.", motivo: "no_existe" };
   if (!edificio.ubicacion) {
-    return { error: `«${edificio.nombre}» todavía no tiene ubicación. Pídele al administrador que la agregue.` };
+    return { error: `«${edificio.nombre}» todavía no tiene ubicación. Pídele al administrador que la agregue.`, motivo: "sin_ubicacion" };
   }
 
-  const candidatos = estacionamientos
-    // Solo abiertos (HU 5.4), con al menos un puesto libre (D-009) y no reservados a profesores (HU 7.3).
-    .filter((e) => e.activo && e.libres > 0 && !e.soloProfesores && e.poligono?.length)
+  // Solo abiertos (HU 5.4), con al menos un puesto libre (D-009) y no reservados a profesores (HU 7.3).
+  const candidatos = estacionamientosSugeribles(estacionamientos)
+    .filter((e) => e.libres > 0 && !e.soloProfesores && e.poligono?.length)
     .map((e) => ({ ...e, distancia: distanciaEnMetros(edificio.ubicacion, centroDelPoligono(e.poligono)) }))
     // El más cercano primero; si están a la misma distancia, el que tiene más libres.
     .sort((a, b) => a.distancia - b.distancia || b.libres - a.libres);
 
   if (candidatos.length === 0) {
-    return { error: "Ahora mismo no hay puestos libres en ningún estacionamiento abierto." };
+    return { error: "Ahora mismo no hay puestos libres en ningún estacionamiento abierto.", motivo: "sin_puestos" };
   }
 
   const [sugerido, ...resto] = candidatos;

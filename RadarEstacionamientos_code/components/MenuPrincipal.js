@@ -30,7 +30,8 @@ export default async function MenuPrincipal() {
           <small>Campus Montalbán</small>
         </span>
       </a>
-      <EnlacesMenu enlaces={enlaces} />
+      {/* Sin sesión las pestañas solo llevarían a /entrar: no se muestran. */}
+      {usuario && <EnlacesMenu enlaces={enlaces} />}
       {usuario && (
         <div className="menu-usuario">
           <span title={usuario.correo}>{usuario.rol}</span>

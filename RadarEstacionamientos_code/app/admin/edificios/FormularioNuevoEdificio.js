@@ -13,7 +13,7 @@ export default function FormularioNuevoEdificio() {
       <h2>Agregar un edificio</h2>
       {/* La key cambia al agregar, así el formulario queda vacío para el siguiente. */}
       <form key={estado.version ?? "nuevo"} action={accion} className={estilos.campos}>
-        <CamposEdificio />
+        <CamposEdificio valores={estado.valores} />
         <button type="submit" className={estilos.boton} disabled={pendiente}>
           {pendiente ? "Agregando…" : "Agregar"}
         </button>

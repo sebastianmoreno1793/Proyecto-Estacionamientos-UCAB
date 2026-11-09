@@ -40,7 +40,7 @@ export class Notificacion {
    */
   static dePrueba() {
     return new Notificacion({
-      titulo: "Radar UCAB 🚗",
+      titulo: "Radar UCAB",
       cuerpo:
         "¡Notificaciones configuradas correctamente! Te avisaremos cuando haya puestos disponibles.",
       icono: "/icono-192.png",

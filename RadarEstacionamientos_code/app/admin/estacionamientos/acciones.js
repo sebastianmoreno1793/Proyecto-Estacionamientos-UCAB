@@ -15,7 +15,13 @@ export async function guardarEstacionamiento(_estadoAnterior, formData) {
     capacidad: formData.get("capacidad"),
     activo: formData.get("activo") === "on",
   });
-  if (resultado.error) return { error: resultado.error };
+  // Con el error vuelven los valores escritos (React 19 vacía el formulario tras enviar).
+  if (resultado.error) {
+    return {
+      error: resultado.error,
+      valores: { capacidad: formData.get("capacidad"), activo: formData.get("activo") === "on" },
+    };
+  }
 
   emitir("ESTACIONAMIENTO", { estacionamiento: vistaPublica(resultado.estacionamiento) });
   revalidatePath("/admin/estacionamientos");

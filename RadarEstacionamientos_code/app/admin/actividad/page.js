@@ -1,11 +1,20 @@
 import { connection } from "next/server";
-import { listarEstacionamientos, listarMovimientos } from "@/lib/estacionamientos/datos";
+import { listarAvisosRechazados, listarEstacionamientos, listarMovimientos } from "@/lib/estacionamientos/datos";
 import { listarLecturasDePlaca } from "@/lib/garita/datos";
 import { formatearFechaHora } from "@/lib/fechas";
 import { esAdministrador, obtenerUsuarioActual } from "@/lib/sesion";
 import estilos from "../../formularios.module.css";
 
 export const metadata = { title: "Actividad de la garita · Administración" };
+
+// Por qué se rechazó un aviso: «no existe» es un rechazo (RN4); lo demás es una anomalía (RN3).
+const MOTIVOS = {
+  no_existe: "Rechazado: el estacionamiento no existe",
+  lleno: "Anomalía: entrada con el estacionamiento lleno",
+  vacio: "Anomalía: salida sin carros dentro",
+  desactivado: "Anomalía: aviso de un estacionamiento cerrado",
+  tipo: "Anomalía: tipo de movimiento desconocido",
+};
 
 // Lo que registraron los sensores (HU 3.1) y el lector de placas de la garita (HU 3.2).
 // Las placas son datos personales: solo las ve el personal autorizado.
@@ -23,6 +32,7 @@ export default async function PaginaActividad() {
   const etiquetas = Object.fromEntries((await listarEstacionamientos()).map((e) => [e.id, e.etiqueta]));
   const movimientos = await listarMovimientos(30);
   const lecturas = await listarLecturasDePlaca(30);
+  const rechazados = await listarAvisosRechazados(30);
 
   return (
     <main className={estilos.pagina}>
@@ -39,8 +49,26 @@ export default async function PaginaActividad() {
           <ul className={estilos.lista}>
             {movimientos.map((m) => (
               <li key={m.id}>
-                {m.tipo === "ENTRADA" ? "🟢 Entrada" : "🔴 Salida"} · {etiquetas[m.estacionamientoId] ?? m.estacionamientoId} ·{" "}
-                {formatearFechaHora(m.hora)}
+                {m.tipo === "ENTRADA" ? "Entrada" : "Salida"} · {etiquetas[m.estacionamientoId] ?? m.estacionamientoId}{" "}
+                · {formatearFechaHora(m.hora)}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {/* HU 4.1 (RN3 y RN4): lo que llegó y no cambió el aforo, con la hora y el motivo. */}
+      <section className={estilos.tarjeta}>
+        <h2>Avisos rechazados ({rechazados.length})</h2>
+        {rechazados.length === 0 ? (
+          <p className={estilos.ayuda}>Ningún aviso fue rechazado.</p>
+        ) : (
+          <ul className={estilos.lista}>
+            {rechazados.map((r) => (
+              <li key={r.id}>
+                {MOTIVOS[r.motivo] ?? r.motivo} ·{" "}
+                {etiquetas[r.estacionamientoId] ?? r.estacionamientoId ?? "sin estacionamiento"} ·{" "}
+                {formatearFechaHora(r.hora)}
               </li>
             ))}
           </ul>
@@ -55,7 +83,8 @@ export default async function PaginaActividad() {
           <ul className={estilos.lista}>
             {lecturas.map((l) => (
               <li key={l.id}>
-                <strong>{l.placa}</strong> · {l.sentido === "ENTRADA" ? "entró" : "salió"} · {formatearFechaHora(l.hora)}
+                <strong>{l.placa}</strong> · {l.sentido === "ENTRADA" ? "entró" : "salió"} ·{" "}
+                {formatearFechaHora(l.hora)}
               </li>
             ))}
           </ul>

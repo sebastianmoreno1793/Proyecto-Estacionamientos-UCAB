@@ -16,9 +16,9 @@ export function normalizarCorreo(correo) {
 
 // Devuelve lo que va después de la @, o null si el correo no tiene forma de correo.
 export function dominioDe(correo) {
-  const partes = normalizarCorreo(correo).split("@");
-  if (partes.length !== 2 || partes[0] === "") return null;
-  return partes[1];
+  // Antes de la @: letras, números y . _ % + - (sin espacios ni signos raros).
+  const coincidencia = /^[a-z0-9._%+-]+@([a-z0-9.-]+)$/.exec(normalizarCorreo(correo));
+  return coincidencia ? coincidencia[1] : null;
 }
 
 export function esCorreoUcab(correo) {

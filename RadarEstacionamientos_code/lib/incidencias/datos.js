@@ -8,6 +8,7 @@ export function vistaPublica({ id, estacionamientoId, tipo, estado, reportadaEn 
 
 // HU 9.1: el reporte queda registrado con la hora y como pendiente.
 export async function registrarIncidencia({ estacionamientoId, tipo, reportadaPor }, ahora = new Date()) {
+  if (!reportadaPor) return { error: "Inicia sesión para reportar una incidencia." }; // RN4
   const almacen = obtenerAlmacen();
   const validacion = validarReporte({ estacionamientoId, tipo }, almacen.estacionamientos);
   if (validacion.error) return { error: validacion.error };

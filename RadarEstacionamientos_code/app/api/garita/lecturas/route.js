@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 //   { "placa": "AB123CD", "sentido": "ENTRADA", "idLectura": "opcional, único" }
 export async function POST(request) {
   if (!esClaveDeSensorValida(request.headers.get("x-clave-sensor"))) {
-    return NextResponse.json({ error: "Falta la clave del sensor (encabezado x-clave-sensor)." }, { status: 401 });
+    return NextResponse.json({ error: "Falta la clave del sensor o no es válida (encabezado x-clave-sensor)." }, { status: 401 });
   }
   const cuerpo = await request.json().catch(() => null);
   if (!cuerpo) return NextResponse.json({ error: "El cuerpo debe ser JSON." }, { status: 400 });

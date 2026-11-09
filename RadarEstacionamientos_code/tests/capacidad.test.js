@@ -1,4 +1,4 @@
-// HU 10.1 Habilitar, inhabilitar y fijar la capacidad de los estacionamientos.
+// HU 5.4 (antes 10.1) Modificar la capacidad y el estado de un estacionamiento.
 // Se corre con: npm test
 
 import { beforeEach, describe, test } from "node:test";

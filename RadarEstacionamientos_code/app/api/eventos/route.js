@@ -14,7 +14,13 @@ export async function GET(request) {
       const enviar = (mensaje) => controlador.enqueue(codificador.encode(`data: ${JSON.stringify(mensaje)}\n\n`));
       const desuscribir = suscribir(enviar);
       // Un comentario cada 25 s para que proxies y navegadores no cierren la conexión.
-      const latido = setInterval(() => controlador.enqueue(codificador.encode(": latido\n\n")), 25000);
+      const latido = setInterval(() => {
+        try {
+          controlador.enqueue(codificador.encode(": latido\n\n"));
+        } catch {
+          cancelar(); // el flujo ya se cerró sin avisar: se apaga el latido
+        }
+      }, 25000);
       cancelar = () => {
         clearInterval(latido);
         desuscribir();
@@ -39,6 +45,7 @@ export async function GET(request) {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache, no-transform",
       Connection: "keep-alive",
+      "X-Accel-Buffering": "no", // detrás de nginx, que no acumule los mensajes
     },
   });
 }

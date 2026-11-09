@@ -12,7 +12,7 @@ export default function FormularioIncidencia({ estacionamientos, elegido = "" })
     <form action={accion} className={estilos.tarjeta}>
       <label className={estilos.campo}>
         Estacionamiento
-        <select name="estacionamientoId" defaultValue={elegido} required>
+        <select name="estacionamientoId" defaultValue={estado.valores?.estacionamientoId ?? elegido} required>
           <option value="" disabled>
             Elige el estacionamiento
           </option>
@@ -28,7 +28,7 @@ export default function FormularioIncidencia({ estacionamientos, elegido = "" })
         <legend>¿Qué problema hay?</legend>
         {TIPOS_DE_INCIDENCIA.map((t) => (
           <label key={t.id} className={estilos.casilla}>
-            <input type="radio" name="tipo" value={t.id} required />
+            <input type="radio" name="tipo" value={t.id} defaultChecked={estado.valores?.tipo === t.id} required />
             {t.nombre}
           </label>
         ))}
@@ -43,7 +43,7 @@ export default function FormularioIncidencia({ estacionamientos, elegido = "" })
         {estado.reporte && (
           <p className={estilos.exito}>
             Reporte enviado ({estado.reporte.hora}): {estado.reporte.tipo} en{" "}
-            {estado.reporte.estacionamiento}. Estado: {estado.reporte.estado}.
+            {estado.reporte.estacionamiento}. Estado: {estado.reporte.estado === "pendiente" ? "Pendiente" : estado.reporte.estado}.
           </p>
         )}
       </div>

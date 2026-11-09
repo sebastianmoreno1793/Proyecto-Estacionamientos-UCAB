@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { guardarEstacionamiento } from "./acciones";
-import { CAPACIDAD_MAXIMA, puestosLibres } from "@/lib/estacionamientos/reglas";
+import { CAPACIDAD_MAXIMA, puestosLibres, textoLibres } from "@/lib/estacionamientos/reglas";
 import estilos from "../../formularios.module.css";
 
 export default function FilaEstacionamiento({ estacionamiento }) {
@@ -19,7 +19,8 @@ export default function FilaEstacionamiento({ estacionamiento }) {
         </span>
       </div>
       <p>
-        {puestosLibres(estacionamiento)} libres de {capacidad} · {ocupados} ocupados
+        {textoLibres(puestosLibres(estacionamiento))} de {capacidad} · {ocupados}{" "}
+        {ocupados === 1 ? "ocupado" : "ocupados"}
       </p>
 
       <form action={accion} className={estilos.campos}>
@@ -32,12 +33,12 @@ export default function FilaEstacionamiento({ estacionamiento }) {
             min={1}
             max={CAPACIDAD_MAXIMA}
             step={1}
-            defaultValue={capacidad}
+            defaultValue={estado.valores?.capacidad ?? capacidad}
             required
           />
         </label>
         <label className={estilos.casilla}>
-          <input type="checkbox" name="activo" defaultChecked={activo} />
+          <input type="checkbox" name="activo" defaultChecked={estado.valores?.activo ?? activo} />
           Activo
         </label>
         <button type="submit" className={estilos.boton} disabled={pendiente}>

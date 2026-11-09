@@ -15,7 +15,9 @@ export async function agregarVehiculo(_estadoAnterior, formData) {
     modelo: formData.get("modelo"),
     color: formData.get("color"),
   });
-  if (resultado.error) return { error: resultado.error };
+  // Con el error se devuelven los valores: React 19 vacía el formulario después de cada envío
+  // y así el usuario no tiene que volver a escribir todo.
+  if (resultado.error) return { error: resultado.error, valores: Object.fromEntries(formData) };
 
   revalidatePath("/vehiculos");
   return { mensaje: `Vehículo ${resultado.vehiculo.placa} registrado.` };

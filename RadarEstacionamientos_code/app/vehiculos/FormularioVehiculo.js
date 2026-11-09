@@ -13,19 +13,49 @@ export default function FormularioVehiculo() {
       <div className={estilos.campos}>
         <label className={estilos.campo}>
           Placa
-          <input name="placa" placeholder="AB123CD" maxLength={9} required />
+          <input
+            type="text"
+            name="placa"
+            defaultValue={estado.valores?.placa ?? ""}
+            autoCapitalize="characters"
+            autoComplete="off"
+            placeholder="AB123CD"
+            maxLength={9}
+            required
+          />
         </label>
         <label className={estilos.campo}>
           Marca
-          <input name="marca" placeholder="Toyota" maxLength={30} required />
+          <input
+            type="text"
+            name="marca"
+            defaultValue={estado.valores?.marca ?? ""}
+            placeholder="Toyota"
+            maxLength={30}
+            required
+          />
         </label>
         <label className={estilos.campo}>
           Modelo
-          <input name="modelo" placeholder="Corolla" maxLength={30} required />
+          <input
+            type="text"
+            name="modelo"
+            defaultValue={estado.valores?.modelo ?? ""}
+            placeholder="Corolla"
+            maxLength={30}
+            required
+          />
         </label>
         <label className={estilos.campo}>
           Color
-          <input name="color" placeholder="Gris" maxLength={30} required />
+          <input
+            type="text"
+            name="color"
+            defaultValue={estado.valores?.color ?? ""}
+            placeholder="Gris"
+            maxLength={30}
+            required
+          />
         </label>
       </div>
 

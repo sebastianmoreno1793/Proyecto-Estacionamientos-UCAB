@@ -2,15 +2,16 @@
 
 export const SENTIDOS = ["ENTRADA", "SALIDA"];
 
-// Placas venezolanas: 6 o 7 letras y números (AB123CD, ABC12D…). Se aceptan con espacios o
-// guiones, como las escriba el lector, y se guardan en mayúsculas y sin separadores.
-export function normalizarPlaca(texto) {
-  return String(texto ?? "").toUpperCase().replace(/[\s-]/g, "");
-}
+// Las placas siguen las mismas reglas que en «Mis vehículos» (HU 2.1): 6 o 7 letras y números,
+// con al menos una letra y un número. Se aceptan con espacios o guiones y se guardan en
+// mayúsculas y sin separadores. Una sola regla para las dos HU.
+import { esPlacaValida, normalizarPlaca } from "../vehiculos/reglas.js";
+
+export { normalizarPlaca };
 
 export function validarLectura({ placa, sentido }) {
   const normalizada = normalizarPlaca(placa);
-  if (!/^[A-Z0-9]{6,7}$/.test(normalizada)) {
+  if (!esPlacaValida(normalizada)) {
     return { error: "La placa debe tener 6 o 7 letras y números." };
   }
   const sentidoNormalizado = String(sentido ?? "").toUpperCase().trim();

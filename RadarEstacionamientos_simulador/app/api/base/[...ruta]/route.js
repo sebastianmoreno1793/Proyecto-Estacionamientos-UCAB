@@ -26,10 +26,21 @@ async function reenviar(request, { params }) {
   const ruta = RUTAS.find((r) => r.patron.test(camino) && r.metodos.includes(request.method));
   if (!ruta) return Response.json({ error: `Ruta no permitida: ${request.method} /api/${camino}` }, { status: 404 });
 
+  // Solo la página del propio simulador puede usar el puente. Si no, cualquier sitio abierto en el
+  // navegador podría mandar avisos falsos firmados con la clave de los sensores.
+  const sitio = request.headers.get("sec-fetch-site");
+  if (sitio && sitio !== "same-origin") {
+    return Response.json({ error: "Origen no permitido." }, { status: 403 });
+  }
+
   const encabezados = { "content-type": "application/json" };
-  const cookie = request.headers.get("cookie");
+  // Solo la cookie de sesión del Radar, no las de otros proyectos que corran en localhost.
+  const sesion = (request.headers.get("cookie") ?? "")
+    .split(/;\s*/)
+    .filter((c) => c.startsWith("radar_sesion="))
+    .join("; ");
   if (ruta.sensor) encabezados["x-clave-sensor"] = CLAVE_SENSORES;
-  else if (cookie) encabezados.cookie = cookie;
+  else if (sesion) encabezados.cookie = sesion;
 
   try {
     const respuesta = await fetch(new URL(`/api/${camino}`, URL_APP_BASE), {
@@ -48,6 +59,13 @@ async function reenviar(request, { params }) {
       },
     });
   } catch {
+    // Si la app base no responde, el canal en vivo pide reintentar en 3 s (EventSource lo hace solo).
+    // Con un 502 en JSON, el navegador cerraría el canal para siempre.
+    if (camino === "eventos") {
+      return new Response("retry: 3000\n\n", {
+        headers: { "content-type": "text/event-stream", "cache-control": "no-cache" },
+      });
+    }
     return Response.json({ error: `No se pudo conectar con la app base en ${URL_APP_BASE}.` }, { status: 502 });
   }
 }

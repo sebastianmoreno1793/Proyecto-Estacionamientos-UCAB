@@ -67,7 +67,10 @@ export default function PanelPuestos({ estacionamientos, conexion, actualizado, 
   const lista = ordenarPorLibres(estacionamientos);
 
   return (
-    <aside className={`panel-puestos${abierto ? "" : " panel-cerrado"}`} aria-label="Puestos libres por estacionamiento">
+    <aside
+      className={`panel-puestos${abierto ? "" : " panel-cerrado"}`}
+      aria-label="Puestos libres por estacionamiento"
+    >
       <header className="panel-encabezado">
         <span className="panel-agarradera" aria-hidden="true" />
         <button
@@ -82,7 +85,8 @@ export default function PanelPuestos({ estacionamientos, conexion, actualizado, 
               {estacionamientos.length ? total : "—"}
             </span>
             <span className="panel-total-texto" aria-live="polite">
-              <span className="oculto-visual">{totalLibres} </span>puestos libres en el campus
+              <span className="oculto-visual">{totalLibres} </span>
+              {totalLibres === 1 ? "puesto libre" : "puestos libres"} en el campus
             </span>
           </span>
           <span className="panel-flecha">{abierto ? "Ocultar" : "Ver lista"}</span>

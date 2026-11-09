@@ -22,6 +22,11 @@ export class GestorNotificaciones {
     this.apis = apis;
   }
 
+  // En pruebas (APIs inyectadas) se comporta como en producción.
+  #enDesarrollo() {
+    return !this.apis && process.env.NODE_ENV !== "production";
+  }
+
   #apiNotificacion() {
     if (this.apis) return this.apis.notificationApi ?? null;
     if (typeof window === "undefined" || typeof Notification === "undefined") {
@@ -86,6 +91,14 @@ export class GestorNotificaciones {
   }
 
   /**
+   * CA3: la solicitud solo se muestra si el navegador todavía no preguntó y el usuario no
+   * respondió antes en este navegador (ni «Permitir» ni «Bloquear»).
+   */
+  debeMostrarSolicitud() {
+    return this.obtenerEstadoPermiso() === "default" && !this.obtenerPreferencia();
+  }
+
+  /**
    * «Bloquear» en la solicitud del Radar (CA2 de la HU 8.1): se registran como bloqueadas sin
    * preguntarle al navegador, así el usuario puede activarlas después desde su perfil.
    */
@@ -116,6 +129,8 @@ export class GestorNotificaciones {
    */
   async registrarServiceWorker() {
     if (!this.soportaServiceWorker()) return null;
+    // En `next dev` no se registra (igual que RegistroPWA): el SW guardaría código viejo en caché.
+    if (this.#enDesarrollo()) return (await this.#navegador().serviceWorker.getRegistration()) ?? null;
 
     try {
       const registro = await this.#navegador().serviceWorker.register(
@@ -136,9 +151,17 @@ export class GestorNotificaciones {
     if (!this.soportaServiceWorker()) return false;
     if (this.obtenerEstadoPermiso() !== "granted") return false;
 
+    const notificacion = Notificacion.dePrueba();
+    if (this.#enDesarrollo()) {
+      // Sin SW en desarrollo: si no hay uno registrado, la prueba sale directo del navegador.
+      const registro = await this.#navegador().serviceWorker.getRegistration();
+      if (registro) await notificacion.mostrarEn(registro);
+      else new (this.#apiNotificacion())(notificacion.titulo, notificacion.aOpcionesDeVisualizacion());
+      return true;
+    }
     const registro = await this.#esperarServiceWorkerActivo();
     if (!registro) return false;
-    await Notificacion.dePrueba().mostrarEn(registro);
+    await notificacion.mostrarEn(registro);
     return true;
   }
 
@@ -158,10 +181,12 @@ export class GestorNotificaciones {
 
     const permiso = await api.requestPermission();
 
+    this.pruebaEnviada = false;
     if (permiso === "granted") {
       this.guardarPreferencia(GestorNotificaciones.PREFERENCIA_ACTIVADAS);
       await this.registrarServiceWorker();
-      await this.enviarNotificacionPrueba();
+      // CA1: una sola notificación de prueba. Se recuerda si salió, para no decir «te enviamos» en falso.
+      this.pruebaEnviada = await this.enviarNotificacionPrueba();
     } else if (permiso === "denied") {
       this.guardarPreferencia(GestorNotificaciones.PREFERENCIA_BLOQUEADAS);
     }

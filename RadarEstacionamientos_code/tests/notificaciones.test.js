@@ -58,7 +58,7 @@ function crearApis({ permisoInicial = "default", resultadoPermiso = "granted" } 
 describe("Notificacion", () => {
   test("arma las opciones de showNotification", () => {
     const notificacion = new Notificacion({
-      titulo: "Radar UCAB 🚗",
+      titulo: "Radar UCAB",
       cuerpo: "Hay un puesto libre",
       icono: "/icono-192.png",
       url: "/",
@@ -81,7 +81,7 @@ describe("Notificacion", () => {
     });
 
     assert.equal(mostradas.length, 1);
-    assert.equal(mostradas[0].titulo, "Radar UCAB 🚗");
+    assert.equal(mostradas[0].titulo, "Radar UCAB");
     assert.match(mostradas[0].opciones.body, /configuradas correctamente/);
   });
 });
@@ -99,7 +99,7 @@ describe("GestorNotificaciones", () => {
     assert.equal(avisos.length, 1);
   });
 
-  test("con [OK] guarda activadas, registra el SW y dispara la notificación de prueba", async () => {
+  test("CA1: con «Permitir» guarda activadas, registra el SW y dispara la notificación de prueba", async () => {
     const { apis, notificacionesMostradas } = crearApis({ resultadoPermiso: "granted" });
     const gestor = new GestorNotificaciones(apis);
 
@@ -110,10 +110,10 @@ describe("GestorNotificaciones", () => {
     );
     assert.equal(apis.rutaRegistrada, GestorNotificaciones.RUTA_SERVICE_WORKER);
     assert.equal(notificacionesMostradas.length, 1);
-    assert.equal(notificacionesMostradas[0].titulo, "Radar UCAB 🚗");
+    assert.equal(notificacionesMostradas[0].titulo, "Radar UCAB");
   });
 
-  test("con [cancelar] guarda bloqueadas y no registra el Service Worker", async () => {
+  test("CA2: si bloquea en el navegador guarda bloqueadas y no registra el Service Worker", async () => {
     const { apis, notificacionesMostradas } = crearApis({ resultadoPermiso: "denied" });
     const gestor = new GestorNotificaciones(apis);
 

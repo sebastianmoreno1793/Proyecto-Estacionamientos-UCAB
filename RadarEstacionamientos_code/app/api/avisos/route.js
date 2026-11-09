@@ -13,10 +13,15 @@ const ESTADO_POR_MOTIVO = { no_existe: 404, tipo: 400, desactivado: 409, lleno: 
 //   { "estacionamientoId": "est-playa", "tipo": "ENTRADA", "idAviso": "opcional, único" }
 export async function POST(request) {
   if (!esClaveDeSensorValida(request.headers.get("x-clave-sensor"))) {
-    return NextResponse.json({ error: "Falta la clave del sensor (encabezado x-clave-sensor)." }, { status: 401 });
+    return NextResponse.json({ error: "Falta la clave del sensor o no es válida (encabezado x-clave-sensor)." }, { status: 401 });
   }
   const cuerpo = await request.json().catch(() => null);
-  if (!cuerpo) return NextResponse.json({ error: "El cuerpo debe ser JSON." }, { status: 400 });
+  if (!cuerpo || typeof cuerpo !== "object" || Array.isArray(cuerpo)) {
+    return NextResponse.json({ error: "El cuerpo debe ser un objeto JSON." }, { status: 400 });
+  }
+  if (typeof cuerpo.estacionamientoId !== "string" || !cuerpo.estacionamientoId) {
+    return NextResponse.json({ error: "Falta estacionamientoId.", motivo: "falta_estacionamiento" }, { status: 400 });
+  }
 
   const idAviso = typeof cuerpo.idAviso === "string" ? cuerpo.idAviso.slice(0, 100) : null;
   const resultado = await registrarAviso({ estacionamientoId: cuerpo.estacionamientoId, tipo: cuerpo.tipo, idAviso });
