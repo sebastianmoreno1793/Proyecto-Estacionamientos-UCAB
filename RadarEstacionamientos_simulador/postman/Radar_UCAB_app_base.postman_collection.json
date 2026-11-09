@@ -376,6 +376,31 @@
             },
             "description": "Capacidad, ocupados, libres, porcentaje del semáforo, si está activo y su forma."
           }
+        },
+        {
+          "name": "Sugerir el más cercano a un edificio (HU 7.2)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/sugerencia?edificio=edif-aulas",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "sugerencia"
+              ],
+              "query": [
+                {
+                  "key": "edificio",
+                  "value": "edif-aulas",
+                  "description": "id del edificio (HU 6.1): edif-aulas, edif-laboratorios, edif-cincuentenario, edif-postgrado, edif-centro-cultural, edif-aula-magna"
+                }
+              ]
+            },
+            "description": "HU 7.2: devuelve el estacionamiento abierto con puestos libres más cercano al edificio (200), o 404 con { error } si no hay. Es la misma llamada que hace la pantalla /sugerencia con fetch."
+          }
         }
       ]
     },

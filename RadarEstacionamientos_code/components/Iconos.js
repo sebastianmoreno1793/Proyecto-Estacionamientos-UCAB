@@ -20,6 +20,12 @@ export const ICONOS = {
       <path d="M9 4v14M15 6v14" />
     </svg>
   ),
+  sugerir: (
+    <svg {...base}>
+      <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" />
+      <path d="M10 13V7h2.5a2 2 0 0 1 0 4H10" />
+    </svg>
+  ),
   reportar: (
     <svg {...base}>
       <path d="M12 3.5 2.8 19.5h18.4L12 3.5Z" />

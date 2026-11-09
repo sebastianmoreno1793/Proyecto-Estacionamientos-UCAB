@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { connection } from "next/server";
 import FilaEstacionamiento from "./FilaEstacionamiento";
 import { listarEstacionamientos } from "@/lib/estacionamientos/datos";
@@ -24,7 +25,10 @@ export default async function PaginaEstacionamientos() {
 
   return (
     <main className={estilos.pagina}>
-      <h1>Estacionamientos</h1>
+      <div className={estilos.encabezado}>
+        <h1>Estacionamientos</h1>
+        <Link href="/admin/actividad">Ver la garita</Link>
+      </div>
       <p className={estilos.ayuda}>
         Cambia cuántos puestos tiene cada estacionamiento o desactívalo. Los puestos libres
         se calculan con la nueva capacidad, y un estacionamiento desactivado no se sugiere

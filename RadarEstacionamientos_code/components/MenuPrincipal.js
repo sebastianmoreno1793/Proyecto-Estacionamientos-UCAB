@@ -5,17 +5,18 @@ import { esAdministrador, obtenerUsuarioActual } from "@/lib/sesion";
 
 // Menú de la app, en todas las páginas (D-007): la marca en Azul Carnet arriba y las pestañas,
 // que en el celular bajan a una barra fija como en iOS (máximo 5). Lo de personal autorizado
-// (incidencias, placas, capacidad) solo aparece para el administrador.
+// (incidencias, placas, capacidad) solo aparece para el administrador. La Garita se abre desde
+// «Administrar» para no pasar de 5 pestañas.
 export default async function MenuPrincipal() {
   const usuario = await obtenerUsuarioActual();
   const enlaces = [
     { href: "/", texto: "Mapa", icono: "mapa" },
+    { href: "/sugerencia", texto: "Sugerir", icono: "sugerir" }, // HU 7.2
     { href: "/incidencias/nueva", texto: "Reportar", icono: "reportar" },
   ];
   if (esAdministrador(usuario)) {
     enlaces.push(
       { href: "/incidencias", texto: "Incidencias", icono: "incidencias" },
-      { href: "/admin/actividad", texto: "Garita", icono: "garita" },
       { href: "/admin/estacionamientos", texto: "Administrar", icono: "admin" },
     );
   }
