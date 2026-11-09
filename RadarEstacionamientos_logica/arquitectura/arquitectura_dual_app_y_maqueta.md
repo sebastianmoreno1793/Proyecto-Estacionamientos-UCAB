@@ -1,7 +1,7 @@
 # Arquitectura dual: la app del Radar y la maqueta 3D del campus
 
 **Estado:** 🟢 Vigente — especificación del 27/oct/26. La decisión está en
-[D-006](../decisiones/D-006-arquitectura-dual-app-y-maqueta-3d.md).
+[D-006](decisiones/D-006-arquitectura-dual-app-y-maqueta-3d.md).
 
 ## En una frase
 
@@ -34,7 +34,7 @@ flowchart LR
 ## Por qué son dos
 
 - La UCAB no dio acceso a sensores ni al lector de placas (restricción del Brief y
-  [D-002](../decisiones/D-002-deteccion-simulada.md)). Sin señales no hay radar que mostrar.
+  [D-002](decisiones/D-002-deteccion-simulada.md)). Sin señales no hay radar que mostrar.
 - Si la simulación viviera dentro de la app, la app quedaría "hecha para la demo". Separada,
   la app **no sabe que la maqueta existe**: recibe las señales por la misma puerta por la que
   entrarían las reales. El día que haya sensores de verdad, se apaga la maqueta y la app no
@@ -52,7 +52,7 @@ mapa, semáforo de ocupación, sugerencia del más cercano, notificaciones, inci
 administración de estacionamientos.
 
 **Lo que tiene que cumplir para la persona.** Muy interactiva y con buen diseño de uso; las
-reglas obligatorias están en ⭐ D-007 (`../producto/DESIGN.md`) y ⭐ D-008 (PWA). Cada punto apunta a los rangos de calidad del Brief:
+reglas obligatorias están en ⭐ D-007 (`DESIGN.md`) y ⭐ D-008 (PWA). Cada punto apunta a los rangos de calidad del Brief:
 
 | Lo que se busca | Cómo se nota | Rango de calidad del Brief → ISO 25010 |
 |---|---|---|
@@ -97,7 +97,7 @@ capturas, pruebas (`npm test`) y una colección de Postman.
 La pantalla de inicio de la app es una **maqueta del campus vista desde arriba** (D-007). Esa
 imagen la produce el simulador en su página `/maqueta`: fotografía la escena 3D con estilo de
 maqueta física y exporta `campus.jpg` y la proyección (`maqueta.json`), que se copian a
-`RadarEstacionamientos_code/public/maqueta/` y `data/`. Es un **archivo**, no código: la app no
+`RadarEstacionamientos_code/front/public/maqueta/` y `back/campus/`. Es un **archivo**, no código: la app no
 importa nada del simulador ni lo necesita corriendo.
 
 ## El contrato entre los dos

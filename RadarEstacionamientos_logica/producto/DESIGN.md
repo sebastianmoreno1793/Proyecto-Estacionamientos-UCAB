@@ -151,7 +151,7 @@ pintadas y los estacionamientos con sus puestos marcados.
 
 - **De dónde sale:** la página `/maqueta` del simulador fotografía la escena 3D con medidas reales
   (OpenStreetMap) en una cámara casi cenital (34°) y exporta la imagen
-  (`public/maqueta/campus.jpg`, 2400 × 1560) y la proyección (`data/maqueta.json`: dónde cae
+  (`front/public/maqueta/campus.jpg`, 2400 × 1560) y la proyección (`back/campus/maqueta.json`: dónde cae
   cada estacionamiento y cada edificio en la imagen). Si cambian los edificios o los
   estacionamientos, se vuelve a exportar; la app no dibuja el campus.
 - **Encima, el semáforo:** cada estacionamiento se pinta con su relleno al 50 % y su borde. El

@@ -1,26 +1,33 @@
 # Radar de Estacionamientos UCAB — código
 
-Aplicación web en Next.js (ver `docs/stack_y_arquitectura.md`).
+Aplicación web en Next.js (ver `docs/stack_y_arquitectura.md`), separada en **front** y **back**.
 
 ## Cómo correrla
 
 ```bash
 cd RadarEstacionamientos_code
-npm install
-npm run dev      # abre http://localhost:3000
-npm test         # pruebas de los datos
+npm run instalar   # instala las dependencias del front (el back no tiene)
+npm run dev        # abre http://localhost:3000
+npm test           # pruebas del back (119) y del front (12)
 ```
 
 ## Dónde está cada cosa
 
 | Carpeta | Qué hay |
 |---|---|
-| `app/` | Páginas (Next.js App Router) |
-| `components/` | Piezas de la interfaz, por ejemplo `MapaCampus.js` (HU 5.1) y el menú (`MenuPrincipal.js`) |
-| `data/` | Datos fijos, por ejemplo la lista de estacionamientos (provisional) |
-| `app/api/` | API pública: sensores, lector de placas, incidencias, administración y canal en vivo |
-| `tests/` | Pruebas que se corren con `npm test` |
+| `back/` | Lógica y API: `api/` (un archivo por endpoint), `logica/` (reglas y datos por tema), `campus/` (datos fijos del campus) y `pruebas/` |
+| `front/` | Pantallas: `app/` (una carpeta por URL), `componentes/`, `notificaciones/` (HU 8.1), `servidor/` (cookie de sesión) y `public/` |
 | `docs/` | Copia de la carpeta de lógica. **No se edita aquí.** |
+
+Cada carpeta tiene un `LEEME.md` corto, y cada archivo empieza con un comentario que dice qué hace.
+
+### Cómo se conectan
+
+```
+navegador (front) ──fetch /api/...──▶ front/app/api/.../route.js ──▶ back/api/<tema>.js ──▶ back/logica/<tema>/
+Postman, simulador y sensores ──────▶ las mismas URL /api/...
+acciones del front (formularios) ────────────────────────────────▶ back/logica/<tema>/ (directo, en el servidor)
+```
 
 ## API (la usan los sensores, Postman y el simulador)
 

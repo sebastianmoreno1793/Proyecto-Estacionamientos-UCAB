@@ -1,17 +1,12 @@
 {
   "name": "radar-estacionamientos-ucab",
-  "version": "0.1.0",
   "private": true,
-  "type": "module",
+  "description": "Radar de Estacionamientos UCAB. El código está en front/ (pantallas) y back/ (lógica y API).",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "test": "node --test"
-  },
-  "dependencies": {
-    "next": "^15.5.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "instalar": "npm --prefix front install",
+    "dev": "npm --prefix front run dev",
+    "build": "npm --prefix front run build",
+    "start": "npm --prefix front run start",
+    "test": "npm --prefix back test && npm --prefix front test"
   }
 }

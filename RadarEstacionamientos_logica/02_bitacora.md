@@ -15,6 +15,11 @@
   placas, y los formularios no se borran cuando hay un error.
 - **Postman:** 28 peticiones en el orden de la demostración, con pruebas y casos de error.
   Para la demo: dejar vacío `SALTAR_INICIO_DE_SESION` y copiar la cookie en `{{sesion}}`.
+- **Código separado en `front/` y `back/`** dentro de `RadarEstacionamientos_code`, con nombres en
+  español que dicen lo que hacen (`back/api`, `back/logica`, `back/campus`, `front/componentes`…),
+  un `LEEME.md` por carpeta y un comentario al inicio de cada archivo. Las URL de la API no
+  cambiaron (Postman y el simulador siguen igual). Pantallas nuevas: `/reportar`, `/admin/puestos`,
+  `/admin/garita`, `/admin/incidencias`.
 - Pruebas: 129/129 en la app y 19/19 en el simulador; build limpio. Incluye el PR #61 (menú en el
   celular). **Falta:** que el equipo revise la rama y se fusione en `main`.
 

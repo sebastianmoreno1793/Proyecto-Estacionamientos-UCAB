@@ -1,0 +1,9 @@
+{
+  "name": "radar-back",
+  "private": true,
+  "description": "Back del Radar: lógica, datos del campus y endpoints de la API. Se prueba con node --test.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

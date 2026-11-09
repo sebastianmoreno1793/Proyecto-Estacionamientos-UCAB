@@ -18,7 +18,7 @@
 // Coordenadas: [latitud, longitud], como en `data/estacionamientos.js` de la app base.
 
 // Origen (0, 0, 0) del mundo 3D: el mismo CENTRO_CAMPUS de la app base
-// (RadarEstacionamientos_code/data/estacionamientos.js). Un test comprueba que coincidan.
+// (RadarEstacionamientos_code/back/campus/estacionamientos.js). Un test comprueba que coincidan.
 export const CENTRO_CAMPUS = [10.4637, -66.977];
 
 // Contorno del campus (OSM, relación 3644537). Mide unos 930 m de este a oeste,

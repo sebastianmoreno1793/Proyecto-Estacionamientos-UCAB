@@ -2,7 +2,7 @@
 
 // Render de la maqueta del campus para la app (D-007 › Maqueta). Herramienta de desarrollo:
 // dibuja la maqueta una vez, la muestra y, con «Exportar», guarda la imagen y la proyección
-// en `exportes/` para copiarlas a `RadarEstacionamientos_code/public/maqueta/`.
+// en `exportes/` para copiarlas a `RadarEstacionamientos_code/front/public/maqueta/`.
 
 import { useCallback, useEffect, useState } from "react";
 import MaquetaRender from "@/components/MaquetaRender";

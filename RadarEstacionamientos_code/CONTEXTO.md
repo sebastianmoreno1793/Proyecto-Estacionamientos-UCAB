@@ -20,7 +20,7 @@ Ingeniería de Software, Equipo 3.
   la ocupación, fuente del sistema, 44 px mínimo, botones con texto, claro y oscuro, celular
   primero (320 y 375 px). Antes de terminar una pantalla corre `/impeccable critique` (skill
   instalada en cada computadora) y arregla los P1. Contexto de producto: `PRODUCT.md`.
-- ⭐ **PWA (D-008, obligatorio):** un solo service worker, `public/sw.js`; nadie registra otro.
+- ⭐ **PWA (D-008, obligatorio):** un solo service worker, `front/public/sw.js`; nadie registra otro.
   `/api/*` nunca sale de la caché. Lo que necesite una HU del service worker se agrega ahí.
 
 ## Qué construir ahora

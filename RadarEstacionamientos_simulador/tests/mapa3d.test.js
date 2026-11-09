@@ -5,7 +5,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { CENTRO_CAMPUS as CENTRO_APP_BASE, ESTACIONAMIENTOS } from "../../RadarEstacionamientos_code/data/estacionamientos.js";
+import { CENTRO_CAMPUS as CENTRO_APP_BASE, ESTACIONAMIENTOS } from "../../RadarEstacionamientos_code/back/campus/estacionamientos.js";
 import { CENTRO_CAMPUS, CONTORNO_CAMPUS, EDIFICIOS, GARITA, RELIEVE, VIAS } from "../data/campus.js";
 import {
   areaPoligono,
