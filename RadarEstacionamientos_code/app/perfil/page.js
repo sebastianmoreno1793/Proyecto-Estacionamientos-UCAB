@@ -28,7 +28,13 @@ export default async function PaginaPerfil() {
         </span>
         <div style={{ minWidth: 0 }}>
           <h1
-            style={{ fontSize: 17, lineHeight: "22px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+            style={{
+              fontSize: 17,
+              lineHeight: "22px",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
           >
             {usuario.correo}
           </h1>
@@ -38,40 +44,46 @@ export default async function PaginaPerfil() {
         </div>
       </div>
 
-      <section className="pantalla" style={{ padding: 0, gap: 10 }} aria-labelledby="titulo-vehiculos">
-        <h2 id="titulo-vehiculos" className="suave" style={{ margin: 0, fontWeight: 600 }}>
-          Mis vehículos
-        </h2>
-        {vehiculos.map((v) => (
-          <div key={v.id} className="tarjeta-grande fila">
-            <div>
-              <div className="cifra-l" style={{ fontSize: 22, letterSpacing: "0.06em" }}>
-                {v.placa}
+      {/* Teléfono: una columna. Computador: vehículos a la izquierda; notificaciones y cuenta a la derecha. */}
+      <div className="perfil-rejilla">
+        <div>
+          <section className="pantalla" style={{ padding: 0, gap: 10 }} aria-labelledby="titulo-vehiculos">
+            <h2 id="titulo-vehiculos" className="suave" style={{ margin: 0, fontWeight: 600 }}>
+              Mis vehículos
+            </h2>
+            {vehiculos.map((v) => (
+              <div key={v.id} className="tarjeta-grande fila">
+                <div>
+                  <div className="cifra-l" style={{ fontSize: 22, letterSpacing: "0.06em" }}>
+                    {v.placa}
+                  </div>
+                  <div className="suave">
+                    {v.marca} {v.modelo} · {v.color}
+                  </div>
+                </div>
+                <Icono nombre="carro" />
               </div>
-              <div className="suave">
-                {v.marca} {v.modelo} · {v.color}
-              </div>
-            </div>
-            <Icono nombre="carro" />
-          </div>
-        ))}
-        <FormularioVehiculo abierto={vehiculos.length === 0} />
-      </section>
+            ))}
+            <FormularioVehiculo abierto={vehiculos.length === 0} />
+          </section>
+        </div>
+        <div>
+          <BotonNotificaciones modo="perfil" />
 
-      <BotonNotificaciones modo="perfil" />
+          {esAdministrador(usuario) && (
+            <Link href="/admin/estacionamientos" className="fila-enlace oscura">
+              Administrar
+              <Icono nombre="flecha" />
+            </Link>
+          )}
 
-      {esAdministrador(usuario) && (
-        <Link href="/admin/estacionamientos" className="fila-enlace oscura">
-          Administrar
-          <Icono nombre="flecha" />
-        </Link>
-      )}
-
-      <form action={salir}>
-        <button type="submit" className="fila-enlace salir">
-          Salir
-        </button>
-      </form>
+          <form action={salir}>
+            <button type="submit" className="fila-enlace salir">
+              Salir
+            </button>
+          </form>
+        </div>
+      </div>
     </main>
   );
 }

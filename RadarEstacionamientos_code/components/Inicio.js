@@ -108,64 +108,68 @@ export default function Inicio({ edificios }) {
         ))}
       </div>
 
-      <div aria-live="polite">
-        {sugerencia?.sugerido && (
-          <Link
-            href={`/mapa?estacionamiento=${encodeURIComponent(sugerencia.sugerido.id)}`}
-            className="tarjeta-grande tarjeta-noche"
-          >
-            <span className="suave">Más cerca</span>
-            <span className="titulo-tarjeta">{sugerencia.sugerido.nombre}</span>
-            <span className="fila">
-              <span>
-                <span className="punto" style={{ background: SEMAFORO[0].relleno }} aria-hidden="true" />
-                {textoLibres(sugerencia.sugerido.libres)}
-              </span>
-              <span className="suave">{metros(sugerencia.sugerido.distancia)}</span>
-            </span>
-          </Link>
-        )}
-        {sugerencia?.error && <p className="mensaje-error">{sugerencia.error}</p>}
-      </div>
-
-      <section className="tarjeta-grande fila" aria-label="Puestos libres en el campus">
-        <div>
-          <div className="cifra-xl">{estacionamientos ? total : "—"}</div>
-          <div className="suave">{total === 1 ? "puesto libre" : "puestos libres"}</div>
-        </div>
-        <div
-          className="anillo"
-          style={{ "--hay": `${abiertos.length ? Math.round((conPuesto / abiertos.length) * 100) : 0}%` }}
-          role="img"
-          aria-label={`${conPuesto} con puesto y ${abiertos.length - conPuesto} sin puesto`}
-        />
-      </section>
-
-      <ul className="cuadricula">
-        {ordenados.map((e) => {
-          const nivel = nivelDelSemaforo(e);
-          return (
-            <li key={e.id}>
+      {/* Teléfono: todo en una columna. Computador: sugerencia y total a la izquierda, la rejilla a la derecha. */}
+      <div className="inicio-cuerpo">
+        <div className="inicio-lado">
+          <div aria-live="polite">
+            {sugerencia?.sugerido && (
               <Link
-                href={`/mapa?estacionamiento=${encodeURIComponent(e.id)}`}
-                className={`tarjeta-grande tarjeta-puesto${e.activo ? "" : " cerrado"}`}
+                href={`/mapa?estacionamiento=${encodeURIComponent(sugerencia.sugerido.id)}`}
+                className="tarjeta-grande tarjeta-noche"
               >
-                <span className="nombre-puesto">{e.etiqueta ?? e.nombre}</span>
-                {e.activo ? (
+                <span className="suave">Más cerca</span>
+                <span className="titulo-tarjeta">{sugerencia.sugerido.nombre}</span>
+                <span className="fila">
                   <span>
-                    <span className="cifra-l">{e.libres}</span>
-                    <span className="suave"> {e.libres === 1 ? "libre" : "libres"}</span>
+                    <span className="punto" style={{ background: SEMAFORO[0].relleno }} aria-hidden="true" />
+                    {textoLibres(sugerencia.sugerido.libres)}
                   </span>
-                ) : null}
-                <span className="suave">
-                  <span className="punto" style={{ background: nivel.relleno }} aria-hidden="true" />
-                  {e.activo ? nivel.texto : CERRADO.texto}
+                  <span className="suave">{metros(sugerencia.sugerido.distancia)}</span>
                 </span>
               </Link>
-            </li>
-          );
-        })}
-      </ul>
+            )}
+            {sugerencia?.error && <p className="mensaje-error">{sugerencia.error}</p>}
+          </div>
+
+          <section className="tarjeta-grande fila" aria-label="Puestos libres en el campus">
+            <div>
+              <div className="cifra-xl">{estacionamientos ? total : "—"}</div>
+              <div className="suave">{total === 1 ? "puesto libre" : "puestos libres"}</div>
+            </div>
+            <div
+              className="anillo"
+              style={{ "--hay": `${abiertos.length ? Math.round((conPuesto / abiertos.length) * 100) : 0}%` }}
+              role="img"
+              aria-label={`${conPuesto} con puesto y ${abiertos.length - conPuesto} sin puesto`}
+            />
+          </section>
+        </div>
+        <ul className="cuadricula">
+          {ordenados.map((e) => {
+            const nivel = nivelDelSemaforo(e);
+            return (
+              <li key={e.id}>
+                <Link
+                  href={`/mapa?estacionamiento=${encodeURIComponent(e.id)}`}
+                  className={`tarjeta-grande tarjeta-puesto${e.activo ? "" : " cerrado"}`}
+                >
+                  <span className="nombre-puesto">{e.etiqueta ?? e.nombre}</span>
+                  {e.activo ? (
+                    <span>
+                      <span className="cifra-l">{e.libres}</span>
+                      <span className="suave"> {e.libres === 1 ? "libre" : "libres"}</span>
+                    </span>
+                  ) : null}
+                  <span className="suave">
+                    <span className="punto" style={{ background: nivel.relleno }} aria-hidden="true" />
+                    {e.activo ? nivel.texto : CERRADO.texto}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </main>
   );
 }

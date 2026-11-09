@@ -36,7 +36,7 @@ export default async function PaginaActividad() {
   const rechazados = await listarAvisosRechazados(30);
 
   return (
-    <main className={estilos.pagina}>
+    <main className={`${estilos.pagina} ancha`}>
       <h1>Administrar</h1>
       <NavAdmin />
 

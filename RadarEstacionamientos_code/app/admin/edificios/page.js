@@ -25,7 +25,7 @@ export default async function PaginaEdificios() {
   const edificios = await listarEdificios();
 
   return (
-    <main className={estilos.pagina}>
+    <main className={`${estilos.pagina} ancha`}>
       <h1>Administrar</h1>
       <NavAdmin />
 

@@ -80,14 +80,13 @@ plantilla.
 ## Revisión del 09/nov/26 (versión 2)
 
 **Decide:** Sebastian Moreno. Se mantiene la idea (iOS, maqueta, semáforo de dos estados, Azul
-Carnet como identidad) y se simplifica la superficie: **un solo diseño en web y teléfono**, barra
-de pestañas flotante con cuatro pestañas (Inicio, Mapa, Reportar, Perfil), fondo claro con letra
+Carnet como identidad) y se simplifica la superficie: **responsive, con una parte de teléfono y una de web de la misma
+familia**, cuatro pestañas (flotantes abajo en el teléfono, arriba en el computador) (Inicio, Mapa, Reportar, Perfil), fondo claro con letra
 negra gruesa (referencia: Cashea), sin textos que expliquen el sistema, y tarjetas pastel solo
 para identificar tipos. Detalle en `DESIGN.md` › «Versión 2».
 
 **Por qué:** la app se veía sobrecargada; las apps de referencia resuelven cada tarea con pocos
-toques y casi sin texto. **Reemplaza** de la versión 1: la barra Azul Carnet arriba, las pestañas
-arriba en el computador, el panel lateral de 360 px y la regla «Azul Montalbán como único color»
+toques y casi sin texto. **Reemplaza** de la versión 1: la barra Azul Carnet arriba y la regla «Azul Montalbán como único color»
 (ahora los pastel identifican tipos; el verde y el rojo siguen reservados al semáforo).
 
 ## Cuándo revisarla

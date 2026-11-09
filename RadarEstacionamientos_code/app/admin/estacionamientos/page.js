@@ -24,7 +24,7 @@ export default async function PaginaEstacionamientos() {
   const estacionamientos = await listarEstacionamientos();
 
   return (
-    <main className={estilos.pagina}>
+    <main className={`${estilos.pagina} ancha`}>
       <h1>Administrar</h1>
       <NavAdmin />
       <ul className={estilos.lista}>

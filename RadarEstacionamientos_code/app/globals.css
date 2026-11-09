@@ -193,7 +193,7 @@ a {
 }
 
 /* En el celular no caben el rol ni el subtítulo junto a «Mis vehículos» y «Salir». */
-@media all { /* antes: (max-width: 479px) — ahora el mismo diseño en web y teléfono */
+@media (max-width: 479px) {
   .menu-usuario span,
   .menu-marca small {
     display: none;
@@ -243,7 +243,7 @@ a {
 }
 
 /* Hasta tableta (menos de 1024 px), las pestañas son la barra de abajo de iOS. */
-@media all { /* antes: (max-width: 1023px) — ahora el mismo diseño en web y teléfono */
+@media (max-width: 1023px) {
   .menu {
     padding-top: max(8px, env(safe-area-inset-top));
     padding-bottom: 8px;
@@ -858,7 +858,7 @@ a {
   }
 }
 
-@media all { /* antes: (max-width: 767px) — ahora el mismo diseño en web y teléfono */
+@media (max-width: 767px) {
   .mapa-contenedor {
     flex-direction: column;
   }
@@ -960,7 +960,7 @@ a {
   min-height: 44px;
 }
 
-@media all { /* antes: (max-width: 767px) — ahora el mismo diseño en web y teléfono */
+@media (max-width: 767px) {
   .aviso-flotante {
     bottom: calc(var(--alto-pestanas) + var(--seguro-abajo) + 12px);
   }
@@ -1014,15 +1014,7 @@ a {
 
 .app {
   width: 100%;
-  max-width: var(--ancho-app);
-  margin: 0 auto;
   background: var(--fondo);
-}
-
-@media (min-width: 560px) {
-  body {
-    background: var(--hundida);
-  }
 }
 
 h1,
@@ -1065,70 +1057,73 @@ h1,
   text-decoration: none;
 }
 
-/* Barra de pestañas: una píldora oscura flotante. La pestaña activa se vuelve blanca y muestra
-   su nombre; las demás solo el ícono (el nombre sigue ahí para los lectores de pantalla). */
-.pestanas {
-  position: fixed;
-  z-index: 1200;
-  left: 50%;
-  right: auto;
-  bottom: calc(12px + var(--seguro-abajo));
-  transform: translateX(-50%);
-  width: min(calc(var(--ancho-app) - 32px), calc(100% - 24px));
-  height: var(--alto-barra);
-  padding: 8px;
-  border: none;
-  border-radius: 999px;
-  background: var(--noche);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  box-shadow: var(--flotante);
-  justify-content: space-between;
-  align-items: center;
-}
+/* ---------- Teléfono y tableta (menos de 1024 px) ---------- */
+@media (max-width: 1023px) {
+  /* Barra de pestañas: una píldora oscura flotante. La pestaña activa se vuelve blanca y muestra
+     su nombre; las demás solo el ícono (el nombre sigue ahí para los lectores de pantalla). */
+  .pestanas {
+    position: fixed;
+    z-index: 1200;
+    left: 50%;
+    right: auto;
+    bottom: calc(12px + var(--seguro-abajo));
+    transform: translateX(-50%);
+    width: min(480px, calc(100% - 24px));
+    height: var(--alto-barra);
+    padding: 8px;
+    border: none;
+    border-radius: 999px;
+    background: var(--noche);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: var(--flotante);
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.pestana,
-.pestana:hover {
-  flex: none;
-  flex-direction: row;
-  gap: 8px;
-  height: 48px;
-  min-width: 48px;
-  padding: 0 12px;
-  justify-content: center;
-  border-radius: 999px;
-  color: #a1a1aa;
-  background: none;
-  font-size: 15px;
-  font-weight: 700;
-}
+  .pestana,
+  .pestana:hover {
+    flex: none;
+    flex-direction: row;
+    gap: 8px;
+    height: 48px;
+    min-width: 48px;
+    padding: 0 12px;
+    justify-content: center;
+    border-radius: 999px;
+    color: #a1a1aa;
+    background: none;
+    font-size: 15px;
+    font-weight: 700;
+  }
 
-.pestana svg {
-  width: 24px;
-  height: 24px;
-}
+  .pestana svg {
+    width: 24px;
+    height: 24px;
+  }
 
-.pestana:not([aria-current="page"]) span {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
+  .pestana:not([aria-current="page"]) span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 
-.pestana[aria-current="page"] {
-  background: #fff;
-  color: #16161a;
-  padding: 0 18px 0 14px;
-}
+  .pestana[aria-current="page"] {
+    background: #fff;
+    color: #16161a;
+    padding: 0 18px 0 14px;
+  }
 
-.app-contenido {
-  padding-bottom: calc(var(--alto-barra) + 28px + var(--seguro-abajo));
-}
+  .app-contenido {
+    padding-bottom: calc(var(--alto-barra) + 28px + var(--seguro-abajo));
+  }
 
-.aviso-flotante {
-  bottom: calc(var(--alto-barra) + 24px + var(--seguro-abajo));
+  .aviso-flotante {
+    bottom: calc(var(--alto-barra) + 24px + var(--seguro-abajo));
+  }
 }
 
 /* ---------- Piezas del rediseño ---------- */
@@ -1618,4 +1613,160 @@ fieldset.chips {
 
 .mensaje-error:empty {
   display: none;
+}
+
+.inicio-cuerpo,
+.inicio-lado,
+.perfil-rejilla > div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ---------- Tableta (600 a 1023 px): el diseño de teléfono, con más aire ---------- */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .pantalla {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .cuadricula {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Computador (1024 px o más): diseño de web, misma familia ----------
+   Encabezado blanco con las pestañas en una píldora, contenido a lo ancho en columnas y el
+   mapa con su panel lateral. Mismos colores, tipografía y tarjetas que en el teléfono. */
+@media (min-width: 1024px) {
+  .menu {
+    gap: 32px;
+    padding: 16px 40px;
+    background: var(--superficie);
+    border-bottom: 0.5px solid var(--separador);
+  }
+
+  .menu-avatar {
+    order: 3;
+  }
+
+  .pestanas {
+    order: 2;
+    gap: 4px;
+    padding: 6px;
+    border-radius: 999px;
+    background: var(--fondo);
+  }
+
+  .pestana {
+    min-height: 44px;
+    padding: 0 18px 0 14px;
+    border-radius: 999px;
+    color: var(--tinta-2);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .pestana:hover {
+    background: var(--relleno);
+    color: var(--tinta);
+  }
+
+  .pestana[aria-current="page"] {
+    background: var(--noche);
+    color: #fff;
+  }
+
+  .pestana svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pantalla {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 24px;
+    padding: 32px 40px 48px;
+  }
+
+  .pantalla h1 {
+    font-size: 40px;
+    line-height: 46px;
+  }
+
+  .chips {
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 2px 0;
+    overflow: visible;
+  }
+
+  /* Inicio: a la izquierda la sugerencia y el total (quedan fijos al bajar); a la derecha, todos
+     los estacionamientos. */
+  .inicio-cuerpo {
+    display: grid;
+    grid-template-columns: minmax(320px, 400px) 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .inicio-lado {
+    position: sticky;
+    top: 0;
+  }
+
+  .cuadricula {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+
+  .tarjeta-puesto:hover,
+  .tarjeta-grande:is(a):hover {
+    box-shadow: var(--flotante);
+  }
+
+  /* Reportar: los tres tipos en una fila y el botón a su tamaño. */
+  .formulario-ancho {
+    max-width: 820px;
+  }
+
+  .mosaicos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mosaico.ancho {
+    grid-column: auto;
+    min-height: 120px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+
+  .accion {
+    width: auto;
+    min-width: 280px;
+    align-self: flex-start;
+  }
+
+  /* Perfil: dos columnas. */
+  .perfil-rejilla {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* Administrar: las tarjetas en rejilla. */
+  main.ancha {
+    max-width: 1200px;
+    padding: 32px 40px 48px;
+  }
+
+  main.ancha > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    align-items: start;
+  }
 }

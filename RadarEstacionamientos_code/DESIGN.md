@@ -68,11 +68,18 @@ Sebastian la decidió después de revisar apps de estacionamiento de Europa (Eas
 Parclick), apps venezolanas (Yummy, **Cashea**) y referencias de Pinterest (Scoopa, «Popular Food»,
 «My Spots», el anillo «8.8»). Lo que cambia frente a la versión 1 (lo demás sigue igual):
 
-1. **Un solo diseño en web y en teléfono.** La app es una columna de teléfono (máximo 520 px),
-   también en el computador. Ya no hay barra de pestañas arriba ni panel a la izquierda.
-2. **Barra de pestañas flotante:** una píldora oscura abajo con **cuatro pestañas** (Inicio, Mapa,
-   Reportar, Perfil). La activa se vuelve blanca y muestra su nombre; las otras, solo el ícono
-   (el nombre sigue ahí para los lectores de pantalla).
+1. **Responsive: una parte de teléfono y una de web, de la misma familia** (mismos colores,
+   letra, tarjetas y pestañas).
+   - **Teléfono y tableta (menos de 1024 px):** una columna; en tableta la rejilla pasa a 3
+     columnas. Barra de pestañas flotante abajo.
+   - **Computador (1024 px o más):** encabezado blanco con las pestañas en una píldora junto a la
+     marca y el perfil a la derecha; contenido a lo ancho (hasta 1200 px) en columnas. Inicio:
+     sugerencia y total a la izquierda (fijos al bajar), rejilla de estacionamientos a la derecha.
+     Mapa: panel de puestos a la izquierda (360 px). Perfil en dos columnas y Administrar en
+     rejilla.
+2. **Cuatro pestañas** (Inicio, Mapa, Reportar, Perfil). En el teléfono son una píldora oscura
+   flotante: la activa se vuelve blanca y muestra su nombre; las otras, solo el ícono (el nombre
+   sigue ahí para los lectores de pantalla). En el computador muestran ícono y nombre.
 3. **Fondo claro y letra negra gruesa, como Cashea.** Títulos de 34 px en peso 800; la marca ya no
    va en una barra Azul Carnet. El **Azul Carnet** queda para la acción principal (píldora) y el
    círculo del perfil.

@@ -32,7 +32,12 @@ export default function FormularioIncidencia({ estacionamientos, elegido = "" })
   if (confirmacion) {
     const aspecto = ASPECTO[confirmacion.tipoId] ?? ASPECTO.vehiculo_mal_estacionado;
     return (
-      <section className="pantalla" style={{ padding: 0 }} aria-live="polite" aria-labelledby="reporte-titulo">
+      <section
+        className="pantalla formulario-ancho"
+        style={{ padding: 0, margin: 0, maxWidth: 520 }}
+        aria-live="polite"
+        aria-labelledby="reporte-titulo"
+      >
         <div className={`tarjeta-grande ${aspecto.color}`}>
           <Icono nombre={aspecto.icono} />
           <span id="reporte-titulo" className="titulo-tarjeta">
@@ -78,7 +83,7 @@ export default function FormularioIncidencia({ estacionamientos, elegido = "" })
 
   const valores = estado.valores ?? {};
   return (
-    <form key={vuelta} action={accion} className="pantalla" style={{ padding: 0 }}>
+    <form key={vuelta} action={accion} className="pantalla formulario-ancho" style={{ padding: 0, margin: 0 }}>
       <fieldset className="mosaicos">
         <legend className="oculto-visual">Tipo de problema</legend>
         {TIPOS_DE_INCIDENCIA.map((t) => {

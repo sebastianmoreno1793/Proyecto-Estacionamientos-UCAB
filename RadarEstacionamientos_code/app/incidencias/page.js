@@ -25,7 +25,7 @@ export default async function PaginaIncidencias() {
   const incidencias = (await listarIncidencias()).reverse();
 
   return (
-    <main className={estilos.pagina}>
+    <main className={`${estilos.pagina} ancha`}>
       <h1>Administrar</h1>
       <NavAdmin />
       {incidencias.length === 0 && <p className={estilos.ayuda}>Sin incidencias.</p>}
