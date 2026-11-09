@@ -2,6 +2,31 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 03/nov/26 — Segunda Entrega: correcciones de la revisión del equipo (HU 9.1 y RNF)
+
+- **Tabla de 3 columnas de la HU 9.1** con el Autor (`HU9.1_especificacion_tabla.png`), como las HU 1.1 y 4.1.
+- **Diagrama de la HU 9.1 en draw.io** (`diagrama_actividades_HU9.1.drawio`) y su enlace de
+  viewer.diagrams.net, que abre sin pasos previos (`enlace_diagrama_HU9.1.txt`).
+- **RNF en forma de lista** (1. característica → a. subcaracterística: «El sistema debe…») con el
+  mismo contenido, en el orden y con los nombres de la lista del equipo (1. Facilidad de Iteración …
+  8. Protección). La plantilla ERS de nuestra copia ordena distinto; queda anotado.
+- **Subido a Trello** (tabla de portada, enlace, checklist y RNF). Detalle:
+  `producto/segunda_entrega/correcciones_03nov_HU9.1_y_RNF.md`.
+
+## 02/nov/26 — Segunda Entrega: diagrama 9.1 v2, RNF finales y revisión del equipo
+
+- **Todos subieron su HU y su RNF** entre el 01/nov en la tarde y el 02/nov de madrugada. Quién hizo
+  qué y lo que falta: `producto/segunda_entrega/revision_y_propuestas_02nov.md`.
+- **Diagrama de la HU 9.1 rehecho** con el modelo del equipo (pasos numerados como el escenario,
+  uniones con barra y conectores en vez de rombos con dos entradas, nodos objeto). Subido a Trello
+  como `diagrama_actividades_HU9.1_v2.png` (portada); el anterior quedó como «(versión anterior)».
+- **Tarjeta de RNF reescrita** en el orden de la plantilla ERS §2, con el rango del Brief en cada uno.
+  El RNF 2 vuelve al texto acordado (Manuel lo había cambiado a «0,2 s», que es comportamiento
+  temporal); el RNF 3 dice «ocultar» como el Brief. Comentario explicativo en la tarjeta.
+- Comentarios de revisión en Trello: Samuel (HU 1.1, tarea 5 de Sebastian, marcada), Manuel (HU 8.1:
+  PNG en modo edición y errores del diagrama) y German (HU 5.1: lo que le marcó Aaron).
+- Falta: minuta de la Reunión 4 (tarea 4) y revisión final + correo a la profesora (tarea 3, 03/nov).
+
 ## 01/nov/26 — Segunda Entrega: HU 9.1 especificada y revisión del equipo
 
 - **HU 9.1 · Crear una incidencia:** Card («quiero **crear** una incidencia»), Conversación con las
