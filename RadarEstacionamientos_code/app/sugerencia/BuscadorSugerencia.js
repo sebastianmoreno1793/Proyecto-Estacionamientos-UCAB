@@ -12,9 +12,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import SelectorEdificio from "@/components/SelectorEdificio";
-import { textoLibres } from "@/lib/estacionamientos/reglas";
+import { SEMAFORO, textoLibres } from "@/lib/estacionamientos/reglas";
 import estilos from "../formularios.module.css";
 
+const HAY_PUESTO = SEMAFORO[0]; // la sugerencia siempre tiene al menos un libre
 const metros = (m) => (m < 1000 ? `${m} m` : `${(m / 1000).toFixed(1).replace(".", ",")} km`);
 
 export default function BuscadorSugerencia({ edificios }) {
@@ -52,19 +53,51 @@ export default function BuscadorSugerencia({ edificios }) {
       )}
 
       {resultado?.sugerido && (
-        <section className={estilos.tarjeta} aria-live="polite">
-          <p className={estilos.ayuda}>El más cercano a {resultado.edificio.nombre} con puesto libre:</p>
-          <h2>{resultado.sugerido.nombre}</h2>
-          <p className={estilos.exito}>
-            {resultado.sugerido.libres} {resultado.sugerido.libres === 1 ? "puesto libre" : "puestos libres"} · a{" "}
-            {metros(resultado.sugerido.distancia)} en línea recta
+        // DESIGN.md: el estado siempre en texto con su punto de color (verde = hay puesto, D-009),
+        // las cifras en tabular-nums 700 y los datos en la tarjeta de tres columnas, como en el mapa.
+        <section className={estilos.tarjeta} aria-live="polite" aria-labelledby="sugerido-titulo">
+          <p className={estilos.ayuda}>Más cerca de {resultado.edificio.nombre}</p>
+          <h2 id="sugerido-titulo" className={estilos.tituloTarjeta}>
+            {resultado.sugerido.nombre}
+          </h2>
+          <p className="nivel">
+            <span style={{ background: HAY_PUESTO.color }} aria-hidden="true" />
+            {HAY_PUESTO.texto}
           </p>
-          {resultado.alternativas.length > 0 && (
-            <p className={estilos.ayuda}>
-              Si se llena: {resultado.alternativas.map((a) => `${a.nombre} (${textoLibres(a.libres)}, ${metros(a.distancia)})`).join(" · ")}
-            </p>
-          )}
-          <Link href="/">Ver el mapa</Link>
+          <dl className="tarjeta-datos">
+            <div>
+              <dt>Libres</dt>
+              <dd className="cifra">{resultado.sugerido.libres}</dd>
+            </div>
+            <div>
+              <dt>Distancia</dt>
+              <dd className="cifra">{metros(resultado.sugerido.distancia)}</dd>
+            </div>
+            <div>
+              <dt>Capacidad</dt>
+              <dd className="cifra">{resultado.sugerido.capacidad}</dd>
+            </div>
+          </dl>
+          <p className={estilos.ayuda}>Distancia en línea recta desde el edificio.</p>
+          <Link href="/" className="boton-secundario">
+            Ver en el mapa
+          </Link>
+        </section>
+      )}
+
+      {resultado?.alternativas?.length > 0 && (
+        <section aria-labelledby="alternativas-titulo">
+          <h2 id="alternativas-titulo">Si se llena</h2>
+          <ul className={estilos.lista}>
+            {resultado.alternativas.map((a) => (
+              <li key={a.id} className={estilos.tarjeta}>
+                <strong>{a.nombre}</strong>
+                <span className={estilos.ayuda}>
+                  <span className="cifra">{textoLibres(a.libres)}</span> · a {metros(a.distancia)}
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
     </>

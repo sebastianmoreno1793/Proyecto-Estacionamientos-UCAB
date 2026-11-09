@@ -93,7 +93,7 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
           <p className={estilos.ayuda}>
             Actívalas para enterarte de la disponibilidad de puestos y de las incidencias.
           </p>
-          <button type="button" className={estilos.boton} onClick={activar} disabled={ocupado}>
+          <button type="button" className={estilos.botonSecundario} onClick={activar} disabled={ocupado}>
             Activar notificaciones
           </button>
         </>
@@ -101,7 +101,7 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
 
       {estadoPermiso === "granted" && (
         <>
-          <p className={estilos.exito}>Las notificaciones están activadas.</p>
+          <p className={estilos.ayuda}>Las notificaciones están activadas.</p>
           <button type="button" className={estilos.botonSecundario} onClick={probar}>
             Enviar una de prueba
           </button>
@@ -115,7 +115,8 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
         </p>
       )}
 
-      <p className={estilos.exito} role="status">
+      {/* Sin verde: en el Radar el verde solo significa «hay puesto» (DESIGN.md, Regla Color con Significado). */}
+      <p className={estilos.ayuda} role="status">
         {mensaje}
       </p>
     </section>

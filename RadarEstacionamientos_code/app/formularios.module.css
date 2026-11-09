@@ -28,6 +28,14 @@
   font-weight: 600;
 }
 
+/* Título de una tarjeta: 22 px como las hojas de iOS (DESIGN.md › Tipografía). Va con .pagina
+   delante para ganarle a «.pagina h2» (17 px). */
+.pagina .tituloTarjeta {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
 .ayuda {
   max-width: 62ch;
   color: var(--tinta-2);
