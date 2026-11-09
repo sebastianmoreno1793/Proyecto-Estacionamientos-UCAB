@@ -3,14 +3,21 @@
 // En desarrollo existe el usuario de prueba usuario.prueba@ucab.edu.ve (contraseña
 // prueba123) con rol de administrador, para entrar a /admin.
 import { cookies } from "next/headers";
-import { borrarSesion, crearSesion, usuarioDeLaSesion } from "./usuarios/datos.js";
+import { USUARIO_DE_PRUEBA, borrarSesion, crearSesion, usuarioDeLaSesion } from "./usuarios/datos.js";
 
 const COOKIE_SESION = "radar_sesion";
 
+// Atajo de desarrollo: con SALTAR_INICIO_DE_SESION=1 en .env.local, quien no tiene sesión
+// entra como el usuario de prueba. En producción no hace nada.
+function saltarInicioDeSesion() {
+  return process.env.NODE_ENV !== "production" && process.env.SALTAR_INICIO_DE_SESION === "1";
+}
+
 export async function obtenerUsuarioActual() {
   const token = (await cookies()).get(COOKIE_SESION)?.value;
-  if (!token) return null;
-  return usuarioDeLaSesion(token);
+  const usuario = token ? await usuarioDeLaSesion(token) : null;
+  if (usuario || !saltarInicioDeSesion()) return usuario;
+  return { correo: USUARIO_DE_PRUEBA.correo, rol: USUARIO_DE_PRUEBA.rol };
 }
 
 export async function iniciarSesion(correo) {
