@@ -2,64 +2,179 @@
 
 import { useState, useEffect } from 'react';
 import { gestorNotificaciones } from '@/lib/notificaciones/gestorNotificaciones';
+import styles from './BotonNotificaciones.module.css';
 
 export default function BotonNotificaciones() {
   const [estadoPermiso, setEstadoPermiso] = useState('default');
+  const [abierto, setAbierto] = useState(false);
+  const [ocupado, setOcupado] = useState(false);
+  const [mensaje, setMensaje] = useState('');
 
   useEffect(() => {
     setEstadoPermiso(gestorNotificaciones.obtenerEstadoPermiso());
   }, []);
 
   const manejarSolicitud = async () => {
+    setOcupado(true);
+    setMensaje('');
+    try {
     const nuevoEstado = await gestorNotificaciones.pedirPermiso();
     setEstadoPermiso(nuevoEstado);
+
+    if (nuevoEstado === 'denied') {
+        setMensaje('El navegador bloqueó las notificaciones. Puedes permitirlas en sus ajustes y volver a comprobarlo desde este menú.');
+      } else if (nuevoEstado === 'default') {
+        setMensaje('No se activaron las notificaciones. Puedes intentarlo de nuevo desde este menú cuando quieras.');
+      } else if (nuevoEstado === 'unsupported') {
+        setMensaje('Este navegador no soporta notificaciones web.');
+      } else {
+        setMensaje('Notificaciones activadas.');
+      }
+    } catch (error) {
+      const permisoActual = gestorNotificaciones.obtenerEstadoPermiso();
+      const detalle = error instanceof Error ? error.message : 'Ocurrió un error inesperado.';
+      setEstadoPermiso(permisoActual);
+      setMensaje(
+        permisoActual === 'granted'
+          ? `El permiso está concedido, pero no se pudo activar el servicio de notificaciones. ${detalle}`
+          : `No se pudo solicitar el permiso de notificaciones. ${detalle}`,
+      );
+      console.error('Error al activar las notificaciones:', error);
+    } finally {
+      setOcupado(false);
+    }
   };
 
   const manejarNotificacionPrueba = async () => {
+    setOcupado(true);
+    setMensaje('');
+    try {
+      await gestorNotificaciones.registrarServiceWorker();
     await gestorNotificaciones.enviarNotificacionPrueba();
+      setMensaje('Notificación de prueba enviada.');
+      } catch (error) {
+        const detalle = error instanceof Error ? error.message : 'Ocurrió un error inesperado.';
+        setMensaje(`No se pudo enviar la notificación de prueba. ${detalle}`);
+        console.error('Error al enviar la notificación de prueba:', error);
+      } finally {
+        setOcupado(false);
+      }
+    };
+    
+  const revisarPermiso = () => {
+    const nuevoEstado = gestorNotificaciones.obtenerEstadoPermiso();
+    setEstadoPermiso(nuevoEstado);
+    setMensaje(
+      nuevoEstado === 'granted'
+        ? 'El permiso está activado. Ya puedes recibir notificaciones.'
+        : nuevoEstado === 'default'
+          ? 'Puedes activar las notificaciones ahora desde este menú.'
+          : '',
+    );
   };
+
 
   if (estadoPermiso === 'unsupported') {
     return <p className="text-sm text-gray-500">Las notificaciones no están soportadas en este navegador.</p>;
   }
 
+
   return (
-    <div className="flex flex-col gap-3 p-4 border rounded-lg max-w-sm my-4 bg-white shadow-sm">
-      <h3 className="font-bold text-lg">Notificaciones del Campus</h3>
-      
-      {estadoPermiso === 'default' && (
-        <div>
-          <p className="text-sm text-gray-600 mb-2">
-            Activa las notificaciones para enterarte de disponibilidad y emergencias.
-          </p>
-          <button 
-            onClick={manejarSolicitud}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Activar Notificaciones
-          </button>
-        </div>
-      )}
+    <div className={styles.contenedor}>
+      <section
+        className={styles.menu}
+        id="menu-notificaciones"
+        aria-labelledby="titulo-notificaciones"
+        hidden={!abierto}
+      >
+        <h2 className={styles.titulo} id="titulo-notificaciones">
+          Notificaciones del Campus
+        </h2>
 
-      {estadoPermiso === 'granted' && (
-        <div>
-          <p className="text-sm text-green-600 font-medium mb-2">
-            ✓ Las notificaciones están activadas
+        {estadoPermiso === 'unsupported' && (
+          <p className={styles.ayuda}>
+            Este navegador no soporta notificaciones web.
           </p>
-          <button 
-            onClick={manejarNotificacionPrueba}
-            className="bg-gray-200 text-gray-800 px-3 py-1.5 rounded text-sm hover:bg-gray-300"
-          >
-            Probar Notificación
-          </button>
-        </div>
-      )}
+        )}
 
-      {estadoPermiso === 'denied' && (
-        <p className="text-sm text-red-500">
-          Bloqueaste las notificaciones. Si deseas activarlas, debes cambiar los permisos en los ajustes de tu navegador.
-        </p>
-      )}
+        {estadoPermiso === 'default' && (
+          <div className={styles.opciones}>
+            <p className={styles.ayuda}>
+              Actívalas para enterarte de la disponibilidad y de novedades del campus.
+              Si lo dejas para después, puedes volver a este menú para habilitarlas.     
+            </p>
+          <button 
+className={styles.accion}
+              type="button"
+              onClick={manejarSolicitud}
+              disabled={ocupado}
+            >
+              {ocupado ? 'Activando…' : 'Activar notificaciones'}
+            </button>
+          </div>
+        )}
+
+        {estadoPermiso === 'granted' && (
+          <div className={styles.opciones}>
+            <p className={styles.estadoActivo}>Las notificaciones están activadas.</p>
+            <button
+              className={styles.accionSecundaria}
+              type="button"
+              onClick={manejarNotificacionPrueba}
+              disabled={ocupado}
+            >
+              {ocupado ? 'Enviando…' : 'Probar notificación'}
+            </button>
+          </div>
+        )}
+
+        {estadoPermiso === 'denied' && (
+          <div className={styles.opciones}>
+            <p className={styles.ayuda}>
+              El navegador bloqueó las notificaciones. Para volver a activarlas, permite
+              las notificaciones de este sitio en los ajustes del navegador y luego
+              comprueba el permiso aquí.
+            </p>
+            <button
+              className={styles.accionSecundaria}
+              type="button"
+              onClick={revisarPermiso}
+            >
+              Volver a comprobar
+            </button>
+          </div>
+        )}
+
+        {mensaje && (
+          <p className={styles.mensaje} role="status" aria-live="polite">
+            {mensaje}
+          </p>
+        )}
+      </section>
+
+      <button
+        className={styles.disparador}
+        type="button"
+        aria-expanded={abierto}
+        aria-controls="menu-notificaciones"
+        onClick={() => setAbierto(!abierto)}
+      >
+        <svg
+          className={styles.icono}
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span>Notificaciones</span>
+      </button>
     </div>
   );
 }
