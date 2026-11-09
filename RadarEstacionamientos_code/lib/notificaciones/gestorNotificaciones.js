@@ -11,8 +11,6 @@ export class GestorNotificaciones {
   static CLAVE_PREFERENCIA = "notificaciones_preferencia";
   static PREFERENCIA_ACTIVADAS = "activadas";
   static PREFERENCIA_BLOQUEADAS = "bloqueadas";
-  // «Ahora no» en nuestra invitación: el navegador no preguntó, así que se puede activar después.
-  static PREFERENCIA_POSPUESTAS = "pospuestas";
   // Si el Service Worker no queda activo en este tiempo, se deja de esperar (no se cuelga).
   static ESPERA_MAXIMA_MS = 10000;
   static RUTA_SERVICE_WORKER = "/sw.js";
@@ -87,9 +85,12 @@ export class GestorNotificaciones {
     return this.#almacenamiento()?.getItem(GestorNotificaciones.CLAVE_PREFERENCIA) ?? null;
   }
 
-  /** «Ahora no»: no se le pregunta al navegador y se puede activar después desde el perfil. */
-  posponer() {
-    this.guardarPreferencia(GestorNotificaciones.PREFERENCIA_POSPUESTAS);
+  /**
+   * «Bloquear» en la solicitud del Radar (CA2 de la HU 8.1): se registran como bloqueadas sin
+   * preguntarle al navegador, así el usuario puede activarlas después desde su perfil.
+   */
+  bloquear() {
+    this.guardarPreferencia(GestorNotificaciones.PREFERENCIA_BLOQUEADAS);
   }
 
   /**

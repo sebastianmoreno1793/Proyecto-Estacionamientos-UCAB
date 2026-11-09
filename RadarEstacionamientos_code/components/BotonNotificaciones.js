@@ -3,9 +3,11 @@
 // HU 8.1 · Activar las notificaciones.
 //
 // Dos formas de mostrarse:
-//  - modo="invitacion" (en el mapa): aviso flotante la primera vez, con «Activar» y «Ahora no».
-//    Si el usuario ya decidió (activó, bloqueó o pospuso), no vuelve a salir.
-//  - modo="perfil" (en «Mi perfil»): siempre visible, para activarlas después (criterio de la HU).
+//  - modo="invitacion" (en el mapa, al iniciar sesión): la solicitud con «Permitir» y «Bloquear».
+//    CA1: «Permitir» → activadas + una notificación de prueba.
+//    CA2: «Bloquear» → bloqueadas, sin prueba, y se le dice cómo activarlas después.
+//    CA3: si ya respondió, no vuelve a salir en este navegador.
+//  - modo="perfil" (en «Mis vehículos», que hace de perfil): siempre visible, para activarlas después.
 //
 // Toda la lógica (permiso del navegador, preferencia guardada, Service Worker) está en
 // lib/notificaciones/gestorNotificaciones.js; este componente solo muestra el estado.
@@ -20,6 +22,7 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
   const [preferencia, setPreferencia] = useState(null);
   const [mensaje, setMensaje] = useState("");
   const [ocupado, setOcupado] = useState(false);
+  const [recienBloqueadas, setRecienBloqueadas] = useState(false);
 
   useEffect(() => {
     setEstadoPermiso(gestorNotificaciones.obtenerEstadoPermiso());
@@ -32,12 +35,15 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
     setEstadoPermiso(nuevoEstado);
     setPreferencia(gestorNotificaciones.obtenerPreferencia());
     if (nuevoEstado === "granted") setMensaje("Listo: te enviamos una notificación de prueba.");
+    // Si las bloquea en el diálogo del navegador, también se le dice cómo activarlas (CA2).
+    if (nuevoEstado === "denied") setRecienBloqueadas(true);
     setOcupado(false);
   }
 
-  function posponer() {
-    gestorNotificaciones.posponer();
-    setPreferencia(GestorNotificaciones.PREFERENCIA_POSPUESTAS);
+  function bloquear() {
+    gestorNotificaciones.bloquear();
+    setPreferencia(GestorNotificaciones.PREFERENCIA_BLOQUEADAS);
+    setRecienBloqueadas(true);
   }
 
   async function probar() {
@@ -47,17 +53,27 @@ export default function BotonNotificaciones({ modo = "perfil" }) {
 
   if (estadoPermiso === null) return null;
 
-  // ---------- Invitación en el mapa: solo si nunca decidió ----------
+  // ---------- Solicitud en el mapa: solo si nunca respondió (CA3) ----------
   if (modo === "invitacion") {
+    if (recienBloqueadas) {
+      return (
+        <div className="aviso-flotante" role="status">
+          <p>Listo, no te enviaremos notificaciones. Puedes activarlas cuando quieras en «Mis vehículos».</p>
+          <button type="button" className="boton-texto" onClick={() => setRecienBloqueadas(false)}>
+            Entendido
+          </button>
+        </div>
+      );
+    }
     if (estadoPermiso !== "default" || preferencia) return null;
     return (
-      <div className="aviso-flotante" role="dialog" aria-label="Activar notificaciones">
+      <div className="aviso-flotante" role="dialog" aria-label="Activar las notificaciones">
         <p>¿Te avisamos cuando haya puesto o una incidencia en tu estacionamiento?</p>
-        <button type="button" className="boton-texto" onClick={posponer}>
-          Ahora no
+        <button type="button" className="boton-texto" onClick={bloquear}>
+          Bloquear
         </button>
         <button type="button" className="boton-principal" onClick={activar} disabled={ocupado}>
-          Activar
+          Permitir
         </button>
       </div>
     );

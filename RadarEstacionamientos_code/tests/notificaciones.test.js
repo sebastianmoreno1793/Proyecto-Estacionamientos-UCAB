@@ -143,13 +143,14 @@ describe("GestorNotificaciones", () => {
     assert.equal(notificacionesMostradas.length, 0);
   });
 
-  test("con «Ahora no» guarda pospuestas y no le pregunta al navegador", () => {
-    const { apis } = crearApis();
+  test("CA2: con «Bloquear» en el Radar guarda bloqueadas, sin prueba y sin preguntarle al navegador", () => {
+    const { apis, notificacionesMostradas } = crearApis();
     const gestor = new GestorNotificaciones(apis);
 
-    gestor.posponer();
-    assert.equal(gestor.obtenerPreferencia(), GestorNotificaciones.PREFERENCIA_POSPUESTAS);
-    assert.equal(apis.notificationApi.permission, "default");
+    gestor.bloquear();
+    assert.equal(gestor.obtenerPreferencia(), GestorNotificaciones.PREFERENCIA_BLOQUEADAS);
+    assert.equal(apis.notificationApi.permission, "default"); // se puede activar después
+    assert.equal(notificacionesMostradas.length, 0);
   });
 
   test("si el Service Worker nunca queda activo, no se queda esperando", async (t) => {
