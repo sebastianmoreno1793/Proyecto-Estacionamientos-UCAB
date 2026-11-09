@@ -11,6 +11,10 @@ export class GestorNotificaciones {
   static CLAVE_PREFERENCIA = "notificaciones_preferencia";
   static PREFERENCIA_ACTIVADAS = "activadas";
   static PREFERENCIA_BLOQUEADAS = "bloqueadas";
+  // «Ahora no» en nuestra invitación: el navegador no preguntó, así que se puede activar después.
+  static PREFERENCIA_POSPUESTAS = "pospuestas";
+  // Si el Service Worker no queda activo en este tiempo, se deja de esperar (no se cuelga).
+  static ESPERA_MAXIMA_MS = 10000;
   static RUTA_SERVICE_WORKER = "/sw.js";
 
   /**
@@ -49,9 +53,8 @@ export class GestorNotificaciones {
       this.apis.avisar(mensaje);
       return;
     }
-    if (typeof alert === "function") {
-      alert(mensaje);
-    }
+    // Sin alert(): el componente muestra el mensaje en la página según el estado que devolvemos.
+    console.info(mensaje);
   }
 
   soportaNotificaciones() {
@@ -84,8 +87,30 @@ export class GestorNotificaciones {
     return this.#almacenamiento()?.getItem(GestorNotificaciones.CLAVE_PREFERENCIA) ?? null;
   }
 
+  /** «Ahora no»: no se le pregunta al navegador y se puede activar después desde el perfil. */
+  posponer() {
+    this.guardarPreferencia(GestorNotificaciones.PREFERENCIA_POSPUESTAS);
+  }
+
   /**
-   * Registra `/sw.js` y espera a que el worker quede activo.
+   * Espera a que el Service Worker esté activo, pero no para siempre: si el registro falló,
+   * `serviceWorker.ready` nunca se cumple, así que a los ESPERA_MAXIMA_MS devuelve null.
+   * @returns {Promise<ServiceWorkerRegistration|null>}
+   */
+  async #esperarServiceWorkerActivo() {
+    let temporizador;
+    const limite = new Promise((resolver) => {
+      temporizador = setTimeout(() => resolver(null), GestorNotificaciones.ESPERA_MAXIMA_MS);
+    });
+    try {
+      return await Promise.race([this.#navegador().serviceWorker.ready, limite]);
+    } finally {
+      clearTimeout(temporizador);
+    }
+  }
+
+  /**
+   * Registra `/sw.js` (el único de la PWA, D-008) y espera a que el worker quede activo.
    * @returns {Promise<ServiceWorkerRegistration|null>}
    */
   async registrarServiceWorker() {
@@ -95,8 +120,7 @@ export class GestorNotificaciones {
       const registro = await this.#navegador().serviceWorker.register(
         GestorNotificaciones.RUTA_SERVICE_WORKER,
       );
-      await this.#navegador().serviceWorker.ready;
-      return registro;
+      return (await this.#esperarServiceWorkerActivo()) ? registro : null;
     } catch (error) {
       console.error("Error al registrar el Service Worker:", error);
       return null;
@@ -105,14 +129,16 @@ export class GestorNotificaciones {
 
   /**
    * Muestra la notificación local de prueba con el Service Worker activo.
-   * @returns {Promise<void>}
+   * @returns {Promise<boolean>} true si se mostró.
    */
   async enviarNotificacionPrueba() {
-    if (!this.soportaServiceWorker()) return;
-    if (this.obtenerEstadoPermiso() !== "granted") return;
+    if (!this.soportaServiceWorker()) return false;
+    if (this.obtenerEstadoPermiso() !== "granted") return false;
 
-    const registro = await this.#navegador().serviceWorker.ready;
+    const registro = await this.#esperarServiceWorkerActivo();
+    if (!registro) return false;
     await Notificacion.dePrueba().mostrarEn(registro);
+    return true;
   }
 
   /**

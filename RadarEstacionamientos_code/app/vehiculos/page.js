@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import FormularioVehiculo from "./FormularioVehiculo";
+import BotonNotificaciones from "@/components/BotonNotificaciones";
 import { listarVehiculosDe } from "@/lib/vehiculos/datos";
 import { obtenerUsuarioActual } from "@/lib/sesion";
 import estilos from "../formularios.module.css";
 
 export const metadata = { title: "Mis vehículos" };
 
-// HU 2.1 Registrar mis vehículos.
+// HU 2.1 Registrar mis vehículos. Es la página del perfil del usuario: aquí también se
+// activan después las notificaciones si dijo «Ahora no» (HU 8.1).
 export default async function PaginaVehiculos() {
   const usuario = await obtenerUsuarioActual();
   if (!usuario) redirect("/entrar");
@@ -40,6 +42,8 @@ export default async function PaginaVehiculos() {
       )}
 
       <FormularioVehiculo />
+
+      <BotonNotificaciones modo="perfil" />
     </main>
   );
 }

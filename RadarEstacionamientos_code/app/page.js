@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import BotonNotificaciones from "@/components/BotonNotificaciones";
 import MaquetaCampus from "@/components/MaquetaCampus";
 import { obtenerUsuarioActual } from "@/lib/sesion";
 
@@ -10,6 +11,8 @@ export default async function Inicio() {
     <main className="pagina">
       <h1 className="oculto-visual">Maqueta del Campus Montalbán: dónde hay puesto</h1>
       <MaquetaCampus />
+      {/* HU 8.1: la primera vez se invita a activar las notificaciones. */}
+      <BotonNotificaciones modo="invitacion" />
     </main>
   );
 }

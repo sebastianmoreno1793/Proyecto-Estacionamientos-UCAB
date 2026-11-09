@@ -1,65 +1,107 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { gestorNotificaciones } from '@/lib/notificaciones/gestorNotificaciones';
+// HU 8.1 · Activar las notificaciones.
+//
+// Dos formas de mostrarse:
+//  - modo="invitacion" (en el mapa): aviso flotante la primera vez, con «Activar» y «Ahora no».
+//    Si el usuario ya decidió (activó, bloqueó o pospuso), no vuelve a salir.
+//  - modo="perfil" (en «Mi perfil»): siempre visible, para activarlas después (criterio de la HU).
+//
+// Toda la lógica (permiso del navegador, preferencia guardada, Service Worker) está en
+// lib/notificaciones/gestorNotificaciones.js; este componente solo muestra el estado.
 
-export default function BotonNotificaciones() {
-  const [estadoPermiso, setEstadoPermiso] = useState('default');
+import { useEffect, useState } from "react";
+import { GestorNotificaciones, gestorNotificaciones } from "@/lib/notificaciones/gestorNotificaciones";
+import estilos from "@/app/formularios.module.css";
+
+export default function BotonNotificaciones({ modo = "perfil" }) {
+  // null mientras no sabemos el estado (el servidor no tiene `Notification`).
+  const [estadoPermiso, setEstadoPermiso] = useState(null);
+  const [preferencia, setPreferencia] = useState(null);
+  const [mensaje, setMensaje] = useState("");
+  const [ocupado, setOcupado] = useState(false);
 
   useEffect(() => {
     setEstadoPermiso(gestorNotificaciones.obtenerEstadoPermiso());
+    setPreferencia(gestorNotificaciones.obtenerPreferencia());
   }, []);
 
-  const manejarSolicitud = async () => {
+  async function activar() {
+    setOcupado(true);
     const nuevoEstado = await gestorNotificaciones.pedirPermiso();
     setEstadoPermiso(nuevoEstado);
-  };
-
-  const manejarNotificacionPrueba = async () => {
-    await gestorNotificaciones.enviarNotificacionPrueba();
-  };
-
-  if (estadoPermiso === 'unsupported') {
-    return <p className="text-sm text-gray-500">Las notificaciones no están soportadas en este navegador.</p>;
+    setPreferencia(gestorNotificaciones.obtenerPreferencia());
+    if (nuevoEstado === "granted") setMensaje("Listo: te enviamos una notificación de prueba.");
+    setOcupado(false);
   }
 
+  function posponer() {
+    gestorNotificaciones.posponer();
+    setPreferencia(GestorNotificaciones.PREFERENCIA_POSPUESTAS);
+  }
+
+  async function probar() {
+    const enviada = await gestorNotificaciones.enviarNotificacionPrueba();
+    setMensaje(enviada ? "Notificación de prueba enviada." : "No se pudo enviar la notificación de prueba.");
+  }
+
+  if (estadoPermiso === null) return null;
+
+  // ---------- Invitación en el mapa: solo si nunca decidió ----------
+  if (modo === "invitacion") {
+    if (estadoPermiso !== "default" || preferencia) return null;
+    return (
+      <div className="aviso-flotante" role="dialog" aria-label="Activar notificaciones">
+        <p>¿Te avisamos cuando haya puesto o una incidencia en tu estacionamiento?</p>
+        <button type="button" className="boton-texto" onClick={posponer}>
+          Ahora no
+        </button>
+        <button type="button" className="boton-principal" onClick={activar} disabled={ocupado}>
+          Activar
+        </button>
+      </div>
+    );
+  }
+
+  // ---------- En el perfil: siempre se puede ver y cambiar ----------
   return (
-    <div className="flex flex-col gap-3 p-4 border rounded-lg max-w-sm my-4 bg-white shadow-sm">
-      <h3 className="font-bold text-lg">Notificaciones del Campus</h3>
-      
-      {estadoPermiso === 'default' && (
-        <div>
-          <p className="text-sm text-gray-600 mb-2">
-            Activa las notificaciones para enterarte de disponibilidad y emergencias.
-          </p>
-          <button 
-            onClick={manejarSolicitud}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Activar Notificaciones
-          </button>
-        </div>
+    <section className={estilos.tarjeta} aria-labelledby="titulo-notificaciones">
+      <h2 id="titulo-notificaciones">Notificaciones</h2>
+
+      {estadoPermiso === "unsupported" && (
+        <p className={estilos.ayuda}>Este navegador no permite notificaciones web.</p>
       )}
 
-      {estadoPermiso === 'granted' && (
-        <div>
-          <p className="text-sm text-green-600 font-medium mb-2">
-            ✓ Las notificaciones están activadas
+      {estadoPermiso === "default" && (
+        <>
+          <p className={estilos.ayuda}>
+            Actívalas para enterarte de la disponibilidad de puestos y de las incidencias.
           </p>
-          <button 
-            onClick={manejarNotificacionPrueba}
-            className="bg-gray-200 text-gray-800 px-3 py-1.5 rounded text-sm hover:bg-gray-300"
-          >
-            Probar Notificación
+          <button type="button" className={estilos.boton} onClick={activar} disabled={ocupado}>
+            Activar notificaciones
           </button>
-        </div>
+        </>
       )}
 
-      {estadoPermiso === 'denied' && (
-        <p className="text-sm text-red-500">
-          Bloqueaste las notificaciones. Si deseas activarlas, debes cambiar los permisos en los ajustes de tu navegador.
+      {estadoPermiso === "granted" && (
+        <>
+          <p className={estilos.exito}>Las notificaciones están activadas.</p>
+          <button type="button" className={estilos.botonSecundario} onClick={probar}>
+            Enviar una de prueba
+          </button>
+        </>
+      )}
+
+      {estadoPermiso === "denied" && (
+        <p className={estilos.ayuda}>
+          Las bloqueaste en el navegador. Para activarlas, permite las notificaciones de este sitio
+          en los ajustes del navegador y vuelve a esta página.
         </p>
       )}
-    </div>
+
+      <p className={estilos.exito} role="status">
+        {mensaje}
+      </p>
+    </section>
   );
 }

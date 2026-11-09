@@ -60,13 +60,13 @@ describe("Notificacion", () => {
     const notificacion = new Notificacion({
       titulo: "Radar UCAB 🚗",
       cuerpo: "Hay un puesto libre",
-      icono: "/favicon.ico",
+      icono: "/icono-192.png",
       url: "/",
     });
 
     assert.deepEqual(notificacion.aOpcionesDeVisualizacion(), {
       body: "Hay un puesto libre",
-      icon: "/favicon.ico",
+      icon: "/icono-192.png",
       data: { url: "/" },
     });
   });
@@ -140,6 +140,27 @@ describe("GestorNotificaciones", () => {
     const gestor = new GestorNotificaciones(apis);
 
     await gestor.enviarNotificacionPrueba();
+    assert.equal(notificacionesMostradas.length, 0);
+  });
+
+  test("con «Ahora no» guarda pospuestas y no le pregunta al navegador", () => {
+    const { apis } = crearApis();
+    const gestor = new GestorNotificaciones(apis);
+
+    gestor.posponer();
+    assert.equal(gestor.obtenerPreferencia(), GestorNotificaciones.PREFERENCIA_POSPUESTAS);
+    assert.equal(apis.notificationApi.permission, "default");
+  });
+
+  test("si el Service Worker nunca queda activo, no se queda esperando", async (t) => {
+    t.mock.timers.enable({ apis: ["setTimeout"] });
+    const { apis, notificacionesMostradas } = crearApis({ permisoInicial: "granted" });
+    apis.navigatorApi.serviceWorker.ready = new Promise(() => {}); // el registro falló
+    const gestor = new GestorNotificaciones(apis);
+
+    const envio = gestor.enviarNotificacionPrueba();
+    t.mock.timers.tick(GestorNotificaciones.ESPERA_MAXIMA_MS);
+    assert.equal(await envio, false);
     assert.equal(notificacionesMostradas.length, 0);
   });
 });
