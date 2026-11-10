@@ -1,0 +1,61 @@
+{
+  "name": "radar-hu",
+  "displayName": "Radar · Historias de usuario",
+  "description": "Muestra a qué HU pertenece cada archivo del Radar (etiquetas @HU-x.y) sin abrirlo, y busca una HU desde la paleta.",
+  "version": "1.0.0",
+  "publisher": "radar-ucab",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Other"],
+  "main": "./extension.js",
+  "activationEvents": ["workspaceContains:**/*.js"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "radarHU.buscar",
+        "title": "Buscar una historia de usuario",
+        "category": "Radar",
+        "icon": "$(book)"
+      },
+      {
+        "command": "radarHU.deEsteArchivo",
+        "title": "¿De qué HU es este archivo?",
+        "category": "Radar"
+      },
+      {
+        "command": "radarHU.recargar",
+        "title": "Volver a leer las etiquetas @HU",
+        "category": "Radar"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "radarHU.buscar",
+        "key": "ctrl+alt+h",
+        "mac": "cmd+alt+h"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "radarHU.deEsteArchivo",
+          "when": "!explorerResourceIsFolder",
+          "group": "navigation@99"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "radarHU.buscar",
+          "when": "view == workbench.explorer.fileView",
+          "group": "navigation"
+        }
+      ]
+    }
+  }
+}
