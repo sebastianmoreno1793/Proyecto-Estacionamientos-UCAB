@@ -1,3 +1,6 @@
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Inicio
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
+// @HU-8.1 Activar las notificaciones · Manuel
 // Pantalla de Inicio (/): edificios, sugerencia (HU 7.2), total y estacionamientos (HU 4.2).
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
@@ -8,6 +11,9 @@ import { obtenerUsuarioActual } from "@/servidor/sesion";
 
 export const metadata = { title: "Radar UCAB" };
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
+// @HU-8.1 Activar las notificaciones · Manuel
 // Arma el Inicio: sin sesión manda a /entrar (HU 1.1); trae los edificios con ubicación (HU 6.1)
 // y lo demás lo pide el navegador (componentes/inicio/Inicio.js). Invita a activar notificaciones (HU 8.1). [sesion]
 export default async function PaginaInicio() {

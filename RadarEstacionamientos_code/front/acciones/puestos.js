@@ -1,4 +1,5 @@
 "use server";
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — acción de guardar
 
 // HU 5.4 · Acción del servidor que guarda la capacidad y el estado de un estacionamiento.
 import { revalidatePath } from "next/cache";
@@ -6,6 +7,7 @@ import { cambiarEstacionamiento, vistaPublica } from "@back/logica/estacionamien
 import { emitir } from "@back/comun/eventos_en_vivo.js";
 import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
 
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — solo el administrador
 // Revisa que sea administrador y guarda capacidad y abierto/cerrado con cambiarEstacionamiento
 // del back; luego lo avisa por el canal en vivo. La llama FilaPuesto (HU 5.4). [accion] [sesion] [en-vivo]
 export async function guardarEstacionamiento(_estadoAnterior, formData) {

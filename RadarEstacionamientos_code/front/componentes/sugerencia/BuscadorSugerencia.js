@@ -1,4 +1,5 @@
 "use client";
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — elige edificio y pide la sugerencia
 
 // HU 7.2 · Parte del navegador (front). El usuario elige el edificio y este componente le pide
 // la sugerencia a la API (back) con fetch:
@@ -19,6 +20,7 @@ const HAY_PUESTO = SEMAFORO[0]; // la sugerencia siempre tiene al menos un libre
 // Convierte una distancia en metros a texto: «350 m» o «1,2 km».
 const metros = (m) => (m < 1000 ? `${m} m` : `${(m / 1000).toFixed(1).replace(".", ",")} km`);
 
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 // Muestra el buscador de /sugerencia: eliges el edificio y dice el estacionamiento más cercano con puesto. HU 7.2.
 export default function BuscadorSugerencia({ edificios }) {
   const [resultado, setResultado] = useState(null);

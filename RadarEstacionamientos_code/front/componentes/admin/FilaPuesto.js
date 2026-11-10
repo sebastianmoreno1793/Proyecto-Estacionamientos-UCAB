@@ -1,4 +1,5 @@
 "use client";
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — fila con capacidad y «Activo»
 
 // HU 5.4 Modificar la capacidad y el estado de un estacionamiento (solo administrador).
 // D-007 v2: sin botón «Guardar». El interruptor abre o cierra, y «−» / «+» cambian la capacidad;
@@ -11,6 +12,7 @@ import estilos from "@/estilos/formularios.module.css";
 
 const ESPERA_MS = 700; // varios toques seguidos en «+» se mandan juntos
 
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 // Muestra un estacionamiento en /admin/puestos con su interruptor (abierto o cerrado) y su capacidad. HU 5.4.
 // Cada cambio se manda solo a la acción guardarEstacionamiento. [accion]
 export default function FilaPuesto({ estacionamiento }) {

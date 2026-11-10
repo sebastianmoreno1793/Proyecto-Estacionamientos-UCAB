@@ -1,3 +1,4 @@
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — pruebas de la HU
 // HU 7.2 Sugerir el estacionamiento libre más cercano.
 // Se corre con: npm test
 

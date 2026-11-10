@@ -27,11 +27,13 @@ Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `
 
 ## Dónde está cada cosa
 
+**¿Dónde está cada historia de usuario?** En [`docs/mapa_HU_codigo.md`](docs/mapa_HU_codigo.md): front, back y pruebas de cada HU con enlace a la línea exacta. En el código, busca la etiqueta `@HU-x.y` (por ejemplo `@HU-4.2`).
+
 | Carpeta | Qué hay |
 |---|---|
 | `back/` | Lógica y API: `api/` (un archivo por endpoint), `logica/` (reglas y datos por tema), `comun/`, `seguridad/`, `campus/` y `pruebas/` |
 | `front/` | Pantallas: `app/` (solo rutas), `componentes/` (por pantalla), `acciones/` (formularios → back), `notificaciones/`, `servidor/`, `estilos/` y `public/` |
-| `docs/` | Copia de la carpeta de lógica. **No se edita aquí.** |
+| `docs/` | Copia de la carpeta de lógica. **No se edita aquí**, salvo `mapa_HU_codigo.md`, que es solo del código. |
 
 Cada carpeta tiene un `LEEME.md` corto, cada archivo empieza con un comentario que dice qué hace y
 cada función tiene el suyo. Las etiquetas entre corchetes (`[api]`, `[fetch]`, `[sesion]`…) sirven

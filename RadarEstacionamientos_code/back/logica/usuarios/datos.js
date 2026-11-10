@@ -1,3 +1,4 @@
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — usuarios y sesiones guardados
 // Usuarios y sesiones EN MEMORIA, igual que comun/almacen.js: es temporal mientras el
 // equipo elige la base de datos. Al reiniciar el servidor se pierden las cuentas creadas.
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
@@ -66,6 +67,7 @@ function buscar(correo) {
   return obtenerDatos().usuarios.find((u) => u.correo === normalizarCorreo(correo));
 }
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel
 // Crea una cuenta con correo UCAB y rol según el dominio (HU 1.1). Devuelve { usuario } o { error }. [datos]
 export async function registrarUsuario({ correo, contrasena, confirmacion }) {
   const validacion = validarRegistro({ correo, contrasena, confirmacion });
@@ -77,6 +79,7 @@ export async function registrarUsuario({ correo, contrasena, confirmacion }) {
   return { usuario: publico(usuario) };
 }
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel
 // Verifica correo UCAB y contraseña al iniciar sesión (HU 1.1). Devuelve { usuario } o { error }. [datos] [sesion]
 export async function comprobarCredenciales({ correo, contrasena }) {
   if (!esCorreoUcab(correo)) return { error: MENSAJE_SOLO_UCAB };
@@ -87,6 +90,7 @@ export async function comprobarCredenciales({ correo, contrasena }) {
   return { usuario: publico(usuario) };
 }
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel
 // Crea un código de sesión (el valor de la cookie radar_sesion) para ese correo. [datos] [sesion]
 export async function crearSesion(correo) {
   const token = randomUUID();

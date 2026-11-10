@@ -1,6 +1,8 @@
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // HU 6.1 · Campos comunes de un edificio: nombre, latitud y longitud.
 import estilos from "@/estilos/formularios.module.css";
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Muestra los campos de un edificio (nombre, latitud y longitud); lo usan NuevoEdificio y FilaEdificio. HU 6.1.
 // Si la acción devolvió un error, `valores` trae lo que escribió el administrador para no hacerle escribir todo otra vez.
 export default function CamposEdificio({ edificio, valores }) {

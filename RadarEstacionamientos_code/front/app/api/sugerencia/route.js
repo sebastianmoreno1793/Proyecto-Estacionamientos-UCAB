@@ -1,3 +1,4 @@
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — URL GET /api/sugerencia
 // GET /api/sugerencia → back/api/sugerencia.js: estacionamiento libre más cercano a un edificio (HU 7.2).
 // Aquí solo se conecta la URL. [api] [postman]
 export { GET } from "@back/api/sugerencia.js";

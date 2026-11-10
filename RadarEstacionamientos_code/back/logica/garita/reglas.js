@@ -1,3 +1,4 @@
+// @HU-3.2 Simular sensores y placas · Aaron — reglas del lector de placas
 // Reglas del lector de placas de la garita (HU 3.2). Funciones puras.
 
 export const SENTIDOS = ["ENTRADA", "SALIDA"];
@@ -9,6 +10,7 @@ import { esPlacaValida, normalizarPlaca } from "../vehiculos/reglas.js";
 
 export { normalizarPlaca };
 
+// @HU-3.2 Simular sensores y placas · Aaron
 // Valida la placa y el sentido (HU 3.2). Los devuelve normalizados o { error }. [regla]
 export function validarLectura({ placa, sentido }) {
   const normalizada = normalizarPlaca(placa);

@@ -1,3 +1,4 @@
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — catálogo inicial
 // Catálogo INICIAL de edificios del Campus Montalbán (HU 6.1).
 //
 // Es solo el punto de partida: el administrador agrega, modifica o quita edificios
@@ -10,6 +11,7 @@
 //   nombre     lo que ve el usuario al elegir el edificio de una materia
 //   ubicacion  (opcional) [latitud, longitud]
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 export const EDIFICIOS = [
   { id: "edif-aulas", nombre: "Edificio de Aulas", ubicacion: [10.46425, -66.97623] },
   { id: "edif-laboratorios", nombre: "Edificio de Laboratorios", ubicacion: [10.46473, -66.9744] },

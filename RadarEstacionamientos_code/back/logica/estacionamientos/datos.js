@@ -1,3 +1,7 @@
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 // HU 3.1, 4.1, 4.2 y 5.4 · Lee y cambia los estacionamientos guardados: avisos de
 // entrada y salida, capacidad, abierto o cerrado, y la vista pública (sin datos personales).
 import { obtenerAlmacen } from "../../comun/almacen.js";
@@ -13,6 +17,7 @@ export async function listarEstacionamientosActivos() {
   return (await listarEstacionamientos()).filter((e) => e.activo);
 }
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — libres y porcentaje para el mapa
 // Lo que cualquiera puede ver de un estacionamiento (mapa, API, canal en vivo).
 // Arma la vista sin datos personales, con libres y porcentaje ya calculados (HU 4.2).
 export function vistaPublica(estacionamiento) {
@@ -30,6 +35,7 @@ export function vistaPublica(estacionamiento) {
   };
 }
 
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 // HU 5.4 (antes 10.1): el administrador cambia la capacidad y si el estacionamiento está abierto.
 // `activo` es opcional: si no viene, se queda como estaba. [datos]
 export async function cambiarEstacionamiento(id, { capacidad, activo }) {
@@ -57,6 +63,8 @@ function registrarRechazo(almacen, { estacionamientoId, tipo, idAviso }, motivo,
   return rechazo;
 }
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — registra el movimiento con la hora
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — cambia los ocupados
 // Registra una ENTRADA o SALIDA y actualiza los ocupados; guarda los rechazos (HU 3.1 y 4.1).
 // Devuelve { movimiento, estacionamiento } o { error, motivo }. [datos]
 export async function registrarAviso({ estacionamientoId, tipo, idAviso = null }, ahora = new Date()) {
@@ -88,6 +96,7 @@ export async function registrarAviso({ estacionamientoId, tipo, idAviso = null }
   return { movimiento: { ...movimiento }, estacionamiento: { ...estacionamiento } };
 }
 
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 // Los avisos rechazados más recientes primero (HU 4.1, CA3 a CA5). [datos]
 export async function listarAvisosRechazados(limite = 50) {
   return obtenerAlmacen()
@@ -96,6 +105,7 @@ export async function listarAvisosRechazados(limite = 50) {
     .map((a) => ({ ...a }));
 }
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
 // Devuelve los últimos avisos aceptados, el más reciente primero (HU 3.1). [datos]
 export async function listarMovimientos(limite = 50) {
   return obtenerAlmacen()

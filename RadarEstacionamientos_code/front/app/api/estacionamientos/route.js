@@ -1,3 +1,5 @@
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — URL GET /api/estacionamientos
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
 // GET /api/estacionamientos → back/api/estacionamientos.js: estado para el mapa y el semáforo (HU 4.2).
 // Aquí solo se conecta la URL. [api] [postman]
 export { GET } from "@back/api/estacionamientos.js";

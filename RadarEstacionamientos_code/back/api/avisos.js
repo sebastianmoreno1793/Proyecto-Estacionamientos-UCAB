@@ -1,3 +1,5 @@
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — endpoint de los sensores
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 // Endpoint del back. La URL la conecta el front en front/app/api/avisos/route.js.
 import { registrarAviso, vistaPublica } from "../logica/estacionamientos/datos.js";
 import { emitir } from "../comun/eventos_en_vivo.js";
@@ -5,6 +7,8 @@ import { esClaveDeSensorValida } from "../seguridad/clave_sensores.js";
 
 const ESTADO_POR_MOTIVO = { no_existe: 404, tipo: 400, lleno: 409, vacio: 409 };
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 // HU 3.1 Recibir avisos de entrada y salida. Es el camino de los sensores de cada
 // estacionamiento; el simulador y Postman entran por aquí igual que un sensor real (D-002).
 //   POST /api/avisos   encabezado x-clave-sensor

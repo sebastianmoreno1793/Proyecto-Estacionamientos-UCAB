@@ -1,3 +1,6 @@
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — GET
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — GET con la forma de cada uno
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — PATCH
 // Endpoints del back. Las URL las conecta el front en front/app/api/estacionamientos/route.js
 // (GET) y front/app/api/estacionamientos/[id]/route.js (PATCH).
 import { ESTACIONAMIENTOS } from "../campus/estacionamientos.js";
@@ -5,6 +8,8 @@ import { cambiarEstacionamiento, listarEstacionamientos, vistaPublica } from "..
 import { emitir } from "../comun/eventos_en_vivo.js";
 import { esAdministrador, usuarioDeLaPeticion } from "../seguridad/sesion.js";
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
 // Estado de los estacionamientos para el mapa y el semáforo (HU 4.2), con su forma (HU 5.1).
 //   GET /api/estacionamientos
 // GET /api/estacionamientos · Devuelve los estacionamientos con libres, porcentaje y polígono (HU 4.2 y 5.1). Responde 200. [api] [postman]
@@ -14,6 +19,7 @@ export async function GET(request) {
   return Response.json({ estacionamientos });
 }
 
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 // HU 5.4 (antes 10.1) Habilitar estacionamientos y fijar su capacidad. Mismas reglas que la
 // página de administración; solo para el administrador.
 //   PATCH /api/estacionamientos/est-labs   { "capacidad": 40, "activo": false }

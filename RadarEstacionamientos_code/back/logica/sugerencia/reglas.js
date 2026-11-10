@@ -1,3 +1,4 @@
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — reglas de la sugerencia
 // HU 7.2 · Sugerir el estacionamiento libre más cercano.
 // Reglas puras: no leen ni guardan datos (se prueban en pruebas/sugerencia.test.js).
 //
@@ -9,6 +10,7 @@ import { estacionamientosSugeribles } from "../estacionamientos/reglas.js";
 
 const RADIO_DE_LA_TIERRA_M = 6371000;
 
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 // Distancia en línea recta, en metros, entre dos puntos [latitud, longitud] (fórmula de
 // Haversine). La distancia caminando por el campus es la HU 6.2 (R2). [regla]
 export function distanciaEnMetros([lat1, lon1], [lat2, lon2]) {
@@ -27,6 +29,7 @@ export function centroDelPoligono(poligono) {
   return [suma[0] / poligono.length, suma[1] / poligono.length];
 }
 
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — abiertos, con libres, el más cercano
 // Elige la sugerencia.
 //   edificio          { id, nombre, ubicacion: [lat, lon] | null }
 //   estacionamientos  [{ id, nombre, activo, libres, poligono }]

@@ -1,3 +1,4 @@
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — reglas del catálogo
 // Reglas del catálogo de edificios (HU 6.1). Funciones puras: no leen ni guardan datos.
 
 import { CENTRO_CAMPUS } from "../../campus/estacionamientos.js";
@@ -8,6 +9,7 @@ export const LARGO_MAXIMO_NOMBRE = 80;
 // 0,015° ≈ 1,6 km a esta latitud: más lejos ya no es el Campus Montalbán.
 const DISTANCIA_MAXIMA_GRADOS = 0.015;
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Dos nombres son el mismo si solo cambian mayúsculas, tildes o espacios.
 // Pasa el nombre a minúsculas, sin tildes ni espacios de más (HU 6.1). [regla]
 export function normalizarNombre(nombre) {
@@ -19,6 +21,7 @@ export function normalizarNombre(nombre) {
     .toLowerCase();
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // "Edificio de Aulas" → "edif-edificio-de-aulas"; si ya existe, le agrega -2, -3…
 // Crea el id del edificio a partir del nombre, sin repetir uno existente. [regla]
 export function crearId(nombre, idsExistentes) {
@@ -40,6 +43,7 @@ function leerCoordenada(valor) {
   return { numero: Number(texto) };
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — nombre único y ubicación dentro del campus
 // Valida lo que escribe el administrador. `idActual` es el edificio que se está
 // modificando (para no chocar con su propio nombre); al agregar uno nuevo es null. HU 6.1. [regla]
 export function validarEdificio({ nombre, latitud, longitud }, edificios, idActual = null) {
@@ -76,6 +80,7 @@ export function validarEdificio({ nombre, latitud, longitud }, edificios, idActu
   return { nombre: limpio, ubicacion: [lat.numero, lon.numero] };
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // La lista que ve el usuario al elegir el edificio de una materia: ordenada por nombre. [regla]
 export function ordenarPorNombre(edificios) {
   return [...edificios].sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));

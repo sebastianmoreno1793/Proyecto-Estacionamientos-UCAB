@@ -1,10 +1,12 @@
 "use server";
+// @HU-2.1 Registrar mis vehículos · Samuel — acción del formulario
 
 // HU 2.1 · Acción del servidor que registra un vehículo (formulario de Perfil).
 import { revalidatePath } from "next/cache";
 import { registrarVehiculo } from "@back/logica/vehiculos/datos.js";
 import { obtenerUsuarioActual } from "@/servidor/sesion";
 
+// @HU-2.1 Registrar mis vehículos · Samuel
 // Recibe el formulario de Mis vehículos y registra el carro con registrarVehiculo del back.
 // La llama FormularioVehiculo en Perfil (HU 2.1 Registrar mis vehículos). [accion] [sesion]
 export async function agregarVehiculo(_estadoAnterior, formData) {

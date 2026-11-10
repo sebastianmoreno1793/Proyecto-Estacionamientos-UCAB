@@ -1,4 +1,5 @@
 "use client";
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — formulario para agregar
 
 // HU 6.1 · Formulario para agregar un edificio al catálogo.
 import { useActionState } from "react";
@@ -6,6 +7,7 @@ import { guardarEdificioNuevo } from "@/acciones/edificios";
 import CamposEdificio from "@/componentes/admin/CamposEdificio";
 import estilos from "@/estilos/formularios.module.css";
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Muestra el formulario «Agregar un edificio» en /admin/edificios. HU 6.1.
 // Lo envía a la acción guardarEdificioNuevo y muestra el error o el mensaje que devuelve. [accion]
 export default function NuevoEdificio() {

@@ -1,3 +1,7 @@
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-3.2 Simular sensores y placas · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
 // HU 3.1 Recibir avisos · HU 3.2 Lector de placas · HU 4.1 Actualizar el aforo.
 // Es lo que reciben los sensores, el simulador y Postman por la API.
 // Se corre con: npm test
@@ -20,6 +24,8 @@ import { esClaveDeSensorValida } from "../seguridad/clave_sensores.js";
 
 const labs = async () => (await listarEstacionamientos()).find((e) => e.id === "est-labs");
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 describe("avisos de entrada y salida de los sensores", () => {
   beforeEach(() => reiniciarAlmacen());
 
@@ -69,6 +75,7 @@ describe("avisos de entrada y salida de los sensores", () => {
 
 });
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
 describe("semáforo y vista pública", () => {
   test("el porcentaje nunca pasa de 100 ni baja de 0", () => {
     assert.equal(porcentajeDeOcupacion({ capacidad: 50, ocupados: 25 }), 50);
@@ -86,6 +93,7 @@ describe("semáforo y vista pública", () => {
   });
 });
 
+// @HU-3.2 Simular sensores y placas · Aaron
 describe("lector de placas de la garita", () => {
   beforeEach(() => reiniciarAlmacen());
 
@@ -110,6 +118,8 @@ describe("lector de placas de la garita", () => {
   });
 });
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-3.2 Simular sensores y placas · Aaron
 describe("clave de los sensores", () => {
   test("solo vale la clave exacta", () => {
     assert.equal(esClaveDeSensorValida("secreta", "secreta"), true);

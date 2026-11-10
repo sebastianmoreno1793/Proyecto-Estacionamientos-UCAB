@@ -1,4 +1,5 @@
 "use server";
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — agregar, modificar y quitar
 
 // HU 6.1 · Acciones del servidor para agregar, modificar y quitar edificios (solo administrador).
 import { revalidatePath } from "next/cache";
@@ -16,6 +17,7 @@ function leerFormulario(formData) {
   };
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — agregar
 // Revisa que sea administrador y agrega el edificio con agregarEdificio del back.
 // La llama el formulario NuevoEdificio de /admin/edificios (HU 6.1). [accion] [sesion]
 export async function guardarEdificioNuevo(_estadoAnterior, formData) {
@@ -29,6 +31,7 @@ export async function guardarEdificioNuevo(_estadoAnterior, formData) {
   return { mensaje: `Se agregó "${resultado.edificio.nombre}".`, version: Date.now() };
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — modificar
 // Revisa que sea administrador y guarda los cambios con modificarEdificio del back.
 // La llama el formulario de FilaEdificio en /admin/edificios (HU 6.1). [accion] [sesion]
 export async function guardarEdificio(_estadoAnterior, formData) {
@@ -41,6 +44,7 @@ export async function guardarEdificio(_estadoAnterior, formData) {
   return { mensaje: "Cambios guardados." };
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — quitar
 // Revisa que sea administrador y quita el edificio con quitarEdificio del back.
 // La llama el botón Quitar de FilaEdificio en /admin/edificios (HU 6.1). [accion] [sesion]
 export async function borrarEdificio(_estadoAnterior, formData) {

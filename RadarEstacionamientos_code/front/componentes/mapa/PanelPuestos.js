@@ -1,4 +1,5 @@
 "use client";
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — lista «¿dónde hay puesto?»
 
 // Lista de "¿dónde hay puesto?" junto al mapa (HU 4.2): de un vistazo, cuántos puestos libres
 // hay en el campus y en cada estacionamiento, del que tiene más al que tiene menos. Los
@@ -49,6 +50,7 @@ function useCifraAnimada(valor) {
   return mostrado;
 }
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
 // Muestra la lista «¿dónde hay puesto?» junto al mapa (en el celular, una hoja que sube desde abajo). HU 4.2.
 // La usa MaquetaCampus; al tocar un estacionamiento avisa con onElegir.
 export default function PanelPuestos({ estacionamientos, conexion, elegido, onElegir }) {

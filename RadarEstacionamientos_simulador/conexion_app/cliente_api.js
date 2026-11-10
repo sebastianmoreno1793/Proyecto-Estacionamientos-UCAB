@@ -1,3 +1,4 @@
+// @HU-3.2 Simular sensores y placas · Aaron — llamadas del simulador a la API de la app
 // Llamadas a la app base desde el navegador del simulador, a través del puente
 // `/api/base/...` (app/api/base/[...ruta]/route.js). Cada llamada devuelve también lo que
 // el registro necesita para mostrarla como en Postman: método, ruta, estado HTTP y tiempo.
@@ -30,6 +31,8 @@ async function llamar(metodo, ruta, cuerpo) {
 
 export const URL_EVENTOS = "/api/base/eventos";
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — aviso → POST /api/avisos
+// @HU-3.2 Simular sensores y placas · Aaron — lecturaDePlaca → POST /api/garita/lecturas
 export const appBase = {
   estacionamientos: () => llamar("GET", "estacionamientos"),
   incidencias: () => llamar("GET", "incidencias"),

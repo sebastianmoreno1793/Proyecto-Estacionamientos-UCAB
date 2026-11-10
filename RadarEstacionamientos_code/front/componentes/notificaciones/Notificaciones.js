@@ -1,4 +1,5 @@
 "use client";
+// @HU-8.1 Activar las notificaciones · Manuel — invitación y interruptor de Perfil
 
 // HU 8.1 · Activar las notificaciones.
 //
@@ -16,6 +17,7 @@
 import { useEffect, useState } from "react";
 import { GestorNotificaciones, gestorNotificaciones } from "@/notificaciones/GestorNotificaciones";
 
+// @HU-8.1 Activar las notificaciones · Manuel
 // Muestra las notificaciones: como invitación en Inicio y Mapa (app/page.js, app/mapa/page.js) o como interruptor en Perfil. HU 8.1.
 export default function Notificaciones({ modo = "perfil" }) {
   // null mientras no sabemos el estado (el servidor no tiene `Notification`).

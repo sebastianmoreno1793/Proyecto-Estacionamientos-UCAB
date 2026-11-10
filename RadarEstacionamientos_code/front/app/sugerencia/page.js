@@ -1,3 +1,4 @@
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — pantalla Sugerir
 // Pantalla Sugerir (/sugerencia), HU 7.2. En el Inicio está la misma función con chips.
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
@@ -8,6 +9,7 @@ import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "¿Dónde me estaciono?" };
 
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 // Arma la pantalla Sugerir (HU 7.2) con la lista de edificios (HU 6.1); sin sesión manda a /entrar.
 // La búsqueda la hace el navegador con fetch a /api/sugerencia (BuscadorSugerencia.js). [sesion]
 export default async function PaginaSugerencia() {

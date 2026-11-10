@@ -1,3 +1,4 @@
+// @HU-8.1 Activar las notificaciones · Manuel — pruebas de la HU
 // HU 8.1 Activar notificaciones (modelo orientado a objetos).
 // Se corre con: npm test
 

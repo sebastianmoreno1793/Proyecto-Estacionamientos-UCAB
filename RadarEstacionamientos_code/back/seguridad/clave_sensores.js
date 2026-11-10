@@ -1,3 +1,5 @@
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — clave de los sensores
+// @HU-3.2 Simular sensores y placas · Aaron
 // Clave de los sensores y del lector de placas (encabezado x-clave-sensor).
 // Solo quien tiene la clave puede avisar entradas, salidas y placas (HU 3.1 y 3.2).
 import { timingSafeEqual } from "node:crypto";
@@ -13,6 +15,8 @@ export function claveDeSensores() {
   return process.env.NODE_ENV === "production" ? null : CLAVE_DE_DESARROLLO;
 }
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-3.2 Simular sensores y placas · Aaron
 // Valida la clave del encabezado x-clave-sensor comparándola en tiempo constante (HU 3.1 y 3.2).
 export function esClaveDeSensorValida(recibida, clave = claveDeSensores()) {
   if (!clave || typeof recibida !== "string") return false;

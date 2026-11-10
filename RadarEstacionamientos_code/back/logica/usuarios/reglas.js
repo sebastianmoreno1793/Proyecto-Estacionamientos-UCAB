@@ -1,3 +1,4 @@
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — reglas del correo y de la contraseña
 // HU 1.1 Crear cuenta con el correo institucional.
 // Reglas puras (sin guardar nada), para poder probarlas con npm test.
 
@@ -6,6 +7,7 @@ export const DOMINIOS_UCAB = ["est.ucab.edu.ve", "ucab.edu.ve"];
 
 export const LARGO_MINIMO_CONTRASENA = 8;
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — los cuatro mensajes del escenario
 // Los cuatro mensajes del escenario de la HU 1.1, letra por letra (pasos 7.1, 8.1, 9.1 y 10.1).
 // Crear cuenta usa noValidate: el navegador no muestra sus avisos, solo estos.
 export const MENSAJE_SOLO_UCAB = "Solo puede entrar la comunidad UCAB. Usa tu correo institucional";
@@ -27,11 +29,13 @@ export function dominioDe(correo) {
   return coincidencia ? coincidencia[1] : null;
 }
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — solo @est.ucab.edu.ve y @ucab.edu.ve
 // Valida que el correo sea @est.ucab.edu.ve o @ucab.edu.ve (HU 1.1). [regla]
 export function esCorreoUcab(correo) {
   return DOMINIOS_UCAB.includes(dominioDe(correo));
 }
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel
 // El rol sale del dominio. Vigilancia y administración se asignan a mano.
 // Devuelve «estudiante» o «profesor» según el dominio, o null. [regla]
 export function rolSegunCorreo(correo) {
@@ -41,6 +45,7 @@ export function rolSegunCorreo(correo) {
   return null;
 }
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — valida en el orden del escenario
 // Valida el registro en el orden del diagrama de la HU 1.1 (pasos 7, 8 y 9). Un correo vacío o
 // mal escrito no tiene dominio UCAB y cae en el paso 7.1; una contraseña vacía, en el 8.1. [regla]
 export function validarRegistro({ correo, contrasena, confirmacion }) {

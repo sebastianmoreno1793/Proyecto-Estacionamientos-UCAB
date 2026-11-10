@@ -1,4 +1,5 @@
 "use client";
+// @HU-9.1 Crear una incidencia · Sebastian — formulario: tipo y estacionamiento
 
 // HU 9.1 Crear una incidencia (D-007 v2: como armar un pedido en dos toques).
 //  1. El tipo de problema: tres mosaicos grandes (un toque).
@@ -20,6 +21,7 @@ const ASPECTO = {
   vehiculo_mal_estacionado: { color: "lavanda", icono: "carro", ancho: true },
 };
 
+// @HU-9.1 Crear una incidencia · Sebastian
 // Muestra el formulario de /reportar: tipo de problema, estacionamiento y «Enviar reporte». HU 9.1.
 // Lo envía a la acción reportarIncidencia; si sale bien, muestra la confirmación. [accion]
 export default function FormularioIncidencia({ estacionamientos, elegido = "" }) {

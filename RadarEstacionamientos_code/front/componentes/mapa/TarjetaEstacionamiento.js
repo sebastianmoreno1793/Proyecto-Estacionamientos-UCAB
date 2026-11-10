@@ -1,4 +1,5 @@
 "use client";
+// @HU-9.1 Crear una incidencia · Sebastian — tarjeta del estacionamiento con «Reportar un problema aquí» (paso 1 del escenario)
 
 // Tarjeta del estacionamiento elegido: flota sobre el mapa (DESIGN.md › Mapa, D-007).
 // Nombre, nivel del semáforo en texto y tres datos en columnas; debajo, una sola acción.
@@ -7,6 +8,7 @@ import Link from "next/link";
 import { nivelDelSemaforo } from "@back/logica/estacionamientos/reglas.js";
 import { Icono } from "@/componentes/comunes/Iconos";
 
+// @HU-9.1 Crear una incidencia · Sebastian
 // Muestra la tarjeta del estacionamiento elegido sobre el mapa: nivel, libres, ocupación y capacidad.
 // La usa MaquetaCampus; «Cerrar» llama a onCerrar y el enlace lleva a /reportar con ese estacionamiento.
 export default function TarjetaEstacionamiento({ estacionamiento: e, onCerrar }) {
@@ -44,6 +46,7 @@ export default function TarjetaEstacionamiento({ estacionamiento: e, onCerrar })
               <dd className="cifra">{e.capacidad}</dd>
             </div>
           </dl>
+          {/* @HU-9.1 Crear una incidencia · Sebastian — abre Reportar con este estacionamiento ya elegido */}
           <Link href={`/reportar?estacionamiento=${encodeURIComponent(e.id)}`} className="boton-secundario">
             <Icono nombre="reportar" />
             &nbsp;Reportar un problema aquí

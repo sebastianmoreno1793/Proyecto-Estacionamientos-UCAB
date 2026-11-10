@@ -1,3 +1,4 @@
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — la lista sirve para dibujar el mapa
 // Comprueba que la lista de estacionamientos sirve para dibujar el mapa (HU 5.1).
 // Se corre con: npm test
 

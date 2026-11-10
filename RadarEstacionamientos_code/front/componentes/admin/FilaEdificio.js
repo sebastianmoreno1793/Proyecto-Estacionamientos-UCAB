@@ -1,4 +1,5 @@
 "use client";
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — fila para modificar o quitar
 
 // HU 6.1 · Una fila del catálogo: modificar o quitar un edificio.
 import { useActionState, useState } from "react";
@@ -6,6 +7,7 @@ import { borrarEdificio, guardarEdificio } from "@/acciones/edificios";
 import CamposEdificio from "@/componentes/admin/CamposEdificio";
 import estilos from "@/estilos/formularios.module.css";
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Muestra una fila del catálogo en /admin/edificios para modificar o quitar un edificio. HU 6.1.
 // Usa dos acciones del servidor: guardarEdificio y borrarEdificio. [accion]
 export default function FilaEdificio({ edificio }) {

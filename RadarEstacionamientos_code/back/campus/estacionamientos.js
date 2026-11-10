@@ -1,3 +1,4 @@
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — estacionamientos que se dibujan en el mapa
 // Estacionamientos del Campus Montalbán que se dibujan en el mapa (HU 5.1).
 //
 // Nombres: los que usa la comunidad UCAB, indicados por German Alfonzo (05/oct/26).
@@ -24,6 +25,7 @@
 export const CENTRO_CAMPUS = [10.4637, -66.9770];
 export const ZOOM_INICIAL = 17;
 
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
 export const ESTACIONAMIENTOS = [
   {
     id: "est-playa",

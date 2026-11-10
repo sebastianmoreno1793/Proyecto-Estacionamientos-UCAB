@@ -1,3 +1,10 @@
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-3.2 Simular sensores y placas · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
+// @HU-9.1 Crear una incidencia · Sebastian
 // Pruebas de los endpoints (back/api): lo que responde cada uno, con su código HTTP,
 // igual que lo vería Postman o el simulador. No levanta el servidor: llama directo a la
 // función GET/POST/PATCH de cada archivo con un Request armado a mano.
@@ -33,6 +40,8 @@ const enId = (id) => ({ params: Promise.resolve({ id }) });
 
 beforeEach(() => reiniciarAlmacen());
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 describe("POST /api/avisos (HU 3.1, 3.2 y 4.1)", () => {
   test("sin la clave del sensor responde 401", async () => {
     const r = await avisos.POST(peticion("/api/avisos", "POST", { estacionamientoId: "est-playa", tipo: "ENTRADA" }));
@@ -70,6 +79,8 @@ describe("POST /api/avisos (HU 3.1, 3.2 y 4.1)", () => {
   });
 });
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 describe("GET y PATCH /api/estacionamientos (HU 4.2 y 5.4)", () => {
   test("GET responde 200 con la lista de estacionamientos y sus puestos libres", async () => {
     const r = await estacionamientos.GET(peticion("/api/estacionamientos"));
@@ -102,6 +113,7 @@ describe("GET y PATCH /api/estacionamientos (HU 4.2 y 5.4)", () => {
   });
 });
 
+// @HU-3.2 Simular sensores y placas · Aaron
 describe("POST /api/garita (HU 3.2, placas)", () => {
   test("una lectura válida responde 200 con la placa normalizada", async () => {
     const r = await garita.POST(peticion("/g", "POST", { placa: "ab-123 cd", sentido: "entrada", idLectura: "L1" }, CLAVE_SENSOR));
@@ -115,6 +127,7 @@ describe("POST /api/garita (HU 3.2, placas)", () => {
   });
 });
 
+// @HU-9.1 Crear una incidencia · Sebastian
 describe("GET y POST /api/incidencias (HU 9.1)", () => {
   test("sin sesión responde 401", async () => {
     assert.equal((await incidencias.GET(peticion("/i"))).status, 401);
@@ -129,6 +142,7 @@ describe("GET y POST /api/incidencias (HU 9.1)", () => {
   });
 });
 
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 describe("GET /api/sugerencia (HU 7.2)", () => {
   test("con un edificio que existe responde 200 con el sugerido", async () => {
     const r = await sugerencia.GET(peticion("/api/sugerencia?edificio=edif-aulas"));

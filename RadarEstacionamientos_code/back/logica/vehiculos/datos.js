@@ -1,3 +1,4 @@
+// @HU-2.1 Registrar mis vehículos · Samuel — vehículos guardados
 // Vehículos EN MEMORIA, temporal mientras el equipo elige la base de datos
 // (igual que comun/almacen.js). Al reiniciar el servidor se pierden.
 import { randomUUID } from "node:crypto";
@@ -15,6 +16,7 @@ export function reiniciarVehiculos() {
   globalThis.__radarVehiculos = [];
 }
 
+// @HU-2.1 Registrar mis vehículos · Samuel — la placa no se repite
 // HU 2.1: el usuario registra un vehículo a su nombre. La placa no se puede repetir
 // en el sistema, porque el lector de la garita identifica al vehículo por ella.
 // Valida y guarda el vehículo. Devuelve { vehiculo } o { error }. [datos]
@@ -34,6 +36,7 @@ export async function registrarVehiculo(dueno, datos) {
   return { vehiculo: { ...vehiculo } };
 }
 
+// @HU-2.1 Registrar mis vehículos · Samuel — cada usuario ve solo los suyos
 // Cada usuario solo ve sus propios vehículos (rango de calidad de seguridad del Brief).
 // Devuelve los vehículos de un dueño (HU 2.1). [datos]
 export async function listarVehiculosDe(dueno) {
@@ -42,6 +45,7 @@ export async function listarVehiculosDe(dueno) {
     .map((v) => ({ ...v }));
 }
 
+// @HU-2.1 Registrar mis vehículos · Samuel
 // Busca un vehículo por su placa; devuelve null si no está registrado. [datos]
 export async function buscarPorPlaca(placa) {
   const vehiculo = obtenerVehiculos().find((v) => v.placa === normalizarPlaca(placa));

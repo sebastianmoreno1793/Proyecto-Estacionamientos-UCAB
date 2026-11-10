@@ -1,7 +1,12 @@
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 // Reglas de los estacionamientos. Funciones puras: no leen ni guardan datos.
 
 export const CAPACIDAD_MAXIMA = 2000;
 
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — entre 0 y la capacidad
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — con la capacidad nueva
 // Nunca menos de 0 ni más que la capacidad. Si el administrador baja la capacidad
 // por debajo de los carros que ya están dentro, quedan 0 libres hasta que salgan.
 // Calcula los puestos libres: capacidad menos ocupados. [regla]
@@ -9,12 +14,14 @@ export function puestosLibres({ capacidad, ocupados }) {
   return Math.min(capacidad, Math.max(0, capacidad - ocupados));
 }
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
 // Porcentaje para el semáforo (HU 4.2). Nunca pasa de 100, igual que los libres nunca bajan de 0. [regla]
 export function porcentajeDeOcupacion({ capacidad, ocupados }) {
   if (!(capacidad > 0)) return 100;
   return Math.round((Math.min(capacidad, Math.max(0, ocupados)) / capacidad) * 100);
 }
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — verde «Hay puesto», rojo «No hay puesto»
 // HU 4.2 · Semáforo de dos estados (D-009): verde si hay al menos un puesto libre, rojo si no
 // hay ninguno. El porcentaje ya no decide el color. Un estacionamiento desactivado no tiene
 // semáforo: está cerrado. `color` lleva texto blanco encima (≥ 4,5:1); `relleno` es para áreas.
@@ -24,6 +31,7 @@ export const SEMAFORO = [
 ];
 export const CERRADO = { nivel: "cerrado", texto: "Cerrado", color: "#6c6c70", relleno: "#8e8e93" };
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — decide el estado con los libres
 // Devuelve el estado del semáforo: «Cerrado», «Hay puesto» o «No hay puesto» (HU 4.2). [regla]
 export function nivelDelSemaforo({ libres, activo = true }) {
   if (!activo) return CERRADO;
@@ -36,6 +44,7 @@ export const textoLibres = (n) => `${n} ${n === 1 ? "libre" : "libres"}`;
 
 export const TIPOS_DE_MOVIMIENTO = ["ENTRADA", "SALIDA"];
 
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — entrada ocupa, salida libera
 // HU 4.1: una entrada ocupa un puesto y una salida lo libera. Un aviso que rompería los
 // límites (lleno, vacío) se rechaza. Un estacionamiento cerrado también cuenta sus avisos:
 // los carros siguen entrando y saliendo aunque no se muestre ni se sugiera. [regla]
@@ -54,6 +63,7 @@ export function aplicarMovimiento(estacionamiento, tipo) {
   return { ocupados: ocupados + (tipo === "ENTRADA" ? 1 : -1) };
 }
 
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 // Valida la capacidad: entero entre 1 y CAPACIDAD_MAXIMA (HU 5.4). Devuelve { capacidad } o { error }. [regla]
 export function validarCapacidad(valor) {
   const texto = String(valor ?? "").trim();
@@ -70,6 +80,8 @@ export function validarCapacidad(valor) {
   return { capacidad };
 }
 
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — un cerrado no se sugiere
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — de aquí parte la sugerencia
 // HU 5.4: un estacionamiento cerrado no se sugiere. La HU 7.2 (logica/sugerencia/reglas.js) parte
 // de esta lista y le añade lo suyo (puestos libres y cercanía al edificio). [regla]
 export function estacionamientosSugeribles(estacionamientos) {

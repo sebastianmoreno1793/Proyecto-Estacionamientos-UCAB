@@ -1,4 +1,5 @@
 "use client";
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — formulario de crear cuenta y de entrar
 
 // HU 1.1 · Formulario para entrar o crear la cuenta con el correo institucional.
 import Link from "next/link";
@@ -6,6 +7,7 @@ import { useActionState } from "react";
 import { crearCuenta, entrar } from "@/acciones/cuenta";
 import estilos from "@/estilos/formularios.module.css";
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — en Crear cuenta, mensajes propios (noValidate)
 // Muestra el formulario de /entrar y /registro: el mismo para «Entrar» y «Crear cuenta». HU 1.1.
 // Cambia el botón, la acción (entrar o crearCuenta) y si pide repetir la contraseña. [accion] [sesion]
 export default function FormularioCuenta({ modo }) {

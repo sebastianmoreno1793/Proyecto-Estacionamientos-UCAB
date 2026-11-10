@@ -1,13 +1,16 @@
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — catálogo guardado
 // HU 6.1 · Guarda el catálogo de edificios: agregar, modificar, quitar y listar.
 import { obtenerAlmacen } from "../../comun/almacen.js";
 import { crearId, ordenarPorNombre, validarEdificio } from "./reglas.js";
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — la misma lista para el administrador y el usuario
 // HU 6.1: esta es la lista que ve el usuario al elegir el edificio de una materia.
 // Devuelve copias de los edificios ordenadas por nombre. [datos]
 export async function listarEdificios() {
   return ordenarPorNombre(obtenerAlmacen().edificios).map(copiar);
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Valida y guarda un edificio nuevo con id único (HU 6.1). Devuelve { edificio } o { error }. [datos]
 export async function agregarEdificio(datos) {
   const { edificios } = obtenerAlmacen();
@@ -23,6 +26,7 @@ export async function agregarEdificio(datos) {
   return { edificio: copiar(edificio) };
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Cambia el nombre y la ubicación de un edificio existente (HU 6.1). [datos]
 export async function modificarEdificio(id, datos) {
   const { edificios } = obtenerAlmacen();
@@ -37,6 +41,7 @@ export async function modificarEdificio(id, datos) {
   return { edificio: copiar(edificio) };
 }
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Quita un edificio del catálogo y devuelve el que se quitó (HU 6.1). [datos]
 export async function quitarEdificio(id) {
   const { edificios } = obtenerAlmacen();

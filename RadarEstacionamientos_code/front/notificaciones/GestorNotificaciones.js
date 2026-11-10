@@ -1,3 +1,4 @@
+// @HU-8.1 Activar las notificaciones · Manuel — lógica de permisos y notificación de prueba
 // HU 8.1 · Lógica de las notificaciones del navegador: pide el permiso, recuerda la
 // respuesta (paso 2.2) y envía la notificación de prueba (CA1). Corre solo en el navegador.
 import { Notificacion } from "./Notificacion.js";
@@ -102,6 +103,7 @@ export class GestorNotificaciones {
     return this.#almacenamiento()?.getItem(GestorNotificaciones.CLAVE_PREFERENCIA) ?? null;
   }
 
+  // @HU-8.1 Activar las notificaciones · Manuel — paso 2.2: preguntar solo si nunca respondió
   /**
    * Paso 2.2 del escenario: la solicitud solo se muestra si el navegador todavía no preguntó y el usuario no
    * respondió antes en este navegador (ni «Permitir» ni «Bloquear»). [notificaciones]
@@ -110,6 +112,7 @@ export class GestorNotificaciones {
     return this.obtenerEstadoPermiso() === "default" && !this.obtenerPreferencia();
   }
 
+  // @HU-8.1 Activar las notificaciones · Manuel — CA2
   /**
    * «Bloquear» en la solicitud del Radar (CA2 de la HU 8.1): se registran como bloqueadas sin
    * preguntarle al navegador, así el usuario puede activarlas después desde su perfil. [notificaciones]
@@ -156,6 +159,7 @@ export class GestorNotificaciones {
     }
   }
 
+  // @HU-8.1 Activar las notificaciones · Manuel — la notificación de prueba
   /**
    * Muestra la notificación local de prueba con el Service Worker activo (CA1). [notificaciones]
    * @returns {Promise<boolean>} true si se mostró.
@@ -184,6 +188,7 @@ export class GestorNotificaciones {
     return true;
   }
 
+  // @HU-8.1 Activar las notificaciones · Manuel — CA1
   /**
    * Solicita el permiso al usuario. Si concede (`[OK]`), activa preferencia,
    * registra el Service Worker y dispara la notificación de prueba.

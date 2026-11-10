@@ -1,3 +1,6 @@
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — avisos registrados
+// @HU-3.2 Simular sensores y placas · Aaron — placas leídas
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — avisos rechazados
 // Administrar › Garita (/admin/garita): avisos de los sensores, avisos rechazados y placas
 // leídas (HU 3.1, 3.2 y 4.1). Solo administrador.
 import { connection } from "next/server";
@@ -18,6 +21,9 @@ const MOTIVOS = {
   tipo: "Anomalía: tipo de movimiento desconocido",
 };
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-3.2 Simular sensores y placas · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 // Arma /admin/garita con las entradas y salidas de los sensores (HU 3.1), los avisos rechazados
 // (HU 4.1) y las placas leídas (HU 3.2). Las placas son datos personales: solo las ve el administrador. [sesion]
 export default async function PaginaActividad() {

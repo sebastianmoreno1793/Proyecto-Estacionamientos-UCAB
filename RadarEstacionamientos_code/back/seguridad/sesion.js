@@ -1,3 +1,4 @@
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — sesión para la API
 // Sesión del usuario (HU 1.1), parte del back: a partir del código de sesión (la cookie
 // «radar_sesion») dice quién es el usuario. No depende de Next: la usan los endpoints de
 // back/api y el front (front/servidor/sesion.js), que es quien pone y borra la cookie.

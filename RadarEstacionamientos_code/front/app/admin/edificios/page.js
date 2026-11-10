@@ -1,3 +1,4 @@
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Administrar › Edificios
 // Administrar › Edificios (/admin/edificios), HU 6.1. Solo administrador.
 import { connection } from "next/server";
 import FilaEdificio from "@/componentes/admin/FilaEdificio";
@@ -9,6 +10,7 @@ import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Edificios · Administración" };
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 // Arma /admin/edificios: al administrador le muestra NuevoEdificio y el catálogo de listarEdificios
 // del back (son los chips del Inicio); a los demás, un aviso (HU 6.1). [sesion]
 export default async function PaginaEdificios() {

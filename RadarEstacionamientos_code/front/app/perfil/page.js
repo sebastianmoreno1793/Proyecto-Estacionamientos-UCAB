@@ -1,3 +1,6 @@
+// @HU-2.1 Registrar mis vehículos · Samuel — «Mis vehículos» en Perfil
+// @HU-8.1 Activar las notificaciones · Manuel — interruptor de notificaciones
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — botón «Salir»
 // Pantalla Perfil (/perfil): vehículos, notificaciones, Administrar y Salir.
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -11,6 +14,8 @@ import { inicialesDe } from "@back/logica/usuarios/reglas.js";
 
 export const metadata = { title: "Perfil" };
 
+// @HU-2.1 Registrar mis vehículos · Samuel
+// @HU-8.1 Activar las notificaciones · Manuel
 // Arma Perfil (D-007 v2): Mis vehículos (HU 2.1, solo el dueño ve sus placas), Notificaciones (HU 8.1),
 // el enlace Administrar solo para el administrador y el botón Salir (HU 1.1).
 // Sin sesión manda a /entrar. [sesion]

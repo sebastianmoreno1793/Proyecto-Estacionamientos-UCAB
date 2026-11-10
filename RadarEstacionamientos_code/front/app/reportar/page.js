@@ -1,3 +1,4 @@
+// @HU-9.1 Crear una incidencia · Sebastian — pantalla «Reportar»
 // Pantalla Reportar (/reportar): crear una incidencia, HU 9.1.
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
@@ -7,6 +8,7 @@ import { listarEstacionamientosActivos } from "@back/logica/estacionamientos/dat
 
 export const metadata = { title: "Reportar una incidencia" };
 
+// @HU-9.1 Crear una incidencia · Sebastian
 // Arma la pantalla Reportar con FormularioIncidencia (HU 9.1); sin sesión manda a /entrar.
 // Desde la tarjeta del mapa llega con `?estacionamiento=<id>` y ese ya viene elegido. [sesion]
 export default async function PaginaNuevaIncidencia({ searchParams }) {

@@ -1,3 +1,12 @@
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel
+// @HU-2.1 Registrar mis vehículos · Samuel
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
+// @HU-9.1 Crear una incidencia · Sebastian
 // Criterios de aceptación del Sprint 1 que no tenían prueba, o cuya prueba no miraba el mensaje.
 // Cada `describe` es una HU y cada `test` nombra el criterio (CA) o la regla (RN) que demuestra.
 // Se corre con: npm test
@@ -31,6 +40,7 @@ beforeEach(() => {
   reiniciarVehiculos();
 });
 
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel
 describe("HU 1.1 · Crear cuenta con el correo institucional", () => {
   const datos = { correo: "ana.perez@est.ucab.edu.ve", contrasena: "clave1234", confirmacion: "clave1234" };
 
@@ -64,6 +74,8 @@ describe("HU 1.1 · Crear cuenta con el correo institucional", () => {
   });
 });
 
+// @HU-2.1 Registrar mis vehículos · Samuel
+// @HU-3.2 Simular sensores y placas · Aaron — placa compartida
 describe("HU 2.1 · Registrar mis vehículos", () => {
   const CARRO = { placa: "AB123CD", marca: "Toyota", modelo: "Corolla", color: "Gris" };
 
@@ -79,6 +91,8 @@ describe("HU 2.1 · Registrar mis vehículos", () => {
   });
 });
 
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 describe("HU 3.1 y 4.1 · Avisos de entrada y salida y aforo", () => {
   const libresDe = async (id) => vistaPublica((await registrarAviso({ estacionamientoId: id, tipo: "SALIDA" })).estacionamiento).libres;
 
@@ -117,6 +131,7 @@ describe("HU 3.1 y 4.1 · Avisos de entrada y salida y aforo", () => {
   });
 });
 
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron
 describe("HU 4.2 · Semáforo de ocupación", () => {
   test("siempre dice la cantidad de libres, en singular o en plural", () => {
     assert.equal(textoLibres(1), "1 libre");
@@ -131,6 +146,7 @@ describe("HU 4.2 · Semáforo de ocupación", () => {
   });
 });
 
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
 describe("HU 5.1 · Estacionamientos en el mapa del campus", () => {
   test("la maqueta dibuja exactamente los estacionamientos del catálogo", () => {
     assert.deepEqual(
@@ -140,6 +156,7 @@ describe("HU 5.1 · Estacionamientos en el mapa del campus", () => {
   });
 });
 
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 describe("HU 5.4 · Modificar la capacidad y el estado", () => {
   test("cambiar solo la capacidad no cierra el estacionamiento", async () => {
     const { estacionamiento } = await cambiarEstacionamiento("est-labs", { capacidad: "40" });
@@ -151,12 +168,14 @@ describe("HU 5.4 · Modificar la capacidad y el estado", () => {
   });
 });
 
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 describe("HU 6.1 · Catálogo de edificios", () => {
   test("rechaza nombres sin letras ni números", () => {
     assert.ok(validarEdificio({ nombre: "¡¡" }, []).error);
   });
 });
 
+// @HU-9.1 Crear una incidencia · Sebastian
 describe("HU 9.1 · Crear una incidencia", () => {
   const quien = "ana@est.ucab.edu.ve";
 

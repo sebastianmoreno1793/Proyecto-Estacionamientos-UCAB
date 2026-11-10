@@ -1,3 +1,4 @@
+// @HU-9.1 Crear una incidencia · Sebastian — endpoint de incidencias
 // Endpoint del back. La URL la conecta el front en front/app/api/incidencias/route.js.
 import { emitir } from "../comun/eventos_en_vivo.js";
 import { listarIncidencias, registrarIncidencia, vistaPublica } from "../logica/incidencias/datos.js";
@@ -15,6 +16,7 @@ export async function GET(request) {
   return Response.json({ incidencias: (await listarIncidencias()).map(vistaPublica) });
 }
 
+// @HU-9.1 Crear una incidencia · Sebastian
 // POST /api/incidencias · Registra una incidencia a nombre del usuario con sesión (HU 9.1). Responde 201, 400 o 401. [api] [postman] [sesion] [en-vivo]
 export async function POST(request) {
   const usuario = await usuarioDeLaPeticion(request);

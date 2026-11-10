@@ -1,8 +1,10 @@
+// @HU-3.2 Simular sensores y placas · Aaron — endpoint del lector de placas
 // Endpoint del back. La URL la conecta el front en front/app/api/garita/lecturas/route.js.
 import { emitir } from "../comun/eventos_en_vivo.js";
 import { registrarLecturaDePlaca } from "../logica/garita/datos.js";
 import { esClaveDeSensorValida } from "../seguridad/clave_sensores.js";
 
+// @HU-3.2 Simular sensores y placas · Aaron
 // HU 3.2 Lectura de placas en la garita. Es el camino del lector de placas.
 //   POST /api/garita/lecturas   encabezado x-clave-sensor
 //   { "placa": "AB123CD", "sentido": "ENTRADA", "idLectura": "opcional, único" }

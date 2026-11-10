@@ -1,4 +1,5 @@
 "use server";
+// @HU-9.1 Crear una incidencia · Sebastian — acción del formulario
 
 // HU 9.1 · Acción del servidor que recibe el formulario de Reportar y la guarda en el back.
 import { listarEstacionamientos } from "@back/logica/estacionamientos/datos.js";
@@ -8,6 +9,7 @@ import { nombreDelTipo } from "@back/logica/incidencias/reglas.js";
 import { formatearFechaHora } from "@back/comun/fechas.js";
 import { obtenerUsuarioActual } from "@/servidor/sesion";
 
+// @HU-9.1 Crear una incidencia · Sebastian
 // Recibe el formulario de Reportar y guarda la incidencia con registrarIncidencia del back;
 // luego la avisa por el canal en vivo. La llama FormularioIncidencia (HU 9.1). [accion] [sesion] [en-vivo]
 export async function reportarIncidencia(_estadoAnterior, formData) {

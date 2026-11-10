@@ -1,4 +1,5 @@
 "use client";
+// @HU-2.1 Registrar mis vehículos · Samuel — formulario para agregar un vehículo
 
 // HU 2.1 Registrar mis vehículos. Va dentro de Perfil, plegado detrás de «Agregar vehículo»
 // (abierto si todavía no tiene ninguno). La acción valida en el servidor (acciones/vehiculos.js).
@@ -7,6 +8,7 @@ import { useActionState } from "react";
 import { agregarVehiculo } from "@/acciones/vehiculos";
 import estilos from "@/estilos/formularios.module.css";
 
+// @HU-2.1 Registrar mis vehículos · Samuel
 // Muestra el formulario «Agregar vehículo» dentro de Perfil (abierto si aún no tiene ninguno). HU 2.1.
 // Lo envía a la acción agregarVehiculo, que valida en el servidor. [accion] [sesion]
 export default function FormularioVehiculo({ abierto = false }) {

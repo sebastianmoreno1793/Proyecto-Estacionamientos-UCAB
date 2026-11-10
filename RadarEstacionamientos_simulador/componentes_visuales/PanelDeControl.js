@@ -1,4 +1,5 @@
 "use client";
+// @HU-3.2 Simular sensores y placas · Aaron — panel de pruebas del simulador
 
 // Menú de control del simulador: todo lo que se puede hacerle a la app base, agrupado en
 // pestañas. Cada botón termina en una llamada a la API pública de la app (ver el Registro).
@@ -74,6 +75,7 @@ function Elegido({ estacionamientos, incidencias, seleccionado, acciones }) {
   );
 }
 
+// @HU-3.2 Simular sensores y placas · Aaron — entradas, salidas y placas
 function PestanaGarita({ placa, tarea, acciones, elegido }) {
   return (
     <>

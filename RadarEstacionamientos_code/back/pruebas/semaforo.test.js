@@ -1,3 +1,4 @@
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — pruebas del criterio de aceptación
 // HU 4.2 Consultar el semáforo de ocupación (D-009: hay o no hay puesto).
 // Se corre con: npm test
 
