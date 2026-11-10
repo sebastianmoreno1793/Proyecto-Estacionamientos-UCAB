@@ -3,7 +3,7 @@
 
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { reiniciarAlmacen } from "../logica/almacen.js";
+import { reiniciarAlmacen } from "../comun/almacen.js";
 import { cambiarEstacionamiento, listarEstacionamientos } from "../logica/estacionamientos/datos.js";
 import { centroDelPoligono, distanciaEnMetros, sugerirMasCercano } from "../logica/sugerencia/reglas.js";
 import { sugerirParaEdificio } from "../logica/sugerencia/datos.js";

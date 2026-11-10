@@ -6,7 +6,7 @@ import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
 import MAQUETA from "../campus/maqueta.json" with { type: "json" };
 import { ESTACIONAMIENTOS } from "../campus/estacionamientos.js";
-import { reiniciarAlmacen } from "../logica/almacen.js";
+import { reiniciarAlmacen } from "../comun/almacen.js";
 import { validarEdificio } from "../logica/edificios/reglas.js";
 import {
   cambiarEstacionamiento,
@@ -20,7 +20,8 @@ import { nivelDelSemaforo, textoLibres } from "../logica/estacionamientos/reglas
 import { validarLectura } from "../logica/garita/reglas.js";
 import { listarIncidencias, registrarIncidencia } from "../logica/incidencias/datos.js";
 import { registrarUsuario, reiniciarUsuarios } from "../logica/usuarios/datos.js";
-import { inicialesDe, nombreCorto } from "../logica/usuarios/reglas.js";
+import { inicialesDe } from "../logica/usuarios/reglas.js";
+import { nombreCorto } from "../logica/edificios/reglas.js";
 import { listarVehiculosDe, registrarVehiculo, reiniciarVehiculos } from "../logica/vehiculos/datos.js";
 import { esPlacaValida } from "../logica/vehiculos/reglas.js";
 
@@ -177,7 +178,7 @@ describe("HU 9.1 · Crear una incidencia", () => {
 describe("Rediseño · textos cortos", () => {
   test("iniciales del perfil", () => {
     assert.equal(inicialesDe("sebastian.moreno@est.ucab.edu.ve"), "SM");
-    assert.equal(inicialesDe("usuario.prueba@ucab.edu.ve"), "UP");
+    assert.equal(inicialesDe("admin.prueba@ucab.edu.ve"), "AP");
     assert.equal(inicialesDe("ana@ucab.edu.ve"), "AN");
   });
 

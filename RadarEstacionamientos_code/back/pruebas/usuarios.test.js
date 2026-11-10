@@ -5,6 +5,7 @@ import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
 import { MENSAJE_SOLO_UCAB, esCorreoUcab, rolSegunCorreo } from "../logica/usuarios/reglas.js";
 import {
+  USUARIOS_DE_PRUEBA,
   USUARIO_DE_PRUEBA,
   comprobarCredenciales,
   crearSesion,
@@ -89,5 +90,17 @@ describe("crear cuenta y entrar", () => {
   test("en desarrollo existe el usuario de prueba administrador", async () => {
     const entrada = await comprobarCredenciales(USUARIO_DE_PRUEBA);
     assert.equal(entrada.usuario.rol, "administrador");
+  });
+
+  test("en desarrollo hay una cuenta de prueba por rol: administrador, estudiante y profesor", async () => {
+    const roles = [];
+    for (const cuenta of USUARIOS_DE_PRUEBA) {
+      const entrada = await comprobarCredenciales(cuenta);
+      roles.push(entrada.usuario.rol);
+    }
+    assert.deepEqual(roles, ["administrador", "estudiante", "profesor"]);
+    // Estudiante y profesor siguen la regla del dominio (HU 1.1); el administrador se asigna a mano.
+    assert.equal(rolSegunCorreo(USUARIOS_DE_PRUEBA[1].correo), "estudiante");
+    assert.equal(rolSegunCorreo(USUARIOS_DE_PRUEBA[2].correo), "profesor");
   });
 });

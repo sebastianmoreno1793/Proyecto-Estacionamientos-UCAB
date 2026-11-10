@@ -1,0 +1,20 @@
+{
+  // «Run Code» (extensión Code Runner) arranca el Radar: app en :3000, simulador en :3001,
+  // y abre el navegador. Funciona con cualquier archivo abierto del proyecto.
+  "code-runner.runInTerminal": true,
+  "code-runner.saveAllFilesBeforeRun": true,
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.executorMap": {
+    "javascript": "node \"$workspaceRoot/RadarEstacionamientos_code/iniciar.mjs\"",
+    "javascriptreact": "node \"$workspaceRoot/RadarEstacionamientos_code/iniciar.mjs\"",
+    "json": "node \"$workspaceRoot/RadarEstacionamientos_code/iniciar.mjs\"",
+    "jsonc": "node \"$workspaceRoot/RadarEstacionamientos_code/iniciar.mjs\"",
+    "css": "node \"$workspaceRoot/RadarEstacionamientos_code/iniciar.mjs\"",
+    "markdown": "node \"$workspaceRoot/RadarEstacionamientos_code/iniciar.mjs\"",
+    "plaintext": "node \"$workspaceRoot/RadarEstacionamientos_code/iniciar.mjs\""
+  },
+  "code-runner.defaultLanguage": "javascript",
+  "files.exclude": { "**/.next": true, "**/node_modules": true, "**/.DS_Store": true },
+  // Sin las letras de git (M, R, U…) junto a los archivos del explorador.
+  "git.decorations.enabled": false
+}

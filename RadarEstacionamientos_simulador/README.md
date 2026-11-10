@@ -39,7 +39,7 @@ igual que lo haría Postman, un sensor o una persona. La app no sabe que el simu
    ```
 
 3. **Entra a la app** en el mismo navegador: http://localhost:3000/entrar con
-   `usuario.prueba@ucab.edu.ve` / `prueba123` (administrador, solo existe en desarrollo). Las
+   `admin.prueba@ucab.edu.ve` / `123456789` (administrador, solo existe en desarrollo). Las
    incidencias, la administración y el reinicio van con esa sesión (HU 1.1); sin ella, la app
    responde 401 o 403 y el Registro lo muestra en rojo. La garita y los sensores no la necesitan:
    usan la clave de sensores.

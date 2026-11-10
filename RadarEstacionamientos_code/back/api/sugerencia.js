@@ -10,6 +10,7 @@ import { sugerirParaEdificio } from "../logica/sugerencia/datos.js";
 // La llama la pantalla /sugerencia con fetch, y se puede probar desde Postman.
 const ESTADO_POR_MOTIVO = { no_existe: 404, sin_ubicacion: 409, sin_puestos: 409 };
 
+// GET /api/sugerencia?edificio=<id> · Sugiere el estacionamiento libre más cercano al edificio (HU 7.2). Responde 200, 400, 404 o 409. [api] [postman]
 export async function GET(request) {
   const edificio = new URL(request.url).searchParams.get("edificio");
   if (!edificio) {

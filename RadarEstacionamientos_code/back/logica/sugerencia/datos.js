@@ -5,6 +5,8 @@ import { listarEdificios } from "../edificios/datos.js";
 import { listarEstacionamientos, vistaPublica } from "../estacionamientos/datos.js";
 import { sugerirMasCercano } from "./reglas.js";
 
+// Junta el edificio y los estacionamientos y aplica la regla de la HU 7.2.
+// Devuelve { edificio, sugerido, alternativas } o { error, motivo }. [datos]
 export async function sugerirParaEdificio(edificioId) {
   const edificio = (await listarEdificios()).find((e) => e.id === edificioId);
   const forma = Object.fromEntries(ESTACIONAMIENTOS.map(({ id, poligono }) => [id, poligono]));

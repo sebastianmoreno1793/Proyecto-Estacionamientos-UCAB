@@ -1,7 +1,7 @@
 // Endpoint del back. La URL la conecta el front en front/app/api/avisos/route.js.
 import { registrarAviso, vistaPublica } from "../logica/estacionamientos/datos.js";
-import { emitir } from "../logica/eventos_en_vivo.js";
-import { esClaveDeSensorValida } from "../logica/clave_sensores.js";
+import { emitir } from "../comun/eventos_en_vivo.js";
+import { esClaveDeSensorValida } from "../seguridad/clave_sensores.js";
 
 const ESTADO_POR_MOTIVO = { no_existe: 404, tipo: 400, desactivado: 409, lleno: 409, vacio: 409 };
 
@@ -9,6 +9,7 @@ const ESTADO_POR_MOTIVO = { no_existe: 404, tipo: 400, desactivado: 409, lleno: 
 // estacionamiento; el simulador y Postman entran por aquí igual que un sensor real (D-002).
 //   POST /api/avisos   encabezado x-clave-sensor
 //   { "estacionamientoId": "est-playa", "tipo": "ENTRADA", "idAviso": "opcional, único" }
+// POST /api/avisos · El sensor avisa una entrada o salida (HU 3.1 y 4.1). Responde 200, 400, 401, 404 o 409. [api] [postman] [en-vivo]
 export async function POST(request) {
   if (!esClaveDeSensorValida(request.headers.get("x-clave-sensor"))) {
     return Response.json({ error: "Falta la clave del sensor o no es válida (encabezado x-clave-sensor)." }, { status: 401 });
@@ -21,7 +22,8 @@ export async function POST(request) {
     return Response.json({ error: "Falta estacionamientoId.", motivo: "falta_estacionamiento" }, { status: 400 });
   }
 
-  const idAviso = typeof cuerpo.idAviso === "string" ? cuerpo.idAviso.slice(0, 100) : null;
+  // El id del aviso puede llegar como texto o número (Postman, sensores); se guarda como texto.
+  const idAviso = ["string", "number"].includes(typeof cuerpo.idAviso) ? String(cuerpo.idAviso).slice(0, 100) : null;
   const resultado = await registrarAviso({ estacionamientoId: cuerpo.estacionamientoId, tipo: cuerpo.tipo, idAviso });
   if (resultado.error) {
     return Response.json({ error: resultado.error, motivo: resultado.motivo }, { status: ESTADO_POR_MOTIVO[resultado.motivo] ?? 400 });

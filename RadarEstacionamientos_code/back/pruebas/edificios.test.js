@@ -4,7 +4,7 @@
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
 import { EDIFICIOS } from "../campus/edificios.js";
-import { reiniciarAlmacen } from "../logica/almacen.js";
+import { reiniciarAlmacen } from "../comun/almacen.js";
 import {
   agregarEdificio,
   listarEdificios,

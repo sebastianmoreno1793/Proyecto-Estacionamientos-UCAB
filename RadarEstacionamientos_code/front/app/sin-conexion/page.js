@@ -1,10 +1,10 @@
 // Pantalla que muestra la PWA cuando no hay internet y la página no está guardada (D-008).
 import Link from "next/link";
-import estilos from "../formularios.module.css";
+import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Sin conexión" };
 
-// Página que muestra el service worker (D-008) cuando no hay red y la página pedida no está
+// Muestra el aviso que sirve el service worker (D-008) cuando no hay red y la página pedida no está
 // guardada. No muestra cifras: la ocupación sin red sería vieja y engañaría al conductor.
 export default function SinConexion() {
   return (

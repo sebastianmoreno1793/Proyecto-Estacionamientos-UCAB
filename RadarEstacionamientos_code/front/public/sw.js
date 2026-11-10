@@ -8,14 +8,15 @@
 //
 // Al cambiar este archivo, sube VERSION para que los teléfonos reciban la versión nueva.
 
-const VERSION = "radar-v5";
+const VERSION = "radar-v6";
 const CACHE_SHELL = `${VERSION}-shell`;
 const CACHE_ESTATICOS = `${VERSION}-estaticos`;
 const SIN_CONEXION = "/sin-conexion";
 // Páginas con datos personales (placas, correos, incidencias): nunca se guardan en el teléfono,
 // así no quedan a la vista de otra persona después de «Salir».
-const PRIVADAS = ["/admin", "/perfil", "/reportar", "/cuenta", "/sugerencia"];
-const SHELL = ["/", "/mapa", SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
+const PRIVADAS = ["/admin", "/perfil", "/reportar", "/sugerencia"];
+// «/» y «/mapa» no van aquí: sin sesión llegarían como redirección a /entrar. Se guardan al visitarlos.
+const SHELL = [SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
 
 self.addEventListener("install", (evento) => {
   evento.waitUntil(caches.open(CACHE_SHELL).then((cache) => cache.addAll(SHELL)));
@@ -39,7 +40,7 @@ self.addEventListener("fetch", (evento) => {
   const { request } = evento;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return; // mapas de OpenStreetMap: siempre a la red
+  if (url.origin !== self.location.origin) return; // otros sitios: siempre a la red
   if (url.pathname.startsWith("/api/")) return; // datos en vivo: nunca de la caché
   // Datos que pide Next al navegar con <Link> (encabezado RSC): siempre a la red, si no se verían viejos.
   if (request.headers.get("RSC") || url.searchParams.has("_rsc")) return;
@@ -50,7 +51,8 @@ self.addEventListener("fetch", (evento) => {
     evento.respondWith(
       fetch(request)
         .then((respuesta) => {
-          if (respuesta.ok && respuesta.type === "basic") {
+          // No se guarda una redirección (p. ej. a /entrar): servirla sin red da error en vez de «Sin conexión».
+          if (respuesta.ok && respuesta.type === "basic" && !respuesta.redirected) {
             const copia = respuesta.clone();
             caches.open(CACHE_SHELL).then((cache) => cache.put(request, copia));
           }
@@ -68,6 +70,7 @@ self.addEventListener("fetch", (evento) => {
         (guardada) =>
           guardada ??
           fetch(request).then((respuesta) => {
+            if (!respuesta.ok) return respuesta; // un 404 no se guarda
             const copia = respuesta.clone();
             caches.open(CACHE_ESTATICOS).then((cache) => cache.put(request, copia));
             return respuesta;
@@ -97,7 +100,7 @@ self.addEventListener("fetch", (evento) => {
 // ---------- Notificaciones (HU 8.1, Manuel Rosales) ----------
 
 self.addEventListener("push", (evento) => {
-  // Mismos nombres que lib/notificaciones/Notificacion.js (titulo, cuerpo, url). Acepta texto plano.
+  // Mismos nombres que front/notificaciones/Notificacion.js (titulo, cuerpo, url). Acepta texto plano.
   let datos = {};
   try {
     datos = evento.data ? evento.data.json() : {};

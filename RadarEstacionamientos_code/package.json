@@ -3,6 +3,7 @@
   "private": true,
   "description": "Radar de Estacionamientos UCAB. El código está en front/ (pantallas) y back/ (lógica y API).",
   "scripts": {
+    "iniciar": "node iniciar.mjs",
     "instalar": "npm --prefix front install",
     "dev": "npm --prefix front run dev",
     "build": "npm --prefix front run build",

@@ -2,11 +2,12 @@
 // (GET) y front/app/api/estacionamientos/[id]/route.js (PATCH).
 import { ESTACIONAMIENTOS } from "../campus/estacionamientos.js";
 import { cambiarEstacionamiento, listarEstacionamientos, vistaPublica } from "../logica/estacionamientos/datos.js";
-import { emitir } from "../logica/eventos_en_vivo.js";
-import { esAdministrador, usuarioDeLaPeticion } from "../logica/sesion.js";
+import { emitir } from "../comun/eventos_en_vivo.js";
+import { esAdministrador, usuarioDeLaPeticion } from "../seguridad/sesion.js";
 
 // Estado de los estacionamientos para el mapa y el semáforo (HU 4.2), con su forma (HU 5.1).
 //   GET /api/estacionamientos
+// GET /api/estacionamientos · Devuelve los estacionamientos con libres, porcentaje y polígono (HU 4.2 y 5.1). Responde 200. [api] [postman]
 export async function GET(request) {
   const forma = Object.fromEntries(ESTACIONAMIENTOS.map(({ id, poligono, pisos }) => [id, { poligono, pisos }]));
   const estacionamientos = (await listarEstacionamientos()).map((e) => ({ ...vistaPublica(e), ...forma[e.id] }));
@@ -17,13 +18,16 @@ export async function GET(request) {
 // página de administración; solo para el administrador.
 //   PATCH /api/estacionamientos/est-labs   { "capacidad": 40, "activo": false }
 // Lo que no se envía se queda como está.
+// PATCH /api/estacionamientos/:id · Cambia capacidad o abierto/cerrado, solo el administrador (HU 5.4). Responde 200, 400, 403 o 404. [api] [postman] [sesion] [en-vivo]
 export async function PATCH(request, { params }) {
   if (!esAdministrador(await usuarioDeLaPeticion(request))) {
     return Response.json({ error: "Solo el administrador puede cambiar los estacionamientos." }, { status: 403 });
   }
   const { id } = await params;
   const cuerpo = await request.json().catch(() => null);
-  if (!cuerpo) return Response.json({ error: "El cuerpo debe ser JSON." }, { status: 400 });
+  if (!cuerpo || typeof cuerpo !== "object" || Array.isArray(cuerpo)) {
+    return Response.json({ error: "El cuerpo debe ser un objeto JSON." }, { status: 400 });
+  }
   // «activo» tiene que ser true o false. Con Boolean("false") quedaría abierto sin querer.
   if (cuerpo.activo !== undefined && typeof cuerpo.activo !== "boolean") {
     return Response.json({ error: "«activo» debe ser true o false (sin comillas)." }, { status: 400 });

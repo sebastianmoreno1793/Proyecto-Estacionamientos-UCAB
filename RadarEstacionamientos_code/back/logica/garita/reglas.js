@@ -9,6 +9,7 @@ import { esPlacaValida, normalizarPlaca } from "../vehiculos/reglas.js";
 
 export { normalizarPlaca };
 
+// Valida la placa y el sentido (HU 3.2). Los devuelve normalizados o { error }. [regla]
 export function validarLectura({ placa, sentido }) {
   const normalizada = normalizarPlaca(placa);
   if (!esPlacaValida(normalizada)) {

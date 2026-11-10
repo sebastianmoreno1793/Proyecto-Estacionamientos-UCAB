@@ -2,18 +2,20 @@
 
 La app que ve el usuario (Next.js). Pide los datos al back de dos maneras:
 
-1. **Desde el navegador, con `fetch`** a `/api/...` (Inicio, sugerencia, mapa en vivo). Es lo
-   mismo que hace Postman.
-2. **Desde el servidor del front**, con las acciones (`acciones.js`) y las páginas, que llaman
-   directo a `back/logica`.
+1. **Desde el navegador, con `fetch`** a `/api/...` (Inicio, sugerencia, mapa en vivo). Es lo mismo
+   que hace Postman. Busca `[fetch]` en VS Code.
+2. **Desde un formulario, con una acción del servidor** (`acciones/`), que llama directo a
+   `back/logica`. Busca `[accion]`.
 
-| Carpeta | Qué tiene |
-|---|---|
-| `app/` | Una carpeta por pantalla (el nombre es la URL) y `api/`, que conecta las URL con el back |
-| `componentes/` | Piezas de pantalla que se usan en varias páginas |
-| `notificaciones/` | HU 8.1: lógica de las notificaciones del navegador |
-| `servidor/` | La cookie de sesión (poner, leer, borrar) |
-| `public/` | Íconos, la imagen de la maqueta y el service worker de la PWA (`sw.js`) |
-| `pruebas/` | Pruebas de las notificaciones |
+| Carpeta | Qué tiene | Simulador |
+|---|---|---|
+| `app/` | Solo las rutas: un `page.js` por pantalla (el nombre de la carpeta es la URL), `layout.js` y `api/` | ✅ `app/api/` (las URL que llama) |
+| `componentes/` | Las piezas de cada pantalla, agrupadas por pantalla | — |
+| `acciones/` | Lo que los formularios le piden al back (crear cuenta, reportar, guardar…) | — |
+| `notificaciones/` | HU 8.1: notificaciones del navegador | — |
+| `servidor/` | La cookie de sesión (poner, leer, borrar) | — |
+| `estilos/` | CSS de toda la app (D-007, ver `DESIGN.md`) | — |
+| `public/` | Íconos, la imagen de la maqueta y el service worker (`sw.js`) | ✅ `maqueta/campus.jpg` sale del simulador |
+| `pruebas/` | Pruebas de las notificaciones | — |
 
 `app/` y `public/` llevan ese nombre porque Next lo exige.

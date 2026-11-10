@@ -40,7 +40,7 @@ export const appBase = {
   reiniciar: () => llamar("POST", "pruebas/reiniciar"),
 };
 
-// Los mismos tipos que la app base (lib/incidencias/reglas.js), con su ícono para los botones.
+// Los mismos tipos que la app base (back/logica/incidencias/reglas.js), con su ícono para los botones.
 export const TIPOS_DE_INCIDENCIA = [
   { id: "bateria_descargada", nombre: "Batería descargada", icono: "🔋" },
   { id: "conos_atravesados", nombre: "Conos atravesados", icono: "🚧" },

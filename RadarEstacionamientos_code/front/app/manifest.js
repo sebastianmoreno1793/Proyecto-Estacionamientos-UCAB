@@ -1,4 +1,5 @@
-// Manifest de la PWA (D-008). Next lo sirve en /manifest.webmanifest.
+// Devuelve el manifest de la PWA (D-008): nombre, colores, íconos y el atajo a Reportar.
+// Next lo llama y lo sirve en /manifest.webmanifest.
 export default function manifest() {
   return {
     name: "Radar de Estacionamientos UCAB",

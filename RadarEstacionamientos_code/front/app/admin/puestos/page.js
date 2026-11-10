@@ -1,14 +1,15 @@
 // Administrar › Puestos (/admin/puestos): capacidad y abierto o cerrado, HU 5.4. Solo administrador.
-import MenuAdmin from "@/componentes/MenuAdmin";
+import MenuAdmin from "@/componentes/menu/MenuAdmin";
 import { connection } from "next/server";
-import FilaPuesto from "./FilaPuesto";
-import { listarEstacionamientos } from "@back/logica/estacionamientos/datos";
+import FilaPuesto from "@/componentes/admin/FilaPuesto";
+import { listarEstacionamientos } from "@back/logica/estacionamientos/datos.js";
 import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
-import estilos from "../../formularios.module.css";
+import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Estacionamientos · Administración" };
 
-// HU 5.4 (antes 10.1) Modificar la capacidad y el estado de un estacionamiento.
+// Arma /admin/puestos con una FilaPuesto por estacionamiento para cambiar capacidad y estado
+// (HU 5.4, antes 10.1). Solo la ve el administrador. [sesion]
 export default async function PaginaEstacionamientos() {
   await connection();
   const usuario = await obtenerUsuarioActual();

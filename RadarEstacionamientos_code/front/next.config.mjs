@@ -1,7 +1,8 @@
 // Configuración de Next (el front). El back vive en ../back y se importa con «@back/…».
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const raizDelCodigo = path.join(import.meta.dirname, ".."); // RadarEstacionamientos_code
+const raizDelCodigo = path.join(path.dirname(fileURLToPath(import.meta.url)), ".."); // RadarEstacionamientos_code
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

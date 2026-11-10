@@ -1,16 +1,17 @@
 // Administrar › Incidencias (/admin/incidencias): lista de lo reportado (HU 9.1). Solo administrador.
-import MenuAdmin from "@/componentes/MenuAdmin";
+import MenuAdmin from "@/componentes/menu/MenuAdmin";
 import { connection } from "next/server";
-import { listarEstacionamientos } from "@back/logica/estacionamientos/datos";
-import { listarIncidencias } from "@back/logica/incidencias/datos";
-import { nombreDelTipo } from "@back/logica/incidencias/reglas";
-import { formatearFechaHora } from "@back/logica/fechas";
+import { listarEstacionamientos } from "@back/logica/estacionamientos/datos.js";
+import { listarIncidencias } from "@back/logica/incidencias/datos.js";
+import { nombreDelTipo } from "@back/logica/incidencias/reglas.js";
+import { formatearFechaHora } from "@back/comun/fechas.js";
 import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
-import estilos from "../../formularios.module.css";
+import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Incidencias" };
 
-// Lista de incidencias reportadas (épica 9), la más reciente primero. Solo personal autorizado.
+// Arma /admin/incidencias con las incidencias de listarIncidencias del back, la más reciente
+// primero (HU 9.1). Solo la ve el administrador. [sesion]
 export default async function PaginaIncidencias() {
   await connection();
   if (!esAdministrador(await obtenerUsuarioActual())) {

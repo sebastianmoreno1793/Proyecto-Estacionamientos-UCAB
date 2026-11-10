@@ -3,22 +3,25 @@
 export const LARGO_MAXIMO_TEXTO = 30;
 
 // "ab-123 cd" -> "AB123CD"
+// Pasa la placa a mayúsculas y quita espacios y guiones (HU 2.1). [regla]
 export function normalizarPlaca(placa) {
   return String(placa ?? "")
     .toUpperCase()
     .replace(/[\s-]/g, "");
 }
 
-// Placas venezolanas: 6 o 7 letras y números (carros AB123CD, motos AB1C23A...).
+// Placas venezolanas: 6 o 7 letras y números (carros AB123CD, motos AB1C23A...). [regla]
 export function esPlacaValida(placa) {
   const p = normalizarPlaca(placa);
   return /^[A-Z0-9]{6,7}$/.test(p) && /[A-Z]/.test(p) && /[0-9]/.test(p);
 }
 
+// Quita los espacios de los extremos (texto vacío si no hay nada).
 function limpiar(texto) {
   return String(texto ?? "").trim();
 }
 
+// Valida placa, marca, modelo y color (HU 2.1). Devuelve { vehiculo } normalizado o { error }. [regla]
 export function validarVehiculo({ placa, marca, modelo, color }) {
   if (!esPlacaValida(placa)) {
     return { error: "La placa no es válida. Escribe solo letras y números, por ejemplo AB123CD." };

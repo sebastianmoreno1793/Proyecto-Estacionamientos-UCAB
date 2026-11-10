@@ -4,7 +4,7 @@
 
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { reiniciarAlmacen } from "../logica/almacen.js";
+import { reiniciarAlmacen } from "../comun/almacen.js";
 import {
   cambiarEstacionamiento,
   listarEstacionamientos,
@@ -15,8 +15,8 @@ import {
 import { aplicarMovimiento, porcentajeDeOcupacion } from "../logica/estacionamientos/reglas.js";
 import { listarLecturasDePlaca, registrarLecturaDePlaca } from "../logica/garita/datos.js";
 import { normalizarPlaca, validarLectura } from "../logica/garita/reglas.js";
-import { emitir, suscribir } from "../logica/eventos_en_vivo.js";
-import { esClaveDeSensorValida } from "../logica/clave_sensores.js";
+import { emitir, suscribir } from "../comun/eventos_en_vivo.js";
+import { esClaveDeSensorValida } from "../seguridad/clave_sensores.js";
 
 const labs = async () => (await listarEstacionamientos()).find((e) => e.id === "est-labs");
 

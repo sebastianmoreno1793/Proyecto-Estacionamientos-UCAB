@@ -1,8 +1,8 @@
 // Marco de todas las pantallas: encabezado con el menú, el contenido y el aviso de
 // versión nueva de la PWA (D-008).
-import "./globals.css";
-import MenuPrincipal from "@/componentes/MenuPrincipal";
-import ActualizacionPWA from "@/componentes/ActualizacionPWA";
+import "@/estilos/globales.css";
+import MenuPrincipal from "@/componentes/menu/MenuPrincipal";
+import ActualizacionPWA from "@/componentes/comunes/ActualizacionPWA";
 
 export const metadata = {
   title: "Radar de Estacionamientos UCAB",
@@ -21,6 +21,8 @@ export const viewport = {
   themeColor: "#12315c",
 };
 
+// Envuelve todas las pantallas: menú principal, el contenido de cada página y el aviso de
+// versión nueva de la PWA. Next la usa como marco de toda la app.
 export default function RootLayout({ children }) {
   return (
     <html lang="es">

@@ -2,13 +2,13 @@
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { obtenerUsuarioActual } from "@/servidor/sesion";
-import FormularioIncidencia from "./FormularioIncidencia";
-import { listarEstacionamientosActivos } from "@back/logica/estacionamientos/datos";
+import FormularioIncidencia from "@/componentes/reportar/FormularioIncidencia";
+import { listarEstacionamientosActivos } from "@back/logica/estacionamientos/datos.js";
 
 export const metadata = { title: "Reportar una incidencia" };
 
-// HU 9.1 Crear una incidencia. Desde la tarjeta del mapa llega con
-// `?estacionamiento=<id>`: ese estacionamiento ya viene elegido (un toque menos).
+// Arma la pantalla Reportar con FormularioIncidencia (HU 9.1); sin sesión manda a /entrar.
+// Desde la tarjeta del mapa llega con `?estacionamiento=<id>` y ese ya viene elegido. [sesion]
 export default async function PaginaNuevaIncidencia({ searchParams }) {
   await connection();
   if (!(await obtenerUsuarioActual())) redirect("/entrar"); // sin sesión el reporte no se puede enviar

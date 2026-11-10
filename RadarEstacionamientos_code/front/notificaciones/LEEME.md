@@ -2,4 +2,4 @@
 
 `GestorNotificaciones.js` pide el permiso del navegador, recuerda la respuesta y manda la
 notificación de prueba. `Notificacion.js` es una notificación. La pantalla está en
-`componentes/Notificaciones.js`.
+`componentes/notificaciones/Notificaciones.js`.

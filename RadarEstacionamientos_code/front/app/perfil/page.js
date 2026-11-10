@@ -1,21 +1,19 @@
 // Pantalla Perfil (/perfil): vehículos, notificaciones, Administrar y Salir.
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import Notificaciones from "@/componentes/Notificaciones";
-import { Icono } from "@/componentes/Iconos";
-import FormularioVehiculo from "./FormularioVehiculo";
-import { salir } from "../cuenta/acciones";
-import { listarVehiculosDe } from "@back/logica/vehiculos/datos";
+import Notificaciones from "@/componentes/notificaciones/Notificaciones";
+import { Icono } from "@/componentes/comunes/Iconos";
+import FormularioVehiculo from "@/componentes/perfil/FormularioVehiculo";
+import { salir } from "@/acciones/cuenta";
+import { listarVehiculosDe } from "@back/logica/vehiculos/datos.js";
 import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
-import { inicialesDe } from "@back/logica/usuarios/reglas";
+import { inicialesDe } from "@back/logica/usuarios/reglas.js";
 
 export const metadata = { title: "Perfil" };
 
-// Perfil (D-007 v2): todo lo personal en un solo lugar.
-//  - HU 2.1 Mis vehículos (solo el dueño ve sus placas).
-//  - HU 8.1 Notificaciones: aquí se activan después si dijo «Bloquear» en la solicitud.
-//  - Administrar: solo para el administrador (HU 5.4, 6.1, 9.1 y la garita).
-//  - Salir (HU 1.1).
+// Arma Perfil (D-007 v2): Mis vehículos (HU 2.1, solo el dueño ve sus placas), Notificaciones (HU 8.1),
+// el enlace Administrar solo para el administrador y el botón Salir (HU 1.1).
+// Sin sesión manda a /entrar. [sesion]
 export default async function PaginaPerfil() {
   const usuario = await obtenerUsuarioActual();
   if (!usuario) redirect("/entrar");

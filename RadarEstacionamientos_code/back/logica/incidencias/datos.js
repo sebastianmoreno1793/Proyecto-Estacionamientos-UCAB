@@ -1,5 +1,5 @@
 // HU 9.1 · Guarda y lista las incidencias reportadas por los conductores.
-import { obtenerAlmacen } from "../almacen.js";
+import { obtenerAlmacen } from "../../comun/almacen.js";
 import { ESTADO_PENDIENTE, nombreDelTipo, validarReporte } from "./reglas.js";
 
 // Lo que se puede mostrar o emitir de una incidencia: sin el correo de quien la reportó.
@@ -8,6 +8,7 @@ export function vistaPublica({ id, estacionamientoId, tipo, estado, reportadaEn 
 }
 
 // HU 9.1: el reporte queda registrado con la hora y como pendiente.
+// Valida y guarda la incidencia; exige el correo de quien reporta (RN4). Devuelve { incidencia } o { error }. [datos]
 export async function registrarIncidencia({ estacionamientoId, tipo, reportadaPor }, ahora = new Date()) {
   if (!reportadaPor) return { error: "Inicia sesión para reportar una incidencia." }; // RN4
   const almacen = obtenerAlmacen();
@@ -26,6 +27,7 @@ export async function registrarIncidencia({ estacionamientoId, tipo, reportadaPo
   return { incidencia: { ...incidencia } };
 }
 
+// Devuelve copias de todas las incidencias guardadas (HU 9.1). [datos]
 export async function listarIncidencias() {
   return obtenerAlmacen().incidencias.map((i) => ({ ...i }));
 }

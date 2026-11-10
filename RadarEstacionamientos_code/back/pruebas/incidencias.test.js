@@ -3,7 +3,7 @@
 
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { reiniciarAlmacen } from "../logica/almacen.js";
+import { reiniciarAlmacen } from "../comun/almacen.js";
 import { cambiarEstacionamiento } from "../logica/estacionamientos/datos.js";
 import { listarIncidencias, registrarIncidencia } from "../logica/incidencias/datos.js";
 import { TIPOS_DE_INCIDENCIA } from "../logica/incidencias/reglas.js";
@@ -21,7 +21,7 @@ describe("reportar una incidencia", () => {
   test("queda registrada con la hora y como pendiente", async () => {
     const ahora = new Date("2026-10-12T13:45:00Z");
     const { incidencia } = await registrarIncidencia(
-      { estacionamientoId: "est-playa", tipo: "conos_atravesados", reportadaPor: "usuario.prueba@ucab.edu.ve" },
+      { estacionamientoId: "est-playa", tipo: "conos_atravesados", reportadaPor: "admin.prueba@ucab.edu.ve" },
       ahora,
     );
     assert.equal(incidencia.estacionamientoId, "est-playa");

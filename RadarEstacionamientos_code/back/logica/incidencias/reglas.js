@@ -8,12 +8,14 @@ export const TIPOS_DE_INCIDENCIA = [
 
 export const ESTADO_PENDIENTE = "pendiente";
 
+// Devuelve el nombre legible de un tipo de incidencia, o undefined si no existe. [regla]
 export function nombreDelTipo(tipo) {
   return TIPOS_DE_INCIDENCIA.find((t) => t.id === tipo)?.nombre;
 }
 
 // Solo se reporta sobre estacionamientos activos: los desactivados no aparecen en la lista.
 // CA2: si falta algo, dice todo lo que falta elegir (no solo lo primero).
+// Valida el estacionamiento y el tipo del reporte (HU 9.1). [regla]
 export function validarReporte({ estacionamientoId, tipo }, estacionamientos) {
   const faltan = [];
   if (!estacionamientos.some((e) => e.id === estacionamientoId && e.activo))

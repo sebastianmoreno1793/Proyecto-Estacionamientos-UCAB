@@ -195,7 +195,7 @@ describe("HU 8.1 · Activar las notificaciones", () => {
     assert.equal(gestor.pruebaEnviada, true);
   });
 
-  test("CA3: si ya respondió «Permitir» o «Bloquear», no se vuelve a preguntar", async () => {
+  test("paso 2.2: si ya respondió «Permitir» o «Bloquear», no se vuelve a preguntar", async () => {
     const permitio = crearApis("granted");
     assert.equal(new GestorNotificaciones(permitio.apis).debeMostrarSolicitud(), true);
     await new GestorNotificaciones(permitio.apis).pedirPermiso();
@@ -205,6 +205,22 @@ describe("HU 8.1 · Activar las notificaciones", () => {
     const bloqueo = crearApis();
     new GestorNotificaciones(bloqueo.apis).bloquear();
     assert.equal(new GestorNotificaciones(bloqueo.apis).debeMostrarSolicitud(), false);
+  });
+
+  test("CA3: desde Perfil se desactivan y se reactivan (bloqueadas → activadas)", async () => {
+    const { apis, mostradas } = crearApis("granted");
+    const gestor = new GestorNotificaciones(apis);
+    await gestor.pedirPermiso(); // activas
+    assert.equal(gestor.obtenerPreferencia(), GestorNotificaciones.PREFERENCIA_ACTIVADAS);
+
+    gestor.bloquear(); // apaga el interruptor de Perfil
+    assert.equal(gestor.obtenerPreferencia(), GestorNotificaciones.PREFERENCIA_BLOQUEADAS);
+
+    // lo vuelve a encender: el navegador ya dio permiso, así que solo cambia la preferencia
+    assert.equal(gestor.obtenerEstadoPermiso(), "granted");
+    gestor.guardarPreferencia(GestorNotificaciones.PREFERENCIA_ACTIVADAS);
+    assert.equal(gestor.obtenerPreferencia(), GestorNotificaciones.PREFERENCIA_ACTIVADAS);
+    assert.equal(mostradas.length, 1); // la prueba no se repite
   });
 
   test("si cierra el diálogo sin responder, se le vuelve a preguntar la próxima vez", async () => {

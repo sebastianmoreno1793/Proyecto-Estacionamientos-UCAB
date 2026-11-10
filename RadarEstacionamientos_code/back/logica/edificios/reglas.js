@@ -9,6 +9,7 @@ export const LARGO_MAXIMO_NOMBRE = 80;
 const DISTANCIA_MAXIMA_GRADOS = 0.015;
 
 // Dos nombres son el mismo si solo cambian mayúsculas, tildes o espacios.
+// Pasa el nombre a minúsculas, sin tildes ni espacios de más (HU 6.1). [regla]
 export function normalizarNombre(nombre) {
   return String(nombre ?? "")
     .normalize("NFD")
@@ -19,6 +20,7 @@ export function normalizarNombre(nombre) {
 }
 
 // "Edificio de Aulas" → "edif-edificio-de-aulas"; si ya existe, le agrega -2, -3…
+// Crea el id del edificio a partir del nombre, sin repetir uno existente. [regla]
 export function crearId(nombre, idsExistentes) {
   const base =
     "edif-" +
@@ -30,6 +32,7 @@ export function crearId(nombre, idsExistentes) {
   return id;
 }
 
+// Lee una latitud o longitud escrita a mano (acepta coma). Devuelve { numero }, { vacia } o { error }. [regla]
 function leerCoordenada(valor) {
   const texto = String(valor ?? "").trim().replace(",", ".");
   if (texto === "") return { vacia: true };
@@ -38,7 +41,7 @@ function leerCoordenada(valor) {
 }
 
 // Valida lo que escribe el administrador. `idActual` es el edificio que se está
-// modificando (para no chocar con su propio nombre); al agregar uno nuevo es null.
+// modificando (para no chocar con su propio nombre); al agregar uno nuevo es null. HU 6.1. [regla]
 export function validarEdificio({ nombre, latitud, longitud }, edificios, idActual = null) {
   const limpio = String(nombre ?? "").replace(/\s+/g, " ").trim();
   if (limpio.length < LARGO_MINIMO_NOMBRE) {
@@ -73,7 +76,12 @@ export function validarEdificio({ nombre, latitud, longitud }, edificios, idActu
   return { nombre: limpio, ubicacion: [lat.numero, lon.numero] };
 }
 
-// La lista que ve el usuario al elegir el edificio de una materia: ordenada por nombre.
+// La lista que ve el usuario al elegir el edificio de una materia: ordenada por nombre. [regla]
 export function ordenarPorNombre(edificios) {
   return [...edificios].sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+}
+
+// Nombre corto de un edificio para los chips del Inicio: «Edificio de Aulas» → «Aulas». [regla]
+export function nombreCorto(nombre) {
+  return String(nombre ?? "").replace(/^Edificio\s+(de\s+)?/i, "") || nombre;
 }

@@ -1,5 +1,5 @@
 // HU 8.1 · Lógica de las notificaciones del navegador: pide el permiso, recuerda la
-// respuesta (CA3) y envía la notificación de prueba (CA1). Corre solo en el navegador.
+// respuesta (paso 2.2) y envía la notificación de prueba (CA1). Corre solo en el navegador.
 import { Notificacion } from "./Notificacion.js";
 
 /**
@@ -8,6 +8,7 @@ import { Notificacion } from "./Notificacion.js";
  *
  * Las APIs del navegador se leen al usar cada método para no romper el
  * render del servidor de Next.js. En pruebas se inyectan por el constructor.
+ * Lo usa el componente Notificaciones (Inicio y Perfil). [notificaciones]
  */
 export class GestorNotificaciones {
   static CLAVE_PREFERENCIA = "notificaciones_preferencia";
@@ -18,17 +19,19 @@ export class GestorNotificaciones {
   static RUTA_SERVICE_WORKER = "/sw.js";
 
   /**
+   * Guarda las APIs inyectadas (en pruebas); en el navegador queda null y se usan las reales. [notificaciones]
    * @param {{ notificationApi?: object, navigatorApi?: object, almacenamiento?: Storage, avisar?: Function } | null} apis
    */
   constructor(apis = null) {
     this.apis = apis;
   }
 
-  // En pruebas (APIs inyectadas) se comporta como en producción.
+  // Dice si corre en `next dev` sin APIs inyectadas; en pruebas se comporta como en producción. [notificaciones]
   #enDesarrollo() {
     return !this.apis && process.env.NODE_ENV !== "production";
   }
 
+  // Devuelve la API Notification del navegador (o la inyectada), o null si no existe. [notificaciones]
   #apiNotificacion() {
     if (this.apis) return this.apis.notificationApi ?? null;
     if (typeof window === "undefined" || typeof Notification === "undefined") {
@@ -37,6 +40,7 @@ export class GestorNotificaciones {
     return Notification;
   }
 
+  // Devuelve el objeto navigator (o el inyectado), o null si corre en el servidor. [notificaciones]
   #navegador() {
     if (this.apis) return this.apis.navigatorApi ?? null;
     if (typeof window === "undefined" || typeof navigator === "undefined") {
@@ -45,6 +49,7 @@ export class GestorNotificaciones {
     return navigator;
   }
 
+  // Devuelve localStorage (o el inyectado), donde se guarda la preferencia del usuario. [notificaciones]
   #almacenamiento() {
     if (this.apis) return this.apis.almacenamiento ?? null;
     if (typeof window === "undefined" || typeof localStorage === "undefined") {
@@ -53,6 +58,7 @@ export class GestorNotificaciones {
     return localStorage;
   }
 
+  // Pasa un mensaje informativo a la función inyectada o lo escribe en la consola. [notificaciones]
   #avisar(mensaje) {
     if (this.apis?.avisar) {
       this.apis.avisar(mensaje);
@@ -62,16 +68,19 @@ export class GestorNotificaciones {
     console.info(mensaje);
   }
 
+  // Dice si el navegador tiene notificaciones web. [notificaciones]
   soportaNotificaciones() {
     return this.#apiNotificacion() != null;
   }
 
+  // Dice si el navegador permite registrar un Service Worker. [notificaciones]
   soportaServiceWorker() {
     const navegador = this.#navegador();
     return Boolean(navegador && "serviceWorker" in navegador);
   }
 
   /**
+   * Devuelve el permiso del navegador: default, granted, denied o unsupported. [notificaciones]
    * @returns {NotificationPermission | "unsupported"}
    */
   obtenerEstadoPermiso() {
@@ -81,20 +90,21 @@ export class GestorNotificaciones {
   }
 
   /**
-   * Persiste la decisión del usuario para la HU 8.1.
+   * Guarda en localStorage la decisión del usuario (activadas o bloqueadas), HU 8.1. [notificaciones]
    * @param {string} valor
    */
   guardarPreferencia(valor) {
     this.#almacenamiento()?.setItem(GestorNotificaciones.CLAVE_PREFERENCIA, valor);
   }
 
+  // Lee de localStorage la decisión guardada, o null si nunca respondió. [notificaciones]
   obtenerPreferencia() {
     return this.#almacenamiento()?.getItem(GestorNotificaciones.CLAVE_PREFERENCIA) ?? null;
   }
 
   /**
-   * CA3: la solicitud solo se muestra si el navegador todavía no preguntó y el usuario no
-   * respondió antes en este navegador (ni «Permitir» ni «Bloquear»).
+   * Paso 2.2 del escenario: la solicitud solo se muestra si el navegador todavía no preguntó y el usuario no
+   * respondió antes en este navegador (ni «Permitir» ni «Bloquear»). [notificaciones]
    */
   debeMostrarSolicitud() {
     return this.obtenerEstadoPermiso() === "default" && !this.obtenerPreferencia();
@@ -102,7 +112,7 @@ export class GestorNotificaciones {
 
   /**
    * «Bloquear» en la solicitud del Radar (CA2 de la HU 8.1): se registran como bloqueadas sin
-   * preguntarle al navegador, así el usuario puede activarlas después desde su perfil.
+   * preguntarle al navegador, así el usuario puede activarlas después desde su perfil. [notificaciones]
    */
   bloquear() {
     this.guardarPreferencia(GestorNotificaciones.PREFERENCIA_BLOQUEADAS);
@@ -110,7 +120,7 @@ export class GestorNotificaciones {
 
   /**
    * Espera a que el Service Worker esté activo, pero no para siempre: si el registro falló,
-   * `serviceWorker.ready` nunca se cumple, así que a los ESPERA_MAXIMA_MS devuelve null.
+   * `serviceWorker.ready` nunca se cumple, así que a los ESPERA_MAXIMA_MS devuelve null. [notificaciones]
    * @returns {Promise<ServiceWorkerRegistration|null>}
    */
   async #esperarServiceWorkerActivo() {
@@ -127,6 +137,7 @@ export class GestorNotificaciones {
 
   /**
    * Registra `/sw.js` (el único de la PWA, D-008) y espera a que el worker quede activo.
+   * La llama pedirPermiso cuando el usuario acepta. [notificaciones]
    * @returns {Promise<ServiceWorkerRegistration|null>}
    */
   async registrarServiceWorker() {
@@ -146,7 +157,7 @@ export class GestorNotificaciones {
   }
 
   /**
-   * Muestra la notificación local de prueba con el Service Worker activo.
+   * Muestra la notificación local de prueba con el Service Worker activo (CA1). [notificaciones]
    * @returns {Promise<boolean>} true si se mostró.
    */
   async enviarNotificacionPrueba() {
@@ -158,7 +169,13 @@ export class GestorNotificaciones {
       // Sin SW en desarrollo: si no hay uno registrado, la prueba sale directo del navegador.
       const registro = await this.#navegador().serviceWorker.getRegistration();
       if (registro) await notificacion.mostrarEn(registro);
-      else new (this.#apiNotificacion())(notificacion.titulo, notificacion.aOpcionesDeVisualizacion());
+      else {
+        try {
+          new (this.#apiNotificacion())(notificacion.titulo, notificacion.aOpcionesDeVisualizacion());
+        } catch {
+          return false; // Chrome en Android no deja crearla sin Service Worker
+        }
+      }
       return true;
     }
     const registro = await this.#esperarServiceWorkerActivo();
@@ -171,6 +188,7 @@ export class GestorNotificaciones {
    * Solicita el permiso al usuario. Si concede (`[OK]`), activa preferencia,
    * registra el Service Worker y dispara la notificación de prueba.
    * Si niega (`[cancelar]`), guarda la preferencia como bloqueadas.
+   * La llama el botón Permitir del componente Notificaciones (HU 8.1). [notificaciones]
    *
    * @returns {Promise<NotificationPermission | "unsupported">}
    */

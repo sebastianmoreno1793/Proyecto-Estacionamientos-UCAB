@@ -4,8 +4,8 @@
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
 import { ESTACIONAMIENTOS } from "../campus/estacionamientos.js";
-import { reiniciarAlmacen } from "../logica/almacen.js";
-import { CAPACIDAD_DE_EJEMPLO } from "../logica/capacidad_inicial.js";
+import { reiniciarAlmacen } from "../comun/almacen.js";
+import { CAPACIDAD_DE_EJEMPLO } from "../campus/capacidad_inicial.js";
 import { cambiarEstacionamiento, listarEstacionamientos } from "../logica/estacionamientos/datos.js";
 import {
   etiquetasUnicas,
@@ -70,7 +70,7 @@ describe("etiquetas para distinguir zonas con el mismo nombre", () => {
 });
 
 describe("datos de ejemplo alineados con el mapa (HU 5.1)", () => {
-  // Si falla, alguien cambió `data/estacionamientos.js`: actualiza `lib/capacidad_inicial.js`.
+  // Si falla, alguien cambió `campus/estacionamientos.js`: actualiza `campus/capacidad_inicial.js`.
   test("cada estacionamiento del mapa tiene capacidad de ejemplo", () => {
     const sinCapacidad = ESTACIONAMIENTOS.map((e) => e.id).filter((id) => !CAPACIDAD_DE_EJEMPLO[id]);
     assert.deepEqual(sinCapacidad, []);

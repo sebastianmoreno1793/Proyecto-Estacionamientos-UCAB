@@ -1,5 +1,14 @@
-# front/componentes · piezas de pantalla
+# front/componentes · piezas de pantalla, agrupadas por pantalla
 
-Cada archivo es una pieza que se usa en una o varias pantallas: el menú y las pestañas, el Inicio,
-la maqueta con su panel y su tarjeta, las notificaciones, los íconos y el aviso de versión nueva.
-El comentario de arriba de cada archivo dice qué HU cubre.
+| Carpeta | Qué tiene |
+|---|---|
+| `menu/` | Encabezado, pestañas y chips de Administrar |
+| `inicio/` | Pantalla de Inicio (sugerencia, total y estacionamientos) |
+| `mapa/` | Maqueta del campus, panel de puestos y tarjeta del estacionamiento |
+| `reportar/` | Formulario y confirmación del reporte (HU 9.1) |
+| `perfil/` | Formulario de vehículos (HU 2.1) |
+| `sugerencia/` | Buscador de la sugerencia (HU 7.2) |
+| `cuenta/` | Formulario para entrar y crear cuenta (HU 1.1) |
+| `admin/` | Filas de puestos y de edificios, y formulario de edificio nuevo |
+| `notificaciones/` | Solicitud y control de las notificaciones (HU 8.1) |
+| `comunes/` | Íconos, selector de edificio y aviso de versión nueva |

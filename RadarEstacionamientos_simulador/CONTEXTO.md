@@ -4,7 +4,7 @@ Mundo virtual en 3D del Campus Montalbán (dimensiones reales) que le hace a la 
 mismo que le pasaría en la realidad: carros que entran y salen, placas en la garita,
 incidencias y cambios del administrador. Es una **extensión aparte**: no es parte de la app.
 
-> **Este archivo se relee en cada turno de cada sesión.** Manténlo corto.
+> Resumen de una página del simulador. Se mantiene corto.
 
 ## Regla de oro
 
@@ -30,8 +30,8 @@ aquí, `npm install` y `npm run dev` → `http://localhost:3001`. Configuración
   vías, garita y relieve: `data/campus.js` (OpenStreetMap + SRTM).
 - El campus mide ~930 m (E-O) × 610 m (N-S). La garita está en la esquina **noreste**
   (Av. Teherán) y el terreno **sube de norte a sur** (~920 m → ~975 m).
-- **Antes de modificar el mapa 3D**, lee los skills `.agents/skills/threejs-campus-3d/SKILL.md`
-  y `.agents/skills/campus-ucab-datos/SKILL.md`.
+- **Antes de modificar el mapa 3D**, revisa `lib/mapa3d/geo.js` (conversión GPS → metros) y
+  `data/campus.js` (de dónde sale cada forma del campus).
 - Valida con `npm test`.
 
 ## Qué NO entra al repositorio

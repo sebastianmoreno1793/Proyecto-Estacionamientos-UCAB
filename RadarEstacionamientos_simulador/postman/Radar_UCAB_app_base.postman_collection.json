@@ -2,7 +2,7 @@
   "info": {
     "name": "Radar UCAB · App base (como si fuera real)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Colección de la app base del Radar de Estacionamientos UCAB, ordenada por HU del Sprint 1 como guion de demostración.\n\nAntes de empezar: 1) npm run dev en RadarEstacionamientos_code (puerto 3000); 2) entra en /entrar con usuario.prueba@ucab.edu.ve y copia la cookie radar_sesion en la variable {{sesion}}; 3) deja SALTAR_INICIO_DE_SESION vacío en .env.local para que los errores 401 y 403 se vean.\n\nQuién puede llamar: los sensores y el lector de placas mandan x-clave-sensor; las personas mandan su cookie de sesión; lo de administración exige el rol administrador."
+    "description": "Colección de la app base del Radar de Estacionamientos UCAB, ordenada por HU del Sprint 1 como guion de demostración.\n\nAntes de empezar: 1) npm run dev en RadarEstacionamientos_code (puerto 3000); 2) entra en /entrar con admin.prueba@ucab.edu.ve y copia la cookie radar_sesion en la variable {{sesion}}; 3) deja SALTAR_INICIO_DE_SESION vacío en .env.local para que los errores 401 y 403 se vean.\n\nQuién puede llamar: los sensores y el lector de placas mandan x-clave-sensor; las personas mandan su cookie de sesión; lo de administración exige el rol administrador."
   },
   "variable": [
     {
@@ -24,7 +24,7 @@
     {
       "key": "sesion",
       "value": "",
-      "description": "Valor de la cookie radar_sesion. Entra en http://localhost:3000/entrar con usuario.prueba@ucab.edu.ve (administrador, solo en desarrollo) y cópiala desde las herramientas del navegador › Aplicación › Cookies. Se pierde al reiniciar el servidor."
+      "description": "Valor de la cookie radar_sesion. Entra en http://localhost:3000/entrar con admin.prueba@ucab.edu.ve (administrador, solo en desarrollo) y cópiala desde las herramientas del navegador › Aplicación › Cookies. Se pierde al reiniciar el servidor."
     }
   ],
   "item": [

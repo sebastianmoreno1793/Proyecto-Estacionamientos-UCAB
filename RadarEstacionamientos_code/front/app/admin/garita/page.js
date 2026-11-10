@@ -1,12 +1,12 @@
 // Administrar › Garita (/admin/garita): avisos de los sensores, avisos rechazados y placas
 // leídas (HU 3.1, 3.2 y 4.1). Solo administrador.
 import { connection } from "next/server";
-import MenuAdmin from "@/componentes/MenuAdmin";
-import { listarAvisosRechazados, listarEstacionamientos, listarMovimientos } from "@back/logica/estacionamientos/datos";
-import { listarLecturasDePlaca } from "@back/logica/garita/datos";
-import { formatearFechaHora } from "@back/logica/fechas";
+import MenuAdmin from "@/componentes/menu/MenuAdmin";
+import { listarAvisosRechazados, listarEstacionamientos, listarMovimientos } from "@back/logica/estacionamientos/datos.js";
+import { listarLecturasDePlaca } from "@back/logica/garita/datos.js";
+import { formatearFechaHora } from "@back/comun/fechas.js";
 import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
-import estilos from "../../formularios.module.css";
+import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Actividad de la garita · Administración" };
 
@@ -19,8 +19,8 @@ const MOTIVOS = {
   tipo: "Anomalía: tipo de movimiento desconocido",
 };
 
-// Lo que registraron los sensores (HU 3.1) y el lector de placas de la garita (HU 3.2).
-// Las placas son datos personales: solo las ve el personal autorizado.
+// Arma /admin/garita con las entradas y salidas de los sensores (HU 3.1), los avisos rechazados
+// (HU 4.1) y las placas leídas (HU 3.2). Las placas son datos personales: solo las ve el administrador. [sesion]
 export default async function PaginaActividad() {
   await connection();
   if (!esAdministrador(await obtenerUsuarioActual())) {

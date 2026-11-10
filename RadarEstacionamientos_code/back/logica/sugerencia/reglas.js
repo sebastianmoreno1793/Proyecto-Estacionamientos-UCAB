@@ -1,5 +1,5 @@
 // HU 7.2 · Sugerir el estacionamiento libre más cercano.
-// Reglas puras: no leen ni guardan datos (se prueban en tests/sugerencia.test.js).
+// Reglas puras: no leen ni guardan datos (se prueban en pruebas/sugerencia.test.js).
 //
 // Criterio de aceptación (Issue #9): «El usuario elige el edificio al que va y el sistema le
 // sugiere el estacionamiento con puestos libres más cercano a ese edificio, sin tomar en
@@ -10,8 +10,9 @@ import { estacionamientosSugeribles } from "../estacionamientos/reglas.js";
 const RADIO_DE_LA_TIERRA_M = 6371000;
 
 // Distancia en línea recta, en metros, entre dos puntos [latitud, longitud] (fórmula de
-// Haversine). La distancia caminando por el campus es la HU 6.2 (R2).
+// Haversine). La distancia caminando por el campus es la HU 6.2 (R2). [regla]
 export function distanciaEnMetros([lat1, lon1], [lat2, lon2]) {
+  // Pasa grados a radianes.
   const aRadianes = (grados) => (grados * Math.PI) / 180;
   const dLat = aRadianes(lat2 - lat1);
   const dLon = aRadianes(lon2 - lon1);
@@ -20,7 +21,7 @@ export function distanciaEnMetros([lat1, lon1], [lat2, lon2]) {
   return Math.round(2 * RADIO_DE_LA_TIERRA_M * Math.asin(Math.sqrt(a)));
 }
 
-// Centro aproximado de un estacionamiento: el promedio de las esquinas de su polígono.
+// Centro aproximado de un estacionamiento: el promedio de las esquinas de su polígono. [regla]
 export function centroDelPoligono(poligono) {
   const suma = poligono.reduce(([la, lo], [lat, lon]) => [la + lat, lo + lon], [0, 0]);
   return [suma[0] / poligono.length, suma[1] / poligono.length];
@@ -31,6 +32,7 @@ export function centroDelPoligono(poligono) {
 //   estacionamientos  [{ id, nombre, activo, libres, soloProfesores, poligono }]
 // Devuelve { sugerido, distancia, alternativas } o { error, motivo } si no hay nada que sugerir.
 //   motivo: "no_existe" (no hay tal edificio) · "sin_ubicacion" · "sin_puestos" (todo lleno o cerrado)
+// Filtra abiertos, con libres y sin reserva de profesores, y ordena por distancia (HU 7.2). [regla]
 export function sugerirMasCercano(edificio, estacionamientos) {
   if (!edificio) return { error: "Ese edificio no existe.", motivo: "no_existe" };
   if (!edificio.ubicacion) {

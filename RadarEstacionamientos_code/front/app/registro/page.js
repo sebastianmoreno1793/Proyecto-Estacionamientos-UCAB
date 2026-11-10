@@ -1,12 +1,12 @@
 // Pantalla Crear cuenta (/registro), HU 1.1.
 import { redirect } from "next/navigation";
-import FormularioCuenta from "../cuenta/FormularioCuenta";
+import FormularioCuenta from "@/componentes/cuenta/FormularioCuenta";
 import { obtenerUsuarioActual } from "@/servidor/sesion";
-import estilos from "../formularios.module.css";
+import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Crear cuenta" };
 
-// HU 1.1 Crear cuenta con el correo institucional.
+// Muestra la pantalla Crear cuenta con FormularioCuenta; si ya hay sesión, manda al Inicio (HU 1.1). [sesion]
 export default async function PaginaRegistro() {
   if (await obtenerUsuarioActual()) redirect("/");
 

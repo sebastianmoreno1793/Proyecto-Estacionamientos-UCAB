@@ -12,7 +12,7 @@
 // cambia esta lista; el mapa no se toca.
 //
 // Cada estacionamiento:
-//   id              identificador único, sin espacios (lo usarán HU 4.1, 7.2, 7.3, 10.1)
+//   id              identificador único, sin espacios (lo usan las HU 4.1, 5.4 y 7.2)
 //   nombre          lo que ve el usuario en el mapa (puede repetirse si el lugar
 //                   tiene varias zonas, como Presambilito o Pádel)
 //   soloProfesores  (opcional) true si los puestos son solo para profesores (HU 7.3)

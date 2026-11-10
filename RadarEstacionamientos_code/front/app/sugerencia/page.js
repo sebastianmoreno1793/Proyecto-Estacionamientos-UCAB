@@ -1,16 +1,15 @@
 // Pantalla Sugerir (/sugerencia), HU 7.2. En el Inicio está la misma función con chips.
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
-import BuscadorSugerencia from "./BuscadorSugerencia";
-import { listarEdificios } from "@back/logica/edificios/datos";
+import BuscadorSugerencia from "@/componentes/sugerencia/BuscadorSugerencia";
+import { listarEdificios } from "@back/logica/edificios/datos.js";
 import { obtenerUsuarioActual } from "@/servidor/sesion";
-import estilos from "../formularios.module.css";
+import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "¿Dónde me estaciono?" };
 
-// HU 7.2 · Sugerir el estacionamiento libre más cercano (Manuel).
-// El servidor arma la página con la lista de edificios (HU 6.1); la búsqueda la hace el
-// navegador con fetch a /api/sugerencia (ver BuscadorSugerencia.js).
+// Arma la pantalla Sugerir (HU 7.2) con la lista de edificios (HU 6.1); sin sesión manda a /entrar.
+// La búsqueda la hace el navegador con fetch a /api/sugerencia (BuscadorSugerencia.js). [sesion]
 export default async function PaginaSugerencia() {
   await connection();
   if (!(await obtenerUsuarioActual())) redirect("/entrar");
