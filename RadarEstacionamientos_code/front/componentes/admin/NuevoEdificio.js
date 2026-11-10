@@ -1,5 +1,5 @@
 "use client";
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — formulario para agregar
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Formulario para agregar un edificio nuevo
 
 // HU 6.1 · Formulario para agregar un edificio al catálogo.
 import { useActionState } from "react";

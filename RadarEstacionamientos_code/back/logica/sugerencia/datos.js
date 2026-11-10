@@ -1,4 +1,4 @@
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Junta el edificio elegido, los puestos libres y el mapa, y aplica la regla de la sugerencia
 // HU 7.2 · Junta los datos que necesita la regla: el edificio elegido (catálogo de la HU 6.1),
 // los puestos libres de cada estacionamiento (HU 4.1) y su forma en el mapa (HU 5.1).
 import { ESTACIONAMIENTOS } from "../../campus/estacionamientos.js";

@@ -1,5 +1,5 @@
 "use client";
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — formulario de crear cuenta y de entrar
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Formulario de correo y contraseña; muestra los mensajes del escenario
 
 // HU 1.1 · Formulario para entrar o crear la cuenta con el correo institucional.
 import Link from "next/link";

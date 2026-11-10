@@ -1,4 +1,4 @@
-// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — estacionamientos que se dibujan en el mapa
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — Catálogo de estacionamientos del campus que se dibujan en el mapa
 // Estacionamientos del Campus Montalbán que se dibujan en el mapa (HU 5.1).
 //
 // Nombres: los que usa la comunidad UCAB, indicados por German Alfonzo (05/oct/26).

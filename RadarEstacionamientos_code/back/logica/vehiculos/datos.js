@@ -1,4 +1,4 @@
-// @HU-2.1 Registrar mis vehículos · Samuel — vehículos guardados
+// @HU-2.1 Registrar mis vehículos · Samuel — Aquí se guardan los vehículos de cada usuario
 // Vehículos EN MEMORIA, temporal mientras el equipo elige la base de datos
 // (igual que comun/almacen.js). Al reiniciar el servidor se pierden.
 import { randomUUID } from "node:crypto";

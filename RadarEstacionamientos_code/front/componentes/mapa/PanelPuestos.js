@@ -1,5 +1,5 @@
 "use client";
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron — lista «¿dónde hay puesto?»
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Lista «¿Dónde hay puesto?» al lado del mapa
 
 // Lista de "¿dónde hay puesto?" junto al mapa (HU 4.2): de un vistazo, cuántos puestos libres
 // hay en el campus y en cada estacionamiento, del que tiene más al que tiene menos. Los

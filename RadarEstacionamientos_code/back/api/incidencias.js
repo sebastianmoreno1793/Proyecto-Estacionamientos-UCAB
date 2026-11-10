@@ -1,4 +1,4 @@
-// @HU-9.1 Crear una incidencia · Sebastian — endpoint de incidencias
+// @HU-9.1 Crear una incidencia · Sebastian — Recibe el reporte de una incidencia
 // Endpoint del back. La URL la conecta el front en front/app/api/incidencias/route.js.
 import { emitir } from "../comun/eventos_en_vivo.js";
 import { listarIncidencias, registrarIncidencia, vistaPublica } from "../logica/incidencias/datos.js";

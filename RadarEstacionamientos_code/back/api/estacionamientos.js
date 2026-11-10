@@ -1,6 +1,6 @@
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron — GET
-// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — GET con la forma de cada uno
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — PATCH
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Entrega la ocupación de cada estacionamiento (GET)
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — Entrega los estacionamientos con su forma para dibujarlos (GET)
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Recibe el cambio de capacidad o estado (PATCH)
 // Endpoints del back. Las URL las conecta el front en front/app/api/estacionamientos/route.js
 // (GET) y front/app/api/estacionamientos/[id]/route.js (PATCH).
 import { ESTACIONAMIENTOS } from "../campus/estacionamientos.js";

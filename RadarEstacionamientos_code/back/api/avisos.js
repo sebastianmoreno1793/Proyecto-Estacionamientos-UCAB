@@ -1,5 +1,5 @@
-// @HU-3.1 Recibir avisos de entrada y salida · Aaron — endpoint de los sensores
-// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — Recibe los avisos de entrada y salida que mandan los sensores
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — Con cada aviso, actualiza el aforo del estacionamiento
 // Endpoint del back. La URL la conecta el front en front/app/api/avisos/route.js.
 import { registrarAviso, vistaPublica } from "../logica/estacionamientos/datos.js";
 import { emitir } from "../comun/eventos_en_vivo.js";

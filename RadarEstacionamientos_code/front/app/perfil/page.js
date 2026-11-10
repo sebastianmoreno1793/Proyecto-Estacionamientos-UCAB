@@ -1,6 +1,6 @@
-// @HU-2.1 Registrar mis vehículos · Samuel — «Mis vehículos» en Perfil
-// @HU-8.1 Activar las notificaciones · Manuel — interruptor de notificaciones
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — botón «Salir»
+// @HU-2.1 Registrar mis vehículos · Samuel — Sección «Mis vehículos» dentro de Perfil
+// @HU-8.1 Activar las notificaciones · Manuel — Interruptor de notificaciones en Perfil
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Botón «Salir» en Perfil para cerrar la sesión
 // Pantalla Perfil (/perfil): vehículos, notificaciones, Administrar y Salir.
 import Link from "next/link";
 import { redirect } from "next/navigation";

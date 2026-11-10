@@ -2,7 +2,7 @@
   "name": "radar-hu",
   "displayName": "Radar · Historias de usuario",
   "description": "Muestra a qué HU pertenece cada archivo del Radar (etiquetas @HU-x.y) sin abrirlo, y busca una HU desde la paleta.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "radar-ucab",
   "license": "UNLICENSED",
   "repository": {

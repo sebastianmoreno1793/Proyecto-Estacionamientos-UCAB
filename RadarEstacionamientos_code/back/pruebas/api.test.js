@@ -1,10 +1,10 @@
-// @HU-3.1 Recibir avisos de entrada y salida · Aaron
-// @HU-3.2 Simular sensores y placas · Aaron
-// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
-// @HU-9.1 Crear una incidencia · Sebastian
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — Prueba la API completa con peticiones reales (avisos)
+// @HU-3.2 Simular sensores y placas · Aaron — Prueba la API completa con peticiones reales (lector de placas)
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — Prueba la API completa con peticiones reales (aforo)
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Prueba la API completa con peticiones reales (semáforo)
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Prueba la API completa con peticiones reales (capacidad y estado)
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Prueba la API completa con peticiones reales (sugerencia)
+// @HU-9.1 Crear una incidencia · Sebastian — Prueba la API completa con peticiones reales (incidencias)
 // Pruebas de los endpoints (back/api): lo que responde cada uno, con su código HTTP,
 // igual que lo vería Postman o el simulador. No levanta el servidor: llama directo a la
 // función GET/POST/PATCH de cada archivo con un Request armado a mano.

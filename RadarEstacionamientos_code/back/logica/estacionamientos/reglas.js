@@ -1,6 +1,6 @@
-// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — Mantiene los ocupados entre 0 y la capacidad
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Decide el semáforo: verde «Hay puesto», rojo «No hay puesto» o «Cerrado»
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Calcula los libres con la capacidad nueva; si queda por debajo de los ocupados, quedan 0 libres
 // Reglas de los estacionamientos. Funciones puras: no leen ni guardan datos.
 
 export const CAPACIDAD_MAXIMA = 2000;
@@ -81,7 +81,7 @@ export function validarCapacidad(valor) {
 }
 
 // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — un cerrado no se sugiere
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — de aquí parte la sugerencia
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Dice qué estacionamientos tienen puesto, base de la sugerencia
 // HU 5.4: un estacionamiento cerrado no se sugiere. La HU 7.2 (logica/sugerencia/reglas.js) parte
 // de esta lista y le añade lo suyo (puestos libres y cercanía al edificio). [regla]
 export function estacionamientosSugeribles(estacionamientos) {

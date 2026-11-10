@@ -1,5 +1,5 @@
 "use client";
-// @HU-8.1 Activar las notificaciones · Manuel — invitación y interruptor de Perfil
+// @HU-8.1 Activar las notificaciones · Manuel — Invitación al entrar y el interruptor de Perfil
 
 // HU 8.1 · Activar las notificaciones.
 //

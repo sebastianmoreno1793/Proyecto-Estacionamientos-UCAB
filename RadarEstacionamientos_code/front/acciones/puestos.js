@@ -1,5 +1,5 @@
 "use server";
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — acción de guardar
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Recibe el formulario y guarda capacidad y estado
 
 // HU 5.4 · Acción del servidor que guarda la capacidad y el estado de un estacionamiento.
 import { revalidatePath } from "next/cache";

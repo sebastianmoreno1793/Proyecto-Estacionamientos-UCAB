@@ -8,7 +8,7 @@
 const vscode = require("vscode");
 
 const ETIQUETA = /@HU-(\d+\.\d+)(?:[ \t]+([^·\n*}]+?)[ \t]*·[ \t]*([^—\n*}]+?))?(?:[ \t]*—[ \t]*([^\n*}]+?))?[ \t]*(?:\*\/|\}|$)/gm;
-const ARCHIVOS = "**/*.{js,jsx,mjs,cjs,ts,tsx,css,md,json}";
+const ARCHIVOS = "**/*.{js,jsx,mjs,cjs,ts,tsx,css}";
 const EXCLUIR = "{**/node_modules/**,**/.next/**,**/.git/**,**/herramientas/radar-hu/**}";
 
 // hu → { nombre, responsable, usos: [{ uri, linea, detalle }] }
@@ -75,11 +75,26 @@ function quitarArchivo(uri) {
   }
 }
 
+// hu → primera frase de «Qué hace» en docs/mapa_HU_codigo.md
+let queHace = new Map();
+
+async function leerMapa() {
+  queHace = new Map();
+  const [mapa] = await vscode.workspace.findFiles("**/docs/mapa_HU_codigo.md", EXCLUIR, 1);
+  if (!mapa) return;
+  const texto = Buffer.from(await vscode.workspace.fs.readFile(mapa)).toString("utf8");
+  for (const seccion of texto.split(/^## /m)) {
+    const hu = seccion.match(/^HU (\d+\.\d+)/);
+    const frase = seccion.match(/\*\*Qué hace\.\*\*\s*(.+?\.)(?:\s|$)/);
+    if (hu && frase) queHace.set(hu[1], frase[1].replace(/`/g, ""));
+  }
+}
+
 async function indexarTodo() {
   historias = new Map();
   porArchivo = new Map();
   const uris = await vscode.workspace.findFiles(ARCHIVOS, EXCLUIR);
-  await Promise.all(uris.map(indexarArchivo));
+  await Promise.all([leerMapa(), ...uris.map(indexarArchivo)]);
   cambioDecoraciones.fire(undefined);
   actualizarBarra();
 }
@@ -114,10 +129,11 @@ async function buscar() {
   const lista = [...historias.keys()].sort(compararHU).map((hu) => {
     const h = historias.get(hu);
     const archivos = new Set(h.usos.map((u) => u.uri.toString())).size;
+    const resumen = `${h.responsable || "sin responsable"} · ${archivos} archivo${archivos === 1 ? "" : "s"}`;
     return {
-      label: `HU ${hu}`,
-      description: h.nombre,
-      detail: `${h.responsable || "sin responsable"} · ${archivos} archivo${archivos === 1 ? "" : "s"}`,
+      label: `HU ${hu} · ${h.nombre}`,
+      description: resumen,
+      detail: queHace.get(hu),
       hu,
     };
   });
@@ -140,13 +156,16 @@ async function mostrarArchivosDe(hu) {
     if (!vistos.has(clave) || (u.detalle && !vistos.get(clave).detalle)) vistos.set(clave, u);
   }
   const items = [...vistos.values()]
-    .sort((a, b) => a.uri.path.localeCompare(b.uri.path))
-    .map((u) => {
-      const relativa = vscode.workspace.asRelativePath(u.uri);
+    .map((u) => ({ u, capa: capaDe(vscode.workspace.asRelativePath(u.uri)) }))
+    .sort((a, b) => a.capa.orden - b.capa.orden || a.u.uri.path.localeCompare(b.u.uri.path))
+    .map(({ u, capa }) => {
+      const relativa = vscode.workspace.asRelativePath(u.uri).replace(/^RadarEstacionamientos_code\//, "");
+      const archivo = relativa.split("/").pop();
       return {
-        label: `$(file-code) ${relativa.split("/").pop()}`,
-        description: relativa,
-        detail: u.detalle || undefined,
+        // Lo primero que se lee es qué hace el archivo; después, cuál es y dónde está.
+        label: `${capa.icono} ${u.detalle || archivo}`,
+        description: `${capa.nombre} · ${archivo}`,
+        detail: relativa,
         uso: u,
       };
     });
@@ -157,6 +176,23 @@ async function mostrarArchivosDe(hu) {
     matchOnDetail: true,
   });
   if (elegido) await abrirEn(elegido.uso.uri, elegido.uso.linea);
+}
+
+// Capa del archivo según su carpeta, para ordenar la lista de pantalla a pruebas.
+function capaDe(ruta) {
+  if (/\/pruebas\//.test(ruta)) return { orden: 6, icono: "$(beaker)", nombre: "Prueba" };
+  if (/front\/app\/api\//.test(ruta)) return { orden: 3, icono: "$(globe)", nombre: "URL de la API" };
+  if (/front\/app\//.test(ruta)) return { orden: 0, icono: "$(browser)", nombre: "Pantalla" };
+  if (/front\/componentes\//.test(ruta)) return { orden: 1, icono: "$(layout)", nombre: "Parte de la pantalla" };
+  if (/front\/acciones\//.test(ruta)) return { orden: 2, icono: "$(arrow-swap)", nombre: "Acción del formulario" };
+  if (/front\/servidor\//.test(ruta)) return { orden: 2, icono: "$(key)", nombre: "Sesión" };
+  if (/front\/notificaciones\/|front\/public\//.test(ruta)) return { orden: 2, icono: "$(bell)", nombre: "Notificaciones" };
+  if (/front\//.test(ruta)) return { orden: 2, icono: "$(arrow-swap)", nombre: "Front" };
+  if (/back\/api\//.test(ruta)) return { orden: 3, icono: "$(globe)", nombre: "API" };
+  if (/reglas\.js$/.test(ruta)) return { orden: 4, icono: "$(law)", nombre: "Reglas" };
+  if (/datos\.js$|back\/campus\//.test(ruta)) return { orden: 5, icono: "$(database)", nombre: "Datos" };
+  if (/back\/seguridad\//.test(ruta)) return { orden: 3, icono: "$(shield)", nombre: "Seguridad" };
+  return { orden: 7, icono: "$(file-code)", nombre: "Archivo" };
 }
 
 async function abrirEn(uri, linea) {
@@ -238,4 +274,4 @@ function activate(context) {
 
 function deactivate() {}
 
-module.exports = { activate, deactivate, leerEtiquetas };
+module.exports = { activate, deactivate, leerEtiquetas, buscar };

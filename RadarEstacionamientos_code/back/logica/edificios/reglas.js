@@ -1,4 +1,4 @@
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — reglas del catálogo
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Valida que el nombre no se repita y que la ubicación esté dentro del campus
 // Reglas del catálogo de edificios (HU 6.1). Funciones puras: no leen ni guardan datos.
 
 import { CENTRO_CAMPUS } from "../../campus/estacionamientos.js";

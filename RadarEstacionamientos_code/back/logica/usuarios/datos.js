@@ -1,4 +1,4 @@
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — usuarios y sesiones guardados
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Aquí se guardan las cuentas (correo, contraseña cifrada y rol) y las sesiones abiertas
 // Usuarios y sesiones EN MEMORIA, igual que comun/almacen.js: es temporal mientras el
 // equipo elige la base de datos. Al reiniciar el servidor se pierden las cuentas creadas.
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";

@@ -1,5 +1,5 @@
 "use server";
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — agregar, modificar y quitar
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Recibe los formularios y agrega, modifica o quita edificios
 
 // HU 6.1 · Acciones del servidor para agregar, modificar y quitar edificios (solo administrador).
 import { revalidatePath } from "next/cache";

@@ -1,4 +1,4 @@
-// @HU-9.1 Crear una incidencia · Sebastian — incidencias guardadas
+// @HU-9.1 Crear una incidencia · Sebastian — Aquí se guardan las incidencias como «pendiente», con fecha y hora
 // HU 9.1 · Guarda y lista las incidencias reportadas por los conductores.
 import { obtenerAlmacen } from "../../comun/almacen.js";
 import { ESTADO_PENDIENTE, nombreDelTipo, validarReporte } from "./reglas.js";

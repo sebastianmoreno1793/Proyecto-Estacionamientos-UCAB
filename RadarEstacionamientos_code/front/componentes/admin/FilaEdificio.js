@@ -1,5 +1,5 @@
 "use client";
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — fila para modificar o quitar
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Fila de un edificio con los botones Guardar y Quitar
 
 // HU 6.1 · Una fila del catálogo: modificar o quitar un edificio.
 import { useActionState, useState } from "react";

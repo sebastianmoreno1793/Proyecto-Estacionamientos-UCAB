@@ -1,4 +1,4 @@
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — endpoint de la sugerencia
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Recibe el edificio y responde el estacionamiento sugerido
 // Endpoint del back. La URL la conecta el front en front/app/api/sugerencia/route.js.
 import { sugerirParaEdificio } from "../logica/sugerencia/datos.js";
 

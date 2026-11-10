@@ -1,4 +1,4 @@
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — catálogo guardado
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Aquí se guardan los edificios del catálogo
 // HU 6.1 · Guarda el catálogo de edificios: agregar, modificar, quitar y listar.
 import { obtenerAlmacen } from "../../comun/almacen.js";
 import { crearId, ordenarPorNombre, validarEdificio } from "./reglas.js";

@@ -1,4 +1,4 @@
-// @HU-8.1 Activar las notificaciones · Manuel — service worker único (D-008); la prueba usa showNotification
+// @HU-8.1 Activar las notificaciones · Manuel — Service worker: muestra la notificación de prueba
 // Service worker ÚNICO del Radar (D-008). Nadie registra otro: si una HU necesita algo del
 // service worker, se agrega aquí.
 //

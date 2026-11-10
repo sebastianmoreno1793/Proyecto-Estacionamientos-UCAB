@@ -1,4 +1,4 @@
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — cookie de sesión en el front
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Guarda la sesión en una cookie del navegador y dice quién está conectado
 // Sesión del usuario (HU 1.1), parte del front: pone, lee y borra la cookie con las
 // herramientas de Next. Quién es el usuario lo decide el back (back/seguridad/sesion.js).
 import { cookies } from "next/headers";

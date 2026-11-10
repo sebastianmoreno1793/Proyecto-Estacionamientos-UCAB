@@ -1,10 +1,10 @@
-// @HU-2.1 Registrar mis vehículos · Samuel — reglas de la placa (las usa también la garita, HU 3.2)
+// @HU-2.1 Registrar mis vehículos · Samuel — Valida la placa (6 o 7 letras y números) y la normaliza
 // HU 2.1 Registrar mis vehículos. Reglas puras, se prueban con npm test.
 
 export const LARGO_MAXIMO_TEXTO = 30;
 
 // @HU-2.1 Registrar mis vehículos · Samuel
-// @HU-3.2 Simular sensores y placas · Aaron — la misma regla para la garita
+// @HU-3.2 Simular sensores y placas · Aaron — Misma regla de placa que usa la garita
 // "ab-123 cd" -> "AB123CD"
 // Pasa la placa a mayúsculas y quita espacios y guiones (HU 2.1). [regla]
 export function normalizarPlaca(placa) {

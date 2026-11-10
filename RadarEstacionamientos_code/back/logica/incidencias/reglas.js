@@ -1,4 +1,4 @@
-// @HU-9.1 Crear una incidencia · Sebastian — reglas del reporte
+// @HU-9.1 Crear una incidencia · Sebastian — Valida que se elija un estacionamiento activo y un tipo de problema; dice todo lo que falta
 // Reglas de las incidencias (HU 9.1). Funciones puras: no leen ni guardan datos.
 
 // @HU-9.1 Crear una incidencia · Sebastian — los tres tipos de problema

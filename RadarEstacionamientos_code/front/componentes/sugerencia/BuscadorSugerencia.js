@@ -1,5 +1,5 @@
 "use client";
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — elige edificio y pide la sugerencia
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Elige el edificio y muestra el estacionamiento sugerido
 
 // HU 7.2 · Parte del navegador (front). El usuario elige el edificio y este componente le pide
 // la sugerencia a la API (back) con fetch:

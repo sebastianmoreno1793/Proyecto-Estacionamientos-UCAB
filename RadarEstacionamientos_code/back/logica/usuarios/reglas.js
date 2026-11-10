@@ -1,4 +1,4 @@
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — reglas del correo y de la contraseña
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Valida el correo UCAB, la contraseña de 8 o más y que coincidan; saca el rol del dominio
 // HU 1.1 Crear cuenta con el correo institucional.
 // Reglas puras (sin guardar nada), para poder probarlas con npm test.
 

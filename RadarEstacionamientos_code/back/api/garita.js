@@ -1,4 +1,4 @@
-// @HU-3.2 Simular sensores y placas · Aaron — endpoint del lector de placas
+// @HU-3.2 Simular sensores y placas · Aaron — Recibe las lecturas de placa del lector de la garita
 // Endpoint del back. La URL la conecta el front en front/app/api/garita/lecturas/route.js.
 import { emitir } from "../comun/eventos_en_vivo.js";
 import { registrarLecturaDePlaca } from "../logica/garita/datos.js";

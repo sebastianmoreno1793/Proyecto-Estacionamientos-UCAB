@@ -1,4 +1,4 @@
-// @HU-2.1 Registrar mis vehículos · Samuel — pruebas de la HU
+// @HU-2.1 Registrar mis vehículos · Samuel — Prueba las reglas de la placa y el guardado de vehículos
 // HU 2.1 Registrar mis vehículos.
 // Se corre con: npm test
 

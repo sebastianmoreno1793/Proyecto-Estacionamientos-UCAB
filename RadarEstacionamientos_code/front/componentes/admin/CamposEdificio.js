@@ -1,4 +1,4 @@
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Campos de nombre y ubicación que usan los formularios de edificio
 // HU 6.1 · Campos comunes de un edificio: nombre, latitud y longitud.
 import estilos from "@/estilos/formularios.module.css";
 

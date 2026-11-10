@@ -1,7 +1,7 @@
-// @HU-3.1 Recibir avisos de entrada y salida · Aaron
-// @HU-3.2 Simular sensores y placas · Aaron
-// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — Prueba que los avisos de entrada y salida se registren
+// @HU-3.2 Simular sensores y placas · Aaron — Prueba los avisos que genera el simulador de sensores
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — Prueba que el aforo suba y baje con los avisos
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Prueba que el semáforo cambie con los avisos
 // HU 3.1 Recibir avisos · HU 3.2 Lector de placas · HU 4.1 Actualizar el aforo.
 // Es lo que reciben los sensores, el simulador y Postman por la API.
 // Se corre con: npm test

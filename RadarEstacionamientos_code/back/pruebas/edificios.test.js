@@ -1,4 +1,4 @@
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — pruebas de la HU
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Prueba agregar, modificar y quitar edificios
 // HU 6.1 Mantener el catálogo de edificios UCAB.
 // Se corre con: npm test
 

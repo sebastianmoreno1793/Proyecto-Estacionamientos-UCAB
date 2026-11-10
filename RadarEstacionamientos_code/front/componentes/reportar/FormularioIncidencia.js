@@ -1,5 +1,5 @@
 "use client";
-// @HU-9.1 Crear una incidencia · Sebastian — formulario: tipo y estacionamiento
+// @HU-9.1 Crear una incidencia · Sebastian — Formulario: elegir el estacionamiento y el tipo de problema
 
 // HU 9.1 Crear una incidencia (D-007 v2: como armar un pedido en dos toques).
 //  1. El tipo de problema: tres mosaicos grandes (un toque).

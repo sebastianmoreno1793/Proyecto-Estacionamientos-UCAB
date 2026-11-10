@@ -1,4 +1,4 @@
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — pruebas de la HU
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Prueba los puestos libres y la validación de la capacidad nueva
 // HU 5.4 (antes 10.1) Modificar la capacidad y el estado de un estacionamiento.
 // Se corre con: npm test
 
@@ -70,7 +70,7 @@ describe("etiquetas para distinguir zonas con el mismo nombre", () => {
   });
 });
 
-// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — Prueba que no haya dos estacionamientos con el mismo nombre en el mapa
 describe("datos de ejemplo alineados con el mapa (HU 5.1)", () => {
   // Si falla, alguien cambió `campus/estacionamientos.js`: actualiza `campus/capacidad_inicial.js`.
   test("cada estacionamiento del mapa tiene capacidad de ejemplo", () => {

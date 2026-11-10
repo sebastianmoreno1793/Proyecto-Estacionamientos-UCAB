@@ -1,6 +1,6 @@
 "use client";
-// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — mapa con el nombre de cada estacionamiento
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron — libres y estado en texto
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — Dibuja el mapa con el nombre de cada estacionamiento
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — En el mapa, muestra libres y el estado en texto
 
 // Maqueta del Campus Montalbán vista desde arriba (D-007 › Maqueta) con el semáforo de dos
 // estados encima (HU 4.2, D-009), en vivo (base de la HU 4.3).

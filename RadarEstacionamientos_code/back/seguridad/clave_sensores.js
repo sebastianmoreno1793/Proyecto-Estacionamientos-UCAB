@@ -1,5 +1,5 @@
-// @HU-3.1 Recibir avisos de entrada y salida · Aaron — clave de los sensores
-// @HU-3.2 Simular sensores y placas · Aaron
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — Comprueba la clave secreta que solo tienen los sensores
+// @HU-3.2 Simular sensores y placas · Aaron — Comprueba la clave del simulador de sensores y placas
 // Clave de los sensores y del lector de placas (encabezado x-clave-sensor).
 // Solo quien tiene la clave puede avisar entradas, salidas y placas (HU 3.1 y 3.2).
 import { timingSafeEqual } from "node:crypto";

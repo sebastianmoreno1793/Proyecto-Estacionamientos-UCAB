@@ -1,7 +1,7 @@
-// @HU-3.1 Recibir avisos de entrada y salida · Aaron
-// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — Registra cada entrada o salida con su hora
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — Suma o resta un ocupado con cada entrada o salida
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Calcula los libres y el porcentaje de cada estacionamiento
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Guarda la capacidad nueva y si está abierto o cerrado
 // HU 3.1, 4.1, 4.2 y 5.4 · Lee y cambia los estacionamientos guardados: avisos de
 // entrada y salida, capacidad, abierto o cerrado, y la vista pública (sin datos personales).
 import { obtenerAlmacen } from "../../comun/almacen.js";

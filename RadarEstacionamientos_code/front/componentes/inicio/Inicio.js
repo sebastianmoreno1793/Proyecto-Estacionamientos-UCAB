@@ -1,6 +1,6 @@
 "use client";
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron — rejilla con libres y estado
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — chips de edificios y «Más cerca»
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Rejilla de Inicio con libres y estado de cada estacionamiento
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Botones de edificios y «Más cerca» en Inicio
 
 // Pantalla de Inicio (D-007 v2). Junta tres HU en una sola vista, sin textos de relleno:
 //  - HU 7.2: el usuario toca el edificio al que va (chips) y aparece la tarjeta oscura con el

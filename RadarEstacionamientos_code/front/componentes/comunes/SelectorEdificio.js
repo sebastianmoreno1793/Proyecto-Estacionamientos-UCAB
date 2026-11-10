@@ -1,5 +1,5 @@
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — la lista que ve el usuario
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Lista de edificios que ve el usuario para elegir
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Lista de edificios para pedir la sugerencia
 // Lista desplegable de edificios del catálogo (HU 6.1). La usa la pantalla /sugerencia.
 import estilos from "@/estilos/formularios.module.css";
 

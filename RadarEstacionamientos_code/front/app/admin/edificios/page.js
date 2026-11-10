@@ -1,4 +1,4 @@
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Administrar › Edificios
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Pantalla Administrar › Edificios
 // Administrar › Edificios (/admin/edificios), HU 6.1. Solo administrador.
 import { connection } from "next/server";
 import FilaEdificio from "@/componentes/admin/FilaEdificio";

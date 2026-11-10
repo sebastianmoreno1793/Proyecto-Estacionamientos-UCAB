@@ -1,4 +1,4 @@
-// @HU-3.2 Simular sensores y placas · Aaron — lecturas de placa guardadas
+// @HU-3.2 Simular sensores y placas · Aaron — Aquí se guardan las placas leídas con su hora y sentido
 // HU 3.2 · Guarda y lista las placas que lee el lector de la garita.
 import { obtenerAlmacen } from "../../comun/almacen.js";
 import { validarLectura } from "./reglas.js";

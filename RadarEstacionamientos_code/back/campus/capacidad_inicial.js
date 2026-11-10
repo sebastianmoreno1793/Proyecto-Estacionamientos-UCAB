@@ -1,4 +1,4 @@
-// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — capacidad de ejemplo de cada estacionamiento del mapa
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — Capacidad de ejemplo (todavía no real) de cada estacionamiento
 // Capacidad y ocupación de EJEMPLO, no reales: falta confirmar la capacidad de cada
 // estacionamiento (preguntas_abiertas.md #4). Los ocupados los calculará la HU 4.1 a
 // partir de las entradas y salidas; aquí solo sirven para ver la página funcionando.

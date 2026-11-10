@@ -1,4 +1,4 @@
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — pantalla «Crear cuenta»
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Pantalla «Crear cuenta»
 // Pantalla Crear cuenta (/registro), HU 1.1.
 import { redirect } from "next/navigation";
 import FormularioCuenta from "@/componentes/cuenta/FormularioCuenta";

@@ -1,4 +1,4 @@
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Administrar › Puestos
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Pantalla Administrar › Puestos
 // Administrar › Puestos (/admin/puestos): capacidad y abierto o cerrado, HU 5.4. Solo administrador.
 import MenuAdmin from "@/componentes/menu/MenuAdmin";
 import { connection } from "next/server";

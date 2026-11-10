@@ -1,4 +1,4 @@
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — pruebas de la HU
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Prueba las reglas y el guardado de las cuentas
 // HU 1.1 Crear cuenta con el correo institucional.
 // Se corre con: npm test
 

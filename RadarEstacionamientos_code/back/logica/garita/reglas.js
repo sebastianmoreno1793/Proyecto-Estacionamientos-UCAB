@@ -1,4 +1,4 @@
-// @HU-3.2 Simular sensores y placas · Aaron — reglas del lector de placas
+// @HU-3.2 Simular sensores y placas · Aaron — Valida la placa leída y el sentido (ENTRADA o SALIDA)
 // Reglas del lector de placas de la garita (HU 3.2). Funciones puras.
 
 export const SENTIDOS = ["ENTRADA", "SALIDA"];

@@ -1,5 +1,5 @@
 "use client";
-// @HU-2.1 Registrar mis vehículos · Samuel — formulario para agregar un vehículo
+// @HU-2.1 Registrar mis vehículos · Samuel — Formulario para escribir la placa y agregar el vehículo
 
 // HU 2.1 Registrar mis vehículos. Va dentro de Perfil, plegado detrás de «Agregar vehículo»
 // (abierto si todavía no tiene ninguno). La acción valida en el servidor (acciones/vehiculos.js).

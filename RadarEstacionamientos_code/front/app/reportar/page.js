@@ -1,4 +1,4 @@
-// @HU-9.1 Crear una incidencia · Sebastian — pantalla «Reportar»
+// @HU-9.1 Crear una incidencia · Sebastian — Pantalla «Reportar»
 // Pantalla Reportar (/reportar): crear una incidencia, HU 9.1.
 import { connection } from "next/server";
 import { redirect } from "next/navigation";

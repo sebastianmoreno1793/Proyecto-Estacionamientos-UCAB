@@ -1,5 +1,5 @@
 "use server";
-// @HU-9.1 Crear una incidencia · Sebastian — acción del formulario
+// @HU-9.1 Crear una incidencia · Sebastian — Recibe el formulario y registra la incidencia
 
 // HU 9.1 · Acción del servidor que recibe el formulario de Reportar y la guarda en el back.
 import { listarEstacionamientos } from "@back/logica/estacionamientos/datos.js";

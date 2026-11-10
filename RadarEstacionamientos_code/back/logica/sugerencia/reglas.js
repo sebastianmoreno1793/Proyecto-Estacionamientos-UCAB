@@ -1,4 +1,4 @@
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — reglas de la sugerencia
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Elige el estacionamiento libre más cercano al edificio
 // HU 7.2 · Sugerir el estacionamiento libre más cercano.
 // Reglas puras: no leen ni guardan datos (se prueban en pruebas/sugerencia.test.js).
 //

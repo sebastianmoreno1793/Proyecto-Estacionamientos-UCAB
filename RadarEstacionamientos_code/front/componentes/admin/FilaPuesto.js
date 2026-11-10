@@ -1,5 +1,5 @@
 "use client";
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — fila con capacidad y «Activo»
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Fila de un estacionamiento con su capacidad y el interruptor «Activo»
 
 // HU 5.4 Modificar la capacidad y el estado de un estacionamiento (solo administrador).
 // D-007 v2: sin botón «Guardar». El interruptor abre o cierra, y «−» / «+» cambian la capacidad;

@@ -1,4 +1,4 @@
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — pantalla Sugerir
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Pantalla Sugerir
 // Pantalla Sugerir (/sugerencia), HU 7.2. En el Inicio está la misma función con chips.
 import { connection } from "next/server";
 import { redirect } from "next/navigation";

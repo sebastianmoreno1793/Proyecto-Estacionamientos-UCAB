@@ -1,4 +1,4 @@
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — catálogo inicial
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Lista inicial de edificios de la UCAB
 // Catálogo INICIAL de edificios del Campus Montalbán (HU 6.1).
 //
 // Es solo el punto de partida: el administrador agrega, modifica o quita edificios

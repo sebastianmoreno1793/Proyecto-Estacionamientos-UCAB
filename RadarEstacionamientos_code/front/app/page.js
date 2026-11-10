@@ -1,6 +1,6 @@
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Inicio
-// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
-// @HU-8.1 Activar las notificaciones · Manuel
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Pantalla Inicio con el semáforo de cada estacionamiento
+// @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Pantalla Inicio con el atajo «Más cerca»
+// @HU-8.1 Activar las notificaciones · Manuel — Pantalla Inicio, donde aparece la invitación a activar notificaciones
 // Pantalla de Inicio (/): edificios, sugerencia (HU 7.2), total y estacionamientos (HU 4.2).
 import { connection } from "next/server";
 import { redirect } from "next/navigation";

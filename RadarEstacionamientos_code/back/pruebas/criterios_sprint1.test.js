@@ -1,12 +1,12 @@
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel
-// @HU-2.1 Registrar mis vehículos · Samuel
-// @HU-3.1 Recibir avisos de entrada y salida · Aaron
-// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
-// @HU-4.2 Consultar el semáforo de ocupación · Aaron
-// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
-// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
-// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
-// @HU-9.1 Crear una incidencia · Sebastian
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Prueba el criterio de aceptación de Crear cuenta
+// @HU-2.1 Registrar mis vehículos · Samuel — Prueba el criterio de aceptación de Mis vehículos
+// @HU-3.1 Recibir avisos de entrada y salida · Aaron — Prueba el criterio de aceptación de los avisos de los sensores
+// @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — Prueba el criterio de aceptación del aforo
+// @HU-4.2 Consultar el semáforo de ocupación · Aaron — Prueba el criterio de aceptación del semáforo
+// @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — Prueba el criterio de aceptación del mapa
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Prueba el criterio de aceptación de capacidad y estado
+// @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Prueba el criterio de aceptación del catálogo de edificios
+// @HU-9.1 Crear una incidencia · Sebastian — Prueba el criterio de aceptación de Crear una incidencia
 // Criterios de aceptación del Sprint 1 que no tenían prueba, o cuya prueba no miraba el mensaje.
 // Cada `describe` es una HU y cada `test` nombra el criterio (CA) o la regla (RN) que demuestra.
 // Se corre con: npm test
@@ -75,7 +75,7 @@ describe("HU 1.1 · Crear cuenta con el correo institucional", () => {
 });
 
 // @HU-2.1 Registrar mis vehículos · Samuel
-// @HU-3.2 Simular sensores y placas · Aaron — placa compartida
+// @HU-3.2 Simular sensores y placas · Aaron — Prueba el criterio de aceptación del simulador y la placa compartida
 describe("HU 2.1 · Registrar mis vehículos", () => {
   const CARRO = { placa: "AB123CD", marca: "Toyota", modelo: "Corolla", color: "Gris" };
 

@@ -1,5 +1,5 @@
 "use client";
-// @HU-9.1 Crear una incidencia · Sebastian — tarjeta del estacionamiento con «Reportar un problema aquí» (paso 1 del escenario)
+// @HU-9.1 Crear una incidencia · Sebastian — Tarjeta del estacionamiento con el botón «Reportar un problema aquí»
 
 // Tarjeta del estacionamiento elegido: flota sobre el mapa (DESIGN.md › Mapa, D-007).
 // Nombre, nivel del semáforo en texto y tres datos en columnas; debajo, una sola acción.

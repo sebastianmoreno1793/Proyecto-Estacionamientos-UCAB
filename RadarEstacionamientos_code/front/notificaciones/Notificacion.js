@@ -1,4 +1,4 @@
-// @HU-8.1 Activar las notificaciones · Manuel
+// @HU-8.1 Activar las notificaciones · Manuel — La notificación de prueba que se muestra
 // @HU-8.1 Activar las notificaciones · Manuel — la notificación que se muestra
 /**
  * Notificación web que el sistema puede mostrar al usuario. [notificaciones]

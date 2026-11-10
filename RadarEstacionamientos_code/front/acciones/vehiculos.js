@@ -1,5 +1,5 @@
 "use server";
-// @HU-2.1 Registrar mis vehículos · Samuel — acción del formulario
+// @HU-2.1 Registrar mis vehículos · Samuel — Recibe el formulario y guarda el vehículo del usuario
 
 // HU 2.1 · Acción del servidor que registra un vehículo (formulario de Perfil).
 import { revalidatePath } from "next/cache";

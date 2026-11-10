@@ -1,4 +1,4 @@
-// @HU-8.1 Activar las notificaciones · Manuel — lógica de permisos y notificación de prueba
+// @HU-8.1 Activar las notificaciones · Manuel — Pide el permiso, recuerda la decisión y manda la notificación de prueba
 // HU 8.1 · Lógica de las notificaciones del navegador: pide el permiso, recuerda la
 // respuesta (paso 2.2) y envía la notificación de prueba (CA1). Corre solo en el navegador.
 import { Notificacion } from "./Notificacion.js";

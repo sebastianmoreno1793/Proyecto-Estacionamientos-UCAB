@@ -1,5 +1,5 @@
 "use server";
-// @HU-1.1 Crear cuenta con el correo institucional · Samuel — acciones del formulario de cuenta
+// @HU-1.1 Crear cuenta con el correo institucional · Samuel — Recibe el formulario, crea la cuenta o entra, y abre la sesión
 
 // HU 1.1 · Acciones del servidor: crear cuenta, entrar y salir (ponen o borran la cookie).
 import { redirect } from "next/navigation";

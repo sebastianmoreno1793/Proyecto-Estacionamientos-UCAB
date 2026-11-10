@@ -1,4 +1,4 @@
-// @HU-3.2 Simular sensores y placas · Aaron — URL POST /api/garita/lecturas
+// @HU-3.2 Simular sensores y placas · Aaron — Dirección web POST /api/garita/lecturas para las placas
 // POST /api/garita/lecturas → back/api/garita.js: el lector de la garita envía una placa leída (HU 3.2).
 // Aquí solo se conecta la URL. [api] [postman]
 export { POST } from "@back/api/garita.js";
