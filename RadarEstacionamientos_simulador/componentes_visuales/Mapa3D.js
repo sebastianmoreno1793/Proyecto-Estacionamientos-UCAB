@@ -1,11 +1,11 @@
 "use client";
 
 // Maqueta 3D del Campus Montalbán con dimensiones reales: el "mundo virtual" del simulador.
-// 1 unidad de Three.js = 1 metro. Origen = CENTRO_CAMPUS. Ejes en `lib/mapa3d/geo.js`.
+// 1 unidad de Three.js = 1 metro. Origen = CENTRO_CAMPUS. Ejes en `mapa_3d/geo.js`.
 //
 // Todo lo que se dibuja sale de coordenadas reales:
-//   estacionamientos   la app base (GET /api/estacionamientos), que los toma de su data/
-//   edificios, vías, canchas, garita, relieve   data/campus.js (OpenStreetMap + SRTM)
+//   estacionamientos   la app base (GET /api/estacionamientos), que los toma de su back/campus/
+//   edificios, vías, canchas, garita, relieve   datos_campus/campus.js (OpenStreetMap + SRTM)
 // Lo único que no tiene coordenadas son los árboles (decorativos, repartidos en las
 // áreas verdes) y los puestos pintados (se reparten dentro de cada polígono).
 //
@@ -42,7 +42,7 @@ import {
   PUNTOS_DE_INTERES,
   RELIEVE,
   VIAS,
-} from "@/data/campus";
+} from "@/datos_campus/campus";
 import {
   cajaDe,
   crearRelieve,
@@ -60,8 +60,8 @@ import {
   puntoInterior,
   puntoMasCercanoEnBorde,
   semillaDeTexto,
-} from "@/lib/mapa3d/geo";
-import { crearGrafo, nodoMasCercano, rutaDesdeGarita, rutaHaciaGarita } from "@/lib/mapa3d/rutas";
+} from "@/mapa_3d/geo";
+import { crearGrafo, nodoMasCercano, rutaDesdeGarita, rutaHaciaGarita } from "@/mapa_3d/rutas";
 
 // Semáforo del proyecto (D-009): verde = hay puesto (libres ≥ 1), rojo = no hay puesto.
 function obtenerColorSemaforo(libres) {

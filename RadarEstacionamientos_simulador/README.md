@@ -67,12 +67,12 @@ Si la app base corre en otra dirección o con otra clave de sensores, copia `.en
 http://localhost:3001/maqueta fotografía la escena con estilo de maqueta física (grama, árboles,
 techos de teja y concreto, puestos pintados), en cámara casi cenital, y con **Exportar** guarda
 `exportes/maqueta-campus.jpg` y `exportes/maqueta-campus.json` (dónde cae cada estacionamiento y
-edificio en la imagen). Se copian a la app: `public/maqueta/campus.jpg` y `data/maqueta.json`.
+edificio en la imagen). Se copian a la app: `public/maqueta/campus.jpg` y `back/campus/maqueta.json`.
 Necesita la app base corriendo (le pide los estacionamientos). Ver D-007 › Maqueta.
 
 ## Postman
 
-Importa `postman/Radar_UCAB_app_base.postman_collection.json`. Trae los avisos de sensores, el
+Importa `coleccion_postman/Radar_UCAB_app_base.postman_collection.json`. Trae los avisos de sensores, el
 lector de placas, las incidencias, la administración, las consultas y el reinicio. Las variables
 son `urlBase`, `claveSensor` y `estacionamiento`. Lo que mandes desde Postman llega a la app
 base como si fuera real, y el simulador lo dibuja.
@@ -86,42 +86,42 @@ agrégala en Postman como encabezado `Cookie: radar_sesion=<valor>`.
 **El simulador conectado a la app base** (barra de arriba: puestos libres, ocupación,
 incidencias y estacionamientos cerrados).
 
-![Simulador](capturas/01_simulador.jpg)
+![Simulador](capturas_pantalla/01_simulador.jpg)
 
 **Incidencias** reportadas en la Playa: cada una se dibuja donde ocurre, con su letrero.
 
-![Incidencias](capturas/02_incidencias.jpg)
+![Incidencias](capturas_pantalla/02_incidencias.jpg)
 
 **Estacionamiento cerrado** por el administrador: cartel «CERRADO», losa gris y conos en la entrada.
 
-![Estacionamiento cerrado](capturas/03_estacionamiento_cerrado.jpg)
+![Estacionamiento cerrado](capturas_pantalla/03_estacionamiento_cerrado.jpg)
 
 **Lector de placas:** el carro espera la talanquera y la placa leída aparece sobre la garita.
 
-![Lector de placas](capturas/04_lector_de_placas.jpg)
+![Lector de placas](capturas_pantalla/04_lector_de_placas.jpg)
 
 **Hora pico:** varios carros a la vez en la garita.
 
-![Hora pico](capturas/05_hora_pico.jpg)
+![Hora pico](capturas_pantalla/05_hora_pico.jpg)
 
 **Registro**, como en Postman: cada llamada con su código HTTP.
 
-![Registro](capturas/06_registro.jpg)
+![Registro](capturas_pantalla/06_registro.jpg)
 
 **La app base reacciona**: en «Actividad de la garita» quedan los avisos y las placas que
 generó el simulador, y el menú tiene sus funciones reales.
 
-![Actividad de la garita en la app base](capturas/07_app_base_actividad.jpg)
+![Actividad de la garita en la app base](capturas_pantalla/07_app_base_actividad.jpg)
 
-![Menú de la app base](capturas/08_app_base_menu.jpg)
+![Menú de la app base](capturas_pantalla/08_app_base_menu.jpg)
 
 ## De dónde salen los datos del mapa
 
 | Qué | Dónde | Fuente |
 |---|---|---|
-| 14 estacionamientos y su ocupación | La app base (`GET /api/estacionamientos`) | Su `data/estacionamientos.js` |
-| Contorno, edificios, vías, canchas, garita | `data/campus.js` | OpenStreetMap (relación 3644537) |
-| Relieve | `data/campus.js` (`RELIEVE`) | SRTM 30 m (NASA) |
+| 14 estacionamientos y su ocupación | La app base (`GET /api/estacionamientos`) | Su `back/campus/estacionamientos.js` |
+| Contorno, edificios, vías, canchas, garita | `datos_campus/campus.js` | OpenStreetMap (relación 3644537) |
+| Relieve | `datos_campus/campus.js` (`RELIEVE`) | SRTM 30 m (NASA) |
 
 - **Medidas reales del campus:** ~930 m de este a oeste × 610 m de norte a sur (~20 ha).
 - **Relieve:** va de ~920 m s. n. m. (Playa, junto a la autopista) a ~975 m (canchas del sur).
@@ -134,14 +134,27 @@ generó el simulador, y el menú tiene sus funciones reales.
 - **Árboles:** son decorativos.
 - **Rectorado y Centro de Estudiantes:** no están en OSM y todavía no se dibujan.
 
-## Código
+## Carpetas
 
-- `app/page.js`: estado, canal en vivo y acciones del menú, todo contra la API de la app base.
-- `app/api/base/[...ruta]/route.js`: puente hacia la app base. Agrega la clave de sensores en el
-  servidor, para que nunca llegue al navegador.
-- `components/Mapa3D.js`: la escena (Three.js). `components/PanelDeControl.js`: el menú.
-- `lib/mapa3d/`: conversión GPS → metros, relieve, polígonos, puestos y rutas por las vías reales.
-- `lib/escenarios.js`: qué avisos manda cada escenario. `lib/cliente_base.js`: las llamadas.
-- `tests/`: distancias, orientación, rutas y escenarios (`npm test`).
+```
+RadarEstacionamientos_simulador/
+├── app/                   Rutas de Next.js (el nombre lo exige Next)
+│   ├── page.js            la pantalla del simulador: estado, canal en vivo y menú
+│   ├── maqueta/           render de la maqueta que se copia a la app
+│   └── api/base/          PUENTE en el servidor: reenvía a la app (:3000) y agrega la clave de sensores
+├── conexion_app/          ← lo único que llama a la app: cliente_api.js (avisos, placas, incidencias…)
+├── escenarios_prueba/     qué avisos manda cada escenario (llegadas, salidas, llenar, vaciar, placas al azar)
+├── mapa_3d/               GPS → metros, relieve y rutas del carro por las vías reales
+├── datos_campus/          contorno, edificios, vías y relieve (OpenStreetMap + SRTM)
+├── componentes_visuales/  lo que se ve: Mapa3D (escena), PanelDeControl (menú), MaquetaRender
+├── pruebas_automaticas/   npm test: distancias, rutas, escenarios y el puente
+├── coleccion_postman/     las mismas llamadas, para hacerlas a mano desde Postman
+└── capturas_pantalla/     imágenes de este README
+```
+
+**Cómo se conecta con la app:** un botón del menú (`componentes_visuales/PanelDeControl.js`) →
+`conexion_app/cliente_api.js` → `fetch /api/base/...` → `app/api/base/[...ruta]/route.js` (el
+puente) → la API pública de la app en `http://localhost:3000/api/...`. El simulador **nunca**
+importa código de la app: todo pasa por esa API, igual que un sensor real (D-002).
 
 Mapa © colaboradores de OpenStreetMap (ODbL). Relieve: SRTM, NASA.

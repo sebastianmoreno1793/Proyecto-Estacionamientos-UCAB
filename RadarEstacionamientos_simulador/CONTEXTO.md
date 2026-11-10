@@ -23,15 +23,15 @@ aquí, `npm install` y `npm run dev` → `http://localhost:3001`. Configuración
 
 ## Mapa 3D
 
-- `components/Mapa3D.js`: la escena (Three.js). 1 unidad = 1 metro; origen en `CENTRO_CAMPUS`
-  (`data/campus.js`, el mismo de la app base). NUNCA inventes posiciones: GPS → metros con
-  `gpsAMetros` (`lib/mapa3d/geo.js`).
+- `componentes_visuales/Mapa3D.js`: la escena (Three.js). 1 unidad = 1 metro; origen en `CENTRO_CAMPUS`
+  (`datos_campus/campus.js`, el mismo de la app base). NUNCA inventes posiciones: GPS → metros con
+  `gpsAMetros` (`mapa_3d/geo.js`).
 - Los estacionamientos llegan de la app base (`GET /api/estacionamientos`). Contorno, edificios,
-  vías, garita y relieve: `data/campus.js` (OpenStreetMap + SRTM).
+  vías, garita y relieve: `datos_campus/campus.js` (OpenStreetMap + SRTM).
 - El campus mide ~930 m (E-O) × 610 m (N-S). La garita está en la esquina **noreste**
   (Av. Teherán) y el terreno **sube de norte a sur** (~920 m → ~975 m).
-- **Antes de modificar el mapa 3D**, revisa `lib/mapa3d/geo.js` (conversión GPS → metros) y
-  `data/campus.js` (de dónde sale cada forma del campus).
+- **Antes de modificar el mapa 3D**, revisa `mapa_3d/geo.js` (conversión GPS → metros) y
+  `datos_campus/campus.js` (de dónde sale cada forma del campus).
 - Valida con `npm test`.
 
 ## Qué NO entra al repositorio

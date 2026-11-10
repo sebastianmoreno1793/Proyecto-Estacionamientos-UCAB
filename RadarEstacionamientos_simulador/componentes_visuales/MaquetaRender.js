@@ -5,7 +5,7 @@
 // de teja y concreto, asfalto claro, puestos pintados), estática y en alta resolución.
 //
 // Sale de los mismos datos reales que la maqueta 3D: edificios, vías, canchas y jardines de
-// `data/campus.js` (OpenStreetMap) y los estacionamientos de la app base (su API pública,
+// `datos_campus/campus.js` (OpenStreetMap) y los estacionamientos de la app base (su API pública,
 // D-006). El suelo es plano: es una maqueta, no el relieve.
 //
 // Al terminar, `onListo({ imagen, datos })` entrega la imagen (JPEG) y la proyección: dónde
@@ -14,7 +14,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { AREAS, CANCHAS, CONTORNO_CAMPUS, EDIFICIOS, GARITA, PUNTOS_DE_INTERES, VIAS } from "@/data/campus";
+import { AREAS, CANCHAS, CONTORNO_CAMPUS, EDIFICIOS, GARITA, PUNTOS_DE_INTERES, VIAS } from "@/datos_campus/campus";
 import {
   cajaDe,
   distanciaAPolilinea,
@@ -25,7 +25,7 @@ import {
   puntoEnPoligono,
   puntoInterior,
   semillaDeTexto,
-} from "@/lib/mapa3d/geo";
+} from "@/mapa_3d/geo";
 
 const ALTO_PISO = 3.5;
 const INCLINACION = 34; // grados desde la vertical: se ven techos y fachadas, como una foto de maqueta

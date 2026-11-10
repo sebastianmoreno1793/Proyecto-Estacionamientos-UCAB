@@ -6,7 +6,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CENTRO_CAMPUS as CENTRO_APP_BASE, ESTACIONAMIENTOS } from "../../RadarEstacionamientos_code/back/campus/estacionamientos.js";
-import { CENTRO_CAMPUS, CONTORNO_CAMPUS, EDIFICIOS, GARITA, RELIEVE, VIAS } from "../data/campus.js";
+import { CENTRO_CAMPUS, CONTORNO_CAMPUS, EDIFICIOS, GARITA, RELIEVE, VIAS } from "../datos_campus/campus.js";
 import {
   areaPoligono,
   crearRelieve,
@@ -15,8 +15,8 @@ import {
   poligonoAMetros,
   puntoEnPoligono,
   puntoInterior,
-} from "../lib/mapa3d/geo.js";
-import { crearGrafo, nodoMasCercano, rutaDesdeGarita, rutaHaciaGarita } from "../lib/mapa3d/rutas.js";
+} from "../mapa_3d/geo.js";
+import { crearGrafo, nodoMasCercano, rutaDesdeGarita, rutaHaciaGarita } from "../mapa_3d/rutas.js";
 
 // Distancia real sobre el elipsoide WGS84 (el de los GPS), con sus radios de curvatura
 // en la latitud media. Para tramos de 1 km el error es de milímetros. Ojo: una esfera

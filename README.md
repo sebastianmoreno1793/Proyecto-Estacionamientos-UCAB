@@ -48,7 +48,7 @@ El proyecto se divide en dos carpetas: **una para decidir y otra para programar.
 │
 └── RadarEstacionamientos_simulador/ ← mundo virtual 3D que "usa" la app desde afuera
     ├── README.md                   cómo abrirlo, capturas y menú de pruebas
-    └── postman/                    colección para llamar a la app como si fuera real
+    └── coleccion_postman/          colección para llamar a la app como si fuera real
 ```
 
 | Carpeta | Para qué | Quién la cambia |

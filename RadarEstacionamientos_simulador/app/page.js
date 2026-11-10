@@ -9,9 +9,9 @@
 // en la app llega de vuelta por su canal en vivo (GET /api/eventos).
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Mapa3D from "@/components/Mapa3D";
-import PanelDeControl from "@/components/PanelDeControl";
-import { appBase, TIPOS_DE_INCIDENCIA, URL_EVENTOS } from "@/lib/cliente_base";
+import Mapa3D from "@/componentes_visuales/Mapa3D";
+import PanelDeControl from "@/componentes_visuales/PanelDeControl";
+import { appBase, TIPOS_DE_INCIDENCIA, URL_EVENTOS } from "@/conexion_app/cliente_api";
 import {
   avisosParaLlenar,
   avisosParaVaciar,
@@ -19,7 +19,7 @@ import {
   placaAleatoria,
   repartirLlegadas,
   repartirSalidas,
-} from "@/lib/escenarios";
+} from "@/escenarios_prueba/escenarios";
 
 const URL_APP_BASE = process.env.NEXT_PUBLIC_URL_APP_BASE ?? "http://localhost:3000";
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));

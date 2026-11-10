@@ -4,7 +4,7 @@
 // pestañas. Cada botón termina en una llamada a la API pública de la app (ver el Registro).
 
 import { useEffect, useState } from "react";
-import { TIPOS_DE_INCIDENCIA } from "@/lib/cliente_base";
+import { TIPOS_DE_INCIDENCIA } from "@/conexion_app/cliente_api";
 
 const PESTANAS = [
   { id: "garita", texto: "🚗 Garita" },
@@ -384,7 +384,7 @@ function PestanaPostman({ urlAppBase, seleccionado, placa }) {
       <h2>Llamar a la app base desde Postman</h2>
       <p className="ayuda">
         Lo que mandes desde Postman llega a la app base como un aviso real, y el simulador lo dibuja (marcador rosa).
-        Colección lista para importar: <code>RadarEstacionamientos_simulador/postman/</code>.
+        Colección lista para importar: <code>RadarEstacionamientos_simulador/coleccion_postman/</code>.
       </p>
       {llamadas.map((l) => (
         <div key={l.titulo} style={{ display: "flex", flexDirection: "column", gap: 4 }}>

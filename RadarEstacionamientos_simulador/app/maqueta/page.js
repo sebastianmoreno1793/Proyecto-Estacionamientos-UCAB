@@ -5,7 +5,7 @@
 // en `exportes/` para copiarlas a `RadarEstacionamientos_code/front/public/maqueta/`.
 
 import { useCallback, useEffect, useState } from "react";
-import MaquetaRender from "@/components/MaquetaRender";
+import MaquetaRender from "@/componentes_visuales/MaquetaRender";
 
 export default function PaginaMaqueta() {
   const [estacionamientos, setEstacionamientos] = useState(null);

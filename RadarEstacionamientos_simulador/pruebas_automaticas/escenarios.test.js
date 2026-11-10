@@ -3,7 +3,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { generadorAleatorio } from "../lib/mapa3d/geo.js";
+import { generadorAleatorio } from "../mapa_3d/geo.js";
 import {
   avisosParaLlenar,
   avisosParaVaciar,
@@ -11,7 +11,7 @@ import {
   placaAleatoria,
   repartirLlegadas,
   repartirSalidas,
-} from "../lib/escenarios.js";
+} from "../escenarios_prueba/escenarios.js";
 
 const CAMPUS = [
   { id: "a", activo: true, capacidad: 10, ocupados: 8 }, // 2 libres

@@ -47,8 +47,8 @@ ninguno y en gris si está cerrado, siempre con el texto de su estado y la canti
 
 ## Consecuencias
 
-- Código: `nivelDelSemaforo` usa los **libres**, no el porcentaje (`lib/estacionamientos/reglas.js`
-  y `tests/semaforo.test.js`). La maqueta 3D del simulador usa los mismos dos colores.
+- Código: `nivelDelSemaforo` usa los **libres**, no el porcentaje (`back/logica/estacionamientos/reglas.js`
+  y `back/pruebas/semaforo.test.js`). La maqueta 3D del simulador usa los mismos dos colores.
 - Documentos actualizados: `negocio/problema_y_usuarios.md`, `para_el_codigo/CONTEXTO.md`,
   `producto/DESIGN.md`, D-007, el Issue #6 y la tarjeta HU 4.2 de Trello.
 - **El Brief no cambia:** solo habla del «semáforo de ocupación», sin fijar colores.

@@ -1,6 +1,6 @@
 // Rutas del carro por las vías reales del campus (mapa 3D, HU 3.2). Funciones puras.
 //
-// El grafo se arma con las vías de `data/campus.js`: dos vías se conectan donde
+// El grafo se arma con las vías de `datos_campus/campus.js`: dos vías se conectan donde
 // comparten un punto de OSM (mismas coordenadas). Se respeta el sentido único.
 
 import { gpsAMetros, puntoEnPoligono } from "./geo.js";

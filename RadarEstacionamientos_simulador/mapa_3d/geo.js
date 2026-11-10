@@ -6,7 +6,7 @@
 //   z  sur (+) / norte (−)   ← negado para que Three.js vea el norte "hacia adentro"
 //   y  altura sobre la cota más baja del relieve
 
-import { CENTRO_CAMPUS } from "../../data/campus.js";
+import { CENTRO_CAMPUS } from "../datos_campus/campus.js";
 
 export const [LAT_CENTRO, LON_CENTRO] = CENTRO_CAMPUS;
 export const M_POR_GRADO_LAT = 110540;
