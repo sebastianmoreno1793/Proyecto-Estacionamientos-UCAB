@@ -63,12 +63,10 @@ describe("POST /api/avisos (HU 3.1, 3.2 y 4.1)", () => {
     assert.ok(movimiento.hora);
   });
 
-  test("el mismo idAviso (texto o número) no se cuenta dos veces", async () => {
+  test("el idAviso (texto o número) se guarda como texto", async () => {
     const cuerpo = { estacionamientoId: "est-playa", tipo: "ENTRADA", idAviso: 7 };
-    const primero = await (await avisos.POST(peticion("/api/avisos", "POST", cuerpo, CLAVE_SENSOR))).json();
-    const segundo = await (await avisos.POST(peticion("/api/avisos", "POST", cuerpo, CLAVE_SENSOR))).json();
-    assert.equal(primero.movimiento.idAviso, "7");
-    assert.equal(segundo.movimiento.id, primero.movimiento.id);
+    const { movimiento } = await (await avisos.POST(peticion("/api/avisos", "POST", cuerpo, CLAVE_SENSOR))).json();
+    assert.equal(movimiento.idAviso, "7");
   });
 });
 

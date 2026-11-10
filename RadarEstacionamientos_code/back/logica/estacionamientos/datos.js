@@ -47,10 +47,9 @@ export async function cambiarEstacionamiento(id, { capacidad, activo }) {
 }
 
 // HU 3.1 + 4.1: el sensor de un estacionamiento avisa una entrada o salida; queda registrada
-// con la hora y cambia los puestos libres. `idAviso` lo pone el sensor: si reintenta el mismo
-// aviso (p. ej. por un corte de red), no se cuenta dos veces.
+// con la hora y cambia los puestos libres. `idAviso` lo pone el sensor y se guarda tal cual.
 // HU 4.1 (RN3 y RN4): un aviso rechazado no cambia el aforo, pero queda registrado con la hora y
-// el motivo («no_existe» = rechazado; «lleno», «vacio», «desactivado», «tipo» = anomalía).
+// el motivo («no_existe» = rechazado; «lleno», «vacio», «tipo» = anomalía).
 // Guarda un aviso rechazado con su motivo y su hora (HU 4.1). [datos]
 function registrarRechazo(almacen, { estacionamientoId, tipo, idAviso }, motivo, ahora) {
   const rechazo = { id: crypto.randomUUID(), idAviso, estacionamientoId, tipo, motivo, hora: ahora.toISOString() };
@@ -58,22 +57,14 @@ function registrarRechazo(almacen, { estacionamientoId, tipo, idAviso }, motivo,
   return rechazo;
 }
 
-// Registra una ENTRADA o SALIDA y actualiza los ocupados; no cuenta repetidos y guarda los rechazos (HU 3.1 y 4.1).
-// Devuelve { movimiento, estacionamiento, repetido? } o { error, motivo }. [datos]
+// Registra una ENTRADA o SALIDA y actualiza los ocupados; guarda los rechazos (HU 3.1 y 4.1).
+// Devuelve { movimiento, estacionamiento } o { error, motivo }. [datos]
 export async function registrarAviso({ estacionamientoId, tipo, idAviso = null }, ahora = new Date()) {
   const almacen = obtenerAlmacen();
   const estacionamiento = almacen.estacionamientos.find((e) => e.id === estacionamientoId);
   if (!estacionamiento) {
     registrarRechazo(almacen, { estacionamientoId, tipo, idAviso }, "no_existe", ahora);
     return { error: `El estacionamiento «${estacionamientoId}» no existe.`, motivo: "no_existe" };
-  }
-
-  if (idAviso) {
-    // El mismo aviso del mismo sensor (no basta el id: otro estacionamiento podría repetirlo).
-    const repetido = almacen.movimientos.find(
-      (m) => m.idAviso === idAviso && m.estacionamientoId === estacionamientoId,
-    );
-    if (repetido) return { movimiento: { ...repetido }, estacionamiento: { ...estacionamiento }, repetido: true };
   }
 
   const tipoNormalizado = String(tipo ?? "")

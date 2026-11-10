@@ -7,12 +7,11 @@ import { usePathname } from "next/navigation";
 
 const PARTES = [
   { href: "/admin/puestos", texto: "Puestos" }, // HU 5.4
-  { href: "/admin/incidencias", texto: "Incidencias" }, // lista de incidencias (HU 9.3, siguiente sprint; aquí se ven las de la 9.1)
   { href: "/admin/garita", texto: "Garita" }, // HU 3.1, 3.2 y 4.1
   { href: "/admin/edificios", texto: "Edificios" }, // HU 6.1
 ];
 
-// Muestra los chips de Administración (Puestos, Incidencias, Garita, Edificios) y marca la página actual.
+// Muestra los chips de Administración (Puestos, Garita, Edificios) y marca la página actual.
 // Va arriba de las páginas /admin; solo lo ve el administrador.
 export default function MenuAdmin() {
   const ruta = usePathname();

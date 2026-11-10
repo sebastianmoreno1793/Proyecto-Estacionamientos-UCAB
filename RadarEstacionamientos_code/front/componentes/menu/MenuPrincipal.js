@@ -5,7 +5,7 @@ import { obtenerUsuarioActual } from "@/servidor/sesion";
 import { inicialesDe } from "@back/logica/usuarios/reglas.js";
 
 // Encabezado y barra de pestañas (D-007 v2): el mismo en web y en teléfono.
-// Cuatro pestañas para todos. Lo de administración (incidencias, garita, capacidad, edificios)
+// Cuatro pestañas para todos. Lo de administración (capacidad, garita, edificios)
 // se abre desde Perfil y solo lo ve el administrador.
 const ENLACES = [
   { href: "/", texto: "Inicio", icono: "inicio" },

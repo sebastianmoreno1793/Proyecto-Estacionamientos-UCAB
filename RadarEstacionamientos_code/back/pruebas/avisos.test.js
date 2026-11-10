@@ -54,10 +54,12 @@ describe("avisos de entrada y salida de los sensores", () => {
     assert.equal(resultado.motivo, "vacio");
   });
 
-  test("un estacionamiento desactivado no recibe avisos", async () => {
+  test("un estacionamiento cerrado también cuenta sus entradas y salidas", async () => {
     await cambiarEstacionamiento("est-labs", { capacidad: "40", activo: false });
-    const resultado = await registrarAviso({ estacionamientoId: "est-labs", tipo: "ENTRADA" });
-    assert.equal(resultado.motivo, "desactivado");
+    const antes = await labs();
+    const resultado = await registrarAviso({ estacionamientoId: "est-labs", tipo: "SALIDA" });
+    assert.equal(resultado.error, undefined);
+    assert.equal((await labs()).ocupados, antes.ocupados - 1);
   });
 
   test("rechaza estacionamientos que no existen y tipos inválidos", async () => {
@@ -65,14 +67,6 @@ describe("avisos de entrada y salida de los sensores", () => {
     assert.equal((await registrarAviso({ estacionamientoId: "est-labs", tipo: "PASO" })).motivo, "tipo");
   });
 
-  test("si el sensor reintenta el mismo aviso (mismo idAviso), no se cuenta dos veces", async () => {
-    const antes = await labs();
-    await registrarAviso({ estacionamientoId: "est-labs", tipo: "ENTRADA", idAviso: "sensor-1-0001" });
-    const segundo = await registrarAviso({ estacionamientoId: "est-labs", tipo: "ENTRADA", idAviso: "sensor-1-0001" });
-    assert.equal(segundo.repetido, true);
-    assert.equal((await labs()).ocupados, antes.ocupados + 1);
-    assert.equal((await listarMovimientos()).length, 1);
-  });
 });
 
 describe("semáforo y vista pública", () => {

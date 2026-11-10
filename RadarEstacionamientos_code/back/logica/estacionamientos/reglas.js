@@ -37,14 +37,14 @@ export const textoLibres = (n) => `${n} ${n === 1 ? "libre" : "libres"}`;
 export const TIPOS_DE_MOVIMIENTO = ["ENTRADA", "SALIDA"];
 
 // HU 4.1: una entrada ocupa un puesto y una salida lo libera. Un aviso que rompería los
-// límites (lleno, vacío) o que llega de un estacionamiento desactivado se rechaza. [regla]
+// límites (lleno, vacío) se rechaza. Un estacionamiento cerrado también cuenta sus avisos:
+// los carros siguen entrando y saliendo aunque no se muestre ni se sugiera. [regla]
 export function aplicarMovimiento(estacionamiento, tipo) {
   if (!TIPOS_DE_MOVIMIENTO.includes(tipo)) {
     return { error: "El tipo debe ser ENTRADA o SALIDA.", motivo: "tipo" };
   }
-  const { etiqueta, nombre, activo, capacidad, ocupados } = estacionamiento;
+  const { etiqueta, nombre, capacidad, ocupados } = estacionamiento;
   const cual = etiqueta ?? nombre;
-  if (!activo) return { error: `${cual} está cerrado.`, motivo: "desactivado" };
   if (tipo === "ENTRADA" && ocupados >= capacidad) {
     return { error: `${cual} está lleno.`, motivo: "lleno" };
   }
@@ -71,7 +71,7 @@ export function validarCapacidad(valor) {
 }
 
 // HU 5.4: un estacionamiento cerrado no se sugiere. La HU 7.2 (logica/sugerencia/reglas.js) parte
-// de esta lista y le añade lo suyo (puestos libres, no solo profesores y cercanía al edificio). [regla]
+// de esta lista y le añade lo suyo (puestos libres y cercanía al edificio). [regla]
 export function estacionamientosSugeribles(estacionamientos) {
   return estacionamientos.filter((e) => e.activo);
 }

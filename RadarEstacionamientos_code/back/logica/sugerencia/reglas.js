@@ -29,19 +29,20 @@ export function centroDelPoligono(poligono) {
 
 // Elige la sugerencia.
 //   edificio          { id, nombre, ubicacion: [lat, lon] | null }
-//   estacionamientos  [{ id, nombre, activo, libres, soloProfesores, poligono }]
+//   estacionamientos  [{ id, nombre, activo, libres, poligono }]
 // Devuelve { sugerido, distancia, alternativas } o { error, motivo } si no hay nada que sugerir.
 //   motivo: "no_existe" (no hay tal edificio) · "sin_ubicacion" · "sin_puestos" (todo lleno o cerrado)
-// Filtra abiertos, con libres y sin reserva de profesores, y ordena por distancia (HU 7.2). [regla]
+// Filtra abiertos y con libres, y ordena por distancia (HU 7.2). [regla]
 export function sugerirMasCercano(edificio, estacionamientos) {
   if (!edificio) return { error: "Ese edificio no existe.", motivo: "no_existe" };
   if (!edificio.ubicacion) {
     return { error: `«${edificio.nombre}» todavía no tiene ubicación. Pídele al administrador que la agregue.`, motivo: "sin_ubicacion" };
   }
 
-  // Solo abiertos (HU 5.4), con al menos un puesto libre (D-009) y no reservados a profesores (HU 7.3).
+  // Solo abiertos (HU 5.4) y con al menos un puesto libre (D-009). Considera todos, también los de
+  // solo profesores: tener en cuenta el rol es la HU 7.3 (R2).
   const candidatos = estacionamientosSugeribles(estacionamientos)
-    .filter((e) => e.libres > 0 && !e.soloProfesores && e.poligono?.length)
+    .filter((e) => e.libres > 0 && e.poligono?.length)
     .map((e) => ({ ...e, distancia: distanciaEnMetros(edificio.ubicacion, centroDelPoligono(e.poligono)) }))
     // El más cercano primero; si están a la misma distancia, el que tiene más libres.
     .sort((a, b) => a.distancia - b.distancia || b.libres - a.libres);

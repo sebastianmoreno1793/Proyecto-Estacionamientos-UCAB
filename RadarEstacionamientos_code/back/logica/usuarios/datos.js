@@ -1,7 +1,7 @@
 // Usuarios y sesiones EN MEMORIA, igual que comun/almacen.js: es temporal mientras el
 // equipo elige la base de datos. Al reiniciar el servidor se pierden las cuentas creadas.
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
-import { MENSAJE_SOLO_UCAB, esCorreoUcab, normalizarCorreo, rolSegunCorreo, validarRegistro } from "./reglas.js";
+import { MENSAJE_SOLO_UCAB, MENSAJE_YA_EXISTE, esCorreoUcab, normalizarCorreo, rolSegunCorreo, validarRegistro } from "./reglas.js";
 
 // Cuentas de prueba, una por rol, para ver la app como cada tipo de usuario. Solo existen en
 // desarrollo (en producción no se crean). Son correos inventados, no de personas reales.
@@ -70,7 +70,7 @@ function buscar(correo) {
 export async function registrarUsuario({ correo, contrasena, confirmacion }) {
   const validacion = validarRegistro({ correo, contrasena, confirmacion });
   if (validacion.error) return { error: validacion.error };
-  if (buscar(correo)) return { error: "Ya existe una cuenta con ese correo. Inicia sesión." };
+  if (buscar(correo)) return { error: MENSAJE_YA_EXISTE }; // paso 10.1
 
   const usuario = nuevoUsuario(normalizarCorreo(correo), contrasena, rolSegunCorreo(correo));
   obtenerDatos().usuarios.push(usuario);

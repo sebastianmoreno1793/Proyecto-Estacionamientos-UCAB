@@ -147,7 +147,7 @@
                 "avisos"
               ]
             },
-            "description": "HU 3.1 y 4.1. El sensor avisa una entrada: queda registrada con la hora y los libres bajan en uno. 401 sin x-clave-sensor; 400 si el tipo no es ENTRADA ni SALIDA; 404 si el estacionamiento no existe; 409 si está lleno o cerrado.",
+            "description": "HU 3.1 y 4.1. El sensor avisa una entrada: queda registrada con la hora y los libres bajan en uno. 401 sin x-clave-sensor; 400 si el tipo no es ENTRADA ni SALIDA; 404 si el estacionamiento no existe; 409 si está lleno.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"ENTRADA\"\n}",
@@ -218,54 +218,6 @@
                   "const r = pm.response.json();",
                   "pm.test('libres = capacidad - ocupados (nunca < 0)', () => pm.expect(r.estacionamiento.libres).to.eql(Math.max(0, r.estacionamiento.capacidad - r.estacionamiento.ocupados)));",
                   "pm.test('el movimiento trae la hora', () => pm.expect(r.movimiento.hora).to.be.a('string'));"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "Aviso repetido (no cuenta dos veces)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "x-clave-sensor",
-                "value": "{{claveSensor}}"
-              }
-            ],
-            "url": {
-              "raw": "{{urlBase}}/api/avisos",
-              "host": [
-                "{{urlBase}}"
-              ],
-              "path": [
-                "api",
-                "avisos"
-              ]
-            },
-            "description": "HU 3.1. Envíala dos veces: la segunda devuelve repetido: true y los libres no cambian (el sensor reintentó tras un corte de red).",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"ENTRADA\",\n  \"idAviso\": \"demo-aviso-001\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('200', () => pm.response.to.have.status(200));",
-                  "pm.test('conserva el idAviso', () => pm.expect(pm.response.json().movimiento.idAviso).to.eql('demo-aviso-001'));"
                 ]
               }
             }
@@ -695,7 +647,7 @@
                 "{{estacionamiento}}"
               ]
             },
-            "description": "HU 5.4 Modificar la capacidad y el estado. Solo el administrador (403 sin su cookie). Lo que no se envía queda igual. Capacidad entera de 1 a 2000; «activo» true o false. 404 si el id no existe. Después, la sugerencia de la HU 7.2 cambia y los avisos a este estacionamiento dan 409.",
+            "description": "HU 5.4 Modificar la capacidad y el estado. Solo el administrador (403 sin su cookie). Lo que no se envía queda igual. Capacidad entera de 1 a 2000; «activo» true o false. 404 si el id no existe. Después, la sugerencia de la HU 7.2 cambia; los avisos de sus sensores se siguen contando.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"activo\": false\n}",

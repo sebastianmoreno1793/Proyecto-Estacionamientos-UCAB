@@ -13,7 +13,8 @@ export default function FormularioCuenta({ modo }) {
   const [estado, accion, pendiente] = useActionState(esRegistro ? crearCuenta : entrar, {});
 
   return (
-    <form action={accion} className={estilos.tarjeta}>
+    // En Crear cuenta, noValidate apaga los avisos del navegador: los mensajes los da el sistema (HU 1.1).
+    <form action={accion} className={estilos.tarjeta} noValidate={esRegistro}>
       <label className={estilos.campo}>
         Correo institucional
         <input

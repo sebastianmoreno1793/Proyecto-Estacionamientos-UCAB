@@ -454,16 +454,20 @@ a {
   }
 }
 
-/* Píldora con los libres: se puede tocar y no cambia de tamaño al acercar. */
+/* Píldora de cada estacionamiento: nombre arriba; libres y estado abajo (HU 5.1 y 4.2).
+   Se puede tocar y no cambia de tamaño al acercar. */
 .pildora {
   position: absolute;
   transform: translate(-50%, -50%) scale(var(--escala));
   transform-origin: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-width: 34px;
   min-height: 30px;
   padding: 4px 10px;
   border: 2px solid #ffffff;
-  border-radius: 999px;
+  border-radius: 12px;
   background: var(--color);
   color: #ffffff;
   box-shadow: 0 2px 6px rgba(15, 27, 45, 0.3);
@@ -480,19 +484,34 @@ a {
   font-weight: 800;
 }
 
-/* Vista general: círculos chicos solo con el número, para que no se tapen entre sí. */
+.pildora-nombre {
+  font-weight: 700;
+}
+
+.pildora-estado {
+  font-weight: 500;
+}
+
+/* Vista general: la misma información con letra más chica, para que no se tapen entre sí. */
 .pildora.compacta {
   min-width: 28px;
   min-height: 28px;
-  padding: 3px 6px;
-  font-size: 13px;
-  line-height: 18px;
+  padding: 2px 6px;
+  border-width: 1.5px;
+  font-size: 10px;
+  line-height: 13px;
 }
 
 .pildora.elegida {
   outline: 3px solid var(--azul);
   outline-offset: 2px;
   z-index: 2;
+}
+
+/* Donde hay varios juntos, la píldora que se señala o se enfoca pasa al frente. */
+.pildora:hover,
+.pildora:focus-visible {
+  z-index: 3;
 }
 
 .rotulo-edificio {

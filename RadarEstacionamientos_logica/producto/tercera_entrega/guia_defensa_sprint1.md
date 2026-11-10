@@ -19,7 +19,7 @@ contar el camino de su HU sin leer: pantalla → acción o API → reglas → da
 
    | Rol | Correo | Contraseña | Qué ve |
    |---|---|---|---|
-   | Administrador | `admin.prueba@ucab.edu.ve` | `123456789` | Todo, más «Administrar» en Perfil (puestos, incidencias, garita, edificios) |
+   | Administrador | `admin.prueba@ucab.edu.ve` | `123456789` | Todo, más «Administrar» en Perfil (puestos, garita, edificios) |
    | Estudiante | `estudiante.prueba@est.ucab.edu.ve` | `123456789` | Inicio, Mapa, Reportar y Perfil |
    | Profesor | `profesor.prueba@ucab.edu.ve` | `123456789` | Lo mismo que el estudiante, con rol Profesor |
 
@@ -74,10 +74,10 @@ Preguntas difíciles que pueden salir y qué contestar:
 | 3.2 Simular sensores y placas | Aaron | Simulador :3001 | `RadarEstacionamientos_simulador` → su puente `/api/base/...` → las mismas URL de la app (D-002). Placas: `POST /api/garita/lecturas` → `api/garita.js` → `logica/garita/` | `avisos.test.js`, pruebas del simulador (19) |
 | 4.1 Actualizar el aforo | Aaron | Mapa e Inicio | `registrarAviso` → `estacionamientos/reglas.js` (`aplicarMovimiento`: la entrada resta un libre, la salida lo suma; nunca menos de 0 ni más que la capacidad; si no se puede, va a anomalías) → `emitir` del canal en vivo | `criterios_sprint1.test.js` (CA1 a CA5) |
 | 4.2 Semáforo | Aaron | Mapa e Inicio | `estacionamientos/reglas.js` (`nivelDelSemaforo`: verde si hay ≥ 1 libre, rojo con 0, gris si está cerrado; D-009) → `MaquetaCampus.js` y `Inicio.js` | `semaforo.test.js` |
-| 5.1 Mapa del campus | German | `/mapa` | `app/mapa/page.js` (pide sesión) → `MaquetaCampus.js`: `fetch /api/estacionamientos` + canal en vivo; polígonos sobre la imagen; borde punteado = solo profesores; error con «Reintentar» y «Salir». Los nombres salen en la lista lateral y en las píldoras al acercar | `criterios_sprint1.test.js` |
+| 5.1 Mapa del campus | German | `/mapa` | `app/mapa/page.js` (pide sesión) → `MaquetaCampus.js`: `fetch /api/estacionamientos` + canal en vivo; polígonos sobre la imagen; borde punteado = solo profesores; error con «Reintentar» y «Salir». Cada píldora muestra desde el inicio el nombre, los libres y el estado en texto (HU 4.2) | `criterios_sprint1.test.js` |
 | 5.4 Capacidad y estado | German | `/admin/puestos` | `componentes/admin/FilaPuesto.js` → `acciones/puestos.js` (solo administrador) → `estacionamientos/reglas.js` (`validarCapacidad`) → `datos.js` (`cambiarEstacionamiento`). También por `PATCH /api/estacionamientos/:id` (403 si no es administrador) | `capacidad.test.js`, `api.test.js` |
 | 6.1 Catálogo de edificios | German | `/admin/edificios` | `componentes/admin/` → `acciones/edificios.js` → `logica/edificios/reglas.js` → `edificios/datos.js` (agregar, modificar, quitar). La lista la usan Inicio y `/sugerencia` | `edificios.test.js` |
-| 7.2 Sugerencia | Manuel | Inicio (chips) y `/sugerencia` | `Inicio.js` → `fetch /api/sugerencia?edificio=` → `api/sugerencia.js` → `logica/sugerencia/datos.js` → `reglas.js` (el abierto con libres más cercano por distancia; sin los de solo profesores) | `sugerencia.test.js`, `api.test.js` |
+| 7.2 Sugerencia | Manuel | Inicio (chips) y `/sugerencia` | `Inicio.js` → `fetch /api/sugerencia?edificio=` → `api/sugerencia.js` → `logica/sugerencia/datos.js` → `reglas.js` (el abierto con libres más cercano por distancia; considera todos, también los de solo profesores) | `sugerencia.test.js`, `api.test.js` |
 | 8.1 Notificaciones | Manuel | Inicio, Mapa y Perfil | `componentes/notificaciones/Notificaciones.js` → `front/notificaciones/GestorNotificaciones.js` (`debeMostrarSolicitud`: paso 2.2 · `pedirPermiso` + una prueba: CA1 · `bloquear`: CA2 · interruptor de Perfil: CA3) → el único service worker `public/sw.js` (D-008) | `front/pruebas/notificaciones.test.js` |
 | 9.1 Crear una incidencia | Sebastián | `/reportar` | `componentes/reportar/FormularioIncidencia.js` → `acciones/incidencias.js` → `logica/incidencias/reglas.js` (falta algo o está cerrado → mensaje) → `datos.js` (`registrarIncidencia`: fecha, hora, «pendiente», sin mostrar el correo). Confirmación con estacionamiento, tipo, hora y estado. «Cancelar» vuelve al mapa | `incidencias.test.js`, `criterios_sprint1.test.js`, `api.test.js` |
 
@@ -93,10 +93,11 @@ Preguntas difíciles que pueden salir y qué contestar:
 
 ## 4. Lo que el código hace de más (tenerlo explicado)
 
-- 4.1: ignora avisos repetidos con el mismo `idAviso` (protege el aforo si un sensor reenvía).
-- 5.1: la tarjeta de detalle del estacionamiento adelanta parte de la HU 5.3.
-- 9.1: `/admin/incidencias` adelanta el listado de la HU 9.3.
 - Canal en vivo `/api/eventos`: es la base de la HU 4.3 y del requisito de tiempo real.
+
+La tarjeta del estacionamiento en el mapa y su botón «Reportar un problema aquí» **no** son de más:
+son de la HU 9.1 (paso 1 del escenario: «Reportar» se abre desde el menú o desde la tarjeta de un
+estacionamiento del mapa).
 
 ## 5. Lo que el equipo debe completar en Trello (no se cambió desde aquí)
 

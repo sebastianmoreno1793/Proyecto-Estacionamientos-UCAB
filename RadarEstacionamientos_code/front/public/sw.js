@@ -1,22 +1,23 @@
 // Service worker ÚNICO del Radar (D-008). Nadie registra otro: si una HU necesita algo del
 // service worker, se agrega aquí.
 //
-//  - App shell en caché: la app abre sin red; si una página no está guardada, «Sin conexión».
+//  - App shell en caché: las páginas ya visitadas abren sin red.
 //  - /api/* va SIEMPRE a la red: los datos en vivo nunca salen de la caché (RNF tolerancia a fallos).
 //  - La versión nueva espera a que el usuario pulse «Actualizar» (mensaje "ACTUALIZAR").
-//  - Notificaciones (HU 8.1): manejadores `push` y `notificationclick`.
+//  - Notificaciones (HU 8.1): la notificación de prueba la muestra el navegador con
+//    `registration.showNotification` (front/notificaciones/Notificacion.js). El envío de
+//    notificaciones reales (push) queda fuera del alcance de la HU 8.1.
 //
 // Al cambiar este archivo, sube VERSION para que los teléfonos reciban la versión nueva.
 
-const VERSION = "radar-v6";
+const VERSION = "radar-v7";
 const CACHE_SHELL = `${VERSION}-shell`;
 const CACHE_ESTATICOS = `${VERSION}-estaticos`;
-const SIN_CONEXION = "/sin-conexion";
 // Páginas con datos personales (placas, correos, incidencias): nunca se guardan en el teléfono,
 // así no quedan a la vista de otra persona después de «Salir».
 const PRIVADAS = ["/admin", "/perfil", "/reportar", "/sugerencia"];
 // «/» y «/mapa» no van aquí: sin sesión llegarían como redirección a /entrar. Se guardan al visitarlos.
-const SHELL = [SIN_CONEXION, "/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
+const SHELL = ["/manifest.webmanifest", "/icono-192.png", "/icono-512.png", "/maqueta/campus.jpg"];
 
 self.addEventListener("install", (evento) => {
   evento.waitUntil(caches.open(CACHE_SHELL).then((cache) => cache.addAll(SHELL)));
@@ -46,19 +47,19 @@ self.addEventListener("fetch", (evento) => {
   if (request.headers.get("RSC") || url.searchParams.has("_rsc")) return;
   if (PRIVADAS.some((ruta) => url.pathname.startsWith(ruta))) return;
 
-  // Páginas: primero la red (para ver lo último); sin red, la copia guardada o «Sin conexión».
+  // Páginas: primero la red (para ver lo último); sin red, la copia guardada si la hay.
   if (request.mode === "navigate") {
     evento.respondWith(
       fetch(request)
         .then((respuesta) => {
-          // No se guarda una redirección (p. ej. a /entrar): servirla sin red da error en vez de «Sin conexión».
+          // No se guarda una redirección (p. ej. a /entrar): servirla sin red daría error.
           if (respuesta.ok && respuesta.type === "basic" && !respuesta.redirected) {
             const copia = respuesta.clone();
             caches.open(CACHE_SHELL).then((cache) => cache.put(request, copia));
           }
           return respuesta;
         })
-        .catch(async () => (await caches.match(request)) ?? (await caches.match(SIN_CONEXION))),
+        .catch(async () => (await caches.match(request)) ?? Response.error()),
     );
     return;
   }
@@ -93,38 +94,6 @@ self.addEventListener("fetch", (evento) => {
         })
         .catch(() => guardada);
       return guardada ?? deRed;
-    }),
-  );
-});
-
-// ---------- Notificaciones (HU 8.1, Manuel Rosales) ----------
-
-self.addEventListener("push", (evento) => {
-  // Mismos nombres que front/notificaciones/Notificacion.js (titulo, cuerpo, url). Acepta texto plano.
-  let datos = {};
-  try {
-    datos = evento.data ? evento.data.json() : {};
-  } catch {
-    datos = { cuerpo: evento.data?.text() };
-  }
-  evento.waitUntil(
-    self.registration.showNotification(datos.titulo || "Radar UCAB", {
-      body: datos.cuerpo || datos.mensaje || "Hay novedades en los estacionamientos.",
-      icon: "/icono-192.png",
-      badge: "/icono-192.png",
-      data: { url: datos.url || "/" },
-    }),
-  );
-});
-
-self.addEventListener("notificationclick", (evento) => {
-  evento.notification.close();
-  const destino = new URL(evento.notification.data?.url || "/", self.location.origin).href;
-  evento.waitUntil(
-    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((ventanas) => {
-      const abierta = ventanas.find((v) => v.url === destino && "focus" in v);
-      if (abierta) return abierta.focus();
-      return self.clients.openWindow ? self.clients.openWindow(destino) : undefined;
     }),
   );
 });

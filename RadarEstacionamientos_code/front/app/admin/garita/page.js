@@ -15,7 +15,6 @@ const MOTIVOS = {
   no_existe: "Rechazado: el estacionamiento no existe",
   lleno: "Anomalía: entrada con el estacionamiento lleno",
   vacio: "Anomalía: salida sin carros dentro",
-  desactivado: "Anomalía: aviso de un estacionamiento cerrado",
   tipo: "Anomalía: tipo de movimiento desconocido",
 };
 

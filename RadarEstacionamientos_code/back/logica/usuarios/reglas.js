@@ -3,10 +3,15 @@
 
 export const DOMINIOS_UCAB = ["est.ucab.edu.ve", "ucab.edu.ve"];
 
-export const MENSAJE_SOLO_UCAB =
-  "Solo puede entrar la comunidad UCAB. Usa tu correo institucional: @est.ucab.edu.ve (estudiantes) o @ucab.edu.ve (profesores y personal).";
 
 export const LARGO_MINIMO_CONTRASENA = 8;
+
+// Los cuatro mensajes del escenario de la HU 1.1, letra por letra (pasos 7.1, 8.1, 9.1 y 10.1).
+// Crear cuenta usa noValidate: el navegador no muestra sus avisos, solo estos.
+export const MENSAJE_SOLO_UCAB = "Solo puede entrar la comunidad UCAB. Usa tu correo institucional";
+export const MENSAJE_CONTRASENA_CORTA = `La contraseña debe tener al menos ${LARGO_MINIMO_CONTRASENA} caracteres`;
+export const MENSAJE_NO_COINCIDEN = "Las contraseñas no coinciden";
+export const MENSAJE_YA_EXISTE = "Ya existe una cuenta con ese correo. Inicia sesión";
 
 // Quita los espacios y pasa el correo a minúsculas. [regla]
 export function normalizarCorreo(correo) {
@@ -36,13 +41,12 @@ export function rolSegunCorreo(correo) {
   return null;
 }
 
-// Valida el registro: correo UCAB, contraseña de al menos 8 caracteres y confirmación igual (HU 1.1). [regla]
+// Valida el registro en el orden del diagrama de la HU 1.1 (pasos 7, 8 y 9). Un correo vacío o
+// mal escrito no tiene dominio UCAB y cae en el paso 7.1; una contraseña vacía, en el 8.1. [regla]
 export function validarRegistro({ correo, contrasena, confirmacion }) {
   if (!esCorreoUcab(correo)) return { error: MENSAJE_SOLO_UCAB };
-  if (String(contrasena ?? "").length < LARGO_MINIMO_CONTRASENA) {
-    return { error: `La contraseña debe tener al menos ${LARGO_MINIMO_CONTRASENA} caracteres.` };
-  }
-  if (contrasena !== confirmacion) return { error: "Las contraseñas no coinciden." };
+  if (String(contrasena ?? "").length < LARGO_MINIMO_CONTRASENA) return { error: MENSAJE_CONTRASENA_CORTA };
+  if (contrasena !== confirmacion) return { error: MENSAJE_NO_COINCIDEN };
   return {};
 }
 

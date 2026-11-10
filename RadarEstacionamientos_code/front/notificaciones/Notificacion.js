@@ -3,25 +3,23 @@
  */
 export class Notificacion {
   /**
-   * Crea la notificación con título, cuerpo, ícono y la URL que abre al tocarla. [notificaciones]
-   * @param {{ titulo: string, cuerpo: string, icono?: string, url?: string }} datos
+   * Crea la notificación con título, cuerpo e ícono. [notificaciones]
+   * @param {{ titulo: string, cuerpo: string, icono?: string }} datos
    */
-  constructor({ titulo, cuerpo, icono = "/icono-192.png", url = "/" }) {
+  constructor({ titulo, cuerpo, icono = "/icono-192.png" }) {
     this.titulo = titulo;
     this.cuerpo = cuerpo;
     this.icono = icono;
-    this.url = url;
   }
 
   /**
    * Convierte la notificación al formato de `registration.showNotification()`. [notificaciones]
-   * @returns {{ body: string, icon: string, data: { url: string } }}
+   * @returns {{ body: string, icon: string }}
    */
   aOpcionesDeVisualizacion() {
     return {
       body: this.cuerpo,
       icon: this.icono,
-      data: { url: this.url },
     };
   }
 
@@ -46,7 +44,6 @@ export class Notificacion {
       cuerpo:
         "¡Notificaciones configuradas correctamente! Te avisaremos cuando haya puestos disponibles.",
       icono: "/icono-192.png",
-      url: "/",
     });
   }
 }

@@ -61,13 +61,11 @@ describe("Notificacion", () => {
       titulo: "Radar UCAB",
       cuerpo: "Hay un puesto libre",
       icono: "/icono-192.png",
-      url: "/",
     });
 
     assert.deepEqual(notificacion.aOpcionesDeVisualizacion(), {
       body: "Hay un puesto libre",
       icon: "/icono-192.png",
-      data: { url: "/" },
     });
   });
 

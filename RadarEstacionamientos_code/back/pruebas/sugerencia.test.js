@@ -51,9 +51,9 @@ describe("criterio de aceptación: el más cercano con puestos libres", () => {
     assert.equal(sugerido.id, "lejos");
   });
 
-  test("no sugiere puestos solo para profesores (eso es la HU 7.3)", () => {
+  test("considera todos los estacionamientos, también los de solo profesores (el rol es la HU 7.3)", () => {
     const { sugerido } = sugerirMasCercano(EDIFICIO, [{ ...cerca, soloProfesores: true }, lejos]);
-    assert.equal(sugerido.id, "lejos");
+    assert.equal(sugerido.id, "cerca");
   });
 
   test("si todo está lleno o cerrado, lo dice en vez de sugerir", () => {

@@ -45,8 +45,22 @@ describe("HU 1.1 · Crear cuenta con el correo institucional", () => {
     assert.ok((await registrarUsuario({ ...datos, contrasena: "12345678", confirmacion: "12345678" })).usuario);
   });
 
-  test("rechaza un correo UCAB mal escrito (con espacios)", async () => {
-    assert.ok((await registrarUsuario({ ...datos, correo: "ana perez@est.ucab.edu.ve" })).error);
+  // Los textos se escriben aquí a mano, letra por letra, para que la prueba falle si alguien los cambia.
+  test("los mensajes son los del escenario, letra por letra (pasos 7.1, 8.1, 9.1 y 10.1)", async () => {
+    const error = async (cambios) => (await registrarUsuario({ ...datos, ...cambios })).error;
+    assert.equal(await error({ correo: "ana@gmail.com" }), "Solo puede entrar la comunidad UCAB. Usa tu correo institucional");
+    assert.equal(await error({ contrasena: "1234567", confirmacion: "1234567" }), "La contraseña debe tener al menos 8 caracteres");
+    assert.equal(await error({ confirmacion: "otraclave" }), "Las contraseñas no coinciden");
+    await registrarUsuario(datos);
+    assert.equal(await error({}), "Ya existe una cuenta con ese correo. Inicia sesión");
+  });
+
+  test("un correo vacío o mal escrito cae en el paso 7.1 y una contraseña vacía en el 8.1", async () => {
+    const error = async (cambios) => (await registrarUsuario({ ...datos, ...cambios })).error;
+    for (const correo of ["", "   ", "ana perez@est.ucab.edu.ve", "ana.perez", "ana@@est.ucab.edu.ve"]) {
+      assert.equal(await error({ correo }), "Solo puede entrar la comunidad UCAB. Usa tu correo institucional", correo);
+    }
+    assert.equal(await error({ contrasena: "", confirmacion: "" }), "La contraseña debe tener al menos 8 caracteres");
   });
 });
 
@@ -92,13 +106,6 @@ describe("HU 3.1 y 4.1 · Avisos de entrada y salida y aforo", () => {
     const r = await registrarAviso({ estacionamientoId: "est-labs", tipo: "ENTRADA" });
     assert.equal(r.motivo, "lleno");
     assert.equal((await listarAvisosRechazados())[0].motivo, "lleno");
-  });
-
-  test("un idAviso usado por otro estacionamiento no se toma como repetido", async () => {
-    await registrarAviso({ estacionamientoId: "est-labs", tipo: "ENTRADA", idAviso: "s-1" });
-    const r = await registrarAviso({ estacionamientoId: "est-playa", tipo: "ENTRADA", idAviso: "s-1" });
-    assert.notEqual(r.repetido, true);
-    assert.equal(r.movimiento.estacionamientoId, "est-playa");
   });
 
   test("si la capacidad baja por debajo de los ocupados: 0 libres, rojo y no entra nadie más", async () => {

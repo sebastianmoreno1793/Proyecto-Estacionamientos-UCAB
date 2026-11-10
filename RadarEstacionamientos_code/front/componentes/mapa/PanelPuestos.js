@@ -49,26 +49,9 @@ function useCifraAnimada(valor) {
   return mostrado;
 }
 
-// Escribe hace cuánto llegó el último dato («hace 3 minutos»), para no tomar cifras viejas como actuales.
-function haceCuanto(hora, ahora) {
-  const segundos = Math.max(0, Math.round((ahora - hora) / 1000));
-  if (segundos < 60) return "hace menos de un minuto";
-  const minutos = Math.round(segundos / 60);
-  return minutos === 1 ? "hace 1 minuto" : `hace ${minutos} minutos`;
-}
-
 // Muestra la lista «¿dónde hay puesto?» junto al mapa (en el celular, una hoja que sube desde abajo). HU 4.2.
 // La usa MaquetaCampus; al tocar un estacionamiento avisa con onElegir.
-export default function PanelPuestos({ estacionamientos, conexion, actualizado, elegido, onElegir }) {
-  const [ahora, setAhora] = useState(() => Date.now());
-  // Sin conexión en vivo, actualiza el reloj cada 15 s para que «hace X minutos» avance; corre si cambia la conexión.
-  useEffect(() => {
-    if (conexion === "en-vivo") return;
-    const reloj = setInterval(() => setAhora(Date.now()), 15000);
-    setAhora(Date.now());
-    // Detiene el reloj al volver a «En vivo» o al salir.
-    return () => clearInterval(reloj);
-  }, [conexion]);
+export default function PanelPuestos({ estacionamientos, conexion, elegido, onElegir }) {
   const [abierto, setAbierto] = useState(true);
   const activos = estacionamientos.filter((e) => e.activo);
   const totalLibres = activos.reduce((suma, e) => suma + e.libres, 0);
@@ -102,7 +85,6 @@ export default function PanelPuestos({ estacionamientos, conexion, actualizado, 
         </button>
         <span className={`estado-conexion estado-${conexion}`}>
           <span className="punto" aria-hidden="true" /> {TEXTO_CONEXION[conexion]}
-          {conexion !== "en-vivo" && actualizado && ` · cifras de ${haceCuanto(actualizado, ahora)}`}
         </span>
       </header>
 

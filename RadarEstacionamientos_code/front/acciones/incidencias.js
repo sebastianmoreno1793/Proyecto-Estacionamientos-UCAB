@@ -1,7 +1,6 @@
 "use server";
 
 // HU 9.1 · Acción del servidor que recibe el formulario de Reportar y la guarda en el back.
-import { revalidatePath } from "next/cache";
 import { listarEstacionamientos } from "@back/logica/estacionamientos/datos.js";
 import { emitir } from "@back/comun/eventos_en_vivo.js";
 import { registrarIncidencia, vistaPublica } from "@back/logica/incidencias/datos.js";
@@ -26,7 +25,6 @@ export async function reportarIncidencia(_estadoAnterior, formData) {
   const { incidencia } = resultado;
   emitir("INCIDENCIA", { incidencia: vistaPublica(incidencia) });
   const estacionamientos = await listarEstacionamientos();
-  revalidatePath("/admin/incidencias");
   return {
     reporte: {
       estacionamiento: estacionamientos.find((e) => e.id === incidencia.estacionamientoId)?.etiqueta ?? incidencia.estacionamientoId,

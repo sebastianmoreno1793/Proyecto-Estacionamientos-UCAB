@@ -54,7 +54,6 @@ export default function MaquetaCampus() {
   const zona = useRef(null);
   const [estacionamientos, setEstacionamientos] = useState(null);
   const [conexion, setConexion] = useState("conectando");
-  const [actualizado, setActualizado] = useState(null);
   const [error, setError] = useState(null);
   const [elegido, setElegido] = useState(null);
   // Lee ?estacionamiento=<id> de la dirección (viene de «Ver en el mapa», HU 7.2) y lo deja elegido.
@@ -77,7 +76,6 @@ export default function MaquetaCampus() {
       if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
       const { estacionamientos } = await respuesta.json();
       setEstacionamientos(estacionamientos);
-      setActualizado(Date.now());
       setError(null);
     } catch {
       setError("No se pudo cargar el mapa");
@@ -108,12 +106,10 @@ export default function MaquetaCampus() {
       if (mensaje.clase === "AVISO" || mensaje.clase === "ESTACIONAMIENTO") {
         const cambio = mensaje.estacionamiento;
         setEstacionamientos((lista) => lista?.map((e) => (e.id === cambio.id ? { ...e, ...cambio } : e)) ?? lista);
-        setActualizado(Date.now());
         if (mensaje.clase === "AVISO") setLatiendo({ id: cambio.id, vez: Date.now() });
       } else if (mensaje.clase === "REINICIO") {
         const porId = new Map(mensaje.estacionamientos.map((e) => [e.id, e]));
         setEstacionamientos((lista) => lista?.map((e) => ({ ...e, ...porId.get(e.id) })) ?? lista);
-        setActualizado(Date.now());
       }
     };
     // Marca «Sin conexión» cuando el navegador pierde la red.
@@ -315,17 +311,18 @@ export default function MaquetaCampus() {
                     onClick={() => fueToque() && elegir(est.id)}
                     aria-label={`${est.etiqueta ?? est.nombre}: ${nivel.texto}${est.activo ? `, ${textoLibres(est.libres)}` : ""}`}
                   >
-                    {/* De lejos, solo el número (si no, se amontonan); al acercarse, cuántos libres y el nombre (HU 5.1 CA1). */}
-                    {!est.activo ? (
-                      detalle ? "Cerrado" : "–"
-                    ) : detalle ? (
-                      <>
-                        <b>{est.libres}</b> {est.libres === 1 ? "libre" : "libres"}
-                        {` · ${est.etiqueta ?? est.nombre}`}
-                      </>
-                    ) : (
-                      <b>{est.libres}</b>
-                    )}
+                    {/* Siempre, desde que se abre el mapa: el nombre (HU 5.1 CA1) y debajo los libres con
+                        el estado en texto (HU 4.2). Un cerrado dice solo «Cerrado». De lejos, la letra es más chica. */}
+                    <span className="pildora-nombre">{est.etiqueta ?? est.nombre}</span>
+                    <span className="pildora-estado">
+                      {est.activo ? (
+                        <>
+                          <b>{est.libres}</b> {est.libres === 1 ? "libre" : "libres"} · {nivel.texto}
+                        </>
+                      ) : (
+                        nivel.texto
+                      )}
+                    </span>
                   </button>
                 );
               })}
@@ -381,7 +378,6 @@ export default function MaquetaCampus() {
       <PanelPuestos
         estacionamientos={estacionamientos ?? []}
         conexion={conexion}
-        actualizado={actualizado}
         elegido={elegido}
         onElegir={elegir}
       />

@@ -21,7 +21,7 @@ Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `
 
 | Rol | Correo | Contraseña | Qué ve |
 |---|---|---|---|
-| Administrador | `admin.prueba@ucab.edu.ve` | `123456789` | Todo, más «Administrar» en Perfil (puestos, incidencias, garita, edificios) |
+| Administrador | `admin.prueba@ucab.edu.ve` | `123456789` | Todo, más «Administrar» en Perfil (puestos, garita, edificios) |
 | Estudiante | `estudiante.prueba@est.ucab.edu.ve` | `123456789` | Inicio, Mapa, Reportar y Perfil |
 | Profesor | `profesor.prueba@ucab.edu.ve` | `123456789` | Lo mismo que el estudiante, con rol Profesor |
 
