@@ -6,7 +6,7 @@
 //  - /api/* va SIEMPRE a la red: los datos en vivo nunca salen de la caché (RNF tolerancia a fallos).
 //  - La versión nueva espera a que el usuario pulse «Actualizar» (mensaje "ACTUALIZAR").
 //  - Notificaciones (HU 8.1): la notificación de prueba la muestra el navegador con
-//    `registration.showNotification` (front/notificaciones/Notificacion.js). El envío de
+//    `registration.showNotification` (front/notificaciones_del_navegador/Notificacion.js). El envío de
 //    notificaciones reales (push) queda fuera del alcance de la HU 8.1.
 //
 // Al cambiar este archivo, sube VERSION para que los teléfonos reciban la versión nueva.
@@ -51,6 +51,7 @@ self.addEventListener("fetch", (evento) => {
   // Páginas: primero la red (para ver lo último); sin red, la copia guardada si la hay.
   if (request.mode === "navigate") {
     evento.respondWith(
+      // @FETCH Todas › páginas (service worker) — pide la página a internet; sin conexión muestra la copia guardada
       fetch(request)
         .then((respuesta) => {
           // No se guarda una redirección (p. ej. a /entrar): servirla sin red daría error.
@@ -71,6 +72,7 @@ self.addEventListener("fetch", (evento) => {
       caches.match(request).then(
         (guardada) =>
           guardada ??
+          // @FETCH Todas › archivos de la app (service worker) — usa la copia guardada y, si no la hay, la pide a internet
           fetch(request).then((respuesta) => {
             if (!respuesta.ok) return respuesta; // un 404 no se guarda
             const copia = respuesta.clone();
@@ -85,6 +87,7 @@ self.addEventListener("fetch", (evento) => {
   // Íconos e imágenes propias: la guardada al instante y se actualiza por detrás.
   evento.respondWith(
     caches.match(request).then((guardada) => {
+      // @FETCH Todas › íconos e imágenes (service worker) — muestra la copia guardada y la actualiza por detrás
       const deRed = fetch(request)
         .then((respuesta) => {
           if (respuesta.ok) {

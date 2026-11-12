@@ -1,4 +1,5 @@
 "use client";
+// @PANTALLA Simulador › Panel de control: los botones que le mandan avisos, placas e incidencias a la app
 // @HU-3.2 Simular sensores y placas · Aaron — panel de pruebas del simulador
 
 // Menú de control del simulador: todo lo que se puede hacerle a la app base, agrupado en

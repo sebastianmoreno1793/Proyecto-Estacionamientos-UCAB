@@ -17,7 +17,7 @@ npm run dev        # solo la app, en http://localhost:3000
 npm test           # pruebas del back (137) y del front (13)
 ```
 
-Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `back/logica/usuarios/datos.js`):
+Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `back/reglas_y_datos/usuarios/datos.js`):
 
 | Rol | Correo | Contraseña | Qué ve |
 |---|---|---|---|
@@ -31,8 +31,8 @@ Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `
 
 | Carpeta | Qué hay |
 |---|---|
-| `back/` | Lógica y API: `api/` (un archivo por endpoint), `logica/` (reglas y datos por tema), `comun/`, `seguridad/`, `campus/` y `pruebas/` |
-| `front/` | Pantallas: `app/` (solo rutas), `componentes/` (por pantalla), `acciones/` (formularios → back), `notificaciones/`, `servidor/`, `estilos/` y `public/` |
+| `back/` | Lo que pasa en el servidor: `pedidos_y_respuestas/` (recibe lo que piden y contesta), `reglas_y_datos/` (qué se permite y dónde se guarda, por tema), `piezas_compartidas/`, `control_de_acceso/`, `datos_del_campus/` y `pruebas_automaticas/` |
+| `front/` | Lo que ve el usuario: `app/` (una carpeta por pantalla), `partes_de_pantallas/`, `envio_de_formularios/`, `notificaciones_del_navegador/`, `sesion_del_usuario/`, `estilos/` y `public/` |
 | `docs/` | Copia de la carpeta de lógica. **No se edita aquí**, salvo `mapa_HU_codigo.md`, que es solo del código. |
 
 Cada carpeta tiene un `LEEME.md` corto, cada archivo empieza con un comentario que dice qué hace y
@@ -42,10 +42,10 @@ para buscarlas con ⌘⇧F (ver «Buscar en VS Code»).
 ### Cómo se conectan
 
 ```
-navegador (front) ──fetch /api/...──▶ front/app/api/.../route.js ──▶ back/api/<tema>.js ──▶ back/logica/<tema>/
+navegador (front) ──fetch /api/...──▶ front/app/api/.../route.js ──▶ back/pedidos_y_respuestas/<tema>.js ──▶ back/reglas_y_datos/<tema>/
 Postman y sensores ─────────────────▶ las mismas URL /api/...
 simulador ──▶ su puente (/api/base/...) ──▶ las mismas URL /api/... (con la clave de sensores)
-formularios del front ──▶ front/acciones/<tema>.js ──────────────────────▶ back/logica/<tema>/ (directo)
+formularios del front ──▶ front/envio_de_formularios/<tema>.js ──────────────────────▶ back/reglas_y_datos/<tema>/ (directo)
 ```
 
 ### Buscar en VS Code

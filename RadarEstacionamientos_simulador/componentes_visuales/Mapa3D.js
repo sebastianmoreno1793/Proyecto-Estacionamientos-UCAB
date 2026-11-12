@@ -1,10 +1,11 @@
 "use client";
+// @PANTALLA Simulador › Mapa 3D del campus con los carros que entran y salen
 
 // Maqueta 3D del Campus Montalbán con dimensiones reales: el "mundo virtual" del simulador.
 // 1 unidad de Three.js = 1 metro. Origen = CENTRO_CAMPUS. Ejes en `mapa_3d/geo.js`.
 //
 // Todo lo que se dibuja sale de coordenadas reales:
-//   estacionamientos   la app base (GET /api/estacionamientos), que los toma de su back/campus/
+//   estacionamientos   la app base (GET /api/estacionamientos), que los toma de su back/datos_del_campus/
 //   edificios, vías, canchas, garita, relieve   datos_campus/campus.js (OpenStreetMap + SRTM)
 // Lo único que no tiene coordenadas son los árboles (decorativos, repartidos en las
 // áreas verdes) y los puestos pintados (se reparten dentro de cada polígono).

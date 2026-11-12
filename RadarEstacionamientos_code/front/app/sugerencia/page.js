@@ -1,10 +1,11 @@
+// @PANTALLA Sugerir (/sugerencia) — elegir el edificio y ver el estacionamiento libre más cercano
 // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Pantalla Sugerir
 // Pantalla Sugerir (/sugerencia), HU 7.2. En el Inicio está la misma función con chips.
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
-import BuscadorSugerencia from "@/componentes/sugerencia/BuscadorSugerencia";
-import { listarEdificios } from "@back/logica/edificios/datos.js";
-import { obtenerUsuarioActual } from "@/servidor/sesion";
+import BuscadorSugerencia from "@/partes_de_pantallas/sugerencia/BuscadorSugerencia";
+import { listarEdificios } from "@back/reglas_y_datos/edificios/datos.js";
+import { obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
 import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "¿Dónde me estaciono?" };

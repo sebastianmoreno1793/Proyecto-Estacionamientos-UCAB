@@ -1,8 +1,9 @@
+// @PANTALLA Crear cuenta (/registro) — la pantalla para registrarse con el correo UCAB
 // @HU-1.1 Crear cuenta con el correo institucional · Samuel — Pantalla «Crear cuenta»
 // Pantalla Crear cuenta (/registro), HU 1.1.
 import { redirect } from "next/navigation";
-import FormularioCuenta from "@/componentes/cuenta/FormularioCuenta";
-import { obtenerUsuarioActual } from "@/servidor/sesion";
+import FormularioCuenta from "@/partes_de_pantallas/cuenta/FormularioCuenta";
+import { obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
 import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Crear cuenta" };

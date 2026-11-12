@@ -4,13 +4,13 @@
 # Excluding: node_modules, .next
 # ContextLines: 0
 
-RadarEstacionamientos_code/back/api/avisos.js:
+RadarEstacionamientos_code/back/pedidos_y_respuestas/avisos.js:
   1: // @HU-3.1 Recibir avisos de entrada y salida · Aaron — endpoint de los sensores
   2: // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
   10: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
   11: // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
 
-RadarEstacionamientos_code/back/api/estacionamientos.js:
+RadarEstacionamientos_code/back/pedidos_y_respuestas/estacionamientos.js:
   1: // @HU-4.2 Consultar el semáforo de ocupación · Aaron — GET
   2: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — GET con la forma de cada uno
   3: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — PATCH
@@ -18,44 +18,44 @@ RadarEstacionamientos_code/back/api/estacionamientos.js:
   12: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
   22: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 
-RadarEstacionamientos_code/back/api/garita.js:
+RadarEstacionamientos_code/back/pedidos_y_respuestas/garita.js:
   1: // @HU-3.2 Simular sensores y placas · Aaron — endpoint del lector de placas
   7: // @HU-3.2 Simular sensores y placas · Aaron
 
-RadarEstacionamientos_code/back/api/incidencias.js:
+RadarEstacionamientos_code/back/pedidos_y_respuestas/incidencias.js:
   1: // @HU-9.1 Crear una incidencia · Sebastian — endpoint de incidencias
   19: // @HU-9.1 Crear una incidencia · Sebastian
 
-RadarEstacionamientos_code/back/api/sugerencia.js:
+RadarEstacionamientos_code/back/pedidos_y_respuestas/sugerencia.js:
   1: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — endpoint de la sugerencia
   14: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 
-RadarEstacionamientos_code/back/campus/capacidad_inicial.js:
+RadarEstacionamientos_code/back/datos_del_campus/capacidad_inicial.js:
   1: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — capacidad de ejemplo de cada estacionamiento del mapa
 
-RadarEstacionamientos_code/back/campus/edificios.js:
+RadarEstacionamientos_code/back/datos_del_campus/edificios.js:
   1: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — catálogo inicial
   14: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 
-RadarEstacionamientos_code/back/campus/estacionamientos.js:
+RadarEstacionamientos_code/back/datos_del_campus/estacionamientos.js:
   1: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — estacionamientos que se dibujan en el mapa
   28: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
 
-RadarEstacionamientos_code/back/logica/edificios/datos.js:
+RadarEstacionamientos_code/back/reglas_y_datos/edificios/datos.js:
   1: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — catálogo guardado
   6: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — la misma lista para el administrador y el usuario
   13: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
   29: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
   44: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 
-RadarEstacionamientos_code/back/logica/edificios/reglas.js:
+RadarEstacionamientos_code/back/reglas_y_datos/edificios/reglas.js:
   1: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — reglas del catálogo
   12: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
   24: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
   46: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — nombre único y ubicación dentro del campus
   83: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 
-RadarEstacionamientos_code/back/logica/estacionamientos/datos.js:
+RadarEstacionamientos_code/back/reglas_y_datos/estacionamientos/datos.js:
   1: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
   2: // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
   3: // @HU-4.2 Consultar el semáforo de ocupación · Aaron
@@ -67,7 +67,7 @@ RadarEstacionamientos_code/back/logica/estacionamientos/datos.js:
   99: // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
   108: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
 
-RadarEstacionamientos_code/back/logica/estacionamientos/reglas.js:
+RadarEstacionamientos_code/back/reglas_y_datos/estacionamientos/reglas.js:
   1: // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
   2: // @HU-4.2 Consultar el semáforo de ocupación · Aaron
   3: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
@@ -81,53 +81,53 @@ RadarEstacionamientos_code/back/logica/estacionamientos/reglas.js:
   83: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — un cerrado no se sugiere
   84: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — de aquí parte la sugerencia
 
-RadarEstacionamientos_code/back/logica/garita/datos.js:
+RadarEstacionamientos_code/back/reglas_y_datos/garita/datos.js:
   1: // @HU-3.2 Simular sensores y placas · Aaron — lecturas de placa guardadas
   6: // @HU-3.2 Simular sensores y placas · Aaron
   25: // @HU-3.2 Simular sensores y placas · Aaron
 
-RadarEstacionamientos_code/back/logica/garita/reglas.js:
+RadarEstacionamientos_code/back/reglas_y_datos/garita/reglas.js:
   1: // @HU-3.2 Simular sensores y placas · Aaron — reglas del lector de placas
   13: // @HU-3.2 Simular sensores y placas · Aaron
 
-RadarEstacionamientos_code/back/logica/incidencias/datos.js:
+RadarEstacionamientos_code/back/reglas_y_datos/incidencias/datos.js:
   1: // @HU-9.1 Crear una incidencia · Sebastian — incidencias guardadas
   11: // @HU-9.1 Crear una incidencia · Sebastian — con la hora y como pendiente
 
-RadarEstacionamientos_code/back/logica/incidencias/reglas.js:
+RadarEstacionamientos_code/back/reglas_y_datos/incidencias/reglas.js:
   1: // @HU-9.1 Crear una incidencia · Sebastian — reglas del reporte
   4: // @HU-9.1 Crear una incidencia · Sebastian — los tres tipos de problema
   18: // @HU-9.1 Crear una incidencia · Sebastian — dice qué falta
 
-RadarEstacionamientos_code/back/logica/sugerencia/datos.js:
+RadarEstacionamientos_code/back/reglas_y_datos/sugerencia/datos.js:
   1: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
   9: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 
-RadarEstacionamientos_code/back/logica/sugerencia/reglas.js:
+RadarEstacionamientos_code/back/reglas_y_datos/sugerencia/reglas.js:
   1: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — reglas de la sugerencia
   13: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
   32: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — abiertos, con libres, el más cercano
 
-RadarEstacionamientos_code/back/logica/usuarios/datos.js:
+RadarEstacionamientos_code/back/reglas_y_datos/usuarios/datos.js:
   1: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — usuarios y sesiones guardados
   70: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
   82: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
   93: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
 
-RadarEstacionamientos_code/back/logica/usuarios/reglas.js:
+RadarEstacionamientos_code/back/reglas_y_datos/usuarios/reglas.js:
   1: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — reglas del correo y de la contraseña
   10: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — los cuatro mensajes del escenario
   32: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — solo @est.ucab.edu.ve y @ucab.edu.ve
   38: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
   48: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — valida en el orden del escenario
 
-RadarEstacionamientos_code/back/logica/vehiculos/datos.js:
+RadarEstacionamientos_code/back/reglas_y_datos/vehiculos/datos.js:
   1: // @HU-2.1 Registrar mis vehículos · Samuel — vehículos guardados
   19: // @HU-2.1 Registrar mis vehículos · Samuel — la placa no se repite
   39: // @HU-2.1 Registrar mis vehículos · Samuel — cada usuario ve solo los suyos
   48: // @HU-2.1 Registrar mis vehículos · Samuel
 
-RadarEstacionamientos_code/back/logica/vehiculos/reglas.js:
+RadarEstacionamientos_code/back/reglas_y_datos/vehiculos/reglas.js:
   1: // @HU-2.1 Registrar mis vehículos · Samuel — reglas de la placa (las usa también la garita, HU 3.2)
   6: // @HU-2.1 Registrar mis vehículos · Samuel
   7: // @HU-3.2 Simular sensores y placas · Aaron — la misma regla para la garita
@@ -135,7 +135,7 @@ RadarEstacionamientos_code/back/logica/vehiculos/reglas.js:
   17: // @HU-3.2 Simular sensores y placas · Aaron — la misma regla para la garita
   29: // @HU-2.1 Registrar mis vehículos · Samuel
 
-RadarEstacionamientos_code/back/pruebas/api.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/api.test.js:
   1: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
   2: // @HU-3.2 Simular sensores y placas · Aaron
   3: // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
@@ -151,7 +151,7 @@ RadarEstacionamientos_code/back/pruebas/api.test.js:
   130: // @HU-9.1 Crear una incidencia · Sebastian
   145: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 
-RadarEstacionamientos_code/back/pruebas/avisos.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/avisos.test.js:
   1: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
   2: // @HU-3.2 Simular sensores y placas · Aaron
   3: // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron
@@ -163,11 +163,11 @@ RadarEstacionamientos_code/back/pruebas/avisos.test.js:
   121: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
   122: // @HU-3.2 Simular sensores y placas · Aaron
 
-RadarEstacionamientos_code/back/pruebas/capacidad.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/capacidad.test.js:
   1: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — pruebas de la HU
   73: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
 
-RadarEstacionamientos_code/back/pruebas/criterios_sprint1.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/criterios_sprint1.test.js:
   1: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
   2: // @HU-2.1 Registrar mis vehículos · Samuel
   3: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
@@ -188,57 +188,57 @@ RadarEstacionamientos_code/back/pruebas/criterios_sprint1.test.js:
   171: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
   178: // @HU-9.1 Crear una incidencia · Sebastian
 
-RadarEstacionamientos_code/back/pruebas/edificios.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/edificios.test.js:
   1: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — pruebas de la HU
 
-RadarEstacionamientos_code/back/pruebas/estacionamientos.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/estacionamientos.test.js:
   1: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — la lista sirve para dibujar el mapa
 
-RadarEstacionamientos_code/back/pruebas/incidencias.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/incidencias.test.js:
   1: // @HU-9.1 Crear una incidencia · Sebastian — pruebas de la HU
 
-RadarEstacionamientos_code/back/pruebas/semaforo.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/semaforo.test.js:
   1: // @HU-4.2 Consultar el semáforo de ocupación · Aaron — pruebas del criterio de aceptación
 
-RadarEstacionamientos_code/back/pruebas/sugerencia.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/sugerencia.test.js:
   1: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — pruebas de la HU
 
-RadarEstacionamientos_code/back/pruebas/usuarios.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/usuarios.test.js:
   1: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — pruebas de la HU
 
-RadarEstacionamientos_code/back/pruebas/vehiculos.test.js:
+RadarEstacionamientos_code/back/pruebas_automaticas/vehiculos.test.js:
   1: // @HU-2.1 Registrar mis vehículos · Samuel — pruebas de la HU
 
-RadarEstacionamientos_code/back/seguridad/clave_sensores.js:
+RadarEstacionamientos_code/back/control_de_acceso/clave_sensores.js:
   1: // @HU-3.1 Recibir avisos de entrada y salida · Aaron — clave de los sensores
   2: // @HU-3.2 Simular sensores y placas · Aaron
   18: // @HU-3.1 Recibir avisos de entrada y salida · Aaron
   19: // @HU-3.2 Simular sensores y placas · Aaron
 
-RadarEstacionamientos_code/back/seguridad/sesion.js:
+RadarEstacionamientos_code/back/control_de_acceso/sesion.js:
   1: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — sesión para la API
 
-RadarEstacionamientos_code/front/acciones/cuenta.js:
+RadarEstacionamientos_code/front/envio_de_formularios/cuenta.js:
   2: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — acciones del formulario de cuenta
   9: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — crea la cuenta, abre la sesión y va al mapa
   25: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
   37: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
 
-RadarEstacionamientos_code/front/acciones/edificios.js:
+RadarEstacionamientos_code/front/envio_de_formularios/edificios.js:
   2: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — agregar, modificar y quitar
   20: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — agregar
   34: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — modificar
   47: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — quitar
 
-RadarEstacionamientos_code/front/acciones/incidencias.js:
+RadarEstacionamientos_code/front/envio_de_formularios/incidencias.js:
   2: // @HU-9.1 Crear una incidencia · Sebastian — acción del formulario
   12: // @HU-9.1 Crear una incidencia · Sebastian
 
-RadarEstacionamientos_code/front/acciones/puestos.js:
+RadarEstacionamientos_code/front/envio_de_formularios/puestos.js:
   2: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — acción de guardar
   10: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — solo el administrador
 
-RadarEstacionamientos_code/front/acciones/vehiculos.js:
+RadarEstacionamientos_code/front/envio_de_formularios/vehiculos.js:
   2: // @HU-2.1 Registrar mis vehículos · Samuel — acción del formulario
   9: // @HU-2.1 Registrar mis vehículos · Samuel
 
@@ -315,86 +315,86 @@ RadarEstacionamientos_code/front/app/sugerencia/page.js:
   1: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — pantalla Sugerir
   12: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 
-RadarEstacionamientos_code/front/componentes/admin/CamposEdificio.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/admin/CamposEdificio.js:
   1: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
   5: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 
-RadarEstacionamientos_code/front/componentes/admin/FilaEdificio.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/admin/FilaEdificio.js:
   2: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — fila para modificar o quitar
   10: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 
-RadarEstacionamientos_code/front/componentes/admin/FilaPuesto.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/admin/FilaPuesto.js:
   2: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — fila con capacidad y «Activo»
   15: // @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian
 
-RadarEstacionamientos_code/front/componentes/admin/NuevoEdificio.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/admin/NuevoEdificio.js:
   2: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — formulario para agregar
   10: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 
-RadarEstacionamientos_code/front/componentes/comunes/SelectorEdificio.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/comunes/SelectorEdificio.js:
   1: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — la lista que ve el usuario
   2: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
   6: // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German
 
-RadarEstacionamientos_code/front/componentes/cuenta/FormularioCuenta.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/cuenta/FormularioCuenta.js:
   2: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — formulario de crear cuenta y de entrar
   10: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — en Crear cuenta, mensajes propios (noValidate)
 
-RadarEstacionamientos_code/front/componentes/inicio/Inicio.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/inicio/Inicio.js:
   2: // @HU-4.2 Consultar el semáforo de ocupación · Aaron — rejilla con libres y estado
   3: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — chips de edificios y «Más cerca»
   37: // @HU-4.2 Consultar el semáforo de ocupación · Aaron
   38: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 
-RadarEstacionamientos_code/front/componentes/mapa/MaquetaCampus.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/mapa/MaquetaCampus.js:
   2: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — mapa con el nombre de cada estacionamiento
   3: // @HU-4.2 Consultar el semáforo de ocupación · Aaron — libres y estado en texto
   53: // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German
   54: // @HU-4.2 Consultar el semáforo de ocupación · Aaron
 
-RadarEstacionamientos_code/front/componentes/mapa/PanelPuestos.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/mapa/PanelPuestos.js:
   2: // @HU-4.2 Consultar el semáforo de ocupación · Aaron — lista «¿dónde hay puesto?»
   53: // @HU-4.2 Consultar el semáforo de ocupación · Aaron
 
-RadarEstacionamientos_code/front/componentes/mapa/TarjetaEstacionamiento.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/mapa/TarjetaEstacionamiento.js:
   2: // @HU-9.1 Crear una incidencia · Sebastian — tarjeta del estacionamiento con «Reportar un problema aquí» (paso 1 del escenario)
   11: // @HU-9.1 Crear una incidencia · Sebastian
   49:           {/* @HU-9.1 Crear una incidencia · Sebastian — abre Reportar con este estacionamiento ya elegido */}
 
-RadarEstacionamientos_code/front/componentes/notificaciones/Notificaciones.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/notificaciones/Notificaciones.js:
   2: // @HU-8.1 Activar las notificaciones · Manuel — invitación y interruptor de Perfil
   20: // @HU-8.1 Activar las notificaciones · Manuel
 
-RadarEstacionamientos_code/front/componentes/perfil/FormularioVehiculo.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/perfil/FormularioVehiculo.js:
   2: // @HU-2.1 Registrar mis vehículos · Samuel — formulario para agregar un vehículo
   11: // @HU-2.1 Registrar mis vehículos · Samuel
 
-RadarEstacionamientos_code/front/componentes/reportar/FormularioIncidencia.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/reportar/FormularioIncidencia.js:
   2: // @HU-9.1 Crear una incidencia · Sebastian — formulario: tipo y estacionamiento
   24: // @HU-9.1 Crear una incidencia · Sebastian
 
-RadarEstacionamientos_code/front/componentes/sugerencia/BuscadorSugerencia.js:
+RadarEstacionamientos_code/front/partes_de_pantallas/sugerencia/BuscadorSugerencia.js:
   2: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — elige edificio y pide la sugerencia
   23: // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel
 
-RadarEstacionamientos_code/front/notificaciones/GestorNotificaciones.js:
+RadarEstacionamientos_code/front/notificaciones_del_navegador/GestorNotificaciones.js:
   1: // @HU-8.1 Activar las notificaciones · Manuel — lógica de permisos y notificación de prueba
   106:   // @HU-8.1 Activar las notificaciones · Manuel — paso 2.2: preguntar solo si nunca respondió
   115:   // @HU-8.1 Activar las notificaciones · Manuel — CA2
   162:   // @HU-8.1 Activar las notificaciones · Manuel — la notificación de prueba
   191:   // @HU-8.1 Activar las notificaciones · Manuel — CA1
 
-RadarEstacionamientos_code/front/notificaciones/Notificacion.js:
+RadarEstacionamientos_code/front/notificaciones_del_navegador/Notificacion.js:
   1: // @HU-8.1 Activar las notificaciones · Manuel
   2: // @HU-8.1 Activar las notificaciones · Manuel — la notificación que se muestra
 
-RadarEstacionamientos_code/front/pruebas/notificaciones.test.js:
+RadarEstacionamientos_code/front/pruebas_automaticas/notificaciones.test.js:
   1: // @HU-8.1 Activar las notificaciones · Manuel — pruebas de la HU
 
 RadarEstacionamientos_code/front/public/sw.js:
   1: // @HU-8.1 Activar las notificaciones · Manuel — service worker único (D-008); la prueba usa showNotification
 
-RadarEstacionamientos_code/front/servidor/sesion.js:
+RadarEstacionamientos_code/front/sesion_del_usuario/sesion.js:
   1: // @HU-1.1 Crear cuenta con el correo institucional · Samuel — cookie de sesión en el front
   11: // @HU-1.1 Crear cuenta con el correo institucional · Samuel
   18: // @HU-1.1 Crear cuenta con el correo institucional · Samuel

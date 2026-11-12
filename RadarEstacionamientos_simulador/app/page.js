@@ -1,4 +1,5 @@
 "use client";
+// @PANTALLA Simulador (/) — el simulador: el campus en 3D y el panel para mandarle cosas a la app
 
 // Simulador del Radar de Estacionamientos UCAB: un mundo virtual que le pasa a la app base
 // lo mismo que le pasaría en la realidad (carros que entran y salen, placas en la garita,
@@ -91,6 +92,7 @@ export default function PaginaSimulador() {
   // simuladores o las personas que usan la app.
   useEffect(() => {
     cargarEstado();
+    // @FETCH Simulador › canal en vivo /api/eventos (EventSource) — escucha lo que pasa en la app para mostrarlo en el registro
     const fuente = new EventSource(URL_EVENTOS);
     fuente.onerror = () => setConexion("sin_conexion");
     fuente.onmessage = (e) => {

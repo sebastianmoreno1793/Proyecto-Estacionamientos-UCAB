@@ -8,6 +8,7 @@ async function llamar(metodo, ruta, cuerpo) {
   let estado = 0;
   let datos = null;
   try {
+    // @FETCH Simulador › /api/base/<ruta> — todo lo que el simulador le pide a la app pasa por aquí (avisos, placas, incidencias)
     const respuesta = await fetch(`/api/base/${ruta}`, {
       method: metodo,
       headers: cuerpo ? { "content-type": "application/json" } : undefined,
@@ -43,7 +44,7 @@ export const appBase = {
   reiniciar: () => llamar("POST", "pruebas/reiniciar"),
 };
 
-// Los mismos tipos que la app base (back/logica/incidencias/reglas.js), con su ícono para los botones.
+// Los mismos tipos que la app base (back/reglas_y_datos/incidencias/reglas.js), con su ícono para los botones.
 export const TIPOS_DE_INCIDENCIA = [
   { id: "bateria_descargada", nombre: "Batería descargada", icono: "🔋" },
   { id: "conos_atravesados", nombre: "Conos atravesados", icono: "🚧" },

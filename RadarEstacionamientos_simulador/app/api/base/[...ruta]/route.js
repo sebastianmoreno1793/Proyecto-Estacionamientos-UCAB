@@ -43,6 +43,7 @@ async function reenviar(request, { params }) {
   else if (sesion) encabezados.cookie = sesion;
 
   try {
+    // @FETCH Simulador › puente /api/base/… → app — reenvía a la app (puerto 3000) lo que pide el simulador
     const respuesta = await fetch(new URL(`/api/${camino}`, URL_APP_BASE), {
       method: request.method,
       headers: encabezados,

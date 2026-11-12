@@ -1,4 +1,5 @@
 "use client";
+// @PANTALLA Simulador Maqueta › Render del campus visto desde arriba
 
 // Render de la MAQUETA del campus para la app (D-007 › Maqueta): una vista desde arriba, con
 // el acabado de una maqueta física de arquitectura (grama de fieltro, árboles redondos, techos

@@ -41,22 +41,22 @@ contar el camino de su HU sin leer: pantalla → acción o API → reglas → da
 | Carpeta | Qué va | Ejemplo |
 |---|---|---|
 | `front/app/` | Solo las rutas: una carpeta por pantalla | `app/mapa/page.js` |
-| `front/componentes/<pantalla>/` | Lo que se ve, agrupado por pantalla | `componentes/mapa/MaquetaCampus.js` |
-| `front/acciones/` | Formularios: reciben lo escrito y llaman al back | `acciones/cuenta.js` |
-| `front/notificaciones/` | Lógica de notificaciones del navegador (HU 8.1) | `GestorNotificaciones.js` |
-| `back/api/` | Un archivo por endpoint: permisos y código HTTP | `api/avisos.js` |
-| `back/logica/<tema>/` | `reglas.js` (puro) + `datos.js` (guarda) | `logica/estacionamientos/` |
-| `back/comun/` | Almacén en memoria y canal en vivo | `comun/almacen.js` |
-| `back/seguridad/` | Sesión (cookie) y clave de los sensores | `seguridad/sesion.js` |
-| `back/campus/` | Datos fijos del campus (estacionamientos, edificios) | `campus/estacionamientos.js` |
-| `back/pruebas/` | Una prueba por tema y una por criterio de aceptación | `pruebas/criterios_sprint1.test.js` |
+| `front/partes_de_pantallas/<pantalla>/` | Lo que se ve, agrupado por pantalla | `componentes/mapa/MaquetaCampus.js` |
+| `front/envio_de_formularios/` | Formularios: reciben lo escrito y llaman al back | `acciones/cuenta.js` |
+| `front/notificaciones_del_navegador/` | Lógica de notificaciones del navegador (HU 8.1) | `GestorNotificaciones.js` |
+| `back/pedidos_y_respuestas/` | Un archivo por endpoint: permisos y código HTTP | `api/avisos.js` |
+| `back/reglas_y_datos/<tema>/` | `reglas.js` (puro) + `datos.js` (guarda) | `logica/estacionamientos/` |
+| `back/piezas_compartidas/` | Almacén en memoria y canal en vivo | `comun/almacen.js` |
+| `back/control_de_acceso/` | Sesión (cookie) y clave de los sensores | `seguridad/sesion.js` |
+| `back/datos_del_campus/` | Datos fijos del campus (estacionamientos, edificios) | `campus/estacionamientos.js` |
+| `back/pruebas_automaticas/` | Una prueba por tema y una por criterio de aceptación | `pruebas/criterios_sprint1.test.js` |
 
 Preguntas difíciles que pueden salir y qué contestar:
 - **«¿Por qué por tema y no por HU?»** Porque varias HU comparten los mismos datos: 3.1, 4.1, 4.2 y
   5.4 trabajan sobre los estacionamientos. Si se separaran por HU, la regla de los puestos libres
   quedaría repetida. Cada archivo dice en su primer comentario qué HU atiende.
 - **«¿Por qué los formularios no pasan por la API?»** Las acciones de servidor de Next ya corren en
-  el servidor y llaman directo a `back/logica`. La API existe para quien está **fuera** de la app:
+  el servidor y llaman directo a `back/reglas_y_datos`. La API existe para quien está **fuera** de la app:
   sensores, Postman y el simulador. Las dos usan las mismas reglas.
 - **«¿Dónde está la base de datos?»** Todavía no se decide (está en `preguntas_abiertas.md`). Por
   ahora todo vive en memoria, en `comun/almacen.js`. Cambiarla solo toca los `datos.js`.
@@ -70,7 +70,7 @@ Preguntas difíciles que pueden salir y qué contestar:
 |---|---|---|---|---|
 | 1.1 Crear cuenta | Samuel | `/registro` | `componentes/cuenta/FormularioCuenta.js` → `acciones/cuenta.js` (`crearCuenta`) → `logica/usuarios/reglas.js` (`validarRegistro`, `esCorreoUcab`, `rolSegunCorreo`) → `usuarios/datos.js` (`registrarUsuario`, contraseña con scrypt) → `crearSesion` y cookie → redirige a `/mapa` | `usuarios.test.js`, `criterios_sprint1.test.js` |
 | 2.1 Mis vehículos | Samuel | `/perfil` | `componentes/perfil/FormularioVehiculo.js` → `acciones/vehiculos.js` → `logica/vehiculos/reglas.js` (placa) → `vehiculos/datos.js` (`registrarVehiculo`, sin placas repetidas) | `vehiculos.test.js` |
-| 3.1 Avisos de entrada y salida | Aaron | `/admin/garita` | Sensor, Postman o simulador → `POST /api/avisos` → `back/api/avisos.js` (clave `x-clave-sensor`) → `estacionamientos/datos.js` (`registrarAviso`: estacionamiento, tipo y hora) | `avisos.test.js`, `api.test.js` |
+| 3.1 Avisos de entrada y salida | Aaron | `/admin/garita` | Sensor, Postman o simulador → `POST /api/avisos` → `back/pedidos_y_respuestas/avisos.js` (clave `x-clave-sensor`) → `estacionamientos/datos.js` (`registrarAviso`: estacionamiento, tipo y hora) | `avisos.test.js`, `api.test.js` |
 | 3.2 Simular sensores y placas | Aaron | Simulador :3001 | `RadarEstacionamientos_simulador` → su puente `/api/base/...` → las mismas URL de la app (D-002). Placas: `POST /api/garita/lecturas` → `api/garita.js` → `logica/garita/` | `avisos.test.js`, pruebas del simulador (19) |
 | 4.1 Actualizar el aforo | Aaron | Mapa e Inicio | `registrarAviso` → `estacionamientos/reglas.js` (`aplicarMovimiento`: la entrada resta un libre, la salida lo suma; nunca menos de 0 ni más que la capacidad; si no se puede, va a anomalías) → `emitir` del canal en vivo | `criterios_sprint1.test.js` (CA1 a CA5) |
 | 4.2 Semáforo | Aaron | Mapa e Inicio | `estacionamientos/reglas.js` (`nivelDelSemaforo`: verde si hay ≥ 1 libre, rojo con 0, gris si está cerrado; D-009) → `MaquetaCampus.js` y `Inicio.js` | `semaforo.test.js` |
@@ -78,7 +78,7 @@ Preguntas difíciles que pueden salir y qué contestar:
 | 5.4 Capacidad y estado | German | `/admin/puestos` | `componentes/admin/FilaPuesto.js` → `acciones/puestos.js` (solo administrador) → `estacionamientos/reglas.js` (`validarCapacidad`) → `datos.js` (`cambiarEstacionamiento`). También por `PATCH /api/estacionamientos/:id` (403 si no es administrador) | `capacidad.test.js`, `api.test.js` |
 | 6.1 Catálogo de edificios | German | `/admin/edificios` | `componentes/admin/` → `acciones/edificios.js` → `logica/edificios/reglas.js` → `edificios/datos.js` (agregar, modificar, quitar). La lista la usan Inicio y `/sugerencia` | `edificios.test.js` |
 | 7.2 Sugerencia | Manuel | Inicio (chips) y `/sugerencia` | `Inicio.js` → `fetch /api/sugerencia?edificio=` → `api/sugerencia.js` → `logica/sugerencia/datos.js` → `reglas.js` (el abierto con libres más cercano por distancia; considera todos, también los de solo profesores) | `sugerencia.test.js`, `api.test.js` |
-| 8.1 Notificaciones | Manuel | Inicio, Mapa y Perfil | `componentes/notificaciones/Notificaciones.js` → `front/notificaciones/GestorNotificaciones.js` (`debeMostrarSolicitud`: paso 2.2 · `pedirPermiso` + una prueba: CA1 · `bloquear`: CA2 · interruptor de Perfil: CA3) → el único service worker `public/sw.js` (D-008) | `front/pruebas/notificaciones.test.js` |
+| 8.1 Notificaciones | Manuel | Inicio, Mapa y Perfil | `componentes/notificaciones/Notificaciones.js` → `front/notificaciones_del_navegador/GestorNotificaciones.js` (`debeMostrarSolicitud`: paso 2.2 · `pedirPermiso` + una prueba: CA1 · `bloquear`: CA2 · interruptor de Perfil: CA3) → el único service worker `public/sw.js` (D-008) | `front/pruebas_automaticas/notificaciones.test.js` |
 | 9.1 Crear una incidencia | Sebastián | `/reportar` | `componentes/reportar/FormularioIncidencia.js` → `acciones/incidencias.js` → `logica/incidencias/reglas.js` (falta algo o está cerrado → mensaje) → `datos.js` (`registrarIncidencia`: fecha, hora, «pendiente», sin mostrar el correo). Confirmación con estacionamiento, tipo, hora y estado. «Cancelar» vuelve al mapa | `incidencias.test.js`, `criterios_sprint1.test.js`, `api.test.js` |
 
 ## 3. Demo sugerida (5 minutos)

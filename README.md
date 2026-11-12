@@ -39,10 +39,11 @@ El proyecto se divide en dos carpetas: **una para decidir y otra para programar.
 │
 ├── RadarEstacionamientos_code/     ← aquí se programa la aplicación
 │   ├── iniciar.mjs                 levanta app + simulador y abre el navegador
-│   ├── front/                      pantallas (Next.js): app/ rutas, componentes/ por pantalla,
-│   │                               acciones/ formularios, notificaciones/, estilos/, public/
-│   ├── back/                       api/ (un archivo por endpoint), logica/<tema>/ (reglas y datos),
-│   │                               comun/, seguridad/, campus/ y pruebas/
+│   ├── front/                      lo que ve el usuario (Next.js): app/ una carpeta por pantalla,
+│   │                               partes_de_pantallas/, envio_de_formularios/, notificaciones_del_navegador/,
+│   │                               sesion_del_usuario/, estilos/, public/
+│   ├── back/                       lo que pasa en el servidor: pedidos_y_respuestas/, reglas_y_datos/<tema>/,
+│   │                               piezas_compartidas/, control_de_acceso/, datos_del_campus/, pruebas_automaticas/
 │   ├── CONTEXTO.md                 contexto para programar
 │   └── docs/                       copia de lógica (no se edita a mano)
 │

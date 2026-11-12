@@ -1,14 +1,15 @@
+// @PANTALLA Admin Garita (/admin/garita) — avisos de los sensores, avisos rechazados y placas leídas
 // @HU-3.1 Recibir avisos de entrada y salida · Aaron — Pantalla de la garita: lista de avisos recibidos
 // @HU-3.2 Simular sensores y placas · Aaron — Pantalla de la garita: placas leídas
 // @HU-4.1 Actualizar el aforo con cada entrada o salida · Aaron — Pantalla de la garita: avisos rechazados y por qué
 // Administrar › Garita (/admin/garita): avisos de los sensores, avisos rechazados y placas
 // leídas (HU 3.1, 3.2 y 4.1). Solo administrador.
 import { connection } from "next/server";
-import MenuAdmin from "@/componentes/menu/MenuAdmin";
-import { listarAvisosRechazados, listarEstacionamientos, listarMovimientos } from "@back/logica/estacionamientos/datos.js";
-import { listarLecturasDePlaca } from "@back/logica/garita/datos.js";
-import { formatearFechaHora } from "@back/comun/fechas.js";
-import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
+import MenuAdmin from "@/partes_de_pantallas/menu/MenuAdmin";
+import { listarAvisosRechazados, listarEstacionamientos, listarMovimientos } from "@back/reglas_y_datos/estacionamientos/datos.js";
+import { listarLecturasDePlaca } from "@back/reglas_y_datos/garita/datos.js";
+import { formatearFechaHora } from "@back/piezas_compartidas/fechas.js";
+import { esAdministrador, obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
 import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Actividad de la garita · Administración" };

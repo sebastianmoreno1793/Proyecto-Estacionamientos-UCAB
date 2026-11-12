@@ -1,11 +1,12 @@
+// @PANTALLA Admin Edificios (/admin/edificios) — agregar, modificar y quitar edificios del catálogo
 // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Pantalla Administrar › Edificios
 // Administrar › Edificios (/admin/edificios), HU 6.1. Solo administrador.
 import { connection } from "next/server";
-import FilaEdificio from "@/componentes/admin/FilaEdificio";
-import NuevoEdificio from "@/componentes/admin/NuevoEdificio";
-import MenuAdmin from "@/componentes/menu/MenuAdmin";
-import { listarEdificios } from "@back/logica/edificios/datos.js";
-import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
+import FilaEdificio from "@/partes_de_pantallas/admin/FilaEdificio";
+import NuevoEdificio from "@/partes_de_pantallas/admin/NuevoEdificio";
+import MenuAdmin from "@/partes_de_pantallas/menu/MenuAdmin";
+import { listarEdificios } from "@back/reglas_y_datos/edificios/datos.js";
+import { esAdministrador, obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
 import estilos from "@/estilos/formularios.module.css";
 
 export const metadata = { title: "Edificios · Administración" };

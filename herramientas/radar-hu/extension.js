@@ -5,6 +5,9 @@
 //   2. Con ⌘⌥H (o el ícono de libro del explorador) busca una HU y lista sus archivos.
 //   3. Clic derecho en un archivo → «¿De qué HU es este archivo?».
 //   4. En la barra de abajo muestra las HU del archivo abierto.
+// También lee las etiquetas «@PANTALLA Nombre (/ruta) — detalle» y «@PANTALLA Nombre › parte»:
+// y «@FETCH Lugar › MÉTODO /url — qué pide» (cada vez que el navegador le pide datos al servidor).
+// En el buscador (⌘⌥H) salen primero las pantallas y los fetch, y después las HU.
 const vscode = require("vscode");
 
 const ETIQUETA = /@HU-(\d+\.\d+)(?:[ \t]+([^·\n*}]+?)[ \t]*·[ \t]*([^—\n*}]+?))?(?:[ \t]*—[ \t]*([^\n*}]+?))?[ \t]*(?:\*\/|\}|$)/gm;
@@ -15,6 +18,18 @@ const EXCLUIR = "{**/node_modules/**,**/.next/**,**/.git/**,**/herramientas/rada
 let historias = new Map();
 // ruta del archivo → [{ hu, linea, detalle }]
 let porArchivo = new Map();
+// pantalla → { ruta, detalle, usos: [{ uri, linea, parte, principal }] }
+let pantallas = new Map();
+
+const ETIQUETA_PANTALLA = /@PANTALLA[ \t]+(.+?)[ \t]*(?:\*\/|\}|$)/;
+const ETIQUETA_FETCH = /@FETCH[ \t]+(.+?)[ \t]*(?:\*\/|\}|$)/;
+// [{ lugar, que, detalle, uri, linea }]
+let fetches = [];
+// Orden de las pantallas en el buscador (las que no estén aquí van al final, por nombre).
+const ORDEN_PANTALLAS = [
+  "Inicio", "Login", "Crear cuenta", "Mapa", "Reportar", "Perfil", "Sugerir",
+  "Admin Puestos", "Admin Garita", "Admin Edificios", "Todas", "Simulador", "Simulador Maqueta",
+];
 
 const cambioDecoraciones = new vscode.EventEmitter();
 
@@ -44,6 +59,57 @@ function leerEtiquetas(texto) {
   return encontradas;
 }
 
+// Lee «@PANTALLA Mapa (/mapa) — detalle» (la pantalla completa) y «@PANTALLA Mapa › parte» (una parte).
+function leerPantallas(texto) {
+  const encontradas = [];
+  texto.split("\n").forEach((linea, numero) => {
+    const m = linea.match(ETIQUETA_PANTALLA);
+    if (!m) return;
+    const contenido = m[1];
+    const parte = contenido.indexOf("›");
+    if (parte !== -1) {
+      encontradas.push({ pantalla: contenido.slice(0, parte).trim(), parte: contenido.slice(parte + 1).trim(), linea: numero, principal: false });
+      return;
+    }
+    const conRuta = contenido.match(/^(.+?)\s*\(([^)]+)\)\s*(?:—\s*(.*))?$/);
+    if (conRuta) {
+      encontradas.push({ pantalla: conRuta[1].trim(), ruta: conRuta[2].trim(), parte: (conRuta[3] || "").trim(), linea: numero, principal: true });
+    } else {
+      const [nombre, ...resto] = contenido.split("—");
+      encontradas.push({ pantalla: nombre.trim(), parte: resto.join("—").trim(), linea: numero, principal: true });
+    }
+  });
+  return encontradas;
+}
+
+// Lee «@FETCH Inicio › GET /api/sugerencia — pide…».
+function leerFetch(texto) {
+  const encontrados = [];
+  texto.split("\n").forEach((linea, numero) => {
+    const m = linea.match(ETIQUETA_FETCH);
+    if (!m) return;
+    const [antes, ...resto] = m[1].split("—");
+    const corte = antes.indexOf("›");
+    encontrados.push({
+      lugar: corte === -1 ? "" : antes.slice(0, corte).trim(),
+      que: (corte === -1 ? antes : antes.slice(corte + 1)).trim(),
+      detalle: resto.join("—").trim(),
+      linea: numero,
+    });
+  });
+  return encontrados;
+}
+
+function indexarPantallas(uri, texto) {
+  for (const e of leerPantallas(texto)) {
+    if (!pantallas.has(e.pantalla)) pantallas.set(e.pantalla, { ruta: "", detalle: "", usos: [] });
+    const p = pantallas.get(e.pantalla);
+    if (e.principal && e.ruta && !p.ruta) p.ruta = e.ruta;
+    if (e.principal && e.parte && !p.detalle) p.detalle = e.parte;
+    p.usos.push({ uri, linea: e.linea, parte: e.parte, principal: e.principal });
+  }
+}
+
 async function indexarArchivo(uri) {
   quitarArchivo(uri);
   let texto;
@@ -52,6 +118,8 @@ async function indexarArchivo(uri) {
   } catch {
     return;
   }
+  if (texto.includes("@PANTALLA")) indexarPantallas(uri, texto);
+  if (texto.includes("@FETCH")) for (const f of leerFetch(texto)) fetches.push({ ...f, uri });
   if (!texto.includes("@HU-")) return;
   const etiquetas = leerEtiquetas(texto);
   if (etiquetas.length === 0) return;
@@ -67,6 +135,11 @@ async function indexarArchivo(uri) {
 
 function quitarArchivo(uri) {
   const clave = uri.toString();
+  fetches = fetches.filter((f) => f.uri.toString() !== clave);
+  for (const [nombre, p] of pantallas) {
+    p.usos = p.usos.filter((u) => u.uri.toString() !== clave);
+    if (p.usos.length === 0) pantallas.delete(nombre);
+  }
   if (!porArchivo.has(clave)) return;
   porArchivo.delete(clave);
   for (const [hu, h] of historias) {
@@ -93,6 +166,8 @@ async function leerMapa() {
 async function indexarTodo() {
   historias = new Map();
   porArchivo = new Map();
+  pantallas = new Map();
+  fetches = [];
   const uris = await vscode.workspace.findFiles(ARCHIVOS, EXCLUIR);
   await Promise.all([leerMapa(), ...uris.map(indexarArchivo)]);
   cambioDecoraciones.fire(undefined);
@@ -123,27 +198,122 @@ const decoraciones = {
   },
 };
 
-// 2. Buscar una HU y abrir uno de sus archivos.
+function compararPantallas(a, b) {
+  const ia = ORDEN_PANTALLAS.indexOf(a);
+  const ib = ORDEN_PANTALLAS.indexOf(b);
+  if (ia !== -1 && ib !== -1) return ia - ib;
+  if (ia !== -1 || ib !== -1) return ia === -1 ? 1 : -1;
+  return a.localeCompare(b);
+}
+
+// HU del archivo en corto: «HU 5.1 · 4.2» (o «sin HU»).
+function husEnCorto(uri) {
+  const hus = husDe(uri);
+  return hus.length ? `HU ${hus.join(" · ")}` : "sin HU";
+}
+
+function rutaCorta(uri) {
+  return vscode.workspace.asRelativePath(uri).replace(/^RadarEstacionamientos_code\//, "");
+}
+
+const separador = (label) => ({ label, kind: vscode.QuickPickItemKind.Separator });
+
+// Renglones de las pantallas. Con «completo» salen también sus partes; sin él, solo la pantalla.
+// Todos llevan «@PANTALLA» en el nombre: al escribir «pantalla» salen todas las pantallas y vistas.
+function renglonesDePantallas(completo) {
+  const renglones = [separador("Pantallas")];
+  for (const nombre of [...pantallas.keys()].sort(compararPantallas)) {
+    const p = pantallas.get(nombre);
+    const usos = [...p.usos]
+      .filter((u) => completo || u.principal)
+      .sort((a, b) => Number(b.principal) - Number(a.principal) || a.uri.path.localeCompare(b.uri.path));
+    for (const u of usos) {
+      const relativa = rutaCorta(u.uri);
+      renglones.push({
+        label: u.principal
+          ? `$(browser) @PANTALLA ${nombre}${p.ruta ? ` (${p.ruta})` : ""}`
+          : `$(layout) @PANTALLA ${nombre} › ${u.parte}`,
+        description: `${husEnCorto(u.uri)} · ${relativa.split("/").pop()}`,
+        detail: u.principal ? `${u.parte ? `${u.parte} · ` : ""}${relativa}` : relativa,
+        uso: u,
+      });
+    }
+    // Sin escribir nada, una pantalla que solo tiene partes (por ejemplo «Todas») sale con su primera parte.
+    if (!completo && usos.length === 0 && p.usos.length) {
+      const u = p.usos[0];
+      renglones.push({
+        label: `$(layout) @PANTALLA ${nombre}`,
+        description: `${p.usos.length} partes · escribe «pantalla ${nombre.toLowerCase()}»`,
+        detail: rutaCorta(u.uri),
+        uso: u,
+      });
+    }
+  }
+  return renglones;
+}
+
+// Renglones de los fetch: cada vez que el navegador le pide datos al servidor.
+function renglonesDeFetch() {
+  const orden = (f) => {
+    const i = ORDEN_PANTALLAS.indexOf(f.lugar);
+    return i === -1 ? ORDEN_PANTALLAS.length : i;
+  };
+  const lista = [...fetches].sort((a, b) => orden(a) - orden(b) || a.uri.path.localeCompare(b.uri.path) || a.linea - b.linea);
+  return [
+    separador("Fetch · lo que el navegador le pide al servidor"),
+    ...lista.map((f) => {
+      const relativa = rutaCorta(f.uri);
+      return {
+        label: `$(cloud-download) @FETCH ${f.lugar ? `${f.lugar} › ` : ""}${f.que}`,
+        description: `${husEnCorto(f.uri)} · ${relativa.split("/").pop()}`,
+        detail: `${f.detalle ? `${f.detalle} · ` : ""}${relativa}`,
+        uso: { uri: f.uri, linea: f.linea + 1 }, // abre en la línea del fetch, debajo de la etiqueta
+      };
+    }),
+  ];
+}
+
+// 2. El buscador (⌘⌥H). Sin escribir nada: las pantallas, los fetch y las HU, en ese orden.
+// Al escribir: también las partes de cada pantalla. «pantalla» → todas las pantallas y vistas;
+// «fetch» → todos los fetch; «6.1» o «edificios» → la HU (al elegirla salen sus archivos).
 async function buscar() {
-  if (historias.size === 0) await indexarTodo();
-  const lista = [...historias.keys()].sort(compararHU).map((hu) => {
+  if (historias.size === 0 && pantallas.size === 0) await indexarTodo();
+  const listaHU = [...historias.keys()].sort(compararHU).map((hu) => {
     const h = historias.get(hu);
     const archivos = new Set(h.usos.map((u) => u.uri.toString())).size;
-    const resumen = `${h.responsable || "sin responsable"} · ${archivos} archivo${archivos === 1 ? "" : "s"}`;
     return {
-      label: `HU ${hu} · ${h.nombre}`,
-      description: resumen,
+      label: `$(book) HU ${hu} · ${h.nombre}`,
+      description: `${h.responsable || "sin responsable"} · ${archivos} archivo${archivos === 1 ? "" : "s"}`,
       detail: queHace.get(hu),
       hu,
     };
   });
-  const elegida = await vscode.window.showQuickPick(lista, {
-    title: "Radar · Historias de usuario",
-    placeHolder: "Escribe el número o el nombre de la HU (por ejemplo 6.1 o edificios)",
-    matchOnDescription: true,
-    matchOnDetail: true,
+  const historiasDeUsuario = [separador("Historias de usuario"), ...listaHU];
+  const sinEscribir = [...renglonesDePantallas(false), ...renglonesDeFetch(), ...historiasDeUsuario];
+  const escribiendo = [...renglonesDePantallas(true), ...renglonesDeFetch(), ...historiasDeUsuario];
+
+  const selector = vscode.window.createQuickPick();
+  selector.title = "Radar · Pantallas, fetch e historias de usuario";
+  selector.placeholder = "Escribe «pantalla», «fetch» o una HU (6.1, edificios). Ej.: pantalla login, fetch mapa";
+  selector.matchOnDescription = true;
+  selector.matchOnDetail = true;
+  selector.items = sinEscribir;
+  let vacio = true;
+  selector.onDidChangeValue((valor) => {
+    const ahoraVacio = valor.trim() === "";
+    if (ahoraVacio === vacio) return;
+    vacio = ahoraVacio;
+    selector.items = vacio ? sinEscribir : escribiendo;
   });
-  if (elegida) await mostrarArchivosDe(elegida.hu);
+  selector.onDidAccept(async () => {
+    const elegido = selector.selectedItems[0];
+    selector.hide();
+    if (!elegido) return;
+    if (elegido.uso) await abrirEn(elegido.uso.uri, elegido.uso.linea);
+    else if (elegido.hu) await mostrarArchivosDe(elegido.hu);
+  });
+  selector.onDidHide(() => selector.dispose());
+  selector.show();
 }
 
 async function mostrarArchivosDe(hu) {
@@ -180,18 +350,18 @@ async function mostrarArchivosDe(hu) {
 
 // Capa del archivo según su carpeta, para ordenar la lista de pantalla a pruebas.
 function capaDe(ruta) {
-  if (/\/pruebas\//.test(ruta)) return { orden: 6, icono: "$(beaker)", nombre: "Prueba" };
+  if (/\/pruebas_automaticas\//.test(ruta)) return { orden: 6, icono: "$(beaker)", nombre: "Prueba" };
   if (/front\/app\/api\//.test(ruta)) return { orden: 3, icono: "$(globe)", nombre: "URL de la API" };
   if (/front\/app\//.test(ruta)) return { orden: 0, icono: "$(browser)", nombre: "Pantalla" };
-  if (/front\/componentes\//.test(ruta)) return { orden: 1, icono: "$(layout)", nombre: "Parte de la pantalla" };
-  if (/front\/acciones\//.test(ruta)) return { orden: 2, icono: "$(arrow-swap)", nombre: "Acción del formulario" };
-  if (/front\/servidor\//.test(ruta)) return { orden: 2, icono: "$(key)", nombre: "Sesión" };
-  if (/front\/notificaciones\/|front\/public\//.test(ruta)) return { orden: 2, icono: "$(bell)", nombre: "Notificaciones" };
+  if (/front\/partes_de_pantallas\//.test(ruta)) return { orden: 1, icono: "$(layout)", nombre: "Parte de la pantalla" };
+  if (/front\/envio_de_formularios\//.test(ruta)) return { orden: 2, icono: "$(arrow-swap)", nombre: "Acción del formulario" };
+  if (/front\/sesion_del_usuario\//.test(ruta)) return { orden: 2, icono: "$(key)", nombre: "Sesión" };
+  if (/front\/notificaciones_del_navegador\/|front\/public\//.test(ruta)) return { orden: 2, icono: "$(bell)", nombre: "Notificaciones" };
   if (/front\//.test(ruta)) return { orden: 2, icono: "$(arrow-swap)", nombre: "Front" };
-  if (/back\/api\//.test(ruta)) return { orden: 3, icono: "$(globe)", nombre: "API" };
+  if (/back\/pedidos_y_respuestas\//.test(ruta)) return { orden: 3, icono: "$(globe)", nombre: "API" };
   if (/reglas\.js$/.test(ruta)) return { orden: 4, icono: "$(law)", nombre: "Reglas" };
-  if (/datos\.js$|back\/campus\//.test(ruta)) return { orden: 5, icono: "$(database)", nombre: "Datos" };
-  if (/back\/seguridad\//.test(ruta)) return { orden: 3, icono: "$(shield)", nombre: "Seguridad" };
+  if (/datos\.js$|back\/datos_del_campus\//.test(ruta)) return { orden: 5, icono: "$(database)", nombre: "Datos" };
+  if (/back\/control_de_acceso\//.test(ruta)) return { orden: 3, icono: "$(shield)", nombre: "Seguridad" };
   return { orden: 7, icono: "$(file-code)", nombre: "Archivo" };
 }
 
@@ -233,7 +403,7 @@ function actualizarBarra() {
   const hus = editor ? husDe(editor.document.uri) : [];
   if (hus.length === 0) {
     barra.text = "$(book) HU";
-    barra.tooltip = "Buscar una historia de usuario (⌘⌥H)";
+    barra.tooltip = "Buscar una pantalla, un fetch o una historia de usuario (⌘⌥H)";
     barra.command = "radarHU.buscar";
   } else {
     barra.text = `$(book) ${hus.map((hu) => `HU ${hu}`).join(" · ")}`;
@@ -274,4 +444,4 @@ function activate(context) {
 
 function deactivate() {}
 
-module.exports = { activate, deactivate, leerEtiquetas, buscar };
+module.exports = { activate, deactivate, leerEtiquetas, leerPantallas, leerFetch, buscar };

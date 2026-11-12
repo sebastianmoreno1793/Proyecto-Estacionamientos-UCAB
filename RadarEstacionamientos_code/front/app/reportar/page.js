@@ -1,10 +1,11 @@
+// @PANTALLA Reportar (/reportar) — la pantalla para reportar un problema (incidencia)
 // @HU-9.1 Crear una incidencia · Sebastian — Pantalla «Reportar»
 // Pantalla Reportar (/reportar): crear una incidencia, HU 9.1.
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
-import { obtenerUsuarioActual } from "@/servidor/sesion";
-import FormularioIncidencia from "@/componentes/reportar/FormularioIncidencia";
-import { listarEstacionamientosActivos } from "@back/logica/estacionamientos/datos.js";
+import { obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
+import FormularioIncidencia from "@/partes_de_pantallas/reportar/FormularioIncidencia";
+import { listarEstacionamientosActivos } from "@back/reglas_y_datos/estacionamientos/datos.js";
 
 export const metadata = { title: "Reportar una incidencia" };
 

@@ -1,16 +1,17 @@
+// @PANTALLA Perfil (/perfil) — mis vehículos, notificaciones, Administrar y el botón «Salir»
 // @HU-2.1 Registrar mis vehículos · Samuel — Sección «Mis vehículos» dentro de Perfil
 // @HU-8.1 Activar las notificaciones · Manuel — Interruptor de notificaciones en Perfil
 // @HU-1.1 Crear cuenta con el correo institucional · Samuel — Botón «Salir» en Perfil para cerrar la sesión
 // Pantalla Perfil (/perfil): vehículos, notificaciones, Administrar y Salir.
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import Notificaciones from "@/componentes/notificaciones/Notificaciones";
-import { Icono } from "@/componentes/comunes/Iconos";
-import FormularioVehiculo from "@/componentes/perfil/FormularioVehiculo";
-import { salir } from "@/acciones/cuenta";
-import { listarVehiculosDe } from "@back/logica/vehiculos/datos.js";
-import { esAdministrador, obtenerUsuarioActual } from "@/servidor/sesion";
-import { inicialesDe } from "@back/logica/usuarios/reglas.js";
+import Notificaciones from "@/partes_de_pantallas/notificaciones/Notificaciones";
+import { Icono } from "@/partes_de_pantallas/comunes/Iconos";
+import FormularioVehiculo from "@/partes_de_pantallas/perfil/FormularioVehiculo";
+import { salir } from "@/envio_de_formularios/cuenta";
+import { listarVehiculosDe } from "@back/reglas_y_datos/vehiculos/datos.js";
+import { esAdministrador, obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
+import { inicialesDe } from "@back/reglas_y_datos/usuarios/reglas.js";
 
 export const metadata = { title: "Perfil" };
 

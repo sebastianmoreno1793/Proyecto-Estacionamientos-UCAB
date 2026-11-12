@@ -1,8 +1,9 @@
+// @PANTALLA Todas › Marco — envuelve cada pantalla: el encabezado arriba, el contenido y el aviso de versión nueva
 // Marco de todas las pantallas: encabezado con el menú, el contenido y el aviso de
 // versión nueva de la PWA (D-008).
 import "@/estilos/globales.css";
-import MenuPrincipal from "@/componentes/menu/MenuPrincipal";
-import ActualizacionPWA from "@/componentes/comunes/ActualizacionPWA";
+import MenuPrincipal from "@/partes_de_pantallas/menu/MenuPrincipal";
+import ActualizacionPWA from "@/partes_de_pantallas/comunes/ActualizacionPWA";
 
 export const metadata = {
   title: "Radar de Estacionamientos UCAB",

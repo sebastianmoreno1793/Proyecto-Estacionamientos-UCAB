@@ -1,6 +1,6 @@
 // Campus Montalbán en 3D: contorno, edificios, vías, canchas y relieve (simulador, HU 3.2).
 // Los estacionamientos NO están aquí: el simulador se los pide a la app base
-// (GET /api/estacionamientos), que los toma de su `back/campus/estacionamientos.js`.
+// (GET /api/estacionamientos), que los toma de su `back/datos_del_campus/estacionamientos.js`.
 //
 // Fuentes:
 //   OpenStreetMap   contorno (relación 3644537), edificios, vías, canchas, garita y
@@ -15,10 +15,10 @@
 //   - Los edificios sin nombre en OSM llevan `nombre: null`.
 // Para corregir algo, se cambia esta lista; el mapa no se toca.
 //
-// Coordenadas: [latitud, longitud], como en `back/campus/estacionamientos.js` de la app base.
+// Coordenadas: [latitud, longitud], como en `back/datos_del_campus/estacionamientos.js` de la app base.
 
 // Origen (0, 0, 0) del mundo 3D: el mismo CENTRO_CAMPUS de la app base
-// (RadarEstacionamientos_code/back/campus/estacionamientos.js). Un test comprueba que coincidan.
+// (RadarEstacionamientos_code/back/datos_del_campus/estacionamientos.js). Un test comprueba que coincidan.
 export const CENTRO_CAMPUS = [10.4637, -66.977];
 
 // Contorno del campus (OSM, relación 3644537). Mide unos 930 m de este a oeste,

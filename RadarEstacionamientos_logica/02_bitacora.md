@@ -16,7 +16,7 @@
 - **Postman:** 28 peticiones en el orden de la demostración, con pruebas y casos de error.
   Para la demo: dejar vacío `SALTAR_INICIO_DE_SESION` y copiar la cookie en `{{sesion}}`.
 - **Código separado en `front/` y `back/`** dentro de `RadarEstacionamientos_code`, con nombres en
-  español que dicen lo que hacen (`back/api`, `back/logica`, `back/campus`, `front/componentes`…),
+  español que dicen lo que hacen (`back/pedidos_y_respuestas`, `back/reglas_y_datos`, `back/datos_del_campus`, `front/partes_de_pantallas`…),
   un `LEEME.md` por carpeta y un comentario al inicio de cada archivo. Las URL de la API no
   cambiaron (Postman y el simulador siguen igual). Pantallas nuevas: `/reportar`, `/admin/puestos`,
   `/admin/garita`, `/admin/incidencias`.

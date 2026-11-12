@@ -67,7 +67,7 @@ Si la app base corre en otra dirección o con otra clave de sensores, copia `.en
 http://localhost:3001/maqueta fotografía la escena con estilo de maqueta física (grama, árboles,
 techos de teja y concreto, puestos pintados), en cámara casi cenital, y con **Exportar** guarda
 `exportes/maqueta-campus.jpg` y `exportes/maqueta-campus.json` (dónde cae cada estacionamiento y
-edificio en la imagen). Se copian a la app: `public/maqueta/campus.jpg` y `back/campus/maqueta.json`.
+edificio en la imagen). Se copian a la app: `public/maqueta/campus.jpg` y `back/datos_del_campus/maqueta.json`.
 Necesita la app base corriendo (le pide los estacionamientos). Ver D-007 › Maqueta.
 
 ## Postman
@@ -119,7 +119,7 @@ generó el simulador, y el menú tiene sus funciones reales.
 
 | Qué | Dónde | Fuente |
 |---|---|---|
-| 14 estacionamientos y su ocupación | La app base (`GET /api/estacionamientos`) | Su `back/campus/estacionamientos.js` |
+| 14 estacionamientos y su ocupación | La app base (`GET /api/estacionamientos`) | Su `back/datos_del_campus/estacionamientos.js` |
 | Contorno, edificios, vías, canchas, garita | `datos_campus/campus.js` | OpenStreetMap (relación 3644537) |
 | Relieve | `datos_campus/campus.js` (`RELIEVE`) | SRTM 30 m (NASA) |
 

@@ -1,8 +1,8 @@
 {
   "name": "radar-hu",
   "displayName": "Radar · Historias de usuario",
-  "description": "Muestra a qué HU pertenece cada archivo del Radar (etiquetas @HU-x.y) sin abrirlo, y busca una HU desde la paleta.",
-  "version": "1.1.0",
+  "description": "Muestra a qué HU pertenece cada archivo del Radar (etiquetas @HU-x.y) sin abrirlo, y busca una pantalla (@PANTALLA), un fetch (@FETCH) o una HU desde la paleta.",
+  "version": "1.4.0",
   "publisher": "radar-ucab",
   "license": "UNLICENSED",
   "repository": {
@@ -19,7 +19,7 @@
     "commands": [
       {
         "command": "radarHU.buscar",
-        "title": "Buscar una historia de usuario",
+        "title": "Buscar una pantalla, un fetch o una historia de usuario",
         "category": "Radar",
         "icon": "$(book)"
       },
@@ -30,7 +30,7 @@
       },
       {
         "command": "radarHU.recargar",
-        "title": "Volver a leer las etiquetas @HU",
+        "title": "Volver a leer las etiquetas @HU, @PANTALLA y @FETCH",
         "category": "Radar"
       }
     ],

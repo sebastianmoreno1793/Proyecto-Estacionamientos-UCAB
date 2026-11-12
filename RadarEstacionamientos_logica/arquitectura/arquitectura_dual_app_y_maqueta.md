@@ -97,7 +97,7 @@ capturas, pruebas (`npm test`) y una colección de Postman.
 La pantalla de inicio de la app es una **maqueta del campus vista desde arriba** (D-007). Esa
 imagen la produce el simulador en su página `/maqueta`: fotografía la escena 3D con estilo de
 maqueta física y exporta `campus.jpg` y la proyección (`maqueta.json`), que se copian a
-`RadarEstacionamientos_code/front/public/maqueta/` y `back/campus/`. Es un **archivo**, no código: la app no
+`RadarEstacionamientos_code/front/public/maqueta/` y `back/datos_del_campus/`. Es un **archivo**, no código: la app no
 importa nada del simulador ni lo necesita corriendo.
 
 ## El contrato entre los dos
