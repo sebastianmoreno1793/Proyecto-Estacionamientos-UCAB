@@ -1,0 +1,38 @@
+// @PANTALLA Todas › Encabezado: la marca, el círculo con las iniciales y las pestañas
+// Encabezado: marca, círculo del perfil y pestañas (solo con sesión iniciada).
+import Link from "next/link";
+import Pestanas from "@/partes_de_pantallas/menu/Pestanas";
+import { obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
+import { inicialesDe } from "@back/reglas_y_datos/usuarios/reglas.js";
+
+// Encabezado y barra de pestañas (D-007 v2): el mismo en web y en teléfono.
+// Cuatro pestañas para todos. Lo de administración (capacidad, garita, edificios)
+// se abre desde Perfil y solo lo ve el administrador.
+const ENLACES = [
+  { href: "/", texto: "Inicio", icono: "inicio" },
+  { href: "/mapa", texto: "Mapa", icono: "mapa" },
+  { href: "/reportar", texto: "Reportar", icono: "reportar" },
+  { href: "/perfil", texto: "Perfil", icono: "perfil" },
+];
+
+// Muestra el encabezado de todas las páginas (app/layout.js): marca, círculo con las iniciales y pestañas.
+// Lee el usuario de la sesión en el servidor; sin sesión no muestra las pestañas. [sesion]
+export default async function MenuPrincipal() {
+  const usuario = await obtenerUsuarioActual();
+
+  return (
+    <header className="menu">
+      <a href="/" className="menu-marca">
+        <img src="/icono-192.png" alt="" width={32} height={32} />
+        <strong>Radar UCAB</strong>
+      </a>
+      {usuario && (
+        <Link href="/perfil" className="menu-avatar" aria-label="Tu perfil">
+          {inicialesDe(usuario.correo)}
+        </Link>
+      )}
+      {/* Sin sesión las pestañas solo llevarían a /entrar: no se muestran. */}
+      {usuario && <Pestanas enlaces={ENLACES} />}
+    </header>
+  );
+}

@@ -1,0 +1,54 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>HU 9.1 · Especificación</title>
+<style>
+body{margin:0;background:#fff;font-family:Calibri,Carlito,"Helvetica Neue",Arial,sans-serif;color:#000}
+.hoja{width:1500px;padding:22px 18px 26px}
+h1{font-size:23px;margin:0 0 4px}
+.autor{font-size:20px;margin:0 0 16px}
+table{border-collapse:collapse;width:100%;font-size:19px;line-height:1.42}
+th{background:#d9d9d9;font-weight:700;border:2px solid #000;padding:10px}
+td{border:2px solid #000;padding:12px 14px;vertical-align:top}
+p{margin:0 0 10px}
+ol{margin:0 0 10px;padding-left:26px}
+ol li{margin:0 0 2px}
+.alt{list-style:none;padding-left:24px}
+</style></head><body><div class="hoja">
+<h1>HU 9.1 · Crear una incidencia</h1>
+<p class="autor">Autor: Moreno, Sebastian</p>
+<table>
+<colgroup><col style="width:22%"><col style="width:46%"><col style="width:32%"></colgroup>
+<tr><th>1 Historia de Usuario</th><th>2 Conversación</th><th>3 Criterios de Aceptación</th></tr>
+<tr>
+<td>Como conductor de la comunidad UCAB (estudiante o profesor), <b>quiero crear</b> una incidencia sobre un estacionamiento para que vigilancia sepa del problema y lo atienda.</td>
+<td>
+<p><b>Épica:</b> 9 · Gestión de Incidencias (R1), de la meta Seguridad del Mapa de Impacto.</p>
+<p><b>Escenario de uso:</b></p>
+<ol>
+<li>El conductor abre la opción «Reportar», desde el menú o desde la tarjeta de un estacionamiento.</li>
+<li>El sistema verifica la sesión.</li>
+<li class="alt">2.1 Si no la tiene, le muestra «Entrar».</li>
+<li class="alt">2.2 El conductor inicia sesión con su correo institucional.</li>
+<li value="3">El sistema muestra el formulario con los estacionamientos abiertos y los tres tipos de problema.</li>
+<li>El conductor elige el estacionamiento.</li>
+<li>El conductor elige el tipo de problema.</li>
+<li>El conductor pulsa «Enviar reporte».</li>
+<li class="alt">6.1 Si se arrepiente, cierra el formulario y no se registra nada.</li>
+<li value="7">El sistema valida el estacionamiento y el tipo.</li>
+<li class="alt">7.1 Si falta alguno, le indica qué debe elegir y el conductor vuelve al paso 4.</li>
+<li value="8">El sistema registra la incidencia con la fecha, la hora y el estado «pendiente».</li>
+<li>El sistema muestra la confirmación con el estacionamiento, el tipo, la hora y el estado.</li>
+<li>El conductor lee la confirmación.</li>
+</ol>
+<p><b>Reglas de negocio:</b> hay tres tipos de problema (batería descargada, conos atravesados y vehículo mal estacionado); solo se reporta sobre estacionamientos abiertos; toda incidencia nueva queda «pendiente» con su fecha y hora, y el conductor no elige el estado; solo la crea un usuario con sesión iniciada, y su correo no se muestra a los demás; si se abre desde la tarjeta de un estacionamiento, ese estacionamiento ya viene elegido.</p>
+<p><b>Alcance:</b> no incluye cambiar el estado (HU 9.2), consultar el listado (HU 9.3) ni eliminar una incidencia (HU 9.4), adjuntar fotos, escribir una descripción libre ni avisar a vigilancia con una notificación.</p>
+<p><b>Dependencias:</b> HU 1.1 · Crear cuenta con el correo institucional; HU 5.1 · Consultar los estacionamientos en el mapa del campus; HU 5.4 decide qué estacionamientos están abiertos.</p>
+<p><b>Restricciones:</b> solo el Campus Montalbán; solo navegador web, en computador y en celular; sin costos adicionales.</p>
+<p style="margin:0"><b>Diagrama de actividades:</b> ver enlace en la descripción de la tarjeta.</p>
+</td>
+<td>
+<p>1. Con sesión iniciada, si el conductor elige un estacionamiento abierto y un tipo de problema y pulsa «Enviar reporte», la incidencia queda registrada con la fecha, la hora y el estado «pendiente», y el sistema le muestra la confirmación.</p>
+<p>2. Si intenta enviar el formulario sin elegir el estacionamiento o el tipo de problema, el sistema no registra nada y le indica qué le falta elegir.</p>
+<p style="margin:0">3. Un estacionamiento que el administrador cerró no aparece en la lista del formulario y no se puede crear una incidencia sobre él.</p>
+</td>
+</tr>
+</table>
+</div></body></html>

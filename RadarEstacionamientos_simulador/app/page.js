@@ -1,4 +1,5 @@
 "use client";
+// @PANTALLA Simulador (/) — el simulador: el campus en 3D y el panel para mandarle cosas a la app
 
 // Simulador del Radar de Estacionamientos UCAB: un mundo virtual que le pasa a la app base
 // lo mismo que le pasaría en la realidad (carros que entran y salen, placas en la garita,
@@ -9,9 +10,9 @@
 // en la app llega de vuelta por su canal en vivo (GET /api/eventos).
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Mapa3D from "@/components/Mapa3D";
-import PanelDeControl from "@/components/PanelDeControl";
-import { appBase, TIPOS_DE_INCIDENCIA, URL_EVENTOS } from "@/lib/cliente_base";
+import Mapa3D from "@/componentes_visuales/Mapa3D";
+import PanelDeControl from "@/componentes_visuales/PanelDeControl";
+import { appBase, TIPOS_DE_INCIDENCIA, URL_EVENTOS } from "@/conexion_app/cliente_api";
 import {
   avisosParaLlenar,
   avisosParaVaciar,
@@ -19,7 +20,7 @@ import {
   placaAleatoria,
   repartirLlegadas,
   repartirSalidas,
-} from "@/lib/escenarios";
+} from "@/escenarios_prueba/escenarios";
 
 const URL_APP_BASE = process.env.NEXT_PUBLIC_URL_APP_BASE ?? "http://localhost:3000";
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -91,6 +92,7 @@ export default function PaginaSimulador() {
   // simuladores o las personas que usan la app.
   useEffect(() => {
     cargarEstado();
+    // @FETCH Simulador › canal en vivo /api/eventos (EventSource) — escucha lo que pasa en la app para mostrarlo en el registro
     const fuente = new EventSource(URL_EVENTOS);
     fuente.onerror = () => setConexion("sin_conexion");
     fuente.onmessage = (e) => {

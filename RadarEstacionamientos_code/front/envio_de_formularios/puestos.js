@@ -1,0 +1,34 @@
+"use server";
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — Recibe el formulario y guarda capacidad y estado
+
+// HU 5.4 · Acción del servidor que guarda la capacidad y el estado de un estacionamiento.
+import { revalidatePath } from "next/cache";
+import { cambiarEstacionamiento, vistaPublica } from "@back/reglas_y_datos/estacionamientos/datos.js";
+import { emitir } from "@back/piezas_compartidas/eventos_en_vivo.js";
+import { esAdministrador, obtenerUsuarioActual } from "@/sesion_del_usuario/sesion";
+
+// @HU-5.4 Modificar la capacidad y el estado de un estacionamiento · Sebastian — solo el administrador
+// Revisa que sea administrador y guarda capacidad y abierto/cerrado con cambiarEstacionamiento
+// del back; luego lo avisa por el canal en vivo. La llama FilaPuesto (HU 5.4). [accion] [sesion] [en-vivo]
+export async function guardarEstacionamiento(_estadoAnterior, formData) {
+  const usuario = await obtenerUsuarioActual();
+  if (!esAdministrador(usuario)) {
+    return { error: "Solo el administrador puede cambiar los estacionamientos." };
+  }
+
+  const resultado = await cambiarEstacionamiento(formData.get("id"), {
+    capacidad: formData.get("capacidad"),
+    activo: formData.get("activo") === "on",
+  });
+  // Con el error vuelven los valores escritos (React 19 vacía el formulario tras enviar).
+  if (resultado.error) {
+    return {
+      error: resultado.error,
+      valores: { capacidad: formData.get("capacidad"), activo: formData.get("activo") === "on" },
+    };
+  }
+
+  emitir("ESTACIONAMIENTO", { estacionamiento: vistaPublica(resultado.estacionamiento) });
+  revalidatePath("/admin/puestos");
+  return { mensaje: "Cambios guardados." };
+}

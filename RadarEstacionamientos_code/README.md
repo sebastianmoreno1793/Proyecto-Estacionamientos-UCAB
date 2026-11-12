@@ -1,26 +1,68 @@
 # Radar de Estacionamientos UCAB — código
 
-Aplicación web en Next.js (ver `docs/stack_y_arquitectura.md`).
+Aplicación web en Next.js (ver `docs/stack_y_arquitectura.md`), separada en **front** y **back**.
 
 ## Cómo correrla
 
+**En VS Code:** abre la carpeta del repo, abre cualquier archivo `.js` y dale a **Run Code** (extensión
+Code Runner) o pulsa **F5**. Las dos corren `iniciar.mjs`, que instala lo que falte, levanta la app
+(http://localhost:3000) y el simulador 3D (http://localhost:3001) y abre el navegador. `Ctrl+C` apaga los dos.
+
+**En la terminal:**
+
 ```bash
 cd RadarEstacionamientos_code
-npm install
-npm run dev      # abre http://localhost:3000
-npm test         # pruebas de los datos
+npm run iniciar    # lo mismo que Run Code: app + simulador y abre el navegador
+npm run dev        # solo la app, en http://localhost:3000
+npm test           # pruebas del back (137) y del front (13)
 ```
+
+Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `back/reglas_y_datos/usuarios/datos.js`):
+
+| Rol | Correo | Contraseña | Qué ve |
+|---|---|---|---|
+| Administrador | `admin.prueba@ucab.edu.ve` | `123456789` | Todo, más «Administrar» en Perfil (puestos, garita, edificios) |
+| Estudiante | `estudiante.prueba@est.ucab.edu.ve` | `123456789` | Inicio, Mapa, Reportar y Perfil |
+| Profesor | `profesor.prueba@ucab.edu.ve` | `123456789` | Lo mismo que el estudiante, con rol Profesor |
 
 ## Dónde está cada cosa
 
+**¿Dónde está cada historia de usuario?** En [`docs/mapa_HU_codigo.md`](docs/mapa_HU_codigo.md): front, back y pruebas de cada HU con enlace a la línea exacta. En el código, busca la etiqueta `@HU-x.y` (por ejemplo `@HU-4.2`).
+
 | Carpeta | Qué hay |
 |---|---|
-| `app/` | Páginas (Next.js App Router) |
-| `components/` | Piezas de la interfaz, por ejemplo `MapaCampus.js` (HU 5.1) y el menú (`MenuPrincipal.js`) |
-| `data/` | Datos fijos, por ejemplo la lista de estacionamientos (provisional) |
-| `app/api/` | API pública: sensores, lector de placas, incidencias, administración y canal en vivo |
-| `tests/` | Pruebas que se corren con `npm test` |
-| `docs/` | Copia de la carpeta de lógica. **No se edita aquí.** |
+| `back/` | Lo que pasa en el servidor: `pedidos_y_respuestas/` (recibe lo que piden y contesta), `reglas_y_datos/` (qué se permite y dónde se guarda, por tema), `piezas_compartidas/`, `control_de_acceso/`, `datos_del_campus/` y `pruebas_automaticas/` |
+| `front/` | Lo que ve el usuario: `app/` (una carpeta por pantalla), `partes_de_pantallas/`, `envio_de_formularios/`, `notificaciones_del_navegador/`, `sesion_del_usuario/`, `estilos/` y `public/` |
+| `docs/` | Copia de la carpeta de lógica. **No se edita aquí**, salvo `mapa_HU_codigo.md`, que es solo del código. |
+
+Cada carpeta tiene un `LEEME.md` corto, cada archivo empieza con un comentario que dice qué hace y
+cada función tiene el suyo. Las etiquetas entre corchetes (`[api]`, `[fetch]`, `[sesion]`…) sirven
+para buscarlas con ⌘⇧F (ver «Buscar en VS Code»).
+
+### Cómo se conectan
+
+```
+navegador (front) ──fetch /api/...──▶ front/app/api/.../route.js ──▶ back/pedidos_y_respuestas/<tema>.js ──▶ back/reglas_y_datos/<tema>/
+Postman y sensores ─────────────────▶ las mismas URL /api/...
+simulador ──▶ su puente (/api/base/...) ──▶ las mismas URL /api/... (con la clave de sensores)
+formularios del front ──▶ front/envio_de_formularios/<tema>.js ──────────────────────▶ back/reglas_y_datos/<tema>/ (directo)
+```
+
+### Buscar en VS Code
+
+| Quiero… | Atajo (Mac) |
+|---|---|
+| Buscar una palabra o etiqueta en todo el proyecto | ⌘⇧F y escribe, por ejemplo, `[fetch]` |
+| Abrir un archivo por su nombre | ⌘P y escribe, por ejemplo, `sugerencia` |
+| Saltar a una función por su nombre en todo el proyecto | ⌘T y escribe, por ejemplo, `registrarAviso` |
+| Ver las funciones del archivo abierto | ⌘⇧O |
+| Ir a donde está definida una función | F12 (o ⌘ + clic) sobre su nombre |
+| Ver dónde se usa una función | ⇧F12 sobre su nombre |
+
+Etiquetas de los comentarios: `[fetch]` (el navegador llama a la API), `[api]` (un endpoint),
+`[postman]` (lo prueba Postman), `[simulador]` (lo usa el simulador), `[en-vivo]` (canal en vivo),
+`[accion]` (un formulario llama al back), `[sesion]` (cookie y permisos), `[regla]` (valida o
+calcula), `[datos]` (lee o guarda) y `[notificaciones]`. También funciona buscar `HU 7.2`.
 
 ## API (la usan los sensores, Postman y el simulador)
 

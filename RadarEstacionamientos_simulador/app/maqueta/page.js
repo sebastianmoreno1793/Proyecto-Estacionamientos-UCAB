@@ -1,11 +1,12 @@
 "use client";
+// @PANTALLA Simulador Maqueta (/maqueta) — dibuja la imagen del campus que usa el Mapa de la app y la exporta
 
 // Render de la maqueta del campus para la app (D-007 › Maqueta). Herramienta de desarrollo:
 // dibuja la maqueta una vez, la muestra y, con «Exportar», guarda la imagen y la proyección
-// en `exportes/` para copiarlas a `RadarEstacionamientos_code/public/maqueta/`.
+// en `exportes/` para copiarlas a `RadarEstacionamientos_code/front/public/maqueta/`.
 
 import { useCallback, useEffect, useState } from "react";
-import MaquetaRender from "@/components/MaquetaRender";
+import MaquetaRender from "@/componentes_visuales/MaquetaRender";
 
 export default function PaginaMaqueta() {
   const [estacionamientos, setEstacionamientos] = useState(null);
@@ -13,8 +14,12 @@ export default function PaginaMaqueta() {
   const [estado, setEstado] = useState("Pidiendo los estacionamientos a la app base…");
 
   useEffect(() => {
+    // @FETCH Simulador Maqueta › GET /api/base/estacionamientos — le pide a la app los estacionamientos para dibujarlos
     fetch("/api/base/estacionamientos")
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`La app base respondió ${r.status}`);
+        return r.json();
+      })
       .then(({ estacionamientos }) => {
         setEstacionamientos(estacionamientos);
         setEstado("Dibujando la maqueta…");
@@ -29,6 +34,7 @@ export default function PaginaMaqueta() {
 
   async function exportar() {
     setEstado("Exportando…");
+    // @FETCH Simulador Maqueta › POST /api/exportar-maqueta — guarda la imagen del campus para usarla en el Mapa de la app
     const respuesta = await fetch("/api/exportar-maqueta", {
       method: "POST",
       headers: { "content-type": "application/json" },
