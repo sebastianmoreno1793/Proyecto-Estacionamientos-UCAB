@@ -1,5 +1,5 @@
-# componentes_visuales · lo que se ve
+# componentes_visuales · lo que se ve (React)
 
-- `Mapa3D.js`: la escena 3D del campus con los carros (Three.js).
-- `PanelDeControl.js`: el menú con pestañas; cada botón termina en una llamada de `conexion_app/`.
-- `MaquetaRender.js`: la vista desde arriba que se usa como imagen del mapa de la app.
+- `Mapa3D.js`: el recuadro de estado y el lienzo; la escena la hace `escena_3d/MundoVirtual3D`.
+- `PanelDeControl.js`: el menú con pestañas; cada botón llama a una acción de `SimuladorControlador`.
+- `MaquetaRender.js`: el contenedor del render de `escena_3d/MaquetaDelCampus`.

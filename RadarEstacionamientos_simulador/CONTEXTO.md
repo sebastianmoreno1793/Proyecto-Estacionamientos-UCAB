@@ -23,14 +23,17 @@ aquí, `npm install` y `npm run dev` → `http://localhost:3001`. Configuración
 
 ## Mapa 3D
 
-- `componentes_visuales/Mapa3D.js`: la escena (Three.js). 1 unidad = 1 metro; origen en `CENTRO_CAMPUS`
+- `escena_3d/MundoVirtual3D.js`: la escena (Three.js), armada con `TerrenoDelCampus`, `Garita3D`,
+  `Estacionamiento3D` y `TraficoDeCarros`. 1 unidad = 1 metro; origen en `CENTRO_CAMPUS`
   (`datos_campus/campus.js`, el mismo de la app base). NUNCA inventes posiciones: GPS → metros con
-  `gpsAMetros` (`mapa_3d/geo.js`).
+  `Coordenadas.gpsAMetros` (`mapa_3d/Coordenadas.js`).
 - Los estacionamientos llegan de la app base (`GET /api/estacionamientos`). Contorno, edificios,
   vías, garita y relieve: `datos_campus/campus.js` (OpenStreetMap + SRTM).
 - El campus mide ~930 m (E-O) × 610 m (N-S). La garita está en la esquina **noreste**
   (Av. Teherán) y el terreno **sube de norte a sur** (~920 m → ~975 m).
-- **Antes de modificar el mapa 3D**, revisa `mapa_3d/geo.js` (conversión GPS → metros) y
+- **Todo el código va en clases** (una por archivo, con el nombre de la clase): cálculos sin dibujar
+  en `mapa_3d/`, lo que usa Three.js en `escena_3d/`, la lógica de la pantalla en `controladores/`.
+- **Antes de modificar el mapa 3D**, revisa `mapa_3d/Coordenadas.js` (conversión GPS → metros) y
   `datos_campus/campus.js` (de dónde sale cada forma del campus).
 - Valida con `npm test`.
 

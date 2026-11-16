@@ -7,6 +7,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import MaquetaRender from "@/componentes_visuales/MaquetaRender";
+import { ClienteAppBase } from "@/conexion_app/ClienteAppBase";
+
+const api = new ClienteAppBase();
 
 export default function PaginaMaqueta() {
   const [estacionamientos, setEstacionamientos] = useState(null);
@@ -14,17 +17,14 @@ export default function PaginaMaqueta() {
   const [estado, setEstado] = useState("Pidiendo los estacionamientos a la app base…");
 
   useEffect(() => {
-    // @FETCH Simulador Maqueta › GET /api/base/estacionamientos — le pide a la app los estacionamientos para dibujarlos
-    fetch("/api/base/estacionamientos")
-      .then((r) => {
-        if (!r.ok) throw new Error(`La app base respondió ${r.status}`);
-        return r.json();
-      })
-      .then(({ estacionamientos }) => {
-        setEstacionamientos(estacionamientos);
-        setEstado("Dibujando la maqueta…");
-      })
-      .catch(() => setEstado("No se pudo hablar con la app base (¿está corriendo en :3000?)."));
+    api.estacionamientos().then((r) => {
+      if (!r.ok) {
+        setEstado("No se pudo hablar con la app base (¿está corriendo en :3000?).");
+        return;
+      }
+      setEstacionamientos(r.datos.estacionamientos);
+      setEstado("Dibujando la maqueta…");
+    });
   }, []);
 
   const alTerminar = useCallback((r) => {
@@ -34,14 +34,8 @@ export default function PaginaMaqueta() {
 
   async function exportar() {
     setEstado("Exportando…");
-    // @FETCH Simulador Maqueta › POST /api/exportar-maqueta — guarda la imagen del campus para usarla en el Mapa de la app
-    const respuesta = await fetch("/api/exportar-maqueta", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(resultado),
-    });
-    const cuerpo = await respuesta.json();
-    setEstado(respuesta.ok ? `Exportada: ${cuerpo.archivos.join(" y ")}` : `Error: ${cuerpo.error}`);
+    const r = await api.exportarMaqueta(resultado);
+    setEstado(r.ok ? `Exportada: ${r.datos.archivos.join(" y ")}` : `Error: ${r.datos?.error ?? "sin respuesta"}`);
   }
 
   return (

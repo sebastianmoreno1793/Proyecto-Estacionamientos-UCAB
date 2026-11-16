@@ -67,7 +67,7 @@ Si la app base corre en otra dirección o con otra clave de sensores, copia `.en
 http://localhost:3001/maqueta fotografía la escena con estilo de maqueta física (grama, árboles,
 techos de teja y concreto, puestos pintados), en cámara casi cenital, y con **Exportar** guarda
 `exportes/maqueta-campus.jpg` y `exportes/maqueta-campus.json` (dónde cae cada estacionamiento y
-edificio en la imagen). Se copian a la app: `public/maqueta/campus.jpg` y `back/datos_del_campus/maqueta.json`.
+edificio en la imagen). Se copian a la app: `public/maqueta/campus.jpg` y `back/basedatos/datos_iniciales/maqueta.json`.
 Necesita la app base corriendo (le pide los estacionamientos). Ver D-007 › Maqueta.
 
 ## Postman
@@ -119,7 +119,7 @@ generó el simulador, y el menú tiene sus funciones reales.
 
 | Qué | Dónde | Fuente |
 |---|---|---|
-| 14 estacionamientos y su ocupación | La app base (`GET /api/estacionamientos`) | Su `back/datos_del_campus/estacionamientos.js` |
+| 14 estacionamientos y su ocupación | La app base (`GET /api/estacionamientos`) | Su `back/basedatos/datos_iniciales/estacionamientos.js` |
 | Contorno, edificios, vías, canchas, garita | `datos_campus/campus.js` | OpenStreetMap (relación 3644537) |
 | Relieve | `datos_campus/campus.js` (`RELIEVE`) | SRTM 30 m (NASA) |
 
@@ -139,22 +139,24 @@ generó el simulador, y el menú tiene sus funciones reales.
 ```
 RadarEstacionamientos_simulador/
 ├── app/                   Rutas de Next.js (el nombre lo exige Next)
-│   ├── page.js            la pantalla del simulador: estado, canal en vivo y menú
+│   ├── page.js            la pantalla del simulador: dibuja el estado de SimuladorControlador
 │   ├── maqueta/           render de la maqueta que se copia a la app
-│   └── api/base/          PUENTE en el servidor: reenvía a la app (:3000) y agrega la clave de sensores
-├── conexion_app/          ← lo único que llama a la app: cliente_api.js (avisos, placas, incidencias…)
-├── escenarios_prueba/     qué avisos manda cada escenario (llegadas, salidas, llenar, vaciar, placas al azar)
-├── mapa_3d/               GPS → metros, relieve y rutas del carro por las vías reales
+│   └── api/base/          PUENTE en el servidor (PuenteAppBase): reenvía a la app (:3000) y agrega la clave de sensores
+├── controladores/         SimuladorControlador: estado, canal en vivo, acciones del menú y escenarios
+├── conexion_app/          ← lo único que llama a la app: ClienteAppBase (avisos, placas, incidencias…) y PuenteAppBase
+├── escenarios_prueba/     GeneradorDeEscenarios: qué avisos manda cada escenario
+├── mapa_3d/               cálculos sin dibujar: Coordenadas (GPS → metros), Poligono, Relieve, Suelo, GrafoDeVias
+├── escena_3d/             el mundo en Three.js: MundoVirtual3D, TerrenoDelCampus, Garita3D, Estacionamiento3D…
 ├── datos_campus/          contorno, edificios, vías y relieve (OpenStreetMap + SRTM)
-├── componentes_visuales/  lo que se ve: Mapa3D (escena), PanelDeControl (menú), MaquetaRender
-├── pruebas_automaticas/   npm test: distancias, rutas, escenarios y el puente
+├── componentes_visuales/  componentes de React: Mapa3D, PanelDeControl, MaquetaRender
+├── pruebas_automaticas/   npm test: distancias, rutas, escenarios, el puente y el controlador
 ├── coleccion_postman/     las mismas llamadas, para hacerlas a mano desde Postman
 └── capturas_pantalla/     imágenes de este README
 ```
 
 **Cómo se conecta con la app:** un botón del menú (`componentes_visuales/PanelDeControl.js`) →
-`conexion_app/cliente_api.js` → `fetch /api/base/...` → `app/api/base/[...ruta]/route.js` (el
-puente) → la API pública de la app en `http://localhost:3000/api/...`. El simulador **nunca**
+`SimuladorControlador` → `ClienteAppBase` → `fetch /api/base/...` → `PuenteAppBase` (el puente, en
+`app/api/base/[...ruta]/route.js`) → la API pública de la app en `http://localhost:3000/api/...`. El simulador **nunca**
 importa código de la app: todo pasa por esa API, igual que un sensor real (D-002).
 
 Mapa © colaboradores de OpenStreetMap (ODbL). Relieve: SRTM, NASA.

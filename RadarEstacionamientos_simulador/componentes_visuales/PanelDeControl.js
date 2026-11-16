@@ -6,7 +6,8 @@
 // pestañas. Cada botón termina en una llamada a la API pública de la app (ver el Registro).
 
 import { useEffect, useState } from "react";
-import { TIPOS_DE_INCIDENCIA } from "@/conexion_app/cliente_api";
+import { ClienteAppBase } from "@/conexion_app/ClienteAppBase";
+import { Medidas3D } from "@/escena_3d/Medidas3D";
 
 const PESTANAS = [
   { id: "garita", texto: "🚗 Garita" },
@@ -17,16 +18,10 @@ const PESTANAS = [
   { id: "postman", texto: "🔌 Postman" },
 ];
 
-// El mismo semáforo de la app (D-009): verde = hay puesto, rojo = no hay puesto, gris = cerrado.
-function colorSemaforo(e) {
-  if (!e.activo) return "#8e8e93";
-  return e.libres > 0 ? "#2f9e57" : "#d93a2e";
-}
-
 function BarraOcupacion({ estacionamiento }) {
   return (
     <div className="barra-ocupacion" aria-hidden="true">
-      <span style={{ width: `${estacionamiento.activo ? estacionamiento.porcentaje : 0}%`, background: colorSemaforo(estacionamiento) }} />
+      <span style={{ width: `${estacionamiento.activo ? estacionamiento.porcentaje : 0}%`, background: Medidas3D.colorSemaforoCss(estacionamiento) }} />
     </div>
   );
 }
@@ -60,7 +55,7 @@ function Elegido({ estacionamientos, incidencias, seleccionado, acciones }) {
       {e && (
         <>
           <div className="elegido">
-            <span className="semaforo" style={{ background: colorSemaforo(e), color: colorSemaforo(e) }} />
+            <span className="semaforo" style={{ background: Medidas3D.colorSemaforoCss(e), color: Medidas3D.colorSemaforoCss(e) }} />
             <div>
               <strong>{e.activo ? `${e.libres} libres de ${e.capacidad}` : "Cerrado por el administrador"}</strong>
               <div className="tenue">
@@ -124,7 +119,7 @@ function PestanaIncidencias({ estacionamientos, incidencias, seleccionado, tarea
     <>
       <section className="tarjeta">
         <h2>Reportar en {elegido?.etiqueta ?? "…"}</h2>
-        {TIPOS_DE_INCIDENCIA.map((t) => (
+        {ClienteAppBase.TIPOS_DE_INCIDENCIA.map((t) => (
           <button
             key={t.id}
             className="boton boton-naranja boton-grande"
@@ -166,7 +161,7 @@ function PestanaIncidencias({ estacionamientos, incidencias, seleccionado, tarea
                 >
                   <span className="item-cabecera">
                     <strong>
-                      {TIPOS_DE_INCIDENCIA.find((t) => t.id === i.tipo)?.icono} {i.nombreTipo}
+                      {ClienteAppBase.TIPOS_DE_INCIDENCIA.find((t) => t.id === i.tipo)?.icono} {i.nombreTipo}
                     </strong>
                     <span className="marca marca-incidencia">{i.estado}</span>
                   </span>
