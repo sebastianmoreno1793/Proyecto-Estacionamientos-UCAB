@@ -37,7 +37,7 @@ Profesora: María Pérez de Ovalles — Ingeniería de Software.
 
 ## Herramientas y enlaces
 
-- Repositorio (privado, cuenta universitaria sebastianmoreno1793): https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB — contiene las dos carpetas: `RadarEstacionamientos_logica/` y `RadarEstacionamientos_code/` (la raíz del repo es la carpeta *Ingeneria de Software*).
+- Repositorio (privado, cuenta universitaria sebastianmoreno1793): https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB — contiene las dos carpetas: `RadarEstacionamientos_logica/` y `RadarEstacionamientos_code/` (la raíz del repo es la carpeta *Proyecto Radar de Estacionamientos*, dentro de `~/UCAB/Ingeniería de Software/`).
 - Tareas: Issues #1–#12 (milestone **Iteración 1**) y #13–#32 (milestone **Iteración 2**), con etiquetas por épica y por persona. Flujo de trabajo en `CONTRIBUTING.md` del repo.
 
 - Brief vigente: `entregables/BRIEF EQUIPO 3 15787.docx`
