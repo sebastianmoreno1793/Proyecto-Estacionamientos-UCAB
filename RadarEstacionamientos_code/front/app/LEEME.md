@@ -1,16 +1,17 @@
 # front/app · rutas (una carpeta por URL)
 
-Aquí solo hay rutas. Cada `page.js` arma su pantalla con piezas de `../partes_de_pantallas/`.
+Cada `page.js` **solo monta su vista** (`../vistas/`). La sesión y el rol los revisa `../middleware.js`
+antes de llegar aquí.
 
-| Carpeta | URL | Qué es |
+| Carpeta | URL | Vista |
 |---|---|---|
-| `page.js` | `/` | Inicio |
-| `mapa/` | `/mapa` | Maqueta del campus |
-| `reportar/` | `/reportar` | Crear una incidencia (HU 9.1) |
-| `perfil/` | `/perfil` | Vehículos, notificaciones, Administrar y Salir |
-| `sugerencia/` | `/sugerencia` | Sugerir estacionamiento (HU 7.2) |
-| `entrar/`, `registro/` | `/entrar`, `/registro` | Inicio de sesión y cuenta (HU 1.1) |
+| `page.js` | `/` | `vistas/inicio/Inicio` |
+| `mapa/` | `/mapa` | `vistas/mapa/MaquetaCampus` |
+| `reportar/` | `/reportar` | `vistas/reportar/FormularioIncidencia` (HU 9.1) |
+| `perfil/` | `/perfil` | `vistas/perfil/PantallaPerfil` |
+| `sugerencia/` | `/sugerencia` | `vistas/sugerencia/BuscadorSugerencia` (HU 7.2) |
+| `entrar/`, `registro/` | `/entrar`, `/registro` | `vistas/cuenta/FormularioCuenta` (HU 1.1) |
 | `admin/` | `/admin/...` | Puestos, Garita y Edificios (solo administrador) |
-| `api/` | `/api/...` | Conecta cada dirección `/api/...` con el archivo del back que la contesta (`back/pedidos_y_respuestas`) (✅ simulador y Postman) |
+| `api/` | `/api/...` | **La ruta del back**: cada `route.js` pasa la petición a su controlador de `back/controladores/` (✅ simulador y Postman) |
 
 `layout.js` es el marco de todas las pantallas; `manifest.js`, los datos de la PWA.

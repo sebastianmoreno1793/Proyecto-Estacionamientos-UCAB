@@ -1,7 +1,7 @@
 {
   "name": "radar-back",
   "private": true,
-  "description": "Back del Radar: lógica, datos del campus y endpoints de la API. Se prueba con node --test.",
+  "description": "Back del Radar en capas: controladores, servicios, repositorios, DTO, modelos y tácticas. Se prueba con node --test.",
   "type": "module",
   "scripts": {
     "test": "node --test"

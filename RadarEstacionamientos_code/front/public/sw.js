@@ -6,7 +6,7 @@
 //  - /api/* va SIEMPRE a la red: los datos en vivo nunca salen de la caché (RNF tolerancia a fallos).
 //  - La versión nueva espera a que el usuario pulse «Actualizar» (mensaje "ACTUALIZAR").
 //  - Notificaciones (HU 8.1): la notificación de prueba la muestra el navegador con
-//    `registration.showNotification` (front/notificaciones_del_navegador/Notificacion.js). El envío de
+//    `registration.showNotification` (front/modelos/Notificacion.js). El envío de
 //    notificaciones reales (push) queda fuera del alcance de la HU 8.1.
 //
 // Al cambiar este archivo, sube VERSION para que los teléfonos reciban la versión nueva.

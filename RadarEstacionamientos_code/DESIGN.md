@@ -47,7 +47,7 @@ spacing: { xs: "4px", sm: "8px", md: "12px", lg: "16px", xl: "24px", xxl: "32px"
 # Sistema de diseño: Radar de Estacionamientos UCAB
 
 **Estado:** 🟢 Vigente — es la regla de [D-007](../decisiones/D-007-diseno-ios-institucional-ucab.md).
-**Obligatorio para todo el equipo.** Sale de Thinkdy (`~/UCAB/App-Estudio/DESIGN.md`) y del
+**Obligatorio para todo el equipo.** Sale de Thinkdy (`~/Proyectos/Thinkdy/DESIGN.md`) y del
 movimiento de Te Cambio. Se revisa con la skill `impeccable`.
 
 ## Idea central: «La maqueta en el parabrisas»
@@ -151,7 +151,7 @@ pintadas y los estacionamientos con sus puestos marcados.
 
 - **De dónde sale:** la página `/maqueta` del simulador fotografía la escena 3D con medidas reales
   (OpenStreetMap) en una cámara casi cenital (34°) y exporta la imagen
-  (`front/public/maqueta/campus.jpg`, 2400 × 1560) y la proyección (`back/datos_del_campus/maqueta.json`: dónde cae
+  (`front/public/maqueta/campus.jpg`, 2400 × 1560) y la proyección (`front/public/maqueta/maqueta.json`: dónde cae
   cada estacionamiento y cada edificio en la imagen). Si cambian los edificios o los
   estacionamientos, se vuelve a exportar; la app no dibuja el campus.
 - **Encima, el semáforo:** cada estacionamiento se pinta con su relleno al 50 % y su borde. El
@@ -215,7 +215,7 @@ mayúsculas encima de títulos · fuentes descargadas.
 
 ## Referencias
 
-- Thinkdy (`~/UCAB/App-Estudio/DESIGN.md`) y Te Cambio (D-007 de ese proyecto), de Sebastian.
+- Thinkdy (`~/Proyectos/Thinkdy/DESIGN.md`) y Te Cambio (D-007 de ese proyecto), de Sebastian.
 - Versión 2 (09/nov/26): Cashea, Yummy, EasyPark, PayByPhone, Parclick y pines de Pinterest
   (Scoopa, «Popular Food», «My Spots», «Elegant Concept Fitness», el anillo «8.8»). Se tomaron los
   patrones (pasos cortos, chips, tarjetas grandes, cifras grandes, barra flotante), no los diseños.

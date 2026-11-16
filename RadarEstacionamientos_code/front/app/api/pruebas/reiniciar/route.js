@@ -1,5 +1,8 @@
-// POST /api/pruebas/reiniciar → back/pedidos_y_respuestas/reiniciar.js: deja los datos como al inicio para las pruebas.
-// Aquí solo se conecta la URL. [api] [postman]
-export { POST } from "@back/pedidos_y_respuestas/reiniciar.js";
+// Solo desarrollo — Dirección web POST /api/pruebas/reiniciar
+// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/controladores/).
+// POST /api/pruebas/reiniciar → PruebasControlador.reiniciar   [api] [postman]
+import { Fabrica } from "@back/Fabrica.js";
+
+export const POST = (peticion) => Fabrica.obtener().pruebasControlador.reiniciar(peticion);
 
 export const dynamic = "force-dynamic"; // datos en vivo: nunca se guardan en caché

@@ -14,10 +14,10 @@ Code Runner) o pulsa **F5**. Las dos corren `iniciar.mjs`, que instala lo que fa
 cd RadarEstacionamientos_code
 npm run iniciar    # lo mismo que Run Code: app + simulador y abre el navegador
 npm run dev        # solo la app, en http://localhost:3000
-npm test           # pruebas del back (137) y del front (13)
+npm test           # pruebas del back (144) y del front (54)
 ```
 
-Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `back/reglas_y_datos/usuarios/datos.js`):
+Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `back/basedatos/datos_iniciales/usuarios_de_prueba.js`):
 
 | Rol | Correo | Contraseña | Qué ve |
 |---|---|---|---|
@@ -29,24 +29,34 @@ Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `
 
 **¿Dónde está cada historia de usuario?** En [`docs/mapa_HU_codigo.md`](docs/mapa_HU_codigo.md): front, back y pruebas de cada HU con enlace a la línea exacta. En el código, busca la etiqueta `@HU-x.y` (por ejemplo `@HU-4.2`).
 
+El código es **orientado a objetos y por capas** (estilo Spring MVC, con nombres en español): una
+clase por archivo, con el sufijo de su capa (`IncidenciaControlador`, `IncidenciaServicio`,
+`IncidenciaRepositorio`, `IncidenciaDTO`, `IncidenciaValidador`). Cada capa solo llama a la de abajo.
+
 | Carpeta | Qué hay |
 |---|---|
-| `back/` | Lo que pasa en el servidor: `pedidos_y_respuestas/` (recibe lo que piden y contesta), `reglas_y_datos/` (qué se permite y dónde se guarda, por tema), `piezas_compartidas/`, `control_de_acceso/`, `datos_del_campus/` y `pruebas_automaticas/` |
-| `front/` | Lo que ve el usuario: `app/` (una carpeta por pantalla), `partes_de_pantallas/`, `envio_de_formularios/`, `notificaciones_del_navegador/`, `sesion_del_usuario/`, `estilos/` y `public/` |
+| `front/` | `app/` (rutas: cada `page.js` monta su vista; `app/api/**/route.js` es la ruta del back), `vistas/` («interfaz»: una por pantalla y una por mensaje), `controladores/` (valida, muestra, redirige), `validadores/` (★ **todas** las validaciones), `servicios/` (`fetch` a la API, con `ClienteHttp`), `dto/`, `modelos/` (`SesionUsuario`, `Notificacion`), `estilos/`, `public/`, `pruebas/` y `middleware.js` (revisa la sesión antes de cada pantalla) |
+| `back/` | `controladores/` (precondición y respuesta HTTP; no validan), `servicios/` (reglas de negocio de cada HU), `repositorios/` (lo único que toca los datos), `dto/`, `modelos/` (atributos privados y reglas de negocio), `tacticas/` (`AutenticadorDeSensores`, `ControlDeAcceso`, `FiltroDeAvisos`, `MonitorDeSensores`), `basedatos/` (almacén en memoria y datos iniciales), `Fabrica.js` y `pruebas/` (`unidad/`, `integracion/`, `aceptacion/`) |
 | `docs/` | Copia de la carpeta de lógica. **No se edita aquí**, salvo `mapa_HU_codigo.md`, que es solo del código. |
 
-Cada carpeta tiene un `LEEME.md` corto, cada archivo empieza con un comentario que dice qué hace y
-cada función tiene el suyo. Las etiquetas entre corchetes (`[api]`, `[fetch]`, `[sesion]`…) sirven
-para buscarlas con ⌘⇧F (ver «Buscar en VS Code»).
+Cada carpeta tiene un `LEEME.md` con la ficha de sus componentes (nombre, requisito y responsabilidad)
+y cada archivo empieza con un comentario que dice qué hace. Las etiquetas entre corchetes (`[api]`,
+`[fetch]`, `[sesion]`…) sirven para buscarlas con ⌘⇧F.
 
-### Cómo se conectan
+### Cómo se conectan (todo pasa por la API)
 
 ```
-navegador (front) ──fetch /api/...──▶ front/app/api/.../route.js ──▶ back/pedidos_y_respuestas/<tema>.js ──▶ back/reglas_y_datos/<tema>/
-Postman y sensores ─────────────────▶ las mismas URL /api/...
+vista ─▶ controlador (front) ─▶ validador ─▶ servicio (front) ─fetch /api/...─▶ front/app/api/.../route.js
+      ─▶ controlador (back) ─▶ táctica (precondición) ─▶ servicio (back) ─▶ modelo + repositorio ─▶ basedatos
+Postman y sensores ──────────────────────────────────────────────────────────▶ las mismas URL /api/...
 simulador ──▶ su puente (/api/base/...) ──▶ las mismas URL /api/... (con la clave de sensores)
-formularios del front ──▶ front/envio_de_formularios/<tema>.js ──────────────────────▶ back/reglas_y_datos/<tema>/ (directo)
 ```
+
+**Validación, precondición y regla de negocio.** Las validaciones de formato (correo UCAB, placa,
+capacidad 1–2000…) están **solo en el front** (`front/validadores/`). El back conserva la
+precondición (sesión y rol, `ControlDeAcceso`), la clave de los sensores (`AutenticadorDeSensores`) y
+las reglas de negocio (lleno/vacío, solo estacionamientos abiertos, incidencia «pendiente», placa y
+nombre de edificio únicos, rol según el dominio).
 
 ### Buscar en VS Code
 
@@ -54,15 +64,14 @@ formularios del front ──▶ front/envio_de_formularios/<tema>.js ───�
 |---|---|
 | Buscar una palabra o etiqueta en todo el proyecto | ⌘⇧F y escribe, por ejemplo, `[fetch]` |
 | Abrir un archivo por su nombre | ⌘P y escribe, por ejemplo, `sugerencia` |
-| Saltar a una función por su nombre en todo el proyecto | ⌘T y escribe, por ejemplo, `registrarAviso` |
+| Saltar a una clase o método por su nombre en todo el proyecto | ⌘T y escribe, por ejemplo, `AforoServicio` |
 | Ver las funciones del archivo abierto | ⌘⇧O |
 | Ir a donde está definida una función | F12 (o ⌘ + clic) sobre su nombre |
 | Ver dónde se usa una función | ⇧F12 sobre su nombre |
 
 Etiquetas de los comentarios: `[fetch]` (el navegador llama a la API), `[api]` (un endpoint),
 `[postman]` (lo prueba Postman), `[simulador]` (lo usa el simulador), `[en-vivo]` (canal en vivo),
-`[accion]` (un formulario llama al back), `[sesion]` (cookie y permisos), `[regla]` (valida o
-calcula), `[datos]` (lee o guarda) y `[notificaciones]`. También funciona buscar `HU 7.2`.
+`[sesion]` (cookie y permisos) y `[notificaciones]`. También funciona buscar `HU 7.2`.
 
 ## API (la usan los sensores, Postman y el simulador)
 
@@ -76,6 +85,11 @@ Lo simulado entra por el mismo camino que lo real (D-002). Copia `.env.example` 
 | Un conductor | `POST /api/incidencias` · `{ estacionamientoId, tipo }` | 9.1 |
 | El administrador | `PATCH /api/estacionamientos/:id` · `{ capacidad?, activo? }` | 5.4 |
 | Quien mira el mapa | `GET /api/estacionamientos` y el canal en vivo `GET /api/eventos` | 4.2, 4.3 |
+| El administrador (Garita) | `GET /api/avisos` (movimientos, rechazados y estado de los sensores) · `GET /api/garita/lecturas` | 3.1, 3.2, 4.1 |
+| Quien crea su cuenta o entra | `POST /api/cuenta` · `POST /api/sesion` `{ correo, contrasena }` · `GET /api/sesion` · `DELETE /api/sesion` | 1.1 |
+| Un conductor (Perfil) | `GET`, `POST /api/vehiculos` · `{ placa, marca, modelo, color }` | 2.1 |
+| Cualquiera / el administrador | `GET /api/edificios` · `POST`, `PATCH`, `DELETE` (administrador) · `{ nombre, ubicacion: [lat, lon] }` | 6.1 |
+| Quien busca dónde estacionar | `GET /api/sugerencia?edificio=<id>` | 7.2 |
 | Solo en desarrollo | `POST /api/pruebas/reiniciar` (vuelve a los datos de ejemplo) | — |
 
 El **simulador 3D** (con su menú de pruebas y una colección de Postman lista para importar)

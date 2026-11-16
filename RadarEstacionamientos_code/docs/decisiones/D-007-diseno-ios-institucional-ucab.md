@@ -17,7 +17,7 @@ genérico, formularios sueltos) y no había una guía. Si cada integrante diseñ
 app se ve hecha por partes, y eso también se ve en la defensa.
 
 Sebastian ya tiene un sistema de diseño probado en dos PWA propias:
-- **Thinkdy** (`~/UCAB/App-Estudio/DESIGN.md`): estilo iOS institucional UCAB, con Azul
+- **Thinkdy** (`~/Proyectos/Thinkdy/DESIGN.md`): estilo iOS institucional UCAB, con Azul
   Montalbán, oro escaso y color con significado.
 - **Te Cambio** (D-007 de ese proyecto): el vocabulario de movimiento.
 

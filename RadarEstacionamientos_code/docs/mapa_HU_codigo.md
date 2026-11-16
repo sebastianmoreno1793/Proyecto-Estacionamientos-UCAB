@@ -1,34 +1,40 @@
 # Mapa de las historias de usuario en el código
 
-Dónde está cada HU del Sprint 1 (Iteración 1) y cómo explicarla. Los códigos, nombres y
-responsables son los de [`backlog_y_iteraciones.md`](backlog_y_iteraciones.md) y los de los
-Issues de GitHub. Cada enlace abre el archivo en la línea exacta (en la vista previa de Markdown
-de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
+Dónde está cada HU del Sprint 1 (Iteración 1), archivo por archivo, y cómo explicarla. Los códigos,
+nombres y responsables son los de [`backlog_y_iteraciones.md`](backlog_y_iteraciones.md) y los de los
+Issues de GitHub. Cada enlace abre el archivo en la línea de su etiqueta (en la vista previa de
+Markdown de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
+
+> Este mapa sale de las etiquetas `@HU-x.y` del código: **una línea por archivo**, con lo que dice su
+> etiqueta. Si agregas un archivo a una HU, ponle la etiqueta en la primera línea y actualiza este mapa.
 
 ## Cómo buscar una HU en segundos
 
-- **Etiqueta fija en el código:** `@HU-3.2` (arroba ancha `@`, sin espacio y con guion). Está en
-  la primera línea de cada archivo que implementa la HU y encima de cada función o componente
-  principal, junto al comentario que ya lo explicaba:
-  `// @HU-3.2 Simular sensores y placas · Aaron`.
+- **Etiqueta fija en el código:** `@HU-3.2` (sin espacio y con guion). Está en la primera línea de
+  cada archivo que implementa la HU y encima de cada clase o método principal:
+  `// @HU-3.2 Simular sensores y placas · Aaron — qué hace este archivo`.
 - **Terminal** (en `RadarEstacionamientos_code/`): `grep -rn "@HU-3.2" front back --exclude-dir=node_modules`.
-- **VS Code:** la extensión *Todo Tree* (recomendada en `.vscode/extensions.json`) muestra un árbol
-  con las etiquetas agrupadas por HU; `.vscode/HU.code-search` es una búsqueda guardada de `@HU-`
-  agrupada por archivo. Las dos están en la carpeta `.vscode/` de la raíz del repo, la misma que se abre para Run Code.
+- **VS Code:** la extensión *Todo Tree* agrupa las etiquetas por HU; `.vscode/HU.code-search` es una
+  búsqueda guardada de `@HU-` agrupada por archivo.
 
 ## Cómo está organizado (vale para todas las HU)
 
-| Carpeta | Qué va | Capa |
-|---|---|---|
-| `front/app/<pantalla>/page.js` | Solo la ruta de cada pantalla | Front |
-| `front/partes_de_pantallas/<pantalla>/` | Lo que se ve, agrupado por pantalla | Front |
-| `front/envio_de_formularios/<tema>.js` | Formularios: reciben lo escrito y llaman directo a `back/reglas_y_datos` | Front → Back |
-| `front/app/api/…/route.js` | Solo conecta la URL con su archivo de `back/pedidos_y_respuestas/` | Front → Back |
-| `back/pedidos_y_respuestas/<tema>.js` | Un archivo por endpoint: permisos y código HTTP. La usan sensores, Postman y el simulador | Back |
-| `back/reglas_y_datos/<tema>/reglas.js` | Reglas puras: validan y calculan sin guardar nada (se prueban sin navegador) | Back |
-| `back/reglas_y_datos/<tema>/datos.js` | Leen y guardan en el almacén (`back/piezas_compartidas/almacen.js`, en memoria) | Back |
-| `back/datos_del_campus/` | Datos fijos del campus: estacionamientos y edificios | Datos |
-| `back/pruebas_automaticas/`, `front/pruebas_automaticas/` | Una prueba por tema y `criterios_sprint1.test.js`, un `describe` por HU | Pruebas |
+Orientado a objetos y por capas, igual en el front y en el back (una clase por archivo, con el sufijo
+de su capa). Un caso de uso con pantalla recorre:
+
+```
+FRONT  vistas/ (interfaz) → controladores/ (+valida +muestra +redirige) → validadores/ → servicios/ (fetch) + dto/
+         ── fetch /api/... ──▶
+BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (precondición) → servicios/
+         → modelos/ (reglas de negocio) + repositorios/ → basedatos/        ← dto/ (respuesta)
+```
+
+| Qué es | Dónde va |
+|---|---|
+| **Validación** (formato de lo que escribe el usuario) | Front: `validadores/` |
+| **Precondición** (sesión, rol) y clave de los sensores | Back: `tacticas/ControlDeAcceso`, `tacticas/AutenticadorDeSensores` |
+| **Regla de negocio** (lleno/vacío, solo abiertos, «pendiente», únicos…) | Back: `modelos/` y `servicios/` |
+| **Disponibilidad** (avisos defectuosos, sensor que no avisa) | Back: `tacticas/FiltroDeAvisos`, `tacticas/MonitorDeSensores` |
 
 | HU | Responsable | Issue |
 |---|---|---|
@@ -51,19 +57,42 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Samuel · **Issue:** [#1](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/1) · **Etiqueta:** `@HU-1.1`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantallas | [registro/page.js](../front/app/registro/page.js#L12) «Crear cuenta» · [entrar/page.js](../front/app/entrar/page.js#L12) «Entrar» |
-| Front · componente | [FormularioCuenta.js](../front/partes_de_pantallas/cuenta/FormularioCuenta.js#L13): en Crear cuenta [noValidate](../front/partes_de_pantallas/cuenta/FormularioCuenta.js#L19) apaga los avisos del navegador y [muestra el mensaje del escenario](../front/partes_de_pantallas/cuenta/FormularioCuenta.js#L53) |
-| Front · acciones | [crearCuenta](../front/envio_de_formularios/cuenta.js#L12) (crea, abre la sesión y va a `/mapa`) · [entrar](../front/envio_de_formularios/cuenta.js#L28) · [salir](../front/envio_de_formularios/cuenta.js#L40) · sesión: [sesion_del_usuario/sesion.js](../front/sesion_del_usuario/sesion.js#L21) |
-| Back · reglas | [validarRegistro](../back/reglas_y_datos/usuarios/reglas.js#L51) (en el orden del diagrama) · [los cuatro mensajes del escenario](../back/reglas_y_datos/usuarios/reglas.js#L13) (pasos 7.1, 8.1, 9.1 y 10.1) · [esCorreoUcab](../back/reglas_y_datos/usuarios/reglas.js#L34) · [rolSegunCorreo](../back/reglas_y_datos/usuarios/reglas.js#L41) |
-| Back · datos | [registrarUsuario](../back/reglas_y_datos/usuarios/datos.js#L72) (contraseña cifrada, sin cuentas repetidas) · [comprobarCredenciales](../back/reglas_y_datos/usuarios/datos.js#L84) · [crearSesion](../back/reglas_y_datos/usuarios/datos.js#L95) |
-| Back · API | No tiene: se entra por el formulario. |
-| Pruebas | Correo UCAB crea la cuenta: [usuarios.test.js](../back/pruebas_automaticas/usuarios.test.js#L45) · otro correo se rechaza y se explica: [usuarios.test.js](../back/pruebas_automaticas/usuarios.test.js#L53) · ya tiene cuenta: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L47) · 8 caracteres: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L53) · los cuatro textos, letra por letra: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L59) · vacío o mal escrito: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L68) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/cuenta/route.js#L1) | Dirección web POST /api/cuenta para crear la cuenta |
+| Ruta (API) | [route.js](../front/app/api/sesion/route.js#L1) | Dirección web /api/sesion para entrar, salir y saber quién está conectado |
+| Front · pantalla | [page.js](../front/app/entrar/page.js#L2) | Pantalla «Entrar» para iniciar sesión con el correo UCAB |
+| Front · pantalla | [page.js](../front/app/perfil/page.js#L3) | Pantalla Perfil con el botón «Salir» |
+| Front · pantalla | [page.js](../front/app/registro/page.js#L2) | Pantalla «Crear cuenta» |
+| Front · navegación | [middleware.js](../front/middleware.js#L1) | Antes de cada pantalla revisa la sesión (y el rol en /admin) |
+| Front · vista | [FormularioCuenta.js](../front/vistas/cuenta/FormularioCuenta.js#L4) | Formulario de correo y contraseña; muestra los mensajes del escenario |
+| Front · vista | [PantallaPerfil.js](../front/vistas/perfil/PantallaPerfil.js#L5) | Botón «Salir» en Perfil para cerrar la sesión |
+| Front · controlador | [CuentaControlador.js](../front/controladores/CuentaControlador.js#L1) | Control de Crear cuenta, Entrar y Salir: valida, llama a la API y lleva al mapa |
+| Front · controlador | [NavegacionControlador.js](../front/controladores/NavegacionControlador.js#L1) | Antes de mostrar una pantalla, revisa que haya sesión (y rol de administrador en /admin) |
+| Front · validador | [CuentaValidador.js](../front/validadores/CuentaValidador.js#L1) | Revisa el correo UCAB, la contraseña de 8 o más y que coincidan, con los mensajes del escenario |
+| Front · servicio | [CuentaServicio.js](../front/servicios/CuentaServicio.js#L1) | Crea la cuenta, entra, sale y pregunta quién está conectado (fetch) |
+| Front · DTO | [CuentaDTO.js](../front/dto/CuentaDTO.js#L1) | Lo que manda Crear cuenta o Entrar: correo y contraseña |
+| Front · modelo | [SesionUsuario.js](../front/modelos/SesionUsuario.js#L1) | Quién está usando la app: correo, rol e iniciales del perfil |
+| Back · controlador | [CuentaControlador.js](../back/controladores/CuentaControlador.js#L1) | Crea la cuenta, entra, sale y dice quién está conectado (pone y borra la cookie) |
+| Back · táctica | [ControlDeAcceso.js](../back/tacticas/ControlDeAcceso.js#L1) | Revisa que la petición venga de alguien con sesión iniciada y con qué rol |
+| Back · servicio | [CuentaServicio.js](../back/servicios/CuentaServicio.js#L1) | Crea la cuenta (sin repetir el correo), entra, sale y dice de quién es cada sesión |
+| Back · DTO | [CredencialesDTO.js](../back/dto/CredencialesDTO.js#L1) | Correo y contraseña que llegan de Crear cuenta o de Entrar |
+| Back · DTO | [UsuarioDTO.js](../back/dto/UsuarioDTO.js#L1) | El usuario tal como sale por la API: correo y rol, nunca la contraseña |
+| Back · modelo | [Sesion.js](../back/modelos/Sesion.js#L1) | La sesión abierta: un código secreto (la cookie radar_sesion) y de quién es |
+| Back · modelo | [Usuario.js](../back/modelos/Usuario.js#L1) | La cuenta: correo, rol que sale del dominio y contraseña cifrada |
+| Back · repositorio | [SesionRepositorio.js](../back/repositorios/SesionRepositorio.js#L1) | Guarda las sesiones abiertas |
+| Back · repositorio | [UsuarioRepositorio.js](../back/repositorios/UsuarioRepositorio.js#L1) | Guarda las cuentas (correo, rol y contraseña cifrada) |
+| Back · datos | [usuarios_de_prueba.js](../back/basedatos/datos_iniciales/usuarios_de_prueba.js#L1) | Las tres cuentas de prueba (administrador, estudiante y profesor) |
+| Pruebas (front) | [CuentaControlador.test.js](../front/pruebas/controladores/CuentaControlador.test.js#L1) | Prueba el control de Crear cuenta, Entrar y Salir |
+| Pruebas (front) | [NavegacionControlador.test.js](../front/pruebas/controladores/NavegacionControlador.test.js#L1) | Prueba adónde se redirige según la sesión y el rol |
+| Pruebas (front) | [CuentaValidador.test.js](../front/pruebas/validadores/CuentaValidador.test.js#L1) | Prueba la validación de Crear cuenta y Entrar, con los mensajes del escenario |
+| Pruebas de unidad | [ControlDeAcceso.test.js](../back/pruebas/unidad/ControlDeAcceso.test.js#L1) | Prueba la precondición: sesión y rol |
+| Pruebas de unidad | [CuentaServicio.test.js](../back/pruebas/unidad/CuentaServicio.test.js#L1) | Prueba crear cuenta, entrar, la sesión y las cuentas de prueba |
+| Pruebas de unidad | [Usuario.test.js](../back/pruebas/unidad/Usuario.test.js#L1) | Prueba el rol según el dominio y la contraseña cifrada |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L1) | Prueba /api/cuenta y /api/sesion (cookie) |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L1) | Prueba el criterio de aceptación de Crear cuenta |
 
-**Qué hace.** Solo la comunidad UCAB crea cuenta (@est.ucab.edu.ve o @ucab.edu.ve, y el rol sale del dominio). El sistema revisa en el orden del diagrama y, si algo falla, muestra el mensaje del escenario en vez del aviso del navegador: dominio (7.1, también si el correo está vacío o mal escrito), contraseña de menos de 8 caracteres (8.1, también si está vacía), contraseñas distintas (9.1) o cuenta ya existente (10.1). Si todo está bien, abre la sesión y muestra el mapa.
-
-**Por qué está organizado así.** Las validaciones y sus cuatro textos viven en `back/reglas_y_datos/usuarios/reglas.js` y no en el navegador, para que las pruebas comprueben cada mensaje letra por letra y se vea igual en cualquier navegador.
+**Qué hace.** Solo la comunidad UCAB crea cuenta. El **front** valida en el orden del diagrama (`CuentaValidador`: dominio 7.1, contraseña de 8 en 8.1, coinciden 9.1) y muestra el mensaje del escenario; el **back** aplica las reglas de negocio: el rol sale del dominio (sin dominio UCAB no hay cuenta, D-003) y el correo no se repite (10.1). Al crear la cuenta se abre la sesión (cookie httpOnly) y va al mapa. `ControlDeAcceso` (precondición) y `middleware.js` piden sesión en el resto de la app.
 
 ---
 
@@ -71,19 +100,31 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Samuel · **Issue:** [#14](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/14) · **Etiqueta:** `@HU-2.1`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantalla | [perfil/page.js](../front/app/perfil/page.js#L22) «Mis vehículos» dentro de Perfil |
-| Front · componente | [FormularioVehiculo.js](../front/partes_de_pantallas/perfil/FormularioVehiculo.js#L14) |
-| Front · acción | [agregarVehiculo](../front/envio_de_formularios/vehiculos.js#L12) |
-| Back · reglas | [normalizarPlaca](../back/reglas_y_datos/vehiculos/reglas.js#L10) · [esPlacaValida](../back/reglas_y_datos/vehiculos/reglas.js#L19) (las mismas que usa la garita, HU 3.2) · [validarVehiculo](../back/reglas_y_datos/vehiculos/reglas.js#L31) |
-| Back · datos | [registrarVehiculo](../back/reglas_y_datos/vehiculos/datos.js#L23) (placa única) · [listarVehiculosDe](../back/reglas_y_datos/vehiculos/datos.js#L42) · [buscarPorPlaca](../back/reglas_y_datos/vehiculos/datos.js#L50) |
-| Back · API | No tiene: se registra desde el formulario. |
-| Pruebas | Registrar: [vehiculos.test.js](../back/pruebas_automaticas/vehiculos.test.js#L31) · cada uno ve los suyos: [vehiculos.test.js](../back/pruebas_automaticas/vehiculos.test.js#L47) · placa única: [vehiculos.test.js](../back/pruebas_automaticas/vehiculos.test.js#L52) · sin sesión no: [vehiculos.test.js](../back/pruebas_automaticas/vehiculos.test.js#L65) · misma placa que la garita: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L87) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/vehiculos/route.js#L1) | Dirección web /api/vehiculos para «Mis vehículos» |
+| Front · pantalla | [page.js](../front/app/perfil/page.js#L2) | Pantalla Perfil con «Mis vehículos» |
+| Front · vista | [FormularioVehiculo.js](../front/vistas/perfil/FormularioVehiculo.js#L3) | Formulario para escribir la placa y agregar el vehículo |
+| Front · vista | [MensajeVehiculoRegistrado.js](../front/vistas/perfil/MensajeVehiculoRegistrado.js#L1) | Mensaje «Vehículo AB123CD registrado.» |
+| Front · vista | [PantallaPerfil.js](../front/vistas/perfil/PantallaPerfil.js#L3) | Sección «Mis vehículos» dentro de Perfil |
+| Front · controlador | [VehiculoControlador.js](../front/controladores/VehiculoControlador.js#L1) | Control de Mis vehículos: valida la placa y los datos y manda el vehículo |
+| Front · validador | [VehiculoValidador.js](../front/validadores/VehiculoValidador.js#L1) | Revisa la placa (6 o 7 letras y números) y que estén marca, modelo y color |
+| Front · servicio | [VehiculoServicio.js](../front/servicios/VehiculoServicio.js#L1) | Pide mis vehículos y registra uno nuevo (fetch) |
+| Front · DTO | [VehiculoDTO.js](../front/dto/VehiculoDTO.js#L1) | Lo que manda el formulario de Mis vehículos |
+| Back · controlador | [VehiculoControlador.js](../back/controladores/VehiculoControlador.js#L1) | Lista los vehículos del usuario con sesión y registra uno nuevo |
+| Back · servicio | [VehiculoServicio.js](../back/servicios/VehiculoServicio.js#L1) | Registra el vehículo a nombre del usuario; la placa no se repite en el Radar |
+| Back · DTO | [VehiculoDTO.js](../back/dto/VehiculoDTO.js#L1) | Lo que llega del formulario y lo que ve el dueño |
+| Back · modelo | [Placa.js](../back/modelos/Placa.js#L1) | La placa se guarda en mayúsculas y sin espacios ni guiones |
+| Back · modelo | [Vehiculo.js](../back/modelos/Vehiculo.js#L1) | Un vehículo a nombre de su dueño, con la placa normalizada |
+| Back · repositorio | [VehiculoRepositorio.js](../back/repositorios/VehiculoRepositorio.js#L1) | Guarda los vehículos de cada usuario |
+| Pruebas (front) | [AdministracionControladores.test.js](../front/pruebas/controladores/AdministracionControladores.test.js#L1) | Prueba el control de Mis vehículos |
+| Pruebas (front) | [VehiculoValidador.test.js](../front/pruebas/validadores/VehiculoValidador.test.js#L1) | Prueba la validación de la placa y los datos del vehículo |
+| Pruebas de unidad | [Vehiculo.test.js](../back/pruebas/unidad/Vehiculo.test.js#L1) | Prueba la placa normalizada y el dueño |
+| Pruebas de unidad | [VehiculoServicio.test.js](../back/pruebas/unidad/VehiculoServicio.test.js#L1) | Prueba registrar vehículos, que cada quien vea los suyos y que la placa no se repita |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L2) | Prueba /api/vehiculos |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L2) | Prueba el criterio de aceptación de Mis vehículos |
 
-**Qué hace.** En Perfil, el usuario registra uno o varios vehículos con placa, marca, modelo y color. La placa se guarda en mayúsculas y sin guiones, y no puede estar registrada por otra persona; cada quien ve solo los suyos.
-
-**Por qué está organizado así.** La regla de la placa está una sola vez, en `back/reglas_y_datos/vehiculos/reglas.js`, y la garita (HU 3.2) la importa: así el registro y el lector aceptan exactamente las mismas placas.
+**Qué hace.** En Perfil, el usuario registra uno o varios vehículos. `VehiculoValidador` (front) revisa la placa (6 o 7 letras y números) y los datos; el back guarda la placa normalizada (`Placa`, la misma que usa la garita) y no deja repetirla (`VehiculoServicio`). Cada quien ve solo los suyos.
 
 ---
 
@@ -91,18 +132,28 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Aaron · **Issue:** [#3](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/3) · **Etiqueta:** `@HU-3.1`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantalla | [admin/garita/page.js](../front/app/admin/garita/page.js#L29) (solo el administrador ve lo registrado) |
-| Front · URL | [app/api/avisos/route.js](../front/app/api/avisos/route.js#L5) solo conecta la URL |
-| Back · API | [POST /api/avisos](../back/pedidos_y_respuestas/avisos.js#L17) (pide el encabezado `x-clave-sensor`) |
-| Back · reglas | [esClaveDeSensorValida](../back/control_de_acceso/clave_sensores.js#L21) · [aplicarMovimiento](../back/reglas_y_datos/estacionamientos/reglas.js#L51) |
-| Back · datos | [registrarAviso](../back/reglas_y_datos/estacionamientos/datos.js#L70) (estacionamiento, tipo y hora) · [listarMovimientos](../back/reglas_y_datos/estacionamientos/datos.js#L110) |
-| Pruebas | Queda registrada con estacionamiento, tipo y hora: [avisos.test.js](../back/pruebas_automaticas/avisos.test.js#L32) · por la API: [api.test.js](../back/pruebas_automaticas/api.test.js#L66) · clave: [avisos.test.js](../back/pruebas_automaticas/avisos.test.js#L124) · sin clave, 401: [api.test.js](../back/pruebas_automaticas/api.test.js#L45) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/avisos/route.js#L1) | Dirección web /api/avisos: aquí llegan los avisos de los sensores |
+| Front · pantalla | [page.js](../front/app/admin/garita/page.js#L2) | Pantalla de la garita: avisos recibidos |
+| Front · vista | [PantallaGarita.js](../front/vistas/admin/PantallaGarita.js#L3) | Lista de avisos recibidos y sensores que dejaron de avisar |
+| Front · controlador | [GaritaControlador.js](../front/controladores/GaritaControlador.js#L1) | Control de Administrar › Garita: trae los avisos y el estado de los sensores |
+| Front · servicio | [GaritaServicio.js](../front/servicios/GaritaServicio.js#L1) | Pide los avisos recibidos y el estado de los sensores (fetch) |
+| Back · controlador | [AvisoControlador.js](../back/controladores/AvisoControlador.js#L1) | Recibe los avisos de los sensores (POST /api/avisos) y lista los recibidos (GET) |
+| Back · táctica | [AutenticadorDeSensores.js](../back/tacticas/AutenticadorDeSensores.js#L1) | Solo quien tiene la clave de los sensores puede avisar entradas y salidas |
+| Back · táctica | [MonitorDeSensores.js](../back/tacticas/MonitorDeSensores.js#L1) | Detecta el sensor que dejó de avisar (timeout) |
+| Back · servicio | [AforoServicio.js](../back/servicios/AforoServicio.js#L1) | Registra cada entrada o salida con su hora |
+| Back · DTO | [AvisoDTO.js](../back/dto/AvisoDTO.js#L1) | Lo que manda el sensor: estacionamiento, ENTRADA o SALIDA e id del aviso |
+| Back · DTO | [MovimientoDTO.js](../back/dto/MovimientoDTO.js#L1) | Un movimiento aceptado tal como sale por la API |
+| Back · modelo | [Movimiento.js](../back/modelos/Movimiento.js#L1) | Una entrada o salida aceptada, con su hora |
+| Back · repositorio | [MovimientoRepositorio.js](../back/repositorios/MovimientoRepositorio.js#L1) | Guarda cada entrada o salida aceptada |
+| Pruebas de unidad | [AforoServicio.test.js](../back/pruebas/unidad/AforoServicio.test.js#L1) | Prueba que cada aviso quede registrado con su hora |
+| Pruebas de unidad | [AutenticadorDeSensores.test.js](../back/pruebas/unidad/AutenticadorDeSensores.test.js#L1) | Prueba la táctica que autentica a los sensores |
+| Pruebas de unidad | [MonitorDeSensores.test.js](../back/pruebas/unidad/MonitorDeSensores.test.js#L1) | Prueba la táctica de timeout del sensor que deja de avisar |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L3) | Prueba POST y GET /api/avisos |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L3) | Prueba el criterio de aceptación de los avisos de los sensores |
 
-**Qué hace.** Es la puerta de los sensores: cada uno manda «entró» o «salió» a `POST /api/avisos` con su clave, y la app lo guarda con la hora. El simulador y Postman entran por el mismo camino (D-002). Cada aviso se cuenta una vez por llamada: la app no detecta avisos repetidos.
-
-**Por qué está organizado así.** El aviso se guarda en `back/reglas_y_datos/estacionamientos/datos.js` porque el mismo aviso actualiza el aforo (HU 4.1): una sola función hace las dos cosas y no se pueden desincronizar.
+**Qué hace.** Cada sensor manda «entró» o «salió» a `POST /api/avisos` con su clave (`AutenticadorDeSensores`) y queda registrado con la hora (`Movimiento`). El simulador y Postman entran por el mismo camino (D-002). `MonitorDeSensores` (táctica de timeout) marca el sensor que deja de avisar.
 
 ---
 
@@ -110,18 +161,27 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Aaron · **Issue:** [#4](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/4) · **Etiqueta:** `@HU-3.2`
 
-| Capa | Dónde |
-|---|---|
-| Panel de pruebas (simulador, proyecto aparte, puerto 3001) | [PanelDeControl.js](../../RadarEstacionamientos_simulador/componentes_visuales/PanelDeControl.js#L79) pestaña «Garita» · [cliente_api.js](../../RadarEstacionamientos_simulador/conexion_app/cliente_api.js#L36) llama a la API pública de la app |
-| Front · pantalla de la app | [admin/garita/page.js](../front/app/admin/garita/page.js#L29) muestra las placas leídas (solo el administrador) |
-| Back · API | [POST /api/garita/lecturas](../back/pedidos_y_respuestas/garita.js#L12) · los carros simulados usan [POST /api/avisos](../back/pedidos_y_respuestas/avisos.js#L17), igual que un sensor real |
-| Back · reglas | [validarLectura](../back/reglas_y_datos/garita/reglas.js#L15), que usa [la regla de placa de la HU 2.1](../back/reglas_y_datos/garita/reglas.js#L9) |
-| Back · datos | [registrarLecturaDePlaca](../back/reglas_y_datos/garita/datos.js#L10) · [listarLecturasDePlaca](../back/reglas_y_datos/garita/datos.js#L27) |
-| Pruebas | Lectura con hora: [avisos.test.js](../back/pruebas_automaticas/avisos.test.js#L111) · por la API: [api.test.js](../back/pruebas_automaticas/api.test.js#L118) · formato: [avisos.test.js](../back/pruebas_automaticas/avisos.test.js#L104) · «reacciona igual que un aviso real»: las pruebas de la 3.1, porque el simulador entra por la misma API; más las 19 del simulador |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/garita/lecturas/route.js#L1) | Dirección web /api/garita/lecturas para las placas |
+| Front · pantalla | [page.js](../front/app/admin/garita/page.js#L3) | Pantalla de la garita: placas leídas |
+| Front · vista | [PantallaGarita.js](../front/vistas/admin/PantallaGarita.js#L4) | Placas leídas |
+| Front · controlador | [GaritaControlador.js](../front/controladores/GaritaControlador.js#L2) | Trae las placas leídas |
+| Front · servicio | [GaritaServicio.js](../front/servicios/GaritaServicio.js#L2) | Pide las placas leídas (fetch) |
+| Back · controlador | [GaritaControlador.js](../back/controladores/GaritaControlador.js#L1) | Recibe las placas del lector de la garita (POST) y las lista al administrador (GET) |
+| Back · táctica | [AutenticadorDeSensores.js](../back/tacticas/AutenticadorDeSensores.js#L2) | Solo el lector de placas (o el simulador) con la clave puede mandar placas |
+| Back · servicio | [GaritaServicio.js](../back/servicios/GaritaServicio.js#L1) | Registra cada placa leída en la garita sin duplicar los reintentos |
+| Back · DTO | [LecturaDePlacaDTO.js](../back/dto/LecturaDePlacaDTO.js#L1) | Lo que manda el lector de la garita y lo que se devuelve |
+| Back · modelo | [LecturaDePlaca.js](../back/modelos/LecturaDePlaca.js#L1) | Una placa leída en la garita, con su sentido y su hora |
+| Back · modelo | [Placa.js](../back/modelos/Placa.js#L2) | La garita guarda la placa igual que «Mis vehículos» |
+| Back · repositorio | [LecturaDePlacaRepositorio.js](../back/repositorios/LecturaDePlacaRepositorio.js#L1) | Guarda las placas leídas en la garita |
+| Pruebas de unidad | [AutenticadorDeSensores.test.js](../back/pruebas/unidad/AutenticadorDeSensores.test.js#L2) | Prueba que el lector de placas (y el simulador) necesite la clave |
+| Pruebas de unidad | [GaritaServicio.test.js](../back/pruebas/unidad/GaritaServicio.test.js#L1) | Prueba que la placa leída quede con su hora y no se duplique |
+| Pruebas de unidad | [Vehiculo.test.js](../back/pruebas/unidad/Vehiculo.test.js#L2) | La garita guarda la placa igual que «Mis vehículos» |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L4) | Prueba /api/garita/lecturas |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L4) | Prueba el criterio de aceptación del lector de placas |
 
-**Qué hace.** El simulador tiene un panel con botones para meter o sacar carros y leer placas en la garita. Cada botón llama a la API pública de la app, así que la app reacciona igual que con un sensor o un lector real.
-
-**Por qué está organizado así.** La simulación vive fuera de la app (D-002, D-006): la app no sabe que el simulador existe, así que con sensores reales no hay que quitar nada. La garita es un tema propio (`back/reglas_y_datos/garita/`) porque lee placas del campus, no puestos de un estacionamiento.
+**Qué hace.** El lector de la garita manda la placa a `POST /api/garita/lecturas`; se guarda normalizada con su sentido y hora, sin duplicar reintentos. Las placas solo las ve el administrador y nunca van al canal en vivo. El simulador (proyecto aparte) usa la misma API.
 
 ---
 
@@ -129,17 +189,28 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Aaron · **Issue:** [#5](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/5) · **Etiqueta:** `@HU-4.1`
 
-| Capa | Dónde |
-|---|---|
-| Front | Sin pantalla propia: el cambio se ve en el mapa y el Inicio (HU 4.2) por el [canal en vivo](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L93); los avisos rechazados, en [admin/garita](../front/app/admin/garita/page.js#L17) |
-| Back · API | [POST /api/avisos](../back/pedidos_y_respuestas/avisos.js#L17) (409 si está lleno o vacío) |
-| Back · reglas | [aplicarMovimiento](../back/reglas_y_datos/estacionamientos/reglas.js#L51) (entrada ocupa, salida libera; también en un estacionamiento cerrado) · [puestosLibres](../back/reglas_y_datos/estacionamientos/reglas.js#L13) |
-| Back · datos | [registrarAviso](../back/reglas_y_datos/estacionamientos/datos.js#L70) · [listarAvisosRechazados](../back/reglas_y_datos/estacionamientos/datos.js#L101) |
-| Pruebas | CA1 y CA2: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L99) · CA3 y CA4: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L118) · CA5: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L109) · cerrado también cuenta: [avisos.test.js](../back/pruebas_automaticas/avisos.test.js#L63) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/avisos/route.js#L2) | Dirección web /api/avisos que actualiza el aforo |
+| Front · pantalla | [page.js](../front/app/admin/garita/page.js#L4) | Pantalla de la garita: avisos rechazados |
+| Front · vista | [PantallaGarita.js](../front/vistas/admin/PantallaGarita.js#L5) | Avisos rechazados, por qué, y sensores con falla |
+| Front · controlador | [GaritaControlador.js](../front/controladores/GaritaControlador.js#L3) | Trae los avisos rechazados |
+| Front · servicio | [GaritaServicio.js](../front/servicios/GaritaServicio.js#L3) | Pide los avisos rechazados (fetch) |
+| Back · controlador | [AvisoControlador.js](../back/controladores/AvisoControlador.js#L2) | Con cada aviso, actualiza el aforo; los rechazados responden 404 o 409 |
+| Back · táctica | [FiltroDeAvisos.js](../back/tacticas/FiltroDeAvisos.js#L1) | Ignora los avisos defectuosos sin detener el sistema y los registra; con N seguidos marca el sensor con falla |
+| Back · servicio | [AforoServicio.js](../back/servicios/AforoServicio.js#L2) | Con cada aviso suma o resta un ocupado, pasando por el filtro de avisos |
+| Back · DTO | [AvisoRechazadoDTO.js](../back/dto/AvisoRechazadoDTO.js#L1) | Un aviso rechazado tal como lo ve el administrador |
+| Back · modelo | [AvisoRechazado.js](../back/modelos/AvisoRechazado.js#L1) | Un aviso que no cambió el aforo, con su hora y su motivo |
+| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L1) | Una entrada ocupa un puesto y una salida lo libera; nunca menos de 0 ni más que la capacidad |
+| Back · repositorio | [AvisoRechazadoRepositorio.js](../back/repositorios/AvisoRechazadoRepositorio.js#L1) | Guarda los avisos rechazados y las anomalías |
+| Back · repositorio | [EstacionamientoRepositorio.js](../back/repositorios/EstacionamientoRepositorio.js#L1) | Lee y guarda el aforo de cada estacionamiento |
+| Pruebas de unidad | [AforoServicio.test.js](../back/pruebas/unidad/AforoServicio.test.js#L2) | Prueba que el aforo cambie y que los rechazos no lo cambien |
+| Pruebas de unidad | [Estacionamiento.test.js](../back/pruebas/unidad/Estacionamiento.test.js#L1) | Prueba que el aforo suba y baje sin salirse de 0 y la capacidad |
+| Pruebas de unidad | [FiltroDeAvisos.test.js](../back/pruebas/unidad/FiltroDeAvisos.test.js#L1) | Prueba la táctica que ignora los avisos defectuosos y marca el sensor con falla |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L5) | Prueba los códigos de los avisos rechazados |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L5) | Prueba el criterio de aceptación del aforo |
 
-**Qué hace.** Con cada aviso, la app suma o resta un carro y recalcula los puestos libres, que nunca bajan de 0 ni pasan de la capacidad. Si el aviso rompería esos límites, no cambia nada y queda anotado como anomalía con su hora; si el estacionamiento no existe, queda como rechazado. Un estacionamiento cerrado sigue contando sus entradas y salidas.
-
-**Por qué está organizado así.** La cuenta es una función pura (`aplicarMovimiento`) junto a `puestosLibres`, que también usa la HU 5.4: la regla «entre 0 y la capacidad» existe una sola vez.
+**Qué hace.** `AforoServicio` pasa cada aviso por `FiltroDeAvisos` (táctica: ignorar comportamiento defectuoso) y aplica la regla del modelo `Estacionamiento` (`registrarEntrada()` / `registrarSalida()`): nunca menos de 0 ni más que la capacidad. Lo imposible (lleno, vacío) no cambia el aforo, queda registrado como anomalía y, con 3 seguidos, el sensor queda «con falla».
 
 ---
 
@@ -147,19 +218,30 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Aaron · **Issue:** [#6](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/6) · **Etiqueta:** `@HU-4.2`
 
-| Capa | Dónde |
-|---|---|
-| Front · mapa | [MaquetaCampus.js](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L57): cada área [con su color](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L290) y una píldora con [los libres y el estado en texto](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L321) · [PanelPuestos.js](../front/partes_de_pantallas/mapa/PanelPuestos.js#L56) lista «¿dónde hay puesto?» |
-| Front · Inicio | [Inicio.js](../front/partes_de_pantallas/inicio/Inicio.js#L41) rejilla con libres y estado |
-| Front · conexión con el back | [fetch a /api/estacionamientos](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L79) y [canal en vivo](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L93) |
-| Back · API | [GET /api/estacionamientos](../back/pedidos_y_respuestas/estacionamientos.js#L16) |
-| Back · reglas | [SEMAFORO](../back/reglas_y_datos/estacionamientos/reglas.js#L28) · [nivelDelSemaforo](../back/reglas_y_datos/estacionamientos/reglas.js#L36) (verde con ≥ 1 libre, rojo con 0, gris si está cerrado; D-009) |
-| Back · datos | [vistaPublica](../back/reglas_y_datos/estacionamientos/datos.js#L23) |
-| Pruebas | Verde: [semaforo.test.js](../back/pruebas_automaticas/semaforo.test.js#L11) · rojo: [semaforo.test.js](../back/pruebas_automaticas/semaforo.test.js#L16) · gris: [semaforo.test.js](../back/pruebas_automaticas/semaforo.test.js#L20) · siempre con texto: [semaforo.test.js](../back/pruebas_automaticas/semaforo.test.js#L29) · siempre dice los libres: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L136) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/estacionamientos/route.js#L1) | Dirección web GET /api/estacionamientos con la ocupación y el semáforo |
+| Front · pantalla | [page.js](../front/app/mapa/page.js#L3) | Pantalla Mapa con el semáforo de cada estacionamiento |
+| Front · pantalla | [page.js](../front/app/page.js#L2) | Pantalla Inicio con el semáforo de cada estacionamiento |
+| Front · vista | [ColoresSemaforo.js](../front/vistas/comunes/ColoresSemaforo.js#L1) | Colores del semáforo: verde «Hay puesto», rojo «No hay puesto» y gris «Cerrado» (D-007, D-009) |
+| Front · vista | [Inicio.js](../front/vistas/inicio/Inicio.js#L3) | Rejilla de Inicio con libres y estado de cada estacionamiento |
+| Front · vista | [MaquetaCampus.js](../front/vistas/mapa/MaquetaCampus.js#L4) | En el mapa, muestra libres y el estado en texto |
+| Front · vista | [PanelPuestos.js](../front/vistas/mapa/PanelPuestos.js#L3) | Lista «¿Dónde hay puesto?» al lado del mapa |
+| Front · controlador | [EstacionamientoControlador.js](../front/controladores/EstacionamientoControlador.js#L1) | Control del mapa y del Inicio: trae los estacionamientos y los mantiene en vivo |
+| Front · servicio | [EstacionamientoServicio.js](../front/servicios/EstacionamientoServicio.js#L1) | Pide los estacionamientos con sus libres y su semáforo (fetch) |
+| Front · DTO | [EstacionamientoDTO.js](../front/dto/EstacionamientoDTO.js#L1) | Lo que el front recibe de cada estacionamiento: libres, porcentaje y semáforo |
+| Back · controlador | [EstacionamientoControlador.js](../back/controladores/EstacionamientoControlador.js#L1) | Entrega la ocupación y el semáforo de cada estacionamiento (GET) |
+| Back · servicio | [EstacionamientoServicio.js](../back/servicios/EstacionamientoServicio.js#L1) | Entrega cada estacionamiento con sus libres y su semáforo |
+| Back · DTO | [EstacionamientoDTO.js](../back/dto/EstacionamientoDTO.js#L1) | Lo que cualquiera puede ver: libres, porcentaje y semáforo, sin datos personales |
+| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L2) | Calcula los libres, el porcentaje y el semáforo |
+| Back · modelo | [Semaforo.js](../back/modelos/Semaforo.js#L1) | Los tres estados del semáforo: «Hay puesto», «No hay puesto» y «Cerrado» (D-009) |
+| Pruebas de unidad | [Estacionamiento.test.js](../back/pruebas/unidad/Estacionamiento.test.js#L2) | Prueba libres, porcentaje y semáforo |
+| Pruebas de unidad | [EstacionamientoServicio.test.js](../back/pruebas/unidad/EstacionamientoServicio.test.js#L1) | Prueba la lista con libres y semáforo |
+| Pruebas de unidad | [Semaforo.test.js](../back/pruebas/unidad/Semaforo.test.js#L1) | Prueba los tres estados y sus textos (D-009) |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L6) | Prueba GET /api/estacionamientos |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L6) | Prueba el criterio de aceptación del semáforo |
 
-**Qué hace.** Cada estacionamiento sale en verde («Hay puesto») si tiene al menos un puesto libre, en rojo («No hay puesto») si no tiene ninguno y en gris («Cerrado») si el administrador lo cerró. En el mapa, en la lista y en el Inicio aparece siempre el estado en texto junto a la cantidad de libres, y cambia solo cuando llega un aviso.
-
-**Por qué está organizado así.** El estado lo decide una sola función (`nivelDelSemaforo`) que usan el mapa, la lista y el Inicio: cuando D-009 cambió la regla de tres colores a dos, se cambió en un solo lugar.
+**Qué hace.** El modelo `Semaforo` decide (D-009): verde «Hay puesto» con al menos un libre, rojo «No hay puesto» sin libres, gris «Cerrado». Viaja en `EstacionamientoDTO.semaforo`; el front solo elige los colores (`ColoresSemaforo`).
 
 ---
 
@@ -167,17 +249,21 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** German · **Issue:** [#7](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/7) · **Etiqueta:** `@HU-5.1`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantalla | [mapa/page.js](../front/app/mapa/page.js#L13) (pide sesión) |
-| Front · componente | [MaquetaCampus.js](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L57): dibuja [cada área](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L290) y [su nombre](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L320) desde que se abre; si falla, [«Reintentar» y «Salir»](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L340) |
-| Back · API | [GET /api/estacionamientos](../back/pedidos_y_respuestas/estacionamientos.js#L16) (estado + forma de cada uno) |
-| Datos | [ESTACIONAMIENTOS](../back/datos_del_campus/estacionamientos.js#L29) · `back/datos_del_campus/maqueta.json` (dónde cae cada uno en la imagen) · [capacidades de ejemplo](../back/datos_del_campus/capacidad_inicial.js#L6) |
-| Pruebas | El mapa dibuja todos: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L151) · todos con nombre: [estacionamientos.test.js](../back/pruebas_automaticas/estacionamientos.test.js#L19) · todos se pueden dibujar: [estacionamientos.test.js](../back/pruebas_automaticas/estacionamientos.test.js#L40) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/estacionamientos/route.js#L2) | Dirección web GET /api/estacionamientos para dibujar el mapa |
+| Front · pantalla | [page.js](../front/app/mapa/page.js#L2) | Pantalla Mapa del campus |
+| Front · vista | [MaquetaCampus.js](../front/vistas/mapa/MaquetaCampus.js#L3) | Dibuja el mapa con el nombre de cada estacionamiento |
+| Back · controlador | [EstacionamientoControlador.js](../back/controladores/EstacionamientoControlador.js#L2) | Con su forma para dibujarlos (GET) |
+| Back · servicio | [EstacionamientoServicio.js](../back/servicios/EstacionamientoServicio.js#L2) | Con la forma para dibujarlos |
+| Back · DTO | [EstacionamientoDTO.js](../back/dto/EstacionamientoDTO.js#L2) | Con la forma (polígono y pisos) para dibujarlo |
+| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L3) | Guarda la forma (polígono y pisos) para dibujarlo |
+| Back · datos | [capacidad_inicial.js](../back/basedatos/datos_iniciales/capacidad_inicial.js#L1) | Capacidad de ejemplo (todavía no real) de cada estacionamiento |
+| Back · datos | [estacionamientos.js](../back/basedatos/datos_iniciales/estacionamientos.js#L1) | Catálogo de estacionamientos del campus que se dibujan en el mapa |
+| Pruebas de unidad | [DatosIniciales.test.js](../back/pruebas/unidad/DatosIniciales.test.js#L1) | Prueba que la lista sirva para dibujar el mapa |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L7) | Prueba el criterio de aceptación del mapa |
 
-**Qué hace.** Al entrar, el usuario ve la maqueta del Campus Montalbán con cada estacionamiento dibujado y su nombre visible desde el primer momento, en el computador y en el celular. Se puede acercar, alejar y tocar un estacionamiento para ver su tarjeta (desde ahí se reporta un problema, HU 9.1).
-
-**Por qué está organizado así.** La lista de estacionamientos está en `back/datos_del_campus/` porque no cambia con el uso y la usan el mapa, el aforo (4.1) y la administración (5.4); la imagen sale de la maqueta 3D del simulador, así los dos muestran el mismo campus (D-006).
+**Qué hace.** `GET /api/estacionamientos` entrega cada estacionamiento con su polígono; `MaquetaCampus` lo dibuja sobre la maqueta y se actualiza por el canal en vivo.
 
 ---
 
@@ -185,19 +271,30 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Sebastian · **Issue:** [#12](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/12) · **Etiqueta:** `@HU-5.4`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantalla | [admin/puestos/page.js](../front/app/admin/puestos/page.js#L15) (solo el administrador) |
-| Front · componente | [FilaPuesto.js](../front/partes_de_pantallas/admin/FilaPuesto.js#L18) (capacidad y «Activo») |
-| Front · acción | [guardarEstacionamiento](../front/envio_de_formularios/puestos.js#L13) |
-| Back · API | [PATCH /api/estacionamientos/:id](../back/pedidos_y_respuestas/estacionamientos.js#L28) (403 si no es administrador) |
-| Back · reglas | [validarCapacidad](../back/reglas_y_datos/estacionamientos/reglas.js#L68) · [puestosLibres](../back/reglas_y_datos/estacionamientos/reglas.js#L13) · [estacionamientosSugeribles](../back/reglas_y_datos/estacionamientos/reglas.js#L87) (un cerrado no se sugiere) |
-| Back · datos | [cambiarEstacionamiento](../back/reglas_y_datos/estacionamientos/datos.js#L41) |
-| Pruebas | Libres con la capacidad nueva: [capacidad.test.js](../back/pruebas_automaticas/capacidad.test.js#L98) · cerrado no se sugiere: [capacidad.test.js](../back/pruebas_automaticas/capacidad.test.js#L104) · por la API: [api.test.js](../back/pruebas_automaticas/api.test.js#L109) · 403: [api.test.js](../back/pruebas_automaticas/api.test.js#L93) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/estacionamientos/[id]/route.js#L1) | Dirección web PATCH /api/estacionamientos/:id |
+| Front · pantalla | [page.js](../front/app/admin/puestos/page.js#L2) | Pantalla Administrar › Puestos |
+| Front · vista | [FilaPuesto.js](../front/vistas/admin/FilaPuesto.js#L3) | Fila de un estacionamiento con su capacidad y el interruptor «Activo» |
+| Front · vista | [MensajeCambiosGuardados.js](../front/vistas/admin/MensajeCambiosGuardados.js#L1) | Mensaje «Cambios guardados.» |
+| Front · vista | [PantallaPuestos.js](../front/vistas/admin/PantallaPuestos.js#L3) | Pantalla Administrar › Puestos |
+| Front · controlador | [EstacionamientoControlador.js](../front/controladores/EstacionamientoControlador.js#L2) | Control de Administrar › Puestos: valida y guarda capacidad y estado |
+| Front · validador | [CapacidadValidador.js](../front/validadores/CapacidadValidador.js#L1) | Revisa que la capacidad sea un entero entre 1 y 2000 y que «activo» sea sí o no |
+| Front · servicio | [EstacionamientoServicio.js](../front/servicios/EstacionamientoServicio.js#L2) | Manda la capacidad y el estado nuevos (fetch PATCH) |
+| Front · DTO | [CambioDeEstacionamientoDTO.js](../front/dto/CambioDeEstacionamientoDTO.js#L1) | Lo que manda el administrador: capacidad y abierto o cerrado |
+| Back · controlador | [EstacionamientoControlador.js](../back/controladores/EstacionamientoControlador.js#L3) | Recibe el cambio de capacidad o estado (PATCH, solo administrador) |
+| Back · servicio | [EstacionamientoServicio.js](../back/servicios/EstacionamientoServicio.js#L3) | Cambia la capacidad y abre o cierra |
+| Back · DTO | [EstacionamientoDTO.js](../back/dto/EstacionamientoDTO.js#L3) | Los cambios que manda el administrador |
+| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L4) | Cambia la capacidad y abre o cierra; si la capacidad queda por debajo de los ocupados, hay 0 libres |
+| Back · repositorio | [EstacionamientoRepositorio.js](../back/repositorios/EstacionamientoRepositorio.js#L2) | Guarda la capacidad nueva y si está abierto |
+| Pruebas (front) | [AdministracionControladores.test.js](../front/pruebas/controladores/AdministracionControladores.test.js#L2) | Prueba el control de Administrar › Puestos |
+| Pruebas (front) | [CapacidadValidador.test.js](../front/pruebas/validadores/CapacidadValidador.test.js#L1) | Prueba la validación de la capacidad nueva y de «activo» |
+| Pruebas de unidad | [Estacionamiento.test.js](../back/pruebas/unidad/Estacionamiento.test.js#L3) | Prueba la capacidad nueva y abrir o cerrar |
+| Pruebas de unidad | [EstacionamientoServicio.test.js](../back/pruebas/unidad/EstacionamientoServicio.test.js#L2) | Prueba cambiar capacidad y abrir o cerrar |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L7) | Prueba PATCH /api/estacionamientos/:id |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L8) | Prueba el criterio de aceptación de capacidad y estado |
 
-**Qué hace.** El administrador cambia la capacidad de un estacionamiento o lo cierra desmarcando «Activo». Los libres se recalculan con la capacidad nueva, el mapa se actualiza al instante y uno cerrado sale en gris y no se sugiere.
-
-**Por qué está organizado así.** La pantalla y la API usan la misma función `cambiarEstacionamiento`, así el administrador y Postman siguen las mismas reglas; y `estacionamientosSugeribles` es de donde parte la HU 7.2.
+**Qué hace.** El administrador cambia la capacidad y abre o cierra. `CapacidadValidador` (front) pide un entero de 1 a 2000; el back revisa la precondición (administrador) y el modelo aplica la regla: si la capacidad queda por debajo de los ocupados, hay 0 libres. Un cerrado no se sugiere ni se reporta.
 
 ---
 
@@ -205,19 +302,35 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** German · **Issue:** [#8](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/8) · **Etiqueta:** `@HU-6.1`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantalla | [admin/edificios/page.js](../front/app/admin/edificios/page.js#L16) (solo el administrador) |
-| Front · componentes | [NuevoEdificio.js](../front/partes_de_pantallas/admin/NuevoEdificio.js#L13) · [FilaEdificio.js](../front/partes_de_pantallas/admin/FilaEdificio.js#L13) · [CamposEdificio.js](../front/partes_de_pantallas/admin/CamposEdificio.js#L8) · la lista que ve el usuario: [SelectorEdificio.js](../front/partes_de_pantallas/comunes/SelectorEdificio.js#L9) |
-| Front · acciones | [agregar](../front/envio_de_formularios/edificios.js#L23) · [modificar](../front/envio_de_formularios/edificios.js#L37) · [quitar](../front/envio_de_formularios/edificios.js#L50) |
-| Back · reglas | [validarEdificio](../back/reglas_y_datos/edificios/reglas.js#L49) (nombre único, ubicación en el campus) · [crearId](../back/reglas_y_datos/edificios/reglas.js#L27) · [ordenarPorNombre](../back/reglas_y_datos/edificios/reglas.js#L85) |
-| Back · datos | [listarEdificios](../back/reglas_y_datos/edificios/datos.js#L9) · [agregarEdificio](../back/reglas_y_datos/edificios/datos.js#L15) · [modificarEdificio](../back/reglas_y_datos/edificios/datos.js#L31) · [quitarEdificio](../back/reglas_y_datos/edificios/datos.js#L46) · catálogo inicial: [EDIFICIOS](../back/datos_del_campus/edificios.js#L15) |
-| Back · API | No tiene: se administra desde la pantalla. |
-| Pruebas | Agregar: [edificios.test.js](../back/pruebas_automaticas/edificios.test.js#L91) · modificar: [edificios.test.js](../back/pruebas_automaticas/edificios.test.js#L97) · quitar: [edificios.test.js](../back/pruebas_automaticas/edificios.test.js#L104) · la misma lista que ve el usuario: [edificios.test.js](../back/pruebas_automaticas/edificios.test.js#L82) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/edificios/[id]/route.js#L1) | Dirección web /api/edificios/:id para modificar y quitar |
+| Ruta (API) | [route.js](../front/app/api/edificios/route.js#L1) | Dirección web /api/edificios para el catálogo |
+| Front · pantalla | [page.js](../front/app/admin/edificios/page.js#L2) | Pantalla Administrar › Edificios |
+| Front · vista | [CamposEdificio.js](../front/vistas/admin/CamposEdificio.js#L2) | Campos de nombre y ubicación que usan los formularios de edificio |
+| Front · vista | [FilaEdificio.js](../front/vistas/admin/FilaEdificio.js#L3) | Fila de un edificio con los botones Guardar y Quitar |
+| Front · vista | [NuevoEdificio.js](../front/vistas/admin/NuevoEdificio.js#L3) | Formulario para agregar un edificio nuevo |
+| Front · vista | [PantallaEdificios.js](../front/vistas/admin/PantallaEdificios.js#L3) | Pantalla Administrar › Edificios |
+| Front · vista | [SelectorEdificio.js](../front/vistas/comunes/SelectorEdificio.js#L2) | Lista de edificios que ve el usuario para elegir |
+| Front · controlador | [EdificioControlador.js](../front/controladores/EdificioControlador.js#L1) | Control de Administrar › Edificios: valida y manda agregar, modificar o quitar |
+| Front · validador | [EdificioValidador.js](../front/validadores/EdificioValidador.js#L1) | Revisa el nombre (con letras, 2 a 80) y que la ubicación esté dentro del campus |
+| Front · servicio | [EdificioServicio.js](../front/servicios/EdificioServicio.js#L1) | Pide el catálogo y manda agregar, modificar o quitar (fetch) |
+| Front · DTO | [EdificioDTO.js](../front/dto/EdificioDTO.js#L1) | Lo que manda el administrador: nombre y ubicación |
+| Back · controlador | [EdificioControlador.js](../back/controladores/EdificioControlador.js#L1) | Lista el catálogo (GET) y deja al administrador agregar, modificar y quitar |
+| Back · servicio | [EdificioServicio.js](../back/servicios/EdificioServicio.js#L1) | Agrega, modifica y quita edificios; el nombre no se repite |
+| Back · DTO | [EdificioDTO.js](../back/dto/EdificioDTO.js#L1) | Lo que manda el administrador y lo que ve el usuario |
+| Back · modelo | [Edificio.js](../back/modelos/Edificio.js#L1) | Un edificio del catálogo: nombre, ubicación e id que no se repite |
+| Back · repositorio | [EdificioRepositorio.js](../back/repositorios/EdificioRepositorio.js#L1) | Guarda el catálogo de edificios |
+| Back · datos | [edificios.js](../back/basedatos/datos_iniciales/edificios.js#L1) | Lista inicial de edificios de la UCAB |
+| Pruebas (front) | [AdministracionControladores.test.js](../front/pruebas/controladores/AdministracionControladores.test.js#L3) | Prueba el control de Administrar › Edificios |
+| Pruebas (front) | [EdificioValidador.test.js](../front/pruebas/validadores/EdificioValidador.test.js#L1) | Prueba la validación del nombre y la ubicación del edificio |
+| Pruebas de unidad | [DatosIniciales.test.js](../back/pruebas/unidad/DatosIniciales.test.js#L2) | Prueba el catálogo inicial de edificios |
+| Pruebas de unidad | [Edificio.test.js](../back/pruebas/unidad/Edificio.test.js#L1) | Prueba el id, el nombre normalizado y los cambios |
+| Pruebas de unidad | [EdificioServicio.test.js](../back/pruebas/unidad/EdificioServicio.test.js#L1) | Prueba agregar, modificar y quitar; el nombre no se repite |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L8) | Prueba /api/edificios |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L9) | Prueba el criterio de aceptación del catálogo de edificios |
 
-**Qué hace.** El administrador agrega, modifica o quita edificios (nombre y, si quiere, latitud y longitud). Esa misma lista, ordenada por nombre, es la que el usuario ve al elegir un edificio en el Inicio y en Sugerir.
-
-**Por qué está organizado así.** Hay una sola lista (`listarEdificios`) para el administrador y para el usuario, guardada con su ubicación porque la sugerencia (7.2) mide la distancia desde cada edificio.
+**Qué hace.** El administrador agrega, modifica y quita edificios. `EdificioValidador` (front) revisa el nombre y que la ubicación esté en el campus; `EdificioServicio` (back) no deja repetir el nombre. La misma lista la ve el usuario (chips del Inicio y Sugerir).
 
 ---
 
@@ -225,18 +338,24 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Manuel · **Issue:** [#9](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/9) · **Etiqueta:** `@HU-7.2`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantallas | [Inicio.js](../front/partes_de_pantallas/inicio/Inicio.js#L41) chips de edificios y «Más cerca» · [sugerencia/page.js](../front/app/sugerencia/page.js#L15) con [BuscadorSugerencia.js](../front/partes_de_pantallas/sugerencia/BuscadorSugerencia.js#L25) |
-| Front · conexión con el back | [fetch a /api/sugerencia](../front/partes_de_pantallas/sugerencia/BuscadorSugerencia.js#L36) |
-| Back · API | [GET /api/sugerencia](../back/pedidos_y_respuestas/sugerencia.js#L16) |
-| Back · reglas | [sugerirMasCercano](../back/reglas_y_datos/sugerencia/reglas.js#L39) (abiertos y con libres, el más cercano; considera todos, también los de solo profesores) · [distanciaEnMetros](../back/reglas_y_datos/sugerencia/reglas.js#L16) · parte de [estacionamientosSugeribles](../back/reglas_y_datos/estacionamientos/reglas.js#L87) (5.4) |
-| Back · datos | [sugerirParaEdificio](../back/reglas_y_datos/sugerencia/datos.js#L12) |
-| Pruebas | El más cercano con libres: [sugerencia.test.js](../back/pruebas_automaticas/sugerencia.test.js#L39) · salta los llenos: [sugerencia.test.js](../back/pruebas_automaticas/sugerencia.test.js#L45) · salta los cerrados: [sugerencia.test.js](../back/pruebas_automaticas/sugerencia.test.js#L50) · considera los de profesores: [sugerencia.test.js](../back/pruebas_automaticas/sugerencia.test.js#L55) · por la API: [api.test.js](../back/pruebas_automaticas/api.test.js#L147) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/sugerencia/route.js#L1) | Dirección web GET /api/sugerencia |
+| Front · pantalla | [page.js](../front/app/page.js#L3) | Pantalla Inicio con el atajo «Más cerca» |
+| Front · pantalla | [page.js](../front/app/sugerencia/page.js#L2) | Pantalla Sugerir |
+| Front · vista | [SelectorEdificio.js](../front/vistas/comunes/SelectorEdificio.js#L3) | Lista de edificios para pedir la sugerencia |
+| Front · vista | [Inicio.js](../front/vistas/inicio/Inicio.js#L4) | Botones de edificios y «Más cerca» en Inicio |
+| Front · vista | [BuscadorSugerencia.js](../front/vistas/sugerencia/BuscadorSugerencia.js#L3) | Elige el edificio y muestra el estacionamiento sugerido |
+| Front · controlador | [SugerenciaControlador.js](../front/controladores/SugerenciaControlador.js#L1) | Control de la sugerencia: pide el más cercano y recuerda el último edificio elegido |
+| Front · servicio | [SugerenciaServicio.js](../front/servicios/SugerenciaServicio.js#L1) | Pide la sugerencia para un edificio (fetch GET /api/sugerencia) |
+| Back · controlador | [SugerenciaControlador.js](../back/controladores/SugerenciaControlador.js#L1) | Recibe el edificio y responde el estacionamiento sugerido |
+| Back · servicio | [SugerenciaServicio.js](../back/servicios/SugerenciaServicio.js#L1) | Elige el estacionamiento abierto con puestos libres más cercano al edificio |
+| Back · DTO | [SugerenciaDTO.js](../back/dto/SugerenciaDTO.js#L1) | El edificio, el sugerido y hasta dos alternativas, con su distancia |
+| Pruebas de unidad | [SugerenciaServicio.test.js](../back/pruebas/unidad/SugerenciaServicio.test.js#L1) | Prueba que sugiera el abierto con libres más cercano |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L9) | Prueba GET /api/sugerencia |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L10) | Prueba el criterio de aceptación de la sugerencia |
 
-**Qué hace.** El usuario elige el edificio al que va y la app le sugiere el estacionamiento abierto con puestos libres más cercano a ese edificio, sin tomar en cuenta su horario ni su rol.
-
-**Por qué está organizado así.** La sugerencia es un tema propio porque combina dos que ya existen, los edificios (6.1) y los estacionamientos abiertos (5.4), sin copiar sus reglas.
+**Qué hace.** `SugerenciaServicio` elige, entre los abiertos con libres, el más cercano al edificio elegido (Haversine) y hasta dos alternativas.
 
 ---
 
@@ -244,18 +363,17 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Manuel · **Issue:** [#10](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/10) · **Etiqueta:** `@HU-8.1`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantallas | Invitación en el [Inicio](../front/app/page.js#L29) y en el [Mapa](../front/app/mapa/page.js#L21) · interruptor en [Perfil](../front/app/perfil/page.js#L75) |
-| Front · componente | [Notificaciones.js](../front/partes_de_pantallas/notificaciones/Notificaciones.js#L22) |
-| Front · lógica | [debeMostrarSolicitud](../front/notificaciones_del_navegador/GestorNotificaciones.js#L111) (paso 2.2) · [pedirPermiso](../front/notificaciones_del_navegador/GestorNotificaciones.js#L200) (CA1) · [bloquear](../front/notificaciones_del_navegador/GestorNotificaciones.js#L120) (CA2) · [enviarNotificacionPrueba](../front/notificaciones_del_navegador/GestorNotificaciones.js#L167) · [Notificacion.js](../front/notificaciones_del_navegador/Notificacion.js#L6) |
-| Front · service worker | [sw.js](../front/public/sw.js#L14) (único, D-008). La prueba la muestra `showNotification`; no hay envío de notificaciones reales (push) |
-| Back | No tiene: todo pasa en el navegador. |
-| Pruebas | CA1: [notificaciones.test.js](../front/pruebas_automaticas/notificaciones.test.js#L189) · CA2: [notificaciones.test.js](../front/pruebas_automaticas/notificaciones.test.js#L145) · CA3: [notificaciones.test.js](../front/pruebas_automaticas/notificaciones.test.js#L209) · paso 2.2: [notificaciones.test.js](../front/pruebas_automaticas/notificaciones.test.js#L197) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Front · pantalla | [page.js](../front/app/page.js#L4) | Pantalla Inicio, donde aparece la invitación a activar notificaciones |
+| Front · vista | [Notificaciones.js](../front/vistas/notificaciones/Notificaciones.js#L5) | Invitación al entrar y el interruptor de Perfil |
+| Front · vista | [PantallaPerfil.js](../front/vistas/perfil/PantallaPerfil.js#L4) | Interruptor de notificaciones en Perfil |
+| Front · controlador | [NotificacionControlador.js](../front/controladores/NotificacionControlador.js#L1) | Control: pide el permiso, recuerda la decisión y manda la notificación de prueba |
+| Front · modelo | [Notificacion.js](../front/modelos/Notificacion.js#L2) | La notificación de prueba que se muestra |
+| Pruebas (front) | [NotificacionControlador.test.js](../front/pruebas/controladores/NotificacionControlador.test.js#L1) | Prueba el permiso y la notificación de prueba |
+| Otro | [sw.js](../front/public/sw.js#L1) | Service worker: muestra la notificación de prueba |
 
-**Qué hace.** La primera vez que entra, la app le pide permiso para mandarle notificaciones. Si acepta, recibe una notificación de prueba; si no, no se le vuelve a preguntar y puede activarlas después desde Perfil.
-
-**Por qué está organizado así.** La lógica está en `front/notificaciones_del_navegador/` y no en el back porque los permisos y las notificaciones son del navegador; el service worker es uno solo para toda la app (D-008).
+**Qué hace.** `NotificacionControlador` pide el permiso del navegador, recuerda la respuesta y manda la notificación de prueba (`Notificacion`).
 
 ---
 
@@ -263,59 +381,103 @@ de VS Code: <kbd>⌘</kbd> + clic; en GitHub, clic).
 
 **Responsable:** Sebastian · **Issue:** [#11](https://github.com/sebastianmoreno1793/Proyecto-Estacionamientos-UCAB/issues/11) · **Etiqueta:** `@HU-9.1`
 
-| Capa | Dónde |
-|---|---|
-| Front · pantalla | [reportar/page.js](../front/app/reportar/page.js#L14) «Reportar»: se abre desde la pestaña del menú o desde la tarjeta del mapa (paso 1 del escenario) |
-| Front · tarjeta del mapa | [TarjetaEstacionamiento.js](../front/partes_de_pantallas/mapa/TarjetaEstacionamiento.js#L14), que se abre al [tocar un estacionamiento](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L380), con el botón [«Reportar un problema aquí»](../front/partes_de_pantallas/mapa/TarjetaEstacionamiento.js#L50), que llega con [ese estacionamiento ya elegido](../front/app/reportar/page.js#L19) |
-| Front · componente | [FormularioIncidencia.js](../front/partes_de_pantallas/reportar/FormularioIncidencia.js#L27) (tipo, estacionamiento, «Enviar reporte» y «Cancelar») |
-| Front · acción | [reportarIncidencia](../front/envio_de_formularios/incidencias.js#L15) |
-| Back · API | [POST /api/incidencias](../back/pedidos_y_respuestas/incidencias.js#L21) (mismas reglas que el formulario) |
-| Back · reglas | [TIPOS_DE_INCIDENCIA](../back/reglas_y_datos/incidencias/reglas.js#L5) · [validarReporte](../back/reglas_y_datos/incidencias/reglas.js#L22) (dice qué falta) |
-| Back · datos | [registrarIncidencia](../back/reglas_y_datos/incidencias/datos.js#L14) (con la hora y como pendiente) |
-| Pruebas | CA1, con hora y pendiente: [incidencias.test.js](../back/pruebas_automaticas/incidencias.test.js#L22) · CA2, dice qué falta: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L182) · CA3, un cerrado no aparece: [criterios_sprint1](../back/pruebas_automaticas/criterios_sprint1.test.js#L194) · por la API: [api.test.js](../back/pruebas_automaticas/api.test.js#L136) |
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Ruta (API) | [route.js](../front/app/api/incidencias/route.js#L1) | Dirección web /api/incidencias para los reportes |
+| Front · pantalla | [page.js](../front/app/reportar/page.js#L2) | Pantalla «Reportar» |
+| Front · vista | [TarjetaEstacionamiento.js](../front/vistas/mapa/TarjetaEstacionamiento.js#L3) | Tarjeta del estacionamiento con el botón «Reportar un problema aquí» |
+| Front · vista | [AspectoIncidencia.js](../front/vistas/reportar/AspectoIncidencia.js#L1) | Color e ícono de cada tipo de problema en Reportar |
+| Front · vista | [FormularioIncidencia.js](../front/vistas/reportar/FormularioIncidencia.js#L3) | Formulario: elegir el estacionamiento y el tipo de problema |
+| Front · vista | [MensajeEstacionamientoCerrado.js](../front/vistas/reportar/MensajeEstacionamientoCerrado.js#L1) | Mensaje «estacionamiento cerrado»: el administrador lo cerró mientras se llenaba el formulario |
+| Front · vista | [MensajeIncidenciaCreada.js](../front/vistas/reportar/MensajeIncidenciaCreada.js#L1) | Mensaje «incidencia creada»: el tipo, el estacionamiento, la hora y la línea Enviado › Pendiente › Atendido |
+| Front · controlador | [IncidenciaControlador.js](../front/controladores/IncidenciaControlador.js#L1) | Control del formulario Reportar: valida, manda el reporte y decide qué mensaje mostrar |
+| Front · validador | [IncidenciaValidador.js](../front/validadores/IncidenciaValidador.js#L1) | Revisa que se elija un estacionamiento de la lista y un tipo de problema; dice todo lo que falta |
+| Front · servicio | [IncidenciaServicio.js](../front/servicios/IncidenciaServicio.js#L1) | Manda el reporte al back con fetch POST /api/incidencias |
+| Front · DTO | [IncidenciaDTO.js](../front/dto/IncidenciaDTO.js#L1) | Lo que manda el formulario de Reportar: estacionamiento y tipo de problema |
+| Back · controlador | [IncidenciaControlador.js](../back/controladores/IncidenciaControlador.js#L1) | Recibe el reporte, revisa que haya sesión y devuelve la incidencia creada |
+| Back · servicio | [IncidenciaServicio.js](../back/servicios/IncidenciaServicio.js#L1) | Registra la incidencia como «pendiente» si el estacionamiento existe y está abierto |
+| Back · DTO | [IncidenciaDTO.js](../back/dto/IncidenciaDTO.js#L1) | Lo que llega del formulario y lo que se devuelve, sin el correo de quien reporta |
+| Back · modelo | [Incidencia.js](../back/modelos/Incidencia.js#L1) | La incidencia nace «pendiente», con fecha y hora, solo en estacionamientos abiertos |
+| Back · repositorio | [EstacionamientoRepositorio.js](../back/repositorios/EstacionamientoRepositorio.js#L12) | solo los abiertos aparecen en el formulario |
+| Back · repositorio | [IncidenciaRepositorio.js](../back/repositorios/IncidenciaRepositorio.js#L1) | Guarda las incidencias reportadas |
+| Pruebas (front) | [IncidenciaControlador.test.js](../front/pruebas/controladores/IncidenciaControlador.test.js#L1) | Prueba el control de Reportar: valida, manda por fetch y elige el mensaje |
+| Pruebas (front) | [IncidenciaValidador.test.js](../front/pruebas/validadores/IncidenciaValidador.test.js#L1) | Prueba que el formulario diga todo lo que falta elegir (CA2) |
+| Pruebas de unidad | [Incidencia.test.js](../back/pruebas/unidad/Incidencia.test.js#L1) | Prueba las reglas de negocio de la incidencia |
+| Pruebas de unidad | [IncidenciaServicio.test.js](../back/pruebas/unidad/IncidenciaServicio.test.js#L1) | Prueba que la incidencia se guarde pendiente y solo en estacionamientos abiertos |
+| Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L10) | Prueba GET y POST /api/incidencias |
+| Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L11) | Prueba el criterio de aceptación de Crear una incidencia |
 
-> **Datos de apoyo de la tarjeta, sin HU propia en el Sprint 1 (decisión del equipo):** [Ocupación %, Capacidad y pisos](../front/partes_de_pantallas/mapa/TarjetaEstacionamiento.js#L41). La tarjeta está por la HU 9.1; esos datos solo acompañan al estacionamiento elegido.
+**Qué hace.** `IncidenciaControlador` (front) valida con `IncidenciaValidador` (dice todo lo que falta, CA2), manda el `IncidenciaDTO` por fetch y muestra el mensaje que toca. En el back, `ControlDeAcceso` exige la sesión (precondición) e `IncidenciaServicio` + el modelo `Incidencia` aplican las reglas: solo en abiertos, tres tipos, nace «pendiente» con fecha y hora.
 
-**Qué hace.** El conductor abre «Reportar» desde el menú o desde la tarjeta de un estacionamiento en el mapa (entonces ese ya viene elegido), elige el tipo de problema (batería descargada, conos atravesados o vehículo mal estacionado) y el estacionamiento, y envía el reporte. Queda registrado con la hora y como «pendiente», y ve la confirmación; si falta algo, el sistema le dice qué.
+---
 
-**Por qué está organizado así.** Las incidencias son un tema propio (`back/reglas_y_datos/incidencias/`) porque la épica 9 sigue con la 9.2 (estado), la 9.3 (listado) y la 9.4 (eliminar), que usarán las mismas reglas y datos.
+## Piezas que usan todas las HU (sin etiqueta de una HU)
+
+| Capa | Archivo | Qué hace |
+|---|---|---|
+| Back | [Fabrica.js](../back/Fabrica.js) | Crea una sola vez cada pieza y las conecta: repositorios → tácticas → servicios → controladores |
+| Back · controlador | [Controlador.js](../back/controladores/Controlador.js) | Clase base: leer el cuerpo, responder y convertir un `ErrorDeNegocio` en su código HTTP |
+| Back · controlador | [EventoControlador.js](../back/controladores/EventoControlador.js) | Canal en vivo `GET /api/eventos` (HU 4.3) |
+| Back · controlador | [PruebasControlador.js](../back/controladores/PruebasControlador.js) | `POST /api/pruebas/reiniciar` (solo desarrollo) |
+| Back · servicio | [EventosEnVivoServicio.js](../back/servicios/EventosEnVivoServicio.js) | Avisa a quien esté mirando cada cambio (HU 4.3) |
+| Back · servicio | [PruebasServicio.js](../back/servicios/PruebasServicio.js) | Vuelve a los datos de ejemplo |
+| Back · repositorio | [Repositorio.js](../back/repositorios/Repositorio.js) | Clase base de acceso a datos |
+| Back · modelo | [ErrorDeNegocio.js](../back/modelos/ErrorDeNegocio.js) | Error que lanza una regla de negocio, con su motivo |
+| Back · datos | [AlmacenEnMemoria.js](../back/basedatos/AlmacenEnMemoria.js) | Los datos mientras no hay base de datos |
+| Front · controlador | [Controlador.js](../front/controladores/Controlador.js) | Clase base: `+valida()` `+muestra()` `+redirige()` |
+| Front · validador | [Validador.js](../front/validadores/Validador.js) | Clase base de las validaciones |
+| Front · servicio | [ClienteHttp.js](../front/servicios/ClienteHttp.js) | Clase base de los servicios: `fetch` a la API |
+| Front · servicio | [EventosEnVivoServicio.js](../front/servicios/EventosEnVivoServicio.js) | Escucha el canal en vivo |
+| Front · vista | [MensajeDatosNoValidos.js](../front/vistas/comunes/MensajeDatosNoValidos.js), [MensajeHecho.js](../front/vistas/comunes/MensajeHecho.js) | Mensajes comunes de los formularios |
+| Front · vista | [MenuPrincipal.js](../front/vistas/comunes/MenuPrincipal.js), [Pestanas.js](../front/vistas/comunes/Pestanas.js), [MenuAdmin.js](../front/vistas/comunes/MenuAdmin.js), [Iconos.js](../front/vistas/comunes/Iconos.js), [Formato.js](../front/vistas/comunes/Formato.js), [ActualizacionPWA.js](../front/vistas/comunes/ActualizacionPWA.js) | Encabezado, pestañas, íconos, formato de cifras y aviso de versión nueva (D-008) |
 
 ---
 
 ## Preguntas típicas de la profesora
 
-**¿Por qué organizaron el código por tema y no por HU?**
-Porque varias HU comparten reglas y, separadas por HU, quedarían copiadas. La placa de «Mis vehículos» (2.1) es la misma que lee la garita (3.2): [garita/reglas.js](../back/reglas_y_datos/garita/reglas.js#L9) importa [esPlacaValida](../back/reglas_y_datos/vehiculos/reglas.js#L19). `puestosLibres` la usan la 4.1 y la 5.4 ([reglas.js](../back/reglas_y_datos/estacionamientos/reglas.js#L13)); un mismo aviso registra el movimiento (3.1) y actualiza el aforo (4.1) en [registrarAviso](../back/reglas_y_datos/estacionamientos/datos.js#L70); y el estado del semáforo sale de una sola función ([nivelDelSemaforo](../back/reglas_y_datos/estacionamientos/reglas.js#L36)). Para encontrar una HU basta la etiqueta `@HU-x.y` o este mapa.
+**¿Reglas y datos son clases?**
+Sí. Todo lo que decide o guarda algo es una clase con el nombre de su capa: el modelo
+[Estacionamiento](../back/modelos/Estacionamiento.js) tiene sus atributos privados (`#capacidad`, `#ocupados`) y sus
+reglas como métodos (`registrarEntrada()`, `libres()`, `semaforo()`); los datos los toca solo su
+[EstacionamientoRepositorio](../back/repositorios/EstacionamientoRepositorio.js), que hereda de [Repositorio](../back/repositorios/Repositorio.js).
+Los componentes de React son la vista; la lógica del front está en controladores, validadores, servicios y modelos.
 
-**¿Por qué separaron front y back, y `reglas.js` de `datos.js`?**
-El front es lo que ve la persona; el back, las reglas y los datos, y cada parte se prueba sola. `reglas.js` valida y calcula sin guardar nada, así se prueba con `npm test` sin servidor ni navegador; `datos.js` es lo único que toca el almacén ([almacen.js](../back/piezas_compartidas/almacen.js#L36)), así que el día que haya base de datos solo cambian los `datos.js`.
+**¿Cómo llega la data del front al back?** (HU 9.1)
+Siempre por `fetch`: [FormularioIncidencia](../front/vistas/reportar/FormularioIncidencia.js) →
+[IncidenciaControlador (front)](../front/controladores/IncidenciaControlador.js) `reportar()` →
+[IncidenciaValidador](../front/validadores/IncidenciaValidador.js) → [IncidenciaServicio (front)](../front/servicios/IncidenciaServicio.js)
+`POST /api/incidencias` → [route.js](../front/app/api/incidencias/route.js) →
+[IncidenciaControlador (back)](../back/controladores/IncidenciaControlador.js) `crear()` →
+[ControlDeAcceso](../back/tacticas/ControlDeAcceso.js) (precondición) → [IncidenciaServicio (back)](../back/servicios/IncidenciaServicio.js)
+`reportar()` → [Incidencia](../back/modelos/Incidencia.js) `crear()` → [IncidenciaRepositorio](../back/repositorios/IncidenciaRepositorio.js)
+→ ← [IncidenciaDTO](../back/dto/IncidenciaDTO.js) (201) → el front muestra [MensajeIncidenciaCreada](../front/vistas/reportar/MensajeIncidenciaCreada.js).
 
-**¿Por qué los formularios no pasan por la API?**
-Las acciones de Next ya corren en el servidor y llaman directo a `back/reglas_y_datos` (por ejemplo [crearCuenta](../front/envio_de_formularios/cuenta.js#L12) → [registrarUsuario](../back/reglas_y_datos/usuarios/datos.js#L72)). La API es para quien está fuera de la app: sensores, Postman y el simulador. Las dos usan las mismas reglas.
+**¿Y si alguien se salta el front (Postman) y manda datos mal escritos?**
+El back no repite las validaciones de formato (decisión del equipo). Lo que protege al sistema sigue
+en el back: la **precondición** (sesión y rol, [ControlDeAcceso](../back/tacticas/ControlDeAcceso.js)), la
+clave de los sensores ([AutenticadorDeSensores](../back/tacticas/AutenticadorDeSensores.js)) y las **reglas de
+negocio** de modelos y servicios (lleno/vacío, solo abiertos, «pendiente», placa y nombre únicos,
+rol según el dominio).
 
-**¿Dónde se conecta el mapa con el back?**
-[MaquetaCampus.js](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L79) pide los estacionamientos a [GET /api/estacionamientos](../back/pedidos_y_respuestas/estacionamientos.js#L16) y abre el [canal en vivo](../front/partes_de_pantallas/mapa/MaquetaCampus.js#L93) para enterarse de cada aviso sin recargar.
-
-**¿Dónde se conecta un formulario con el back?** (el de incidencias)
-[FormularioIncidencia.js](../front/partes_de_pantallas/reportar/FormularioIncidencia.js#L28) → [reportarIncidencia](../front/envio_de_formularios/incidencias.js#L15) → [registrarIncidencia](../back/reglas_y_datos/incidencias/datos.js#L14) → [validarReporte](../back/reglas_y_datos/incidencias/reglas.js#L22). Todos siguen el mismo camino: pantalla → componente → `front/envio_de_formularios/<tema>.js` → `back/reglas_y_datos/<tema>/datos.js` → `reglas.js`.
-
-**¿Dónde se prueba el criterio N de la HU X?**
-En [`criterios_sprint1.test.js`](../back/pruebas_automaticas/criterios_sprint1.test.js) hay un `describe` por HU y cada `test` nombra su criterio (CA) o regla (RN); el resto, en la prueba del tema. La tabla de cada HU, arriba, enlaza la prueba de cada criterio. Todas corren con `npm test` dentro de `RadarEstacionamientos_code/` (back y front).
-
-**¿Qué pasa si un sensor manda dos veces el mismo aviso?**
-Se cuentan los dos: detectar avisos repetidos no está en el alcance de la HU 4.1. Cada llamada a [registrarAviso](../back/reglas_y_datos/estacionamientos/datos.js#L70) es un carro.
+**¿Qué pasa si un sensor falla y manda avisos imposibles?** (táctica de disponibilidad)
+[FiltroDeAvisos](../back/tacticas/FiltroDeAvisos.js) los ignora sin detener el sistema y los registra como
+[AvisoRechazado](../back/modelos/AvisoRechazado.js); con 3 seguidos marca el sensor «con falla». Si un sensor
+deja de avisar, [MonitorDeSensores](../back/tacticas/MonitorDeSensores.js) lo marca «sin avisar» pasado el
+tiempo límite (30 min). Los dos se ven en Administrar › Garita.
 
 **¿Qué pasa con un aviso de un estacionamiento cerrado?**
-Se acepta y se cuenta: los carros siguen entrando y saliendo aunque esté cerrado; solo deja de mostrarse con libres y de sugerirse ([aplicarMovimiento](../back/reglas_y_datos/estacionamientos/reglas.js#L51), prueba: [avisos.test.js](../back/pruebas_automaticas/avisos.test.js#L63)).
-
-**¿Cómo sabe la app que un aviso viene de un sensor?**
-Por el encabezado `x-clave-sensor`, que compara [esClaveDeSensorValida](../back/control_de_acceso/clave_sensores.js#L21). Sin clave responde 401.
+Se acepta y se cuenta: los carros siguen entrando y saliendo aunque esté cerrado; solo deja de
+mostrarse con libres y de sugerirse ([Estacionamiento.motivoDeRechazo](../back/modelos/Estacionamiento.js)).
 
 **¿Cómo entra el simulador a la app?**
-Por la misma API que usaría un sensor real ([cliente_api.js](../../RadarEstacionamientos_simulador/conexion_app/cliente_api.js#L36) → [POST /api/avisos](../back/pedidos_y_respuestas/avisos.js#L17)). La app no tiene código del simulador (D-002, D-006).
-
-**¿Quién puede cambiar la capacidad o los edificios?**
-Solo el administrador: lo comprueban [guardarEstacionamiento](../front/envio_de_formularios/puestos.js#L13), [PATCH](../back/pedidos_y_respuestas/estacionamientos.js#L28) (403) y [las acciones de edificios](../front/envio_de_formularios/edificios.js#L23), con [esAdministrador](../back/control_de_acceso/sesion.js#L37).
+Por la misma API que usaría un sensor real ([ClienteAppBase.aviso](../../RadarEstacionamientos_simulador/conexion_app/ClienteAppBase.js)
+→ `POST /api/avisos` con `x-clave-sensor`). La app no tiene código del simulador (D-002, D-006).
 
 **¿Dónde se guardan los datos?**
-En memoria ([almacen.js](../back/piezas_compartidas/almacen.js#L36)) mientras el equipo elige la base de datos; se borran al apagar el servidor.
+En memoria ([AlmacenEnMemoria](../back/basedatos/AlmacenEnMemoria.js)) mientras el equipo elige la base de
+datos; solo lo usan los repositorios, así que al llegar la base de datos se cambia esa capa y nada más.
+
+**¿Dónde se prueba el criterio N de la HU X?**
+En [`criterios_sprint1.test.js`](../back/pruebas/aceptacion/criterios_sprint1.test.js) hay un `describe` por HU y cada
+`test` nombra su criterio (CA) o regla (RN). Los criterios de mensajes de formulario están en
+`front/pruebas/validadores/`. Todo corre con `npm test` dentro de `RadarEstacionamientos_code/`.
