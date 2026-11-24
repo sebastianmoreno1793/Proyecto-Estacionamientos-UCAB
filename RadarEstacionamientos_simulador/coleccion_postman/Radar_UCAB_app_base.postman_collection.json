@@ -1,0 +1,1239 @@
+{
+  "info": {
+    "name": "Radar UCAB · App base (como si fuera real)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Colección de la app base del Radar de Estacionamientos UCAB, ordenada por HU del Sprint 1 como guion de demostración.\n\nAntes de empezar: 1) npm run dev en RadarEstacionamientos_code (puerto 3000); 2) entra en /entrar con admin.prueba@ucab.edu.ve y copia la cookie radar_sesion en la variable {{sesion}}; 3) deja SALTAR_INICIO_DE_SESION vacío en .env.local para que los errores 401 y 403 se vean.\n\nQuién puede llamar: los sensores y el lector de placas mandan x-clave-sensor; las personas mandan su cookie de sesión; lo de administración exige el rol administrador."
+  },
+  "variable": [
+    {
+      "key": "urlBase",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "claveSensor",
+      "value": "clave-de-desarrollo"
+    },
+    {
+      "key": "estacionamiento",
+      "value": "est-playa"
+    },
+    {
+      "key": "edificio",
+      "value": "edif-centro-cultural"
+    },
+    {
+      "key": "sesion",
+      "value": "",
+      "description": "Valor de la cookie radar_sesion. Entra en http://localhost:3000/entrar con admin.prueba@ucab.edu.ve (administrador, solo en desarrollo) y cópiala desde las herramientas del navegador › Aplicación › Cookies. Se pierde al reiniciar el servidor."
+    }
+  ],
+  "item": [
+    {
+      "name": "0 · Preparación",
+      "item": [
+        {
+          "name": "Reiniciar la app base",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/pruebas/reiniciar",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "pruebas",
+                "reiniciar"
+              ]
+            },
+            "description": "Vuelve a los datos de ejemplo. Solo el administrador (403 sin la cookie) y solo en desarrollo (404 en producción). No borra usuarios ni sesiones: la cookie sigue sirviendo."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 ok', () => pm.expect(pm.response.json().ok).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Canal en vivo (dejar abierto)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/eventos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "eventos"
+              ]
+            },
+            "description": "Server-Sent Events. Primero llega { clase: \"CONEXION\" } y después AVISO, LECTURA_GARITA (sin la placa), INCIDENCIA, ESTACIONAMIENTO o REINICIO cada vez que algo cambia. Ábrelo en otra pestaña mientras mandas avisos."
+          }
+        }
+      ]
+    },
+    {
+      "name": "HU 4.2 · Semáforo de ocupación",
+      "item": [
+        {
+          "name": "Estado de los estacionamientos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos"
+              ]
+            },
+            "description": "HU 4.2 y 5.1. Para el mapa y el semáforo: capacidad, ocupados, libres, porcentaje, activo y forma (polígono, pisos). No pide sesión."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 con 14 estacionamientos', () => { pm.response.to.have.status(200); pm.expect(pm.response.json().estacionamientos.length).to.eql(14); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HU 3.1 y 4.1 · Avisos de entrada y salida",
+      "item": [
+        {
+          "name": "Aviso: entra un carro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/avisos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "avisos"
+              ]
+            },
+            "description": "HU 3.1 y 4.1. El sensor avisa una entrada: queda registrada con la hora y los libres bajan en uno. 401 sin x-clave-sensor; 400 si el tipo no es ENTRADA ni SALIDA; 404 si el estacionamiento no existe; 409 si está lleno.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"ENTRADA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200: el aviso quedó registrado', () => pm.response.to.have.status(200));",
+                  "const r = pm.response.json();",
+                  "pm.test('libres = capacidad - ocupados (nunca < 0)', () => pm.expect(r.estacionamiento.libres).to.eql(Math.max(0, r.estacionamiento.capacidad - r.estacionamiento.ocupados)));",
+                  "pm.test('el movimiento trae la hora', () => pm.expect(r.movimiento.hora).to.be.a('string'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Aviso: sale un carro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/avisos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "avisos"
+              ]
+            },
+            "description": "HU 3.1 y 4.1. Los libres suben en uno (nunca más que la capacidad: 409 «vacio» si no hay carros).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"SALIDA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200: el aviso quedó registrado', () => pm.response.to.have.status(200));",
+                  "const r = pm.response.json();",
+                  "pm.test('libres = capacidad - ocupados (nunca < 0)', () => pm.expect(r.estacionamiento.libres).to.eql(Math.max(0, r.estacionamiento.capacidad - r.estacionamiento.ocupados)));",
+                  "pm.test('el movimiento trae la hora', () => pm.expect(r.movimiento.hora).to.be.a('string'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: aviso sin clave (401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/avisos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "avisos"
+              ]
+            },
+            "description": "HU 3.1. Sin el encabezado x-clave-sensor la app rechaza el aviso.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"ENTRADA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: tipo inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/avisos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "avisos"
+              ]
+            },
+            "description": "HU 3.1. El tipo debe ser ENTRADA o SALIDA.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"ESTACIONAR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: estacionamiento inexistente (404)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/avisos",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "avisos"
+              ]
+            },
+            "description": "HU 3.1. Un sensor de un estacionamiento que no existe.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"est-no-existe\",\n  \"tipo\": \"ENTRADA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HU 3.2 · Lector de placas (simulado)",
+      "item": [
+        {
+          "name": "Lector de placas: entra a la garita",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/garita/lecturas",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "garita",
+                "lecturas"
+              ]
+            },
+            "description": "HU 3.2. La placa se acepta con espacios o guiones y se guarda en mayúsculas sin separadores. idLectura evita contar dos veces el mismo reintento.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"AB123CD\",\n  \"sentido\": \"ENTRADA\",\n  \"idLectura\": \"{{$guid}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('placa normalizada', () => pm.expect(pm.response.json().lectura.placa).to.eql('AB123CD'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Lector de placas: sale de la garita",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/garita/lecturas",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "garita",
+                "lecturas"
+              ]
+            },
+            "description": "HU 3.2. Misma placa, sentido SALIDA.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"ab-123-cd\",\n  \"sentido\": \"SALIDA\",\n  \"idLectura\": \"{{$guid}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('placa normalizada', () => pm.expect(pm.response.json().lectura.placa).to.eql('AB123CD'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: placa inválida (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-clave-sensor",
+                "value": "{{claveSensor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/garita/lecturas",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "garita",
+                "lecturas"
+              ]
+            },
+            "description": "HU 3.2. La placa debe tener 6 o 7 letras y números.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"AB1\",\n  \"sentido\": \"ENTRADA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HU 7.2 · Sugerir el más cercano",
+      "item": [
+        {
+          "name": "Sugerir el más cercano a un edificio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/sugerencia?edificio={{edificio}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "sugerencia"
+              ],
+              "query": [
+                {
+                  "key": "edificio",
+                  "value": "{{edificio}}"
+                }
+              ]
+            },
+            "description": "HU 7.2. Devuelve el estacionamiento abierto con puestos libres más cercano al edificio (200). Es la misma llamada que hace la pantalla /sugerencia con fetch. Edificios: edif-aulas, edif-laboratorios, edif-cincuentenario, edif-postgrado, edif-centro-cultural, edif-aula-magna."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 con sugerido', () => pm.response.to.have.status(200));",
+                  "const r = pm.response.json();",
+                  "pm.test('el sugerido tiene libres', () => pm.expect(r.sugerido.libres).to.be.above(0));",
+                  "pm.test('ninguna alternativa está más cerca', () => r.alternativas.forEach(a => pm.expect(a.distancia).to.be.at.least(r.sugerido.distancia)));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: sin edificio (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/sugerencia",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "sugerencia"
+              ]
+            },
+            "description": "HU 7.2. Falta el parámetro edificio."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: edificio inexistente (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urlBase}}/api/sugerencia?edificio=edif-no-existe",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "sugerencia"
+              ],
+              "query": [
+                {
+                  "key": "edificio",
+                  "value": "edif-no-existe"
+                }
+              ]
+            },
+            "description": "HU 7.2. 404 con { error }. También da 404 si no hay puestos libres en ningún estacionamiento abierto."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HU 5.4 · Capacidad y estado (administrador)",
+      "item": [
+        {
+          "name": "Cerrar un estacionamiento",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "HU 5.4 Modificar la capacidad y el estado. Solo el administrador (403 sin su cookie). Lo que no se envía queda igual. Capacidad entera de 1 a 2000; «activo» true o false. 404 si el id no existe. Después, la sugerencia de la HU 7.2 cambia; los avisos de sus sensores se siguen contando.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('activo = false', () => pm.expect(pm.response.json().estacionamiento.activo).to.eql(false));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Abrir un estacionamiento",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "HU 5.4 Modificar la capacidad y el estado. Solo el administrador (403 sin su cookie). Lo que no se envía queda igual. Capacidad entera de 1 a 2000; «activo» true o false. 404 si el id no existe.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('activo = true', () => pm.expect(pm.response.json().estacionamiento.activo).to.eql(true));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cambiar la capacidad",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "HU 5.4 Modificar la capacidad y el estado. Solo el administrador (403 sin su cookie). Lo que no se envía queda igual. Capacidad entera de 1 a 2000; «activo» true o false. 404 si el id no existe.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacidad\": 200\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('capacidad = 200', () => pm.expect(pm.response.json().estacionamiento.capacidad).to.eql(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: sin ser administrador (403)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "HU 5.4. Sin la cookie de administrador no se puede cambiar nada.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('403', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: capacidad inválida (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "HU 5.4. La capacidad es un entero de 1 a 2000. Para cerrarlo se desactiva, no se pone en 0.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacidad\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: «activo» como texto (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/{{estacionamiento}}",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "{{estacionamiento}}"
+              ]
+            },
+            "description": "HU 5.4. «activo» va sin comillas: true o false.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": \"false\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: estacionamiento inexistente (404)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/estacionamientos/est-no-existe",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "estacionamientos",
+                "est-no-existe"
+              ]
+            },
+            "description": "HU 5.4. Con sesión de administrador, un id que no existe da 404.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HU 9.1 · Crear una incidencia",
+      "item": [
+        {
+          "name": "Reportar: conos atravesados",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "HU 9.1 Crear una incidencia. Necesita sesión: Cookie radar_sesion={{sesion}}. Solo en estacionamientos abiertos. 201 con la incidencia «pendiente»; 401 sin sesión; 400 si el estacionamiento no existe o está cerrado, o el tipo no es válido.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"conos_atravesados\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('201: incidencia creada', () => pm.response.to.have.status(201));",
+                  "const i = pm.response.json().incidencia;",
+                  "pm.test('queda «pendiente», con hora y sin el correo de quien reportó', () => { pm.expect(i.estado).to.eql('pendiente'); pm.expect(i.reportadaEn).to.be.a('string'); pm.expect(i).to.not.have.property('reportadaPor'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reportar: batería descargada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "HU 9.1 Crear una incidencia. Necesita sesión: Cookie radar_sesion={{sesion}}. Solo en estacionamientos abiertos. 201 con la incidencia «pendiente»; 401 sin sesión; 400 si el estacionamiento no existe o está cerrado, o el tipo no es válido.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"bateria_descargada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('201: incidencia creada', () => pm.response.to.have.status(201));",
+                  "const i = pm.response.json().incidencia;",
+                  "pm.test('queda «pendiente», con hora y sin el correo de quien reportó', () => { pm.expect(i.estado).to.eql('pendiente'); pm.expect(i.reportadaEn).to.be.a('string'); pm.expect(i).to.not.have.property('reportadaPor'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reportar: vehículo mal estacionado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "HU 9.1 Crear una incidencia. Necesita sesión: Cookie radar_sesion={{sesion}}. Solo en estacionamientos abiertos. 201 con la incidencia «pendiente»; 401 sin sesión; 400 si el estacionamiento no existe o está cerrado, o el tipo no es válido.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"vehiculo_mal_estacionado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('201: incidencia creada', () => pm.response.to.have.status(201));",
+                  "const i = pm.response.json().incidencia;",
+                  "pm.test('queda «pendiente», con hora y sin el correo de quien reportó', () => { pm.expect(i.estado).to.eql('pendiente'); pm.expect(i.reportadaEn).to.be.a('string'); pm.expect(i).to.not.have.property('reportadaPor'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Ver incidencias",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "HU 9.1. Lista de incidencias reportadas (sin el correo de quien reportó). Necesita sesión: 401 sin ella."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 con lista', () => { pm.response.to.have.status(200); pm.expect(pm.response.json().incidencias).to.be.an('array'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: reportar sin sesión (401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "HU 9.1. Sin la cookie radar_sesion no se puede reportar. (Con SALTAR_INICIO_DE_SESION=1 en .env.local da 201: déjalo vacío para la demostración.)",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"conos_atravesados\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error: tipo inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "radar_sesion={{sesion}}"
+              }
+            ],
+            "url": {
+              "raw": "{{urlBase}}/api/incidencias",
+              "host": [
+                "{{urlBase}}"
+              ],
+              "path": [
+                "api",
+                "incidencias"
+              ]
+            },
+            "description": "HU 9.1. El tipo debe ser uno de los tres de la lista.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estacionamientoId\": \"{{estacionamiento}}\",\n  \"tipo\": \"choque\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

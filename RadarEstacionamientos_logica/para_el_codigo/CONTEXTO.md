@@ -4,7 +4,7 @@ Aplicación web que muestra a estudiantes y profesores de la UCAB Montalbán qu�
 estacionamientos tienen puestos libres, con un semáforo de ocupación. Proyecto de
 Ingeniería de Software, Equipo 3.
 
-> **Este archivo se relee en cada turno de cada sesión.** Manténlo corto y apunta a
+> Resumen de una página para quien empiece a programar. Se mantiene corto y apunta a
 > los documentos en vez de copiarlos.
 
 ## Lo que no se puede romper
@@ -18,9 +18,9 @@ Ingeniería de Software, Equipo 3.
 - ⭐ **Diseño (D-007, obligatorio):** toda interfaz sigue `DESIGN.md` (raíz de esta carpeta): iOS
   institucional, Azul Montalbán como único color de acción, los colores del semáforo solo para
   la ocupación, fuente del sistema, 44 px mínimo, botones con texto, claro y oscuro, celular
-  primero (320 y 375 px). Antes de terminar una pantalla corre `/impeccable critique` (skill
-  instalada en cada computadora) y arregla los P1. Contexto de producto: `PRODUCT.md`.
-- ⭐ **PWA (D-008, obligatorio):** un solo service worker, `public/sw.js`; nadie registra otro.
+  primero (320 y 375 px). Antes de terminar una pantalla, revísala contra la lista de
+  `DESIGN.md` y arregla lo que falle. Contexto de producto: `PRODUCT.md`.
+- ⭐ **PWA (D-008, obligatorio):** un solo service worker, `front/public/sw.js`; nadie registra otro.
   `/api/*` nunca sale de la caché. Lo que necesite una HU del service worker se agrega ahí.
 
 ## Qué construir ahora
@@ -34,7 +34,7 @@ Stack: `docs/stack_y_arquitectura.md`.
   **`docs/` es una copia: no se edita.**
 - Si encuentras un documento equivocado, **dilo en vez de arreglarlo**: qué archivo, qué
   línea, qué debería decir y de dónde sale.
-- Los commits los hace la persona, no tú.
+- Cada integrante hace sus propios commits y abre su PR.
 - Antes de empezar, revisa `docs/ULTIMA_SINCRONIZACION.md`.
 
 ## Qué NO entra al repositorio

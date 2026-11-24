@@ -16,6 +16,13 @@ Ingeniería de Software · Equipo 3 (NRC 15787) · Profesora María Pérez de Ov
 | Manuel Rosales | 7 Sugerencia de estacionamiento · 8 Avisos en el celular |
 | Sebastian Moreno | 9 Incidencias y vigilancia · 10 Administración y reportes |
 
+## Cómo correrlo
+
+Abre esta carpeta en VS Code, abre cualquier archivo `.js` y dale a **Run Code** (o **F5**): se
+instala lo que falte, arrancan la app (http://localhost:3000) y el simulador 3D
+(http://localhost:3001), y se abre el navegador. Desde la terminal: `node RadarEstacionamientos_code/iniciar.mjs`.
+Necesita Node 18.18 o más nuevo.
+
 ## Cómo está organizado: método de dos sesiones
 
 El proyecto se divide en dos carpetas: **una para decidir y otra para programar.**
@@ -31,12 +38,18 @@ El proyecto se divide en dos carpetas: **una para decidir y otra para programar.
 │   └── para_el_codigo/           lo que se copia a la carpeta de código
 │
 ├── RadarEstacionamientos_code/     ← aquí se programa la aplicación
-│   ├── CONTEXTO.md                   contexto para programar
+│   ├── iniciar.mjs                 levanta app + simulador y abre el navegador
+│   ├── front/                      lo que ve el usuario (Next.js): app/ una carpeta por pantalla,
+│   │                               partes_de_pantallas/, envio_de_formularios/, notificaciones_del_navegador/,
+│   │                               sesion_del_usuario/, estilos/, public/
+│   ├── back/                       lo que pasa en el servidor: pedidos_y_respuestas/, reglas_y_datos/<tema>/,
+│   │                               piezas_compartidas/, control_de_acceso/, datos_del_campus/, pruebas_automaticas/
+│   ├── CONTEXTO.md                 contexto para programar
 │   └── docs/                       copia de lógica (no se edita a mano)
 │
 └── RadarEstacionamientos_simulador/ ← mundo virtual 3D que "usa" la app desde afuera
     ├── README.md                   cómo abrirlo, capturas y menú de pruebas
-    └── postman/                    colección para llamar a la app como si fuera real
+    └── coleccion_postman/          colección para llamar a la app como si fuera real
 ```
 
 | Carpeta | Para qué | Quién la cambia |

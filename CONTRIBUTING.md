@@ -13,8 +13,8 @@ la API pública de la app** (como Postman) y la app nunca importa nada de él.
 Toda pantalla sigue **D-007** y **D-008** (`RadarEstacionamientos_logica/decisiones/`):
 
 - Lee `RadarEstacionamientos_code/DESIGN.md` antes de hacer una pantalla (es una página).
-- Revisa tu pantalla con la skill **impeccable** antes de abrir el PR: desde
-  la raíz del repo, `/impeccable critique <ruta de la página>`. Arregla los P1.
+- Antes de abrir el PR, revisa tu pantalla contra la lista de `RadarEstacionamientos_code/DESIGN.md`
+  (en celular de 375 px y en computador, claro y oscuro) y arregla lo que falle.
 - No agregues librerías de componentes (Material, Bootstrap) ni fuentes descargadas.
 - Hay **un solo service worker** (`public/sw.js`). Si tu HU necesita algo de él, agrégalo ahí.
 

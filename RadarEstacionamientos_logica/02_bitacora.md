@@ -2,6 +2,65 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 09/nov/26 — Sprint 1 completo para la defensa (rama `sprint-1-completo`)
+
+- **HU 8.1 (Manuel):** su código del PR #45 entra limpio (sin el merge de la 2.1 ni su `sw.js`) y
+  con las correcciones de la revisión: sin Tailwind, «Permitir / Bloquear» como dicen CA1–CA3,
+  control en «Mis vehículos» para activarlas después y sin `alert()`.
+- **HU 7.2 (hecha por Sebastian; era de Manuel):** `GET /api/sugerencia?edificio=<id>`, pantalla
+  `/sugerencia` con `fetch` y pestaña «Sugerir». La Garita pasa a abrirse desde «Administrar».
+- **Revisión completa** de botones, conexiones `fetch`/API, Postman y lógica contra los criterios.
+  Lo más importante: la HU 4.1 ahora registra los avisos rechazados (RN3/RN4), la HU 5.4 ya no
+  cierra un estacionamiento al cambiar solo la capacidad, el service worker no guarda páginas con
+  placas, y los formularios no se borran cuando hay un error.
+- **Postman:** 28 peticiones en el orden de la demostración, con pruebas y casos de error.
+  Para la demo: dejar vacío `SALTAR_INICIO_DE_SESION` y copiar la cookie en `{{sesion}}`.
+- **Código separado en `front/` y `back/`** dentro de `RadarEstacionamientos_code`, con nombres en
+  español que dicen lo que hacen (`back/pedidos_y_respuestas`, `back/reglas_y_datos`, `back/datos_del_campus`, `front/partes_de_pantallas`…),
+  un `LEEME.md` por carpeta y un comentario al inicio de cada archivo. Las URL de la API no
+  cambiaron (Postman y el simulador siguen igual). Pantallas nuevas: `/reportar`, `/admin/puestos`,
+  `/admin/garita`, `/admin/incidencias`.
+- Pruebas: 129/129 en la app y 19/19 en el simulador; build limpio. Incluye el PR #61 (menú en el
+  celular). **Falta:** que el equipo revise la rama y se fusione en `main`.
+
+## 03/nov/26 — Segunda Entrega: correcciones de la revisión del equipo (HU 9.1 y RNF)
+
+- **Tabla de 3 columnas de la HU 9.1** con el Autor (`HU9.1_especificacion_tabla.png`), como las HU 1.1 y 4.1.
+- **Diagrama de la HU 9.1 en draw.io** (`diagrama_actividades_HU9.1.drawio`) y su enlace de
+  viewer.diagrams.net, que abre sin pasos previos (`enlace_diagrama_HU9.1.txt`).
+- **RNF en forma de lista** (1. característica → a. subcaracterística: «El sistema debe…») con el
+  mismo contenido, en el orden y con los nombres de la lista del equipo (1. Facilidad de Iteración …
+  8. Protección). La plantilla ERS de nuestra copia ordena distinto; queda anotado.
+- **Subido a Trello** (tabla de portada, enlace, checklist y RNF). Detalle:
+  `producto/segunda_entrega/correcciones_03nov_HU9.1_y_RNF.md`.
+
+## 02/nov/26 — Segunda Entrega: diagrama 9.1 v2, RNF finales y revisión del equipo
+
+- **Todos subieron su HU y su RNF** entre el 01/nov en la tarde y el 02/nov de madrugada. Quién hizo
+  qué y lo que falta: `producto/segunda_entrega/revision_y_propuestas_02nov.md`.
+- **Diagrama de la HU 9.1 rehecho** con el modelo del equipo (pasos numerados como el escenario,
+  uniones con barra y conectores en vez de rombos con dos entradas, nodos objeto). Subido a Trello
+  como `diagrama_actividades_HU9.1_v2.png` (portada); el anterior quedó como «(versión anterior)».
+- **Tarjeta de RNF reescrita** en el orden de la plantilla ERS §2, con el rango del Brief en cada uno.
+  El RNF 2 vuelve al texto acordado (Manuel lo había cambiado a «0,2 s», que es comportamiento
+  temporal); el RNF 3 dice «ocultar» como el Brief. Comentario explicativo en la tarjeta.
+- Comentarios de revisión en Trello: Samuel (HU 1.1, tarea 5 de Sebastian, marcada), Manuel (HU 8.1:
+  PNG en modo edición y errores del diagrama) y German (HU 5.1: lo que le marcó Aaron).
+- Falta: minuta de la Reunión 4 (tarea 4) y revisión final + correo a la profesora (tarea 3, 03/nov).
+
+## 01/nov/26 (noche) — Fusiones en main
+
+- Fusionados en `main`, en orden: #49 (maqueta 3D), #50 (docs), #51 (semáforo, D-007, D-008), #60
+  (el puente del simulador reenvía la sesión), #58 (HU 1.1), #59 (HU 2.1) y #44 (HU 6.1). Cierran
+  los Issues #1, #14 y #8. `main` queda con 84/84 pruebas en la app, 19/19 en el simulador y el
+  build limpio.
+- Conflictos resueltos en las ramas de cada PR: `app/page.js` (maqueta + redirección a
+  `/entrar`), «Salir» y «Mis vehículos» pasan al menú principal, y `lib/almacen.js` junta
+  movimientos, lecturas de placa y edificios.
+- #61 (abierto): en el celular, «Salir» quedaba cortado en el menú; se ocultan el rol y el
+  subtítulo por debajo de 480 px. Falta que otro integrante lo revise y lo fusione.
+- **No se fusionó el #45** (HU 8.1): sigue con los problemas comentados en el PR.
+
 ## 01/nov/26 — Segunda Entrega: HU 9.1 especificada y revisión del equipo
 
 - **HU 9.1 · Crear una incidencia:** Card («quiero **crear** una incidencia»), Conversación con las

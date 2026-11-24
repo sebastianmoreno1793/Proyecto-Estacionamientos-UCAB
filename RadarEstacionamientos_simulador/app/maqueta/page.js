@@ -1,11 +1,15 @@
 "use client";
+// @PANTALLA Simulador Maqueta (/maqueta) — dibuja la imagen del campus que usa el Mapa de la app y la exporta
 
 // Render de la maqueta del campus para la app (D-007 › Maqueta). Herramienta de desarrollo:
 // dibuja la maqueta una vez, la muestra y, con «Exportar», guarda la imagen y la proyección
-// en `exportes/` para copiarlas a `RadarEstacionamientos_code/public/maqueta/`.
+// en `exportes/` para copiarlas a `RadarEstacionamientos_code/front/public/maqueta/`.
 
 import { useCallback, useEffect, useState } from "react";
-import MaquetaRender from "@/components/MaquetaRender";
+import MaquetaRender from "@/componentes_visuales/MaquetaRender";
+import { ClienteAppBase } from "@/conexion_app/ClienteAppBase";
+
+const api = new ClienteAppBase();
 
 export default function PaginaMaqueta() {
   const [estacionamientos, setEstacionamientos] = useState(null);
@@ -13,13 +17,14 @@ export default function PaginaMaqueta() {
   const [estado, setEstado] = useState("Pidiendo los estacionamientos a la app base…");
 
   useEffect(() => {
-    fetch("/api/base/estacionamientos")
-      .then((r) => r.json())
-      .then(({ estacionamientos }) => {
-        setEstacionamientos(estacionamientos);
-        setEstado("Dibujando la maqueta…");
-      })
-      .catch(() => setEstado("No se pudo hablar con la app base (¿está corriendo en :3000?)."));
+    api.estacionamientos().then((r) => {
+      if (!r.ok) {
+        setEstado("No se pudo hablar con la app base (¿está corriendo en :3000?).");
+        return;
+      }
+      setEstacionamientos(r.datos.estacionamientos);
+      setEstado("Dibujando la maqueta…");
+    });
   }, []);
 
   const alTerminar = useCallback((r) => {
@@ -29,13 +34,8 @@ export default function PaginaMaqueta() {
 
   async function exportar() {
     setEstado("Exportando…");
-    const respuesta = await fetch("/api/exportar-maqueta", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(resultado),
-    });
-    const cuerpo = await respuesta.json();
-    setEstado(respuesta.ok ? `Exportada: ${cuerpo.archivos.join(" y ")}` : `Error: ${cuerpo.error}`);
+    const r = await api.exportarMaqueta(resultado);
+    setEstado(r.ok ? `Exportada: ${r.datos.archivos.join(" y ")}` : `Error: ${r.datos?.error ?? "sin respuesta"}`);
   }
 
   return (
