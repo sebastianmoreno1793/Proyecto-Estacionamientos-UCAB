@@ -1,4 +1,4 @@
-# back/controladores · Control
+# back/logica/controladores · Control
 
 Reciben la petición que les pasa la ruta, revisan la **precondición** con las tácticas, arman el DTO,
 llaman al servicio y responden. Heredan de `Controlador.js` (`leerCuerpo()`, `responder()`, `error()`,

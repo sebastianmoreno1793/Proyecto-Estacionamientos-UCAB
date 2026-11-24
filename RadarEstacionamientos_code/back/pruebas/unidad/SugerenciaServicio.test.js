@@ -2,9 +2,9 @@
 // Pruebas de unidad del servicio SugerenciaServicio. Se corren con: npm test
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
-import { Edificio } from "../../modelos/Edificio.js";
-import { Estacionamiento } from "../../modelos/Estacionamiento.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
+import { Edificio } from "../../logica/modelos/Edificio.js";
+import { Estacionamiento } from "../../logica/modelos/Estacionamiento.js";
 import { Fabrica } from "../../Fabrica.js";
 
 let servicios;

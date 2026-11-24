@@ -2,8 +2,8 @@
 // Pruebas de unidad de los modelos Usuario y Sesion. Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { Sesion } from "../../modelos/Sesion.js";
-import { Usuario } from "../../modelos/Usuario.js";
+import { Sesion } from "../../logica/modelos/Sesion.js";
+import { Usuario } from "../../logica/modelos/Usuario.js";
 
 test("el rol sale del dominio", () => {
   assert.equal(Usuario.rolSegunCorreo("ana@est.ucab.edu.ve"), "estudiante");

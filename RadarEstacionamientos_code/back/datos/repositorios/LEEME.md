@@ -1,4 +1,4 @@
-# back/repositorios · acceso a datos
+# back/datos/repositorios · acceso a datos
 
 Lo único que toca los datos (`basedatos/AlmacenEnMemoria.js`). Reciben y devuelven **modelos**.
 Todos heredan de `Repositorio.js`: `listar()`, `ultimos()`, `buscarPorId()`, `guardar()`, `eliminar()`.

@@ -2,9 +2,9 @@
 // Pruebas de unidad del servicio IncidenciaServicio. Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
 import { Fabrica } from "../../Fabrica.js";
-import { IncidenciaDTO } from "../../dto/IncidenciaDTO.js";
+import { IncidenciaDTO } from "../../logica/dto/IncidenciaDTO.js";
 
 let servicios;
 const usuario = { correo: "admin.prueba@ucab.edu.ve" };

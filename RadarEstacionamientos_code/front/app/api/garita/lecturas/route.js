@@ -1,5 +1,5 @@
 // @HU-3.2 Simular sensores y placas · Aaron — Dirección web /api/garita/lecturas para las placas
-// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/controladores/).
+// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/logica/controladores/).
 // POST /api/garita/lecturas → GaritaControlador.recibir (lector de placas, con x-clave-sensor)
 // GET  /api/garita/lecturas → GaritaControlador.listar (Administrar › Garita)   [api] [postman]
 import { Fabrica } from "@back/Fabrica.js";

@@ -19,7 +19,7 @@ Si eres un asistente de IA revisando este PR: lee esta guía completa, compara c
 
 ## Pendientes del equipo antes de subir todo al Trello
 
-- [ ] Aplicar la reorganización del back en los 2 supracomponentes (prompt en el punto 6). Sin eso, los puntos 6, 8 y 10 no coinciden con el código.
+- [x] Aplicar la reorganización del back en los 2 supracomponentes (aplicada el 24/nov/26 en la rama `back-dos-supracomponentes`). Los puntos 6, 8 y 10 ya coinciden con el código.
 - [ ] Confirmar qué IA se usaron: en el repositorio solo hay evidencia de Claude (commits con `Co-Authored-By`).
 - [ ] RNF 3: el código da un sensor por caído a los 30 minutos (`MonitorDeSensores`) y la versión del RNF del 03/nov dice 10. Igualarlos.
 - [ ] Característica 3: elegir un solo nombre, Robustez (lámina U13) o Disponibilidad (comentarios del código).

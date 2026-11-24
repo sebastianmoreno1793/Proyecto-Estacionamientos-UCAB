@@ -1,12 +1,12 @@
 // @HU-5.1 Consultar los estacionamientos en el mapa del campus · German — Prueba que la lista sirva para dibujar el mapa
 // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Prueba el catálogo inicial de edificios
-// Pruebas de los datos iniciales del campus (back/basedatos/datos_iniciales/). Se corren con: npm test
+// Pruebas de los datos iniciales del campus (back/datos/basedatos/datos_iniciales/). Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { CAPACIDAD_DE_EJEMPLO } from "../../basedatos/datos_iniciales/capacidad_inicial.js";
-import { EDIFICIOS } from "../../basedatos/datos_iniciales/edificios.js";
-import { CENTRO_CAMPUS, ESTACIONAMIENTOS } from "../../basedatos/datos_iniciales/estacionamientos.js";
-import { Estacionamiento } from "../../modelos/Estacionamiento.js";
+import { CAPACIDAD_DE_EJEMPLO } from "../../datos/basedatos/datos_iniciales/capacidad_inicial.js";
+import { EDIFICIOS } from "../../datos/basedatos/datos_iniciales/edificios.js";
+import { CENTRO_CAMPUS, ESTACIONAMIENTOS } from "../../datos/basedatos/datos_iniciales/estacionamientos.js";
+import { Estacionamiento } from "../../logica/modelos/Estacionamiento.js";
 
 const esCoordenada = ([lat, lng]) => Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180;
 

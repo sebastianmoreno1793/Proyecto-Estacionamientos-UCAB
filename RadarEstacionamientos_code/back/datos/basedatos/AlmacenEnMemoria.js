@@ -1,13 +1,13 @@
 // Almacén EN MEMORIA, temporal mientras el equipo elige la base de datos. Solo lo usan los
-// repositorios (back/repositorios/): al llegar la base de datos se cambian ellos y nada más.
+// repositorios (back/datos/repositorios/): al llegar la base de datos se cambian ellos y nada más.
 // Guarda registros simples (objetos), como lo haría una tabla; los modelos los arman los repositorios.
 // Vive en globalThis para que sobreviva a las recargas de `next dev`.
 import { ESTACIONAMIENTOS } from "./datos_iniciales/estacionamientos.js";
 import { CAPACIDAD_DE_EJEMPLO, CAPACIDAD_POR_DEFECTO } from "./datos_iniciales/capacidad_inicial.js";
 import { EDIFICIOS } from "./datos_iniciales/edificios.js";
 import { USUARIOS_DE_PRUEBA } from "./datos_iniciales/usuarios_de_prueba.js";
-import { Estacionamiento } from "../modelos/Estacionamiento.js";
-import { Usuario } from "../modelos/Usuario.js";
+import { Estacionamiento } from "../../logica/modelos/Estacionamiento.js";
+import { Usuario } from "../../logica/modelos/Usuario.js";
 
 const CLAVE_GLOBAL = "__radarAlmacenEnMemoria";
 

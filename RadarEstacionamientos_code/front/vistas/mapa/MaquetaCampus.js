@@ -7,7 +7,7 @@
 // estados encima (HU 4.2, D-009), en vivo (base de la HU 4.3).
 //
 // La imagen (`public/maqueta/campus.jpg`) y dónde cae cada estacionamiento en ella
-// (`back/basedatos/datos_iniciales/maqueta.json`) salen del render de la maqueta 3D del simulador (página /maqueta).
+// (`back/datos/basedatos/datos_iniciales/maqueta.json`) salen del render de la maqueta 3D del simulador (página /maqueta).
 // Aquí no se dibuja el campus: se pinta el estado de cada estacionamiento sobre la imagen.
 // Los datos llegan por la API pública y el canal en vivo, el mismo camino de la maqueta 3D (D-006).
 

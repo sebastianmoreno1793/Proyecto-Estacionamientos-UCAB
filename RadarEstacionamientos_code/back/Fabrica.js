@@ -2,39 +2,39 @@
 // repositorios → tácticas → servicios → controladores. Las rutas (front/app/api/**/route.js) piden
 // aquí su controlador. Vive en globalThis para que sobreviva a las recargas de `next dev`.
 // Las pruebas automáticas crean su propia Fábrica con `new Fabrica()`.
-import { AvisoRechazadoRepositorio } from "./repositorios/AvisoRechazadoRepositorio.js";
-import { EdificioRepositorio } from "./repositorios/EdificioRepositorio.js";
-import { EstacionamientoRepositorio } from "./repositorios/EstacionamientoRepositorio.js";
-import { IncidenciaRepositorio } from "./repositorios/IncidenciaRepositorio.js";
-import { LecturaDePlacaRepositorio } from "./repositorios/LecturaDePlacaRepositorio.js";
-import { MovimientoRepositorio } from "./repositorios/MovimientoRepositorio.js";
-import { SesionRepositorio } from "./repositorios/SesionRepositorio.js";
-import { UsuarioRepositorio } from "./repositorios/UsuarioRepositorio.js";
-import { VehiculoRepositorio } from "./repositorios/VehiculoRepositorio.js";
-import { AutenticadorDeSensores } from "./tacticas/AutenticadorDeSensores.js";
-import { ControlDeAcceso } from "./tacticas/ControlDeAcceso.js";
-import { FiltroDeAvisos } from "./tacticas/FiltroDeAvisos.js";
-import { MonitorDeSensores } from "./tacticas/MonitorDeSensores.js";
-import { AforoServicio } from "./servicios/AforoServicio.js";
-import { CuentaServicio } from "./servicios/CuentaServicio.js";
-import { EdificioServicio } from "./servicios/EdificioServicio.js";
-import { EstacionamientoServicio } from "./servicios/EstacionamientoServicio.js";
-import { EventosEnVivoServicio } from "./servicios/EventosEnVivoServicio.js";
-import { GaritaServicio } from "./servicios/GaritaServicio.js";
-import { IncidenciaServicio } from "./servicios/IncidenciaServicio.js";
-import { PruebasServicio } from "./servicios/PruebasServicio.js";
-import { SugerenciaServicio } from "./servicios/SugerenciaServicio.js";
-import { VehiculoServicio } from "./servicios/VehiculoServicio.js";
-import { AvisoControlador } from "./controladores/AvisoControlador.js";
-import { CuentaControlador } from "./controladores/CuentaControlador.js";
-import { EdificioControlador } from "./controladores/EdificioControlador.js";
-import { EstacionamientoControlador } from "./controladores/EstacionamientoControlador.js";
-import { EventoControlador } from "./controladores/EventoControlador.js";
-import { GaritaControlador } from "./controladores/GaritaControlador.js";
-import { IncidenciaControlador } from "./controladores/IncidenciaControlador.js";
-import { PruebasControlador } from "./controladores/PruebasControlador.js";
-import { SugerenciaControlador } from "./controladores/SugerenciaControlador.js";
-import { VehiculoControlador } from "./controladores/VehiculoControlador.js";
+import { AvisoRechazadoRepositorio } from "./datos/repositorios/AvisoRechazadoRepositorio.js";
+import { EdificioRepositorio } from "./datos/repositorios/EdificioRepositorio.js";
+import { EstacionamientoRepositorio } from "./datos/repositorios/EstacionamientoRepositorio.js";
+import { IncidenciaRepositorio } from "./datos/repositorios/IncidenciaRepositorio.js";
+import { LecturaDePlacaRepositorio } from "./datos/repositorios/LecturaDePlacaRepositorio.js";
+import { MovimientoRepositorio } from "./datos/repositorios/MovimientoRepositorio.js";
+import { SesionRepositorio } from "./datos/repositorios/SesionRepositorio.js";
+import { UsuarioRepositorio } from "./datos/repositorios/UsuarioRepositorio.js";
+import { VehiculoRepositorio } from "./datos/repositorios/VehiculoRepositorio.js";
+import { AutenticadorDeSensores } from "./logica/tacticas/AutenticadorDeSensores.js";
+import { ControlDeAcceso } from "./logica/tacticas/ControlDeAcceso.js";
+import { FiltroDeAvisos } from "./logica/tacticas/FiltroDeAvisos.js";
+import { MonitorDeSensores } from "./logica/tacticas/MonitorDeSensores.js";
+import { AforoServicio } from "./logica/servicios/AforoServicio.js";
+import { CuentaServicio } from "./logica/servicios/CuentaServicio.js";
+import { EdificioServicio } from "./logica/servicios/EdificioServicio.js";
+import { EstacionamientoServicio } from "./logica/servicios/EstacionamientoServicio.js";
+import { EventosEnVivoServicio } from "./logica/servicios/EventosEnVivoServicio.js";
+import { GaritaServicio } from "./logica/servicios/GaritaServicio.js";
+import { IncidenciaServicio } from "./logica/servicios/IncidenciaServicio.js";
+import { PruebasServicio } from "./logica/servicios/PruebasServicio.js";
+import { SugerenciaServicio } from "./logica/servicios/SugerenciaServicio.js";
+import { VehiculoServicio } from "./logica/servicios/VehiculoServicio.js";
+import { AvisoControlador } from "./logica/controladores/AvisoControlador.js";
+import { CuentaControlador } from "./logica/controladores/CuentaControlador.js";
+import { EdificioControlador } from "./logica/controladores/EdificioControlador.js";
+import { EstacionamientoControlador } from "./logica/controladores/EstacionamientoControlador.js";
+import { EventoControlador } from "./logica/controladores/EventoControlador.js";
+import { GaritaControlador } from "./logica/controladores/GaritaControlador.js";
+import { IncidenciaControlador } from "./logica/controladores/IncidenciaControlador.js";
+import { PruebasControlador } from "./logica/controladores/PruebasControlador.js";
+import { SugerenciaControlador } from "./logica/controladores/SugerenciaControlador.js";
+import { VehiculoControlador } from "./logica/controladores/VehiculoControlador.js";
 
 export class Fabrica {
   // La única Fábrica de la app (la usan las rutas).

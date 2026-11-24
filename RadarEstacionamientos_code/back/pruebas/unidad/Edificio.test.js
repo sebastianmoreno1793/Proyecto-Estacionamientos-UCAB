@@ -2,7 +2,7 @@
 // Pruebas de unidad del modelo Edificio. Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { Edificio } from "../../modelos/Edificio.js";
+import { Edificio } from "../../logica/modelos/Edificio.js";
 
 test("el id sale del nombre, sin tildes ni espacios", () => {
   assert.equal(Edificio.crearId("Módulo José Miranda", []), "edif-modulo-jose-miranda");

@@ -1,4 +1,4 @@
-# back/dto · lo que entra y lo que sale
+# back/logica/dto · lo que entra y lo que sale
 
 `desdeCuerpo(cuerpo)` arma lo que llega en la petición (solo pasa a mayúsculas, recorta espacios o
 convierte a número; **no valida**). `desdeModelo(modelo)` arma lo que sale: nunca el modelo «bruto»,

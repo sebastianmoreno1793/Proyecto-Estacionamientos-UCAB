@@ -2,9 +2,9 @@
 // Pruebas de unidad de los servicios GaritaServicio y EventosEnVivoServicio. Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
 import { Fabrica } from "../../Fabrica.js";
-import { LecturaDePlacaDTO } from "../../dto/LecturaDePlacaDTO.js";
+import { LecturaDePlacaDTO } from "../../logica/dto/LecturaDePlacaDTO.js";
 
 let servicios;
 beforeEach(() => {

@@ -2,7 +2,7 @@
 // Pruebas de unidad de la táctica MonitorDeSensores. Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { MonitorDeSensores } from "../../tacticas/MonitorDeSensores.js";
+import { MonitorDeSensores } from "../../logica/tacticas/MonitorDeSensores.js";
 
 const inicio = new Date("2026-11-13T12:00:00Z");
 const despues = (minutos) => new Date(inicio.getTime() + minutos * 60000);

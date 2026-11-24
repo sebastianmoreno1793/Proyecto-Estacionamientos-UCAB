@@ -1,4 +1,4 @@
-# back/modelos · Modelo
+# back/logica/modelos · Modelo
 
 Entidades con su estado **privado** (`#capacidad`, `#ocupados`…) que solo cambia con sus métodos, y
 las **reglas de negocio** como métodos. `desde(registro)` y `aRegistro()` los usan los repositorios.

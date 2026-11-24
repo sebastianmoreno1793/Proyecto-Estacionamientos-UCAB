@@ -3,9 +3,9 @@
 // Pruebas de unidad del servicio AforoServicio. Se corren con: npm test
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
 import { Fabrica } from "../../Fabrica.js";
-import { AvisoDTO } from "../../dto/AvisoDTO.js";
+import { AvisoDTO } from "../../logica/dto/AvisoDTO.js";
 
 let servicios;
 const aviso = (estacionamientoId, tipo) => AvisoDTO.desdeCuerpo({ estacionamientoId, tipo });

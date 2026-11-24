@@ -2,9 +2,9 @@
 // Pruebas de unidad del servicio VehiculoServicio. Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
 import { Fabrica } from "../../Fabrica.js";
-import { VehiculoDTO } from "../../dto/VehiculoDTO.js";
+import { VehiculoDTO } from "../../logica/dto/VehiculoDTO.js";
 
 let servicio;
 const ANA = "ana.perez@est.ucab.edu.ve";

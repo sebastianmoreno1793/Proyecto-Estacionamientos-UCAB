@@ -1,4 +1,4 @@
-# back/servicios · reglas de negocio de cada HU
+# back/logica/servicios · reglas de negocio de cada HU
 
 Coordinan modelos y repositorios. Devuelven DTO y lanzan `ErrorDeNegocio` cuando una regla no deja seguir.
 

@@ -1,4 +1,4 @@
-# back/tacticas · una clase por táctica (van dibujadas en el diagrama de clases)
+# back/logica/tacticas · una clase por táctica (van dibujadas en el diagrama de clases)
 
 | Componente | Requisito | Atributo · táctica | Responsabilidad |
 |---|---|---|---|

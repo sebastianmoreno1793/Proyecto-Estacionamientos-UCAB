@@ -1,5 +1,5 @@
 // @HU-6.1 Registrar y actualizar el catálogo de edificios UCAB · German — Dirección web /api/edificios/:id para modificar y quitar
-// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/controladores/).
+// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/logica/controladores/).
 // PATCH  /api/edificios/<id> → EdificioControlador.modificar
 // DELETE /api/edificios/<id> → EdificioControlador.quitar   [api] [postman]
 import { Fabrica } from "@back/Fabrica.js";

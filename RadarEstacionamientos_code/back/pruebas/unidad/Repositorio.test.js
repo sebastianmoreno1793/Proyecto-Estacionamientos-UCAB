@@ -1,9 +1,9 @@
 // Pruebas de unidad de la clase base Repositorio (con EdificioRepositorio). Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
-import { Edificio } from "../../modelos/Edificio.js";
-import { EdificioRepositorio } from "../../repositorios/EdificioRepositorio.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
+import { Edificio } from "../../logica/modelos/Edificio.js";
+import { EdificioRepositorio } from "../../datos/repositorios/EdificioRepositorio.js";
 
 let repositorio;
 beforeEach(() => {

@@ -2,8 +2,8 @@
 // Pruebas de unidad del modelo Incidencia. Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { Estacionamiento } from "../../modelos/Estacionamiento.js";
-import { Incidencia } from "../../modelos/Incidencia.js";
+import { Estacionamiento } from "../../logica/modelos/Estacionamiento.js";
+import { Incidencia } from "../../logica/modelos/Incidencia.js";
 
 const playa = (activo = true) => new Estacionamiento({ id: "est-playa", nombre: "Playa", capacidad: 10, activo });
 const quien = "ana@est.ucab.edu.ve";

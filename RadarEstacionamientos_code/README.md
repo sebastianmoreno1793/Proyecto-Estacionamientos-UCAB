@@ -17,7 +17,7 @@ npm run dev        # solo la app, en http://localhost:3000
 npm test           # pruebas del back (144) y del front (54)
 ```
 
-Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `back/basedatos/datos_iniciales/usuarios_de_prueba.js`):
+Cuentas de prueba (solo existen en desarrollo, se crean al arrancar; están en `back/datos/basedatos/datos_iniciales/usuarios_de_prueba.js`):
 
 | Rol | Correo | Contraseña | Qué ve |
 |---|---|---|---|

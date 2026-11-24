@@ -3,9 +3,9 @@
 // Pruebas de unidad de los modelos Placa, Vehiculo y LecturaDePlaca. Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { LecturaDePlaca } from "../../modelos/LecturaDePlaca.js";
-import { Placa } from "../../modelos/Placa.js";
-import { Vehiculo } from "../../modelos/Vehiculo.js";
+import { LecturaDePlaca } from "../../logica/modelos/LecturaDePlaca.js";
+import { Placa } from "../../logica/modelos/Placa.js";
+import { Vehiculo } from "../../logica/modelos/Vehiculo.js";
 
 test("la placa se guarda en mayúsculas y sin espacios ni guiones", () => {
   assert.equal(new Placa(" ab-123 cd ").toString(), "AB123CD");

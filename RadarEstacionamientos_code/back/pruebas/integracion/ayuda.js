@@ -1,6 +1,6 @@
 // Ayuda para las pruebas de integración: arma peticiones HTTP como las de Postman o el simulador y
 // una Fábrica nueva con los datos de ejemplo. No levanta el servidor: llama directo a cada controlador.
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
 import { Fabrica } from "../../Fabrica.js";
 
 export const CLAVE_SENSOR = { "x-clave-sensor": "clave-de-desarrollo" }; // la de desarrollo (sin .env.local)

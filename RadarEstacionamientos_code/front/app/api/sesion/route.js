@@ -1,5 +1,5 @@
 // @HU-1.1 Crear cuenta con el correo institucional · Samuel — Dirección web /api/sesion para entrar, salir y saber quién está conectado
-// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/controladores/).
+// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/logica/controladores/).
 // GET    /api/sesion → CuentaControlador.sesionActual
 // POST   /api/sesion → CuentaControlador.entrar
 // DELETE /api/sesion → CuentaControlador.salir   [api] [postman]

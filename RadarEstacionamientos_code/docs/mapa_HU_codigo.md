@@ -73,16 +73,16 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · servicio | [CuentaServicio.js](../front/servicios/CuentaServicio.js#L1) | Crea la cuenta, entra, sale y pregunta quién está conectado (fetch) |
 | Front · DTO | [CuentaDTO.js](../front/dto/CuentaDTO.js#L1) | Lo que manda Crear cuenta o Entrar: correo y contraseña |
 | Front · modelo | [SesionUsuario.js](../front/modelos/SesionUsuario.js#L1) | Quién está usando la app: correo, rol e iniciales del perfil |
-| Back · controlador | [CuentaControlador.js](../back/controladores/CuentaControlador.js#L1) | Crea la cuenta, entra, sale y dice quién está conectado (pone y borra la cookie) |
-| Back · táctica | [ControlDeAcceso.js](../back/tacticas/ControlDeAcceso.js#L1) | Revisa que la petición venga de alguien con sesión iniciada y con qué rol |
-| Back · servicio | [CuentaServicio.js](../back/servicios/CuentaServicio.js#L1) | Crea la cuenta (sin repetir el correo), entra, sale y dice de quién es cada sesión |
-| Back · DTO | [CredencialesDTO.js](../back/dto/CredencialesDTO.js#L1) | Correo y contraseña que llegan de Crear cuenta o de Entrar |
-| Back · DTO | [UsuarioDTO.js](../back/dto/UsuarioDTO.js#L1) | El usuario tal como sale por la API: correo y rol, nunca la contraseña |
-| Back · modelo | [Sesion.js](../back/modelos/Sesion.js#L1) | La sesión abierta: un código secreto (la cookie radar_sesion) y de quién es |
-| Back · modelo | [Usuario.js](../back/modelos/Usuario.js#L1) | La cuenta: correo, rol que sale del dominio y contraseña cifrada |
-| Back · repositorio | [SesionRepositorio.js](../back/repositorios/SesionRepositorio.js#L1) | Guarda las sesiones abiertas |
-| Back · repositorio | [UsuarioRepositorio.js](../back/repositorios/UsuarioRepositorio.js#L1) | Guarda las cuentas (correo, rol y contraseña cifrada) |
-| Back · datos | [usuarios_de_prueba.js](../back/basedatos/datos_iniciales/usuarios_de_prueba.js#L1) | Las tres cuentas de prueba (administrador, estudiante y profesor) |
+| Back · controlador | [CuentaControlador.js](../back/logica/controladores/CuentaControlador.js#L1) | Crea la cuenta, entra, sale y dice quién está conectado (pone y borra la cookie) |
+| Back · táctica | [ControlDeAcceso.js](../back/logica/tacticas/ControlDeAcceso.js#L1) | Revisa que la petición venga de alguien con sesión iniciada y con qué rol |
+| Back · servicio | [CuentaServicio.js](../back/logica/servicios/CuentaServicio.js#L1) | Crea la cuenta (sin repetir el correo), entra, sale y dice de quién es cada sesión |
+| Back · DTO | [CredencialesDTO.js](../back/logica/dto/CredencialesDTO.js#L1) | Correo y contraseña que llegan de Crear cuenta o de Entrar |
+| Back · DTO | [UsuarioDTO.js](../back/logica/dto/UsuarioDTO.js#L1) | El usuario tal como sale por la API: correo y rol, nunca la contraseña |
+| Back · modelo | [Sesion.js](../back/logica/modelos/Sesion.js#L1) | La sesión abierta: un código secreto (la cookie radar_sesion) y de quién es |
+| Back · modelo | [Usuario.js](../back/logica/modelos/Usuario.js#L1) | La cuenta: correo, rol que sale del dominio y contraseña cifrada |
+| Back · repositorio | [SesionRepositorio.js](../back/datos/repositorios/SesionRepositorio.js#L1) | Guarda las sesiones abiertas |
+| Back · repositorio | [UsuarioRepositorio.js](../back/datos/repositorios/UsuarioRepositorio.js#L1) | Guarda las cuentas (correo, rol y contraseña cifrada) |
+| Back · datos | [usuarios_de_prueba.js](../back/datos/basedatos/datos_iniciales/usuarios_de_prueba.js#L1) | Las tres cuentas de prueba (administrador, estudiante y profesor) |
 | Pruebas (front) | [CuentaControlador.test.js](../front/pruebas/controladores/CuentaControlador.test.js#L1) | Prueba el control de Crear cuenta, Entrar y Salir |
 | Pruebas (front) | [NavegacionControlador.test.js](../front/pruebas/controladores/NavegacionControlador.test.js#L1) | Prueba adónde se redirige según la sesión y el rol |
 | Pruebas (front) | [CuentaValidador.test.js](../front/pruebas/validadores/CuentaValidador.test.js#L1) | Prueba la validación de Crear cuenta y Entrar, con los mensajes del escenario |
@@ -111,12 +111,12 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · validador | [VehiculoValidador.js](../front/validadores/VehiculoValidador.js#L1) | Revisa la placa (6 o 7 letras y números) y que estén marca, modelo y color |
 | Front · servicio | [VehiculoServicio.js](../front/servicios/VehiculoServicio.js#L1) | Pide mis vehículos y registra uno nuevo (fetch) |
 | Front · DTO | [VehiculoDTO.js](../front/dto/VehiculoDTO.js#L1) | Lo que manda el formulario de Mis vehículos |
-| Back · controlador | [VehiculoControlador.js](../back/controladores/VehiculoControlador.js#L1) | Lista los vehículos del usuario con sesión y registra uno nuevo |
-| Back · servicio | [VehiculoServicio.js](../back/servicios/VehiculoServicio.js#L1) | Registra el vehículo a nombre del usuario; la placa no se repite en el Radar |
-| Back · DTO | [VehiculoDTO.js](../back/dto/VehiculoDTO.js#L1) | Lo que llega del formulario y lo que ve el dueño |
-| Back · modelo | [Placa.js](../back/modelos/Placa.js#L1) | La placa se guarda en mayúsculas y sin espacios ni guiones |
-| Back · modelo | [Vehiculo.js](../back/modelos/Vehiculo.js#L1) | Un vehículo a nombre de su dueño, con la placa normalizada |
-| Back · repositorio | [VehiculoRepositorio.js](../back/repositorios/VehiculoRepositorio.js#L1) | Guarda los vehículos de cada usuario |
+| Back · controlador | [VehiculoControlador.js](../back/logica/controladores/VehiculoControlador.js#L1) | Lista los vehículos del usuario con sesión y registra uno nuevo |
+| Back · servicio | [VehiculoServicio.js](../back/logica/servicios/VehiculoServicio.js#L1) | Registra el vehículo a nombre del usuario; la placa no se repite en el Radar |
+| Back · DTO | [VehiculoDTO.js](../back/logica/dto/VehiculoDTO.js#L1) | Lo que llega del formulario y lo que ve el dueño |
+| Back · modelo | [Placa.js](../back/logica/modelos/Placa.js#L1) | La placa se guarda en mayúsculas y sin espacios ni guiones |
+| Back · modelo | [Vehiculo.js](../back/logica/modelos/Vehiculo.js#L1) | Un vehículo a nombre de su dueño, con la placa normalizada |
+| Back · repositorio | [VehiculoRepositorio.js](../back/datos/repositorios/VehiculoRepositorio.js#L1) | Guarda los vehículos de cada usuario |
 | Pruebas (front) | [AdministracionControladores.test.js](../front/pruebas/controladores/AdministracionControladores.test.js#L1) | Prueba el control de Mis vehículos |
 | Pruebas (front) | [VehiculoValidador.test.js](../front/pruebas/validadores/VehiculoValidador.test.js#L1) | Prueba la validación de la placa y los datos del vehículo |
 | Pruebas de unidad | [Vehiculo.test.js](../back/pruebas/unidad/Vehiculo.test.js#L1) | Prueba la placa normalizada y el dueño |
@@ -139,14 +139,14 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · vista | [PantallaGarita.js](../front/vistas/admin/PantallaGarita.js#L3) | Lista de avisos recibidos y sensores que dejaron de avisar |
 | Front · controlador | [GaritaControlador.js](../front/controladores/GaritaControlador.js#L1) | Control de Administrar › Garita: trae los avisos y el estado de los sensores |
 | Front · servicio | [GaritaServicio.js](../front/servicios/GaritaServicio.js#L1) | Pide los avisos recibidos y el estado de los sensores (fetch) |
-| Back · controlador | [AvisoControlador.js](../back/controladores/AvisoControlador.js#L1) | Recibe los avisos de los sensores (POST /api/avisos) y lista los recibidos (GET) |
-| Back · táctica | [AutenticadorDeSensores.js](../back/tacticas/AutenticadorDeSensores.js#L1) | Solo quien tiene la clave de los sensores puede avisar entradas y salidas |
-| Back · táctica | [MonitorDeSensores.js](../back/tacticas/MonitorDeSensores.js#L1) | Detecta el sensor que dejó de avisar (timeout) |
-| Back · servicio | [AforoServicio.js](../back/servicios/AforoServicio.js#L1) | Registra cada entrada o salida con su hora |
-| Back · DTO | [AvisoDTO.js](../back/dto/AvisoDTO.js#L1) | Lo que manda el sensor: estacionamiento, ENTRADA o SALIDA e id del aviso |
-| Back · DTO | [MovimientoDTO.js](../back/dto/MovimientoDTO.js#L1) | Un movimiento aceptado tal como sale por la API |
-| Back · modelo | [Movimiento.js](../back/modelos/Movimiento.js#L1) | Una entrada o salida aceptada, con su hora |
-| Back · repositorio | [MovimientoRepositorio.js](../back/repositorios/MovimientoRepositorio.js#L1) | Guarda cada entrada o salida aceptada |
+| Back · controlador | [AvisoControlador.js](../back/logica/controladores/AvisoControlador.js#L1) | Recibe los avisos de los sensores (POST /api/avisos) y lista los recibidos (GET) |
+| Back · táctica | [AutenticadorDeSensores.js](../back/logica/tacticas/AutenticadorDeSensores.js#L1) | Solo quien tiene la clave de los sensores puede avisar entradas y salidas |
+| Back · táctica | [MonitorDeSensores.js](../back/logica/tacticas/MonitorDeSensores.js#L1) | Detecta el sensor que dejó de avisar (timeout) |
+| Back · servicio | [AforoServicio.js](../back/logica/servicios/AforoServicio.js#L1) | Registra cada entrada o salida con su hora |
+| Back · DTO | [AvisoDTO.js](../back/logica/dto/AvisoDTO.js#L1) | Lo que manda el sensor: estacionamiento, ENTRADA o SALIDA e id del aviso |
+| Back · DTO | [MovimientoDTO.js](../back/logica/dto/MovimientoDTO.js#L1) | Un movimiento aceptado tal como sale por la API |
+| Back · modelo | [Movimiento.js](../back/logica/modelos/Movimiento.js#L1) | Una entrada o salida aceptada, con su hora |
+| Back · repositorio | [MovimientoRepositorio.js](../back/datos/repositorios/MovimientoRepositorio.js#L1) | Guarda cada entrada o salida aceptada |
 | Pruebas de unidad | [AforoServicio.test.js](../back/pruebas/unidad/AforoServicio.test.js#L1) | Prueba que cada aviso quede registrado con su hora |
 | Pruebas de unidad | [AutenticadorDeSensores.test.js](../back/pruebas/unidad/AutenticadorDeSensores.test.js#L1) | Prueba la táctica que autentica a los sensores |
 | Pruebas de unidad | [MonitorDeSensores.test.js](../back/pruebas/unidad/MonitorDeSensores.test.js#L1) | Prueba la táctica de timeout del sensor que deja de avisar |
@@ -168,13 +168,13 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · vista | [PantallaGarita.js](../front/vistas/admin/PantallaGarita.js#L4) | Placas leídas |
 | Front · controlador | [GaritaControlador.js](../front/controladores/GaritaControlador.js#L2) | Trae las placas leídas |
 | Front · servicio | [GaritaServicio.js](../front/servicios/GaritaServicio.js#L2) | Pide las placas leídas (fetch) |
-| Back · controlador | [GaritaControlador.js](../back/controladores/GaritaControlador.js#L1) | Recibe las placas del lector de la garita (POST) y las lista al administrador (GET) |
-| Back · táctica | [AutenticadorDeSensores.js](../back/tacticas/AutenticadorDeSensores.js#L2) | Solo el lector de placas (o el simulador) con la clave puede mandar placas |
-| Back · servicio | [GaritaServicio.js](../back/servicios/GaritaServicio.js#L1) | Registra cada placa leída en la garita sin duplicar los reintentos |
-| Back · DTO | [LecturaDePlacaDTO.js](../back/dto/LecturaDePlacaDTO.js#L1) | Lo que manda el lector de la garita y lo que se devuelve |
-| Back · modelo | [LecturaDePlaca.js](../back/modelos/LecturaDePlaca.js#L1) | Una placa leída en la garita, con su sentido y su hora |
-| Back · modelo | [Placa.js](../back/modelos/Placa.js#L2) | La garita guarda la placa igual que «Mis vehículos» |
-| Back · repositorio | [LecturaDePlacaRepositorio.js](../back/repositorios/LecturaDePlacaRepositorio.js#L1) | Guarda las placas leídas en la garita |
+| Back · controlador | [GaritaControlador.js](../back/logica/controladores/GaritaControlador.js#L1) | Recibe las placas del lector de la garita (POST) y las lista al administrador (GET) |
+| Back · táctica | [AutenticadorDeSensores.js](../back/logica/tacticas/AutenticadorDeSensores.js#L2) | Solo el lector de placas (o el simulador) con la clave puede mandar placas |
+| Back · servicio | [GaritaServicio.js](../back/logica/servicios/GaritaServicio.js#L1) | Registra cada placa leída en la garita sin duplicar los reintentos |
+| Back · DTO | [LecturaDePlacaDTO.js](../back/logica/dto/LecturaDePlacaDTO.js#L1) | Lo que manda el lector de la garita y lo que se devuelve |
+| Back · modelo | [LecturaDePlaca.js](../back/logica/modelos/LecturaDePlaca.js#L1) | Una placa leída en la garita, con su sentido y su hora |
+| Back · modelo | [Placa.js](../back/logica/modelos/Placa.js#L2) | La garita guarda la placa igual que «Mis vehículos» |
+| Back · repositorio | [LecturaDePlacaRepositorio.js](../back/datos/repositorios/LecturaDePlacaRepositorio.js#L1) | Guarda las placas leídas en la garita |
 | Pruebas de unidad | [AutenticadorDeSensores.test.js](../back/pruebas/unidad/AutenticadorDeSensores.test.js#L2) | Prueba que el lector de placas (y el simulador) necesite la clave |
 | Pruebas de unidad | [GaritaServicio.test.js](../back/pruebas/unidad/GaritaServicio.test.js#L1) | Prueba que la placa leída quede con su hora y no se duplique |
 | Pruebas de unidad | [Vehiculo.test.js](../back/pruebas/unidad/Vehiculo.test.js#L2) | La garita guarda la placa igual que «Mis vehículos» |
@@ -196,14 +196,14 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · vista | [PantallaGarita.js](../front/vistas/admin/PantallaGarita.js#L5) | Avisos rechazados, por qué, y sensores con falla |
 | Front · controlador | [GaritaControlador.js](../front/controladores/GaritaControlador.js#L3) | Trae los avisos rechazados |
 | Front · servicio | [GaritaServicio.js](../front/servicios/GaritaServicio.js#L3) | Pide los avisos rechazados (fetch) |
-| Back · controlador | [AvisoControlador.js](../back/controladores/AvisoControlador.js#L2) | Con cada aviso, actualiza el aforo; los rechazados responden 404 o 409 |
-| Back · táctica | [FiltroDeAvisos.js](../back/tacticas/FiltroDeAvisos.js#L1) | Ignora los avisos defectuosos sin detener el sistema y los registra; con N seguidos marca el sensor con falla |
-| Back · servicio | [AforoServicio.js](../back/servicios/AforoServicio.js#L2) | Con cada aviso suma o resta un ocupado, pasando por el filtro de avisos |
-| Back · DTO | [AvisoRechazadoDTO.js](../back/dto/AvisoRechazadoDTO.js#L1) | Un aviso rechazado tal como lo ve el administrador |
-| Back · modelo | [AvisoRechazado.js](../back/modelos/AvisoRechazado.js#L1) | Un aviso que no cambió el aforo, con su hora y su motivo |
-| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L1) | Una entrada ocupa un puesto y una salida lo libera; nunca menos de 0 ni más que la capacidad |
-| Back · repositorio | [AvisoRechazadoRepositorio.js](../back/repositorios/AvisoRechazadoRepositorio.js#L1) | Guarda los avisos rechazados y las anomalías |
-| Back · repositorio | [EstacionamientoRepositorio.js](../back/repositorios/EstacionamientoRepositorio.js#L1) | Lee y guarda el aforo de cada estacionamiento |
+| Back · controlador | [AvisoControlador.js](../back/logica/controladores/AvisoControlador.js#L2) | Con cada aviso, actualiza el aforo; los rechazados responden 404 o 409 |
+| Back · táctica | [FiltroDeAvisos.js](../back/logica/tacticas/FiltroDeAvisos.js#L1) | Ignora los avisos defectuosos sin detener el sistema y los registra; con N seguidos marca el sensor con falla |
+| Back · servicio | [AforoServicio.js](../back/logica/servicios/AforoServicio.js#L2) | Con cada aviso suma o resta un ocupado, pasando por el filtro de avisos |
+| Back · DTO | [AvisoRechazadoDTO.js](../back/logica/dto/AvisoRechazadoDTO.js#L1) | Un aviso rechazado tal como lo ve el administrador |
+| Back · modelo | [AvisoRechazado.js](../back/logica/modelos/AvisoRechazado.js#L1) | Un aviso que no cambió el aforo, con su hora y su motivo |
+| Back · modelo | [Estacionamiento.js](../back/logica/modelos/Estacionamiento.js#L1) | Una entrada ocupa un puesto y una salida lo libera; nunca menos de 0 ni más que la capacidad |
+| Back · repositorio | [AvisoRechazadoRepositorio.js](../back/datos/repositorios/AvisoRechazadoRepositorio.js#L1) | Guarda los avisos rechazados y las anomalías |
+| Back · repositorio | [EstacionamientoRepositorio.js](../back/datos/repositorios/EstacionamientoRepositorio.js#L1) | Lee y guarda el aforo de cada estacionamiento |
 | Pruebas de unidad | [AforoServicio.test.js](../back/pruebas/unidad/AforoServicio.test.js#L2) | Prueba que el aforo cambie y que los rechazos no lo cambien |
 | Pruebas de unidad | [Estacionamiento.test.js](../back/pruebas/unidad/Estacionamiento.test.js#L1) | Prueba que el aforo suba y baje sin salirse de 0 y la capacidad |
 | Pruebas de unidad | [FiltroDeAvisos.test.js](../back/pruebas/unidad/FiltroDeAvisos.test.js#L1) | Prueba la táctica que ignora los avisos defectuosos y marca el sensor con falla |
@@ -230,11 +230,11 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · controlador | [EstacionamientoControlador.js](../front/controladores/EstacionamientoControlador.js#L1) | Control del mapa y del Inicio: trae los estacionamientos y los mantiene en vivo |
 | Front · servicio | [EstacionamientoServicio.js](../front/servicios/EstacionamientoServicio.js#L1) | Pide los estacionamientos con sus libres y su semáforo (fetch) |
 | Front · DTO | [EstacionamientoDTO.js](../front/dto/EstacionamientoDTO.js#L1) | Lo que el front recibe de cada estacionamiento: libres, porcentaje y semáforo |
-| Back · controlador | [EstacionamientoControlador.js](../back/controladores/EstacionamientoControlador.js#L1) | Entrega la ocupación y el semáforo de cada estacionamiento (GET) |
-| Back · servicio | [EstacionamientoServicio.js](../back/servicios/EstacionamientoServicio.js#L1) | Entrega cada estacionamiento con sus libres y su semáforo |
-| Back · DTO | [EstacionamientoDTO.js](../back/dto/EstacionamientoDTO.js#L1) | Lo que cualquiera puede ver: libres, porcentaje y semáforo, sin datos personales |
-| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L2) | Calcula los libres, el porcentaje y el semáforo |
-| Back · modelo | [Semaforo.js](../back/modelos/Semaforo.js#L1) | Los tres estados del semáforo: «Hay puesto», «No hay puesto» y «Cerrado» (D-009) |
+| Back · controlador | [EstacionamientoControlador.js](../back/logica/controladores/EstacionamientoControlador.js#L1) | Entrega la ocupación y el semáforo de cada estacionamiento (GET) |
+| Back · servicio | [EstacionamientoServicio.js](../back/logica/servicios/EstacionamientoServicio.js#L1) | Entrega cada estacionamiento con sus libres y su semáforo |
+| Back · DTO | [EstacionamientoDTO.js](../back/logica/dto/EstacionamientoDTO.js#L1) | Lo que cualquiera puede ver: libres, porcentaje y semáforo, sin datos personales |
+| Back · modelo | [Estacionamiento.js](../back/logica/modelos/Estacionamiento.js#L2) | Calcula los libres, el porcentaje y el semáforo |
+| Back · modelo | [Semaforo.js](../back/logica/modelos/Semaforo.js#L1) | Los tres estados del semáforo: «Hay puesto», «No hay puesto» y «Cerrado» (D-009) |
 | Pruebas de unidad | [Estacionamiento.test.js](../back/pruebas/unidad/Estacionamiento.test.js#L2) | Prueba libres, porcentaje y semáforo |
 | Pruebas de unidad | [EstacionamientoServicio.test.js](../back/pruebas/unidad/EstacionamientoServicio.test.js#L1) | Prueba la lista con libres y semáforo |
 | Pruebas de unidad | [Semaforo.test.js](../back/pruebas/unidad/Semaforo.test.js#L1) | Prueba los tres estados y sus textos (D-009) |
@@ -254,12 +254,12 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Ruta (API) | [route.js](../front/app/api/estacionamientos/route.js#L2) | Dirección web GET /api/estacionamientos para dibujar el mapa |
 | Front · pantalla | [page.js](../front/app/mapa/page.js#L2) | Pantalla Mapa del campus |
 | Front · vista | [MaquetaCampus.js](../front/vistas/mapa/MaquetaCampus.js#L3) | Dibuja el mapa con el nombre de cada estacionamiento |
-| Back · controlador | [EstacionamientoControlador.js](../back/controladores/EstacionamientoControlador.js#L2) | Con su forma para dibujarlos (GET) |
-| Back · servicio | [EstacionamientoServicio.js](../back/servicios/EstacionamientoServicio.js#L2) | Con la forma para dibujarlos |
-| Back · DTO | [EstacionamientoDTO.js](../back/dto/EstacionamientoDTO.js#L2) | Con la forma (polígono y pisos) para dibujarlo |
-| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L3) | Guarda la forma (polígono y pisos) para dibujarlo |
-| Back · datos | [capacidad_inicial.js](../back/basedatos/datos_iniciales/capacidad_inicial.js#L1) | Capacidad de ejemplo (todavía no real) de cada estacionamiento |
-| Back · datos | [estacionamientos.js](../back/basedatos/datos_iniciales/estacionamientos.js#L1) | Catálogo de estacionamientos del campus que se dibujan en el mapa |
+| Back · controlador | [EstacionamientoControlador.js](../back/logica/controladores/EstacionamientoControlador.js#L2) | Con su forma para dibujarlos (GET) |
+| Back · servicio | [EstacionamientoServicio.js](../back/logica/servicios/EstacionamientoServicio.js#L2) | Con la forma para dibujarlos |
+| Back · DTO | [EstacionamientoDTO.js](../back/logica/dto/EstacionamientoDTO.js#L2) | Con la forma (polígono y pisos) para dibujarlo |
+| Back · modelo | [Estacionamiento.js](../back/logica/modelos/Estacionamiento.js#L3) | Guarda la forma (polígono y pisos) para dibujarlo |
+| Back · datos | [capacidad_inicial.js](../back/datos/basedatos/datos_iniciales/capacidad_inicial.js#L1) | Capacidad de ejemplo (todavía no real) de cada estacionamiento |
+| Back · datos | [estacionamientos.js](../back/datos/basedatos/datos_iniciales/estacionamientos.js#L1) | Catálogo de estacionamientos del campus que se dibujan en el mapa |
 | Pruebas de unidad | [DatosIniciales.test.js](../back/pruebas/unidad/DatosIniciales.test.js#L1) | Prueba que la lista sirva para dibujar el mapa |
 | Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L7) | Prueba el criterio de aceptación del mapa |
 
@@ -282,11 +282,11 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · validador | [CapacidadValidador.js](../front/validadores/CapacidadValidador.js#L1) | Revisa que la capacidad sea un entero entre 1 y 2000 y que «activo» sea sí o no |
 | Front · servicio | [EstacionamientoServicio.js](../front/servicios/EstacionamientoServicio.js#L2) | Manda la capacidad y el estado nuevos (fetch PATCH) |
 | Front · DTO | [CambioDeEstacionamientoDTO.js](../front/dto/CambioDeEstacionamientoDTO.js#L1) | Lo que manda el administrador: capacidad y abierto o cerrado |
-| Back · controlador | [EstacionamientoControlador.js](../back/controladores/EstacionamientoControlador.js#L3) | Recibe el cambio de capacidad o estado (PATCH, solo administrador) |
-| Back · servicio | [EstacionamientoServicio.js](../back/servicios/EstacionamientoServicio.js#L3) | Cambia la capacidad y abre o cierra |
-| Back · DTO | [EstacionamientoDTO.js](../back/dto/EstacionamientoDTO.js#L3) | Los cambios que manda el administrador |
-| Back · modelo | [Estacionamiento.js](../back/modelos/Estacionamiento.js#L4) | Cambia la capacidad y abre o cierra; si la capacidad queda por debajo de los ocupados, hay 0 libres |
-| Back · repositorio | [EstacionamientoRepositorio.js](../back/repositorios/EstacionamientoRepositorio.js#L2) | Guarda la capacidad nueva y si está abierto |
+| Back · controlador | [EstacionamientoControlador.js](../back/logica/controladores/EstacionamientoControlador.js#L3) | Recibe el cambio de capacidad o estado (PATCH, solo administrador) |
+| Back · servicio | [EstacionamientoServicio.js](../back/logica/servicios/EstacionamientoServicio.js#L3) | Cambia la capacidad y abre o cierra |
+| Back · DTO | [EstacionamientoDTO.js](../back/logica/dto/EstacionamientoDTO.js#L3) | Los cambios que manda el administrador |
+| Back · modelo | [Estacionamiento.js](../back/logica/modelos/Estacionamiento.js#L4) | Cambia la capacidad y abre o cierra; si la capacidad queda por debajo de los ocupados, hay 0 libres |
+| Back · repositorio | [EstacionamientoRepositorio.js](../back/datos/repositorios/EstacionamientoRepositorio.js#L2) | Guarda la capacidad nueva y si está abierto |
 | Pruebas (front) | [AdministracionControladores.test.js](../front/pruebas/controladores/AdministracionControladores.test.js#L2) | Prueba el control de Administrar › Puestos |
 | Pruebas (front) | [CapacidadValidador.test.js](../front/pruebas/validadores/CapacidadValidador.test.js#L1) | Prueba la validación de la capacidad nueva y de «activo» |
 | Pruebas de unidad | [Estacionamiento.test.js](../back/pruebas/unidad/Estacionamiento.test.js#L3) | Prueba la capacidad nueva y abrir o cerrar |
@@ -316,12 +316,12 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · validador | [EdificioValidador.js](../front/validadores/EdificioValidador.js#L1) | Revisa el nombre (con letras, 2 a 80) y que la ubicación esté dentro del campus |
 | Front · servicio | [EdificioServicio.js](../front/servicios/EdificioServicio.js#L1) | Pide el catálogo y manda agregar, modificar o quitar (fetch) |
 | Front · DTO | [EdificioDTO.js](../front/dto/EdificioDTO.js#L1) | Lo que manda el administrador: nombre y ubicación |
-| Back · controlador | [EdificioControlador.js](../back/controladores/EdificioControlador.js#L1) | Lista el catálogo (GET) y deja al administrador agregar, modificar y quitar |
-| Back · servicio | [EdificioServicio.js](../back/servicios/EdificioServicio.js#L1) | Agrega, modifica y quita edificios; el nombre no se repite |
-| Back · DTO | [EdificioDTO.js](../back/dto/EdificioDTO.js#L1) | Lo que manda el administrador y lo que ve el usuario |
-| Back · modelo | [Edificio.js](../back/modelos/Edificio.js#L1) | Un edificio del catálogo: nombre, ubicación e id que no se repite |
-| Back · repositorio | [EdificioRepositorio.js](../back/repositorios/EdificioRepositorio.js#L1) | Guarda el catálogo de edificios |
-| Back · datos | [edificios.js](../back/basedatos/datos_iniciales/edificios.js#L1) | Lista inicial de edificios de la UCAB |
+| Back · controlador | [EdificioControlador.js](../back/logica/controladores/EdificioControlador.js#L1) | Lista el catálogo (GET) y deja al administrador agregar, modificar y quitar |
+| Back · servicio | [EdificioServicio.js](../back/logica/servicios/EdificioServicio.js#L1) | Agrega, modifica y quita edificios; el nombre no se repite |
+| Back · DTO | [EdificioDTO.js](../back/logica/dto/EdificioDTO.js#L1) | Lo que manda el administrador y lo que ve el usuario |
+| Back · modelo | [Edificio.js](../back/logica/modelos/Edificio.js#L1) | Un edificio del catálogo: nombre, ubicación e id que no se repite |
+| Back · repositorio | [EdificioRepositorio.js](../back/datos/repositorios/EdificioRepositorio.js#L1) | Guarda el catálogo de edificios |
+| Back · datos | [edificios.js](../back/datos/basedatos/datos_iniciales/edificios.js#L1) | Lista inicial de edificios de la UCAB |
 | Pruebas (front) | [AdministracionControladores.test.js](../front/pruebas/controladores/AdministracionControladores.test.js#L3) | Prueba el control de Administrar › Edificios |
 | Pruebas (front) | [EdificioValidador.test.js](../front/pruebas/validadores/EdificioValidador.test.js#L1) | Prueba la validación del nombre y la ubicación del edificio |
 | Pruebas de unidad | [DatosIniciales.test.js](../back/pruebas/unidad/DatosIniciales.test.js#L2) | Prueba el catálogo inicial de edificios |
@@ -348,9 +348,9 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · vista | [BuscadorSugerencia.js](../front/vistas/sugerencia/BuscadorSugerencia.js#L3) | Elige el edificio y muestra el estacionamiento sugerido |
 | Front · controlador | [SugerenciaControlador.js](../front/controladores/SugerenciaControlador.js#L1) | Control de la sugerencia: pide el más cercano y recuerda el último edificio elegido |
 | Front · servicio | [SugerenciaServicio.js](../front/servicios/SugerenciaServicio.js#L1) | Pide la sugerencia para un edificio (fetch GET /api/sugerencia) |
-| Back · controlador | [SugerenciaControlador.js](../back/controladores/SugerenciaControlador.js#L1) | Recibe el edificio y responde el estacionamiento sugerido |
-| Back · servicio | [SugerenciaServicio.js](../back/servicios/SugerenciaServicio.js#L1) | Elige el estacionamiento abierto con puestos libres más cercano al edificio |
-| Back · DTO | [SugerenciaDTO.js](../back/dto/SugerenciaDTO.js#L1) | El edificio, el sugerido y hasta dos alternativas, con su distancia |
+| Back · controlador | [SugerenciaControlador.js](../back/logica/controladores/SugerenciaControlador.js#L1) | Recibe el edificio y responde el estacionamiento sugerido |
+| Back · servicio | [SugerenciaServicio.js](../back/logica/servicios/SugerenciaServicio.js#L1) | Elige el estacionamiento abierto con puestos libres más cercano al edificio |
+| Back · DTO | [SugerenciaDTO.js](../back/logica/dto/SugerenciaDTO.js#L1) | El edificio, el sugerido y hasta dos alternativas, con su distancia |
 | Pruebas de unidad | [SugerenciaServicio.test.js](../back/pruebas/unidad/SugerenciaServicio.test.js#L1) | Prueba que sugiera el abierto con libres más cercano |
 | Pruebas de integración | [api.test.js](../back/pruebas/integracion/api.test.js#L9) | Prueba GET /api/sugerencia |
 | Pruebas de aceptación | [criterios_sprint1.test.js](../back/pruebas/aceptacion/criterios_sprint1.test.js#L10) | Prueba el criterio de aceptación de la sugerencia |
@@ -394,12 +394,12 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Front · validador | [IncidenciaValidador.js](../front/validadores/IncidenciaValidador.js#L1) | Revisa que se elija un estacionamiento de la lista y un tipo de problema; dice todo lo que falta |
 | Front · servicio | [IncidenciaServicio.js](../front/servicios/IncidenciaServicio.js#L1) | Manda el reporte al back con fetch POST /api/incidencias |
 | Front · DTO | [IncidenciaDTO.js](../front/dto/IncidenciaDTO.js#L1) | Lo que manda el formulario de Reportar: estacionamiento y tipo de problema |
-| Back · controlador | [IncidenciaControlador.js](../back/controladores/IncidenciaControlador.js#L1) | Recibe el reporte, revisa que haya sesión y devuelve la incidencia creada |
-| Back · servicio | [IncidenciaServicio.js](../back/servicios/IncidenciaServicio.js#L1) | Registra la incidencia como «pendiente» si el estacionamiento existe y está abierto |
-| Back · DTO | [IncidenciaDTO.js](../back/dto/IncidenciaDTO.js#L1) | Lo que llega del formulario y lo que se devuelve, sin el correo de quien reporta |
-| Back · modelo | [Incidencia.js](../back/modelos/Incidencia.js#L1) | La incidencia nace «pendiente», con fecha y hora, solo en estacionamientos abiertos |
-| Back · repositorio | [EstacionamientoRepositorio.js](../back/repositorios/EstacionamientoRepositorio.js#L12) | solo los abiertos aparecen en el formulario |
-| Back · repositorio | [IncidenciaRepositorio.js](../back/repositorios/IncidenciaRepositorio.js#L1) | Guarda las incidencias reportadas |
+| Back · controlador | [IncidenciaControlador.js](../back/logica/controladores/IncidenciaControlador.js#L1) | Recibe el reporte, revisa que haya sesión y devuelve la incidencia creada |
+| Back · servicio | [IncidenciaServicio.js](../back/logica/servicios/IncidenciaServicio.js#L1) | Registra la incidencia como «pendiente» si el estacionamiento existe y está abierto |
+| Back · DTO | [IncidenciaDTO.js](../back/logica/dto/IncidenciaDTO.js#L1) | Lo que llega del formulario y lo que se devuelve, sin el correo de quien reporta |
+| Back · modelo | [Incidencia.js](../back/logica/modelos/Incidencia.js#L1) | La incidencia nace «pendiente», con fecha y hora, solo en estacionamientos abiertos |
+| Back · repositorio | [EstacionamientoRepositorio.js](../back/datos/repositorios/EstacionamientoRepositorio.js#L12) | solo los abiertos aparecen en el formulario |
+| Back · repositorio | [IncidenciaRepositorio.js](../back/datos/repositorios/IncidenciaRepositorio.js#L1) | Guarda las incidencias reportadas |
 | Pruebas (front) | [IncidenciaControlador.test.js](../front/pruebas/controladores/IncidenciaControlador.test.js#L1) | Prueba el control de Reportar: valida, manda por fetch y elige el mensaje |
 | Pruebas (front) | [IncidenciaValidador.test.js](../front/pruebas/validadores/IncidenciaValidador.test.js#L1) | Prueba que el formulario diga todo lo que falta elegir (CA2) |
 | Pruebas de unidad | [Incidencia.test.js](../back/pruebas/unidad/Incidencia.test.js#L1) | Prueba las reglas de negocio de la incidencia |
@@ -416,14 +416,14 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 | Capa | Archivo | Qué hace |
 |---|---|---|
 | Back | [Fabrica.js](../back/Fabrica.js) | Crea una sola vez cada pieza y las conecta: repositorios → tácticas → servicios → controladores |
-| Back · controlador | [Controlador.js](../back/controladores/Controlador.js) | Clase base: leer el cuerpo, responder y convertir un `ErrorDeNegocio` en su código HTTP |
-| Back · controlador | [EventoControlador.js](../back/controladores/EventoControlador.js) | Canal en vivo `GET /api/eventos` (HU 4.3) |
-| Back · controlador | [PruebasControlador.js](../back/controladores/PruebasControlador.js) | `POST /api/pruebas/reiniciar` (solo desarrollo) |
-| Back · servicio | [EventosEnVivoServicio.js](../back/servicios/EventosEnVivoServicio.js) | Avisa a quien esté mirando cada cambio (HU 4.3) |
-| Back · servicio | [PruebasServicio.js](../back/servicios/PruebasServicio.js) | Vuelve a los datos de ejemplo |
-| Back · repositorio | [Repositorio.js](../back/repositorios/Repositorio.js) | Clase base de acceso a datos |
-| Back · modelo | [ErrorDeNegocio.js](../back/modelos/ErrorDeNegocio.js) | Error que lanza una regla de negocio, con su motivo |
-| Back · datos | [AlmacenEnMemoria.js](../back/basedatos/AlmacenEnMemoria.js) | Los datos mientras no hay base de datos |
+| Back · controlador | [Controlador.js](../back/logica/controladores/Controlador.js) | Clase base: leer el cuerpo, responder y convertir un `ErrorDeNegocio` en su código HTTP |
+| Back · controlador | [EventoControlador.js](../back/logica/controladores/EventoControlador.js) | Canal en vivo `GET /api/eventos` (HU 4.3) |
+| Back · controlador | [PruebasControlador.js](../back/logica/controladores/PruebasControlador.js) | `POST /api/pruebas/reiniciar` (solo desarrollo) |
+| Back · servicio | [EventosEnVivoServicio.js](../back/logica/servicios/EventosEnVivoServicio.js) | Avisa a quien esté mirando cada cambio (HU 4.3) |
+| Back · servicio | [PruebasServicio.js](../back/logica/servicios/PruebasServicio.js) | Vuelve a los datos de ejemplo |
+| Back · repositorio | [Repositorio.js](../back/datos/repositorios/Repositorio.js) | Clase base de acceso a datos |
+| Back · modelo | [ErrorDeNegocio.js](../back/logica/modelos/ErrorDeNegocio.js) | Error que lanza una regla de negocio, con su motivo |
+| Back · datos | [AlmacenEnMemoria.js](../back/datos/basedatos/AlmacenEnMemoria.js) | Los datos mientras no hay base de datos |
 | Front · controlador | [Controlador.js](../front/controladores/Controlador.js) | Clase base: `+valida()` `+muestra()` `+redirige()` |
 | Front · validador | [Validador.js](../front/validadores/Validador.js) | Clase base de las validaciones |
 | Front · servicio | [ClienteHttp.js](../front/servicios/ClienteHttp.js) | Clase base de los servicios: `fetch` a la API |
@@ -437,9 +437,9 @@ BACK   front/app/api/**/route.js (la ruta) → controladores/ → tacticas/ (pre
 
 **¿Reglas y datos son clases?**
 Sí. Todo lo que decide o guarda algo es una clase con el nombre de su capa: el modelo
-[Estacionamiento](../back/modelos/Estacionamiento.js) tiene sus atributos privados (`#capacidad`, `#ocupados`) y sus
+[Estacionamiento](../back/logica/modelos/Estacionamiento.js) tiene sus atributos privados (`#capacidad`, `#ocupados`) y sus
 reglas como métodos (`registrarEntrada()`, `libres()`, `semaforo()`); los datos los toca solo su
-[EstacionamientoRepositorio](../back/repositorios/EstacionamientoRepositorio.js), que hereda de [Repositorio](../back/repositorios/Repositorio.js).
+[EstacionamientoRepositorio](../back/datos/repositorios/EstacionamientoRepositorio.js), que hereda de [Repositorio](../back/datos/repositorios/Repositorio.js).
 Los componentes de React son la vista; la lógica del front está en controladores, validadores, servicios y modelos.
 
 **¿Cómo llega la data del front al back?** (HU 9.1)
@@ -447,34 +447,34 @@ Siempre por `fetch`: [FormularioIncidencia](../front/vistas/reportar/FormularioI
 [IncidenciaControlador (front)](../front/controladores/IncidenciaControlador.js) `reportar()` →
 [IncidenciaValidador](../front/validadores/IncidenciaValidador.js) → [IncidenciaServicio (front)](../front/servicios/IncidenciaServicio.js)
 `POST /api/incidencias` → [route.js](../front/app/api/incidencias/route.js) →
-[IncidenciaControlador (back)](../back/controladores/IncidenciaControlador.js) `crear()` →
-[ControlDeAcceso](../back/tacticas/ControlDeAcceso.js) (precondición) → [IncidenciaServicio (back)](../back/servicios/IncidenciaServicio.js)
-`reportar()` → [Incidencia](../back/modelos/Incidencia.js) `crear()` → [IncidenciaRepositorio](../back/repositorios/IncidenciaRepositorio.js)
-→ ← [IncidenciaDTO](../back/dto/IncidenciaDTO.js) (201) → el front muestra [MensajeIncidenciaCreada](../front/vistas/reportar/MensajeIncidenciaCreada.js).
+[IncidenciaControlador (back)](../back/logica/controladores/IncidenciaControlador.js) `crear()` →
+[ControlDeAcceso](../back/logica/tacticas/ControlDeAcceso.js) (precondición) → [IncidenciaServicio (back)](../back/logica/servicios/IncidenciaServicio.js)
+`reportar()` → [Incidencia](../back/logica/modelos/Incidencia.js) `crear()` → [IncidenciaRepositorio](../back/datos/repositorios/IncidenciaRepositorio.js)
+→ ← [IncidenciaDTO](../back/logica/dto/IncidenciaDTO.js) (201) → el front muestra [MensajeIncidenciaCreada](../front/vistas/reportar/MensajeIncidenciaCreada.js).
 
 **¿Y si alguien se salta el front (Postman) y manda datos mal escritos?**
 El back no repite las validaciones de formato (decisión del equipo). Lo que protege al sistema sigue
-en el back: la **precondición** (sesión y rol, [ControlDeAcceso](../back/tacticas/ControlDeAcceso.js)), la
-clave de los sensores ([AutenticadorDeSensores](../back/tacticas/AutenticadorDeSensores.js)) y las **reglas de
+en el back: la **precondición** (sesión y rol, [ControlDeAcceso](../back/logica/tacticas/ControlDeAcceso.js)), la
+clave de los sensores ([AutenticadorDeSensores](../back/logica/tacticas/AutenticadorDeSensores.js)) y las **reglas de
 negocio** de modelos y servicios (lleno/vacío, solo abiertos, «pendiente», placa y nombre únicos,
 rol según el dominio).
 
 **¿Qué pasa si un sensor falla y manda avisos imposibles?** (táctica de disponibilidad)
-[FiltroDeAvisos](../back/tacticas/FiltroDeAvisos.js) los ignora sin detener el sistema y los registra como
-[AvisoRechazado](../back/modelos/AvisoRechazado.js); con 3 seguidos marca el sensor «con falla». Si un sensor
-deja de avisar, [MonitorDeSensores](../back/tacticas/MonitorDeSensores.js) lo marca «sin avisar» pasado el
+[FiltroDeAvisos](../back/logica/tacticas/FiltroDeAvisos.js) los ignora sin detener el sistema y los registra como
+[AvisoRechazado](../back/logica/modelos/AvisoRechazado.js); con 3 seguidos marca el sensor «con falla». Si un sensor
+deja de avisar, [MonitorDeSensores](../back/logica/tacticas/MonitorDeSensores.js) lo marca «sin avisar» pasado el
 tiempo límite (30 min). Los dos se ven en Administrar › Garita.
 
 **¿Qué pasa con un aviso de un estacionamiento cerrado?**
 Se acepta y se cuenta: los carros siguen entrando y saliendo aunque esté cerrado; solo deja de
-mostrarse con libres y de sugerirse ([Estacionamiento.motivoDeRechazo](../back/modelos/Estacionamiento.js)).
+mostrarse con libres y de sugerirse ([Estacionamiento.motivoDeRechazo](../back/logica/modelos/Estacionamiento.js)).
 
 **¿Cómo entra el simulador a la app?**
 Por la misma API que usaría un sensor real ([ClienteAppBase.aviso](../../RadarEstacionamientos_simulador/conexion_app/ClienteAppBase.js)
 → `POST /api/avisos` con `x-clave-sensor`). La app no tiene código del simulador (D-002, D-006).
 
 **¿Dónde se guardan los datos?**
-En memoria ([AlmacenEnMemoria](../back/basedatos/AlmacenEnMemoria.js)) mientras el equipo elige la base de
+En memoria ([AlmacenEnMemoria](../back/datos/basedatos/AlmacenEnMemoria.js)) mientras el equipo elige la base de
 datos; solo lo usan los repositorios, así que al llegar la base de datos se cambia esa capa y nada más.
 
 **¿Dónde se prueba el criterio N de la HU X?**

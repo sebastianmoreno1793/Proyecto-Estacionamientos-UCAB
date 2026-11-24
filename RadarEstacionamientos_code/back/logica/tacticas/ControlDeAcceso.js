@@ -3,7 +3,7 @@
 // algo, tener la sesión iniciada (401 si no) y, para lo de administración, ser administrador (403).
 // No es una validación de datos: esas están en el front. La llaman los controladores del back.
 import { Sesion } from "../modelos/Sesion.js";
-import { USUARIOS_DE_PRUEBA } from "../basedatos/datos_iniciales/usuarios_de_prueba.js";
+import { USUARIOS_DE_PRUEBA } from "../../datos/basedatos/datos_iniciales/usuarios_de_prueba.js";
 
 export class ControlDeAcceso {
   #cuentaServicio;

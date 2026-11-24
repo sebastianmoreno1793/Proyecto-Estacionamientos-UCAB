@@ -13,7 +13,7 @@ Ingeniería de Software, Equipo 3.
   camino que entrarían los reales (`docs/decisiones/D-002-deteccion-simulada.md`).
 - Solo entran correos @est.ucab.edu.ve y @ucab.edu.ve (`docs/decisiones/D-003-solo-web-con-correo-ucab.md`).
 - ⭐ Semáforo (D-009): **verde = hay puesto** (libres ≥ 1), **rojo = no hay puesto** (libres = 0), gris =
-  cerrado. Nada de amarillo ni naranja. Lo decide el modelo `Semaforo` (`back/modelos/Semaforo.js`) con los libres, no el porcentaje.
+  cerrado. Nada de amarillo ni naranja. Lo decide el modelo `Semaforo` (`back/logica/modelos/Semaforo.js`) con los libres, no el porcentaje.
 - Puestos libres: nunca menos de 0 ni más que la capacidad.
 - ⭐ **Diseño (D-007, obligatorio):** toda interfaz sigue `DESIGN.md` (raíz de esta carpeta): iOS
   institucional, Azul Montalbán como único color de acción, los colores del semáforo solo para
@@ -48,7 +48,7 @@ Datos personales reales (placas, correos, cédulas) y credenciales (`.env`).
   HU 3.2), `POST /api/incidencias` (HU 9.1), `PATCH /api/estacionamientos/:id` (HU 5.4),
   `GET /api/estacionamientos` y el canal en vivo `GET /api/eventos` (HU 4.3).
 - Avisos y lecturas piden el encabezado `x-clave-sensor` (`CLAVE_SENSORES`, ver `.env.example`).
-- Al canal en vivo y a la API pública **nunca** van placas ni correos (los DTO de `back/dto/`).
+- Al canal en vivo y a la API pública **nunca** van placas ni correos (los DTO de `back/logica/dto/`).
 - `POST /api/pruebas/reiniciar` existe solo en desarrollo.
 - **La simulación NO vive aquí**: está en `../RadarEstacionamientos_simulador/` (maqueta 3D,
   menú de pruebas, colección de Postman) y solo usa esta API. No agregues código "para el

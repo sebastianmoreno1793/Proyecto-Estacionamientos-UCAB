@@ -1,8 +1,8 @@
 // @HU-2.1 Registrar mis vehículos · Samuel — Guarda los vehículos de cada usuario
 // Repositorio · Vehículos.
 import { Repositorio } from "./Repositorio.js";
-import { Placa } from "../modelos/Placa.js";
-import { Vehiculo } from "../modelos/Vehiculo.js";
+import { Placa } from "../../logica/modelos/Placa.js";
+import { Vehiculo } from "../../logica/modelos/Vehiculo.js";
 
 export class VehiculoRepositorio extends Repositorio {
   constructor(almacen) {

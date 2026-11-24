@@ -5,7 +5,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { CENTRO_CAMPUS as CENTRO_APP_BASE, ESTACIONAMIENTOS } from "../../RadarEstacionamientos_code/back/basedatos/datos_iniciales/estacionamientos.js";
+import { CENTRO_CAMPUS as CENTRO_APP_BASE, ESTACIONAMIENTOS } from "../../RadarEstacionamientos_code/back/datos/basedatos/datos_iniciales/estacionamientos.js";
 import { CENTRO_CAMPUS, CONTORNO_CAMPUS, EDIFICIOS, GARITA, RELIEVE, VIAS } from "../datos_campus/campus.js";
 import { Coordenadas } from "../mapa_3d/Coordenadas.js";
 import { GrafoDeVias } from "../mapa_3d/GrafoDeVias.js";

@@ -2,8 +2,8 @@
 // Pruebas de unidad del servicio CuentaServicio. Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
-import { USUARIOS_DE_PRUEBA } from "../../basedatos/datos_iniciales/usuarios_de_prueba.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
+import { USUARIOS_DE_PRUEBA } from "../../datos/basedatos/datos_iniciales/usuarios_de_prueba.js";
 import { Fabrica } from "../../Fabrica.js";
 
 let cuentas;

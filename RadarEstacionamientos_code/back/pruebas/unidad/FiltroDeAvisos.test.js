@@ -2,10 +2,10 @@
 // Pruebas de unidad de la táctica FiltroDeAvisos. Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
-import { Estacionamiento } from "../../modelos/Estacionamiento.js";
-import { AvisoRechazadoRepositorio } from "../../repositorios/AvisoRechazadoRepositorio.js";
-import { FiltroDeAvisos } from "../../tacticas/FiltroDeAvisos.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
+import { Estacionamiento } from "../../logica/modelos/Estacionamiento.js";
+import { AvisoRechazadoRepositorio } from "../../datos/repositorios/AvisoRechazadoRepositorio.js";
+import { FiltroDeAvisos } from "../../logica/tacticas/FiltroDeAvisos.js";
 
 let repositorio;
 let filtro;

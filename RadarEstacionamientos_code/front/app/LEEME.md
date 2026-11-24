@@ -12,6 +12,6 @@ antes de llegar aquí.
 | `sugerencia/` | `/sugerencia` | `vistas/sugerencia/BuscadorSugerencia` (HU 7.2) |
 | `entrar/`, `registro/` | `/entrar`, `/registro` | `vistas/cuenta/FormularioCuenta` (HU 1.1) |
 | `admin/` | `/admin/...` | Puestos, Garita y Edificios (solo administrador) |
-| `api/` | `/api/...` | **La ruta del back**: cada `route.js` pasa la petición a su controlador de `back/controladores/` (✅ simulador y Postman) |
+| `api/` | `/api/...` | **La ruta del back**: cada `route.js` pasa la petición a su controlador de `back/logica/controladores/` (✅ simulador y Postman) |
 
 `layout.js` es el marco de todas las pantallas; `manifest.js`, los datos de la PWA.

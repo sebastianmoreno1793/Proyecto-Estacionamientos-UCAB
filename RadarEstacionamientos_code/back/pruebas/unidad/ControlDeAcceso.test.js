@@ -2,9 +2,9 @@
 // Pruebas de unidad de la táctica ControlDeAcceso. Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
 import { Fabrica } from "../../Fabrica.js";
-import { ControlDeAcceso } from "../../tacticas/ControlDeAcceso.js";
+import { ControlDeAcceso } from "../../logica/tacticas/ControlDeAcceso.js";
 
 let fabrica;
 beforeEach(() => {

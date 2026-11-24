@@ -1,7 +1,7 @@
 // @HU-3.2 Simular sensores y placas · Aaron — Guarda las placas leídas en la garita
 // Repositorio · Lecturas del lector de placas.
 import { Repositorio } from "./Repositorio.js";
-import { LecturaDePlaca } from "../modelos/LecturaDePlaca.js";
+import { LecturaDePlaca } from "../../logica/modelos/LecturaDePlaca.js";
 
 export class LecturaDePlacaRepositorio extends Repositorio {
   constructor(almacen) {

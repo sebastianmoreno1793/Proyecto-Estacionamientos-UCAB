@@ -1,5 +1,5 @@
 // Canal en vivo (HU 4.3) — Dirección web GET /api/eventos (Server-Sent Events)
-// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/controladores/).
+// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/logica/controladores/).
 // GET /api/eventos → EventoControlador.abrir   [api] [postman]
 import { Fabrica } from "@back/Fabrica.js";
 

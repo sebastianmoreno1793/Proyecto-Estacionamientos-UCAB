@@ -2,8 +2,8 @@
 // Pruebas de unidad del servicio EdificioServicio. Se corren con: npm test
 import { beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { AlmacenEnMemoria } from "../../basedatos/AlmacenEnMemoria.js";
-import { EDIFICIOS } from "../../basedatos/datos_iniciales/edificios.js";
+import { AlmacenEnMemoria } from "../../datos/basedatos/AlmacenEnMemoria.js";
+import { EDIFICIOS } from "../../datos/basedatos/datos_iniciales/edificios.js";
 import { Fabrica } from "../../Fabrica.js";
 
 let servicio;

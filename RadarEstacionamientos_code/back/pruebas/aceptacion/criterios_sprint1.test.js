@@ -16,7 +16,7 @@
 import { readFileSync } from "node:fs";
 import { beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { ESTACIONAMIENTOS } from "../../basedatos/datos_iniciales/estacionamientos.js";
+import { ESTACIONAMIENTOS } from "../../datos/basedatos/datos_iniciales/estacionamientos.js";
 import { Ayuda, CLAVE_SENSOR } from "../integracion/ayuda.js";
 
 let a;

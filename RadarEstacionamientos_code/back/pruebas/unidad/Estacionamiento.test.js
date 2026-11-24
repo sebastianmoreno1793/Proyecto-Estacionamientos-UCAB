@@ -4,8 +4,8 @@
 // Pruebas de unidad del modelo Estacionamiento. Se corren con: npm test
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { Estacionamiento } from "../../modelos/Estacionamiento.js";
-import { ErrorDeNegocio } from "../../modelos/ErrorDeNegocio.js";
+import { Estacionamiento } from "../../logica/modelos/Estacionamiento.js";
+import { ErrorDeNegocio } from "../../logica/modelos/ErrorDeNegocio.js";
 
 const nuevo = (datos = {}) => new Estacionamiento({ id: "est-x", nombre: "X", capacidad: 40, ocupados: 30, ...datos });
 

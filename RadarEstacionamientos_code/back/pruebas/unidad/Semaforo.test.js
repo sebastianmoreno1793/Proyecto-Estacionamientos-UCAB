@@ -2,8 +2,8 @@
 // Pruebas de unidad del modelo Semaforo. Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { Estacionamiento } from "../../modelos/Estacionamiento.js";
-import { Semaforo } from "../../modelos/Semaforo.js";
+import { Estacionamiento } from "../../logica/modelos/Estacionamiento.js";
+import { Semaforo } from "../../logica/modelos/Semaforo.js";
 
 const nivel = (libres, activo = true) => Semaforo.segun({ libres, activo }).nivel;
 

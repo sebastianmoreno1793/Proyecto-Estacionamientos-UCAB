@@ -1,4 +1,4 @@
-# back/basedatos · los datos mientras no hay base de datos
+# back/datos/basedatos · los datos mientras no hay base de datos
 
 `AlmacenEnMemoria.js` guarda registros simples (como tablas) en memoria; se borran al apagar el
 servidor. Solo lo usan los repositorios. `reiniciar()` vuelve el campus a los datos de ejemplo y

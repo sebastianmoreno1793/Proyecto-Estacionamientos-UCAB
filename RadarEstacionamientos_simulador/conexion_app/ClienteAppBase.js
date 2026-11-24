@@ -5,7 +5,7 @@
 export class ClienteAppBase {
   static URL_EVENTOS = "/api/base/eventos";
 
-  // Los mismos tipos que la app base (back/modelos/Incidencia.js), con su ícono para los botones.
+  // Los mismos tipos que la app base (back/logica/modelos/Incidencia.js), con su ícono para los botones.
   static TIPOS_DE_INCIDENCIA = [
     { id: "bateria_descargada", nombre: "Batería descargada", icono: "🔋" },
     { id: "conos_atravesados", nombre: "Conos atravesados", icono: "🚧" },

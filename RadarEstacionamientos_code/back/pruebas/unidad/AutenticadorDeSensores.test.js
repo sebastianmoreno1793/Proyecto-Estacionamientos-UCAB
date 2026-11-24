@@ -3,7 +3,7 @@
 // Pruebas de unidad de la táctica AutenticadorDeSensores. Se corren con: npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { AutenticadorDeSensores } from "../../tacticas/AutenticadorDeSensores.js";
+import { AutenticadorDeSensores } from "../../logica/tacticas/AutenticadorDeSensores.js";
 
 const peticion = (encabezados = {}) => new Request("http://x/api/avisos", { method: "POST", headers: encabezados });
 

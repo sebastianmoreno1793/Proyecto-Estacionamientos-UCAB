@@ -1,5 +1,5 @@
 // @HU-7.2 Sugerir el estacionamiento libre más cercano · Manuel — Dirección web GET /api/sugerencia
-// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/controladores/).
+// LA RUTA: no sabe qué le llega, solo se lo pasa a su controlador del back (back/logica/controladores/).
 // GET /api/sugerencia?edificio=<id> → SugerenciaControlador.sugerir   [api] [postman]
 import { Fabrica } from "@back/Fabrica.js";
 
