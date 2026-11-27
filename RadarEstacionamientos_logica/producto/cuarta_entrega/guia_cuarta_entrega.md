@@ -2,30 +2,22 @@
 
 > **Guía interna del equipo. No es para entregar.** Para cada punto de la entrega: qué pide la profesora, dónde va en el Trello, el diagrama listo (draw.io + PNG), cómo explicarlo y su trazabilidad con el código.
 
-**Fuente:** rama `sprint-1-completo`, commit `9438990` (16/nov/26). Preparada por Samuel con Claude el 24/nov/26. Los diagramas están en esta misma carpeta: el `.drawio` se abre en app.diagrams.net (Archivo → Abrir desde → Dispositivo) y el `.png` es la imagen para el Trello.
+**Fuente:** rama `sprint-1-completo`, commit `39d254f` (24/nov/26, con el back ya reorganizado en `logica/` y `datos/`). Preparada por Samuel con Claude; actualizada el 26/nov/26. Los diagramas están en esta misma carpeta: el `.drawio` se abre en app.diagrams.net (Archivo → Abrir desde → Dispositivo) y el `.png` es la imagen para el Trello.
 
-## Para quien revise (Sebastián y su Claude)
+## Estado (26/nov/26)
 
-Este PR **solo agrega documentación** en `RadarEstacionamientos_logica/producto/cuarta_entrega/`. No cambia código ni el Trello.
-
-Qué se pide revisar:
-
-1. **Que cada diagrama coincida con el código** de `sprint-1-completo`. Cada punto trae una tabla de trazabilidad (elemento → HU → archivo y línea). Si algo no coincide, comentar en el PR.
-2. **Que cumpla lo que pidió la profesora.** Las fuentes son sus instrucciones de la Cuarta Entrega, su documento «Diseño 4» y las notas de clase (resumidas en «Qué pidió la profesora en clase», abajo).
-3. **La reorganización del back en 2 supracomponentes** (punto 6). Los diagramas 6, 8 y 10 ya usan `back/logica/` y `back/datos/`. Se probó en una copia local: pasan las 144 pruebas del back y las 54 del front. El prompt para aplicarla está en el punto 6; **se aplica en una rama aparte** y no en este PR.
-4. **Los pendientes** de la lista de abajo, que debe decidir el equipo.
-
-Si eres un asistente de IA revisando este PR: lee esta guía completa, compara cada tabla de trazabilidad con los archivos que cita en la rama `sprint-1-completo`, y reporta en el PR las diferencias (archivo, línea y qué no coincide). No modifiques el código, el Trello ni los diagramas sin que el equipo lo confirme.
+- La reorganización del back en 2 supracomponentes ya está aplicada (commit `39d254f`, D-018). Las tablas de trazabilidad usan las rutas nuevas (`back/logica/…` y `back/datos/…`).
+- Los diagramas finales para el Trello son los de `00_cuarta_entrega_completa.drawio` (una página por diagrama). Los `.drawio` y `.png` de esta carpeta son la primera versión y sirven de referencia.
 
 ## Pendientes del equipo antes de subir todo al Trello
 
-- [x] Aplicar la reorganización del back en los 2 supracomponentes (aplicada el 24/nov/26 en la rama `back-dos-supracomponentes`). Los puntos 6, 8 y 10 ya coinciden con el código.
-- [ ] Confirmar qué IA se usaron: en el repositorio solo hay evidencia de Claude (commits con `Co-Authored-By`).
-- [ ] RNF 3: el código da un sensor por caído a los 30 minutos (`MonitorDeSensores`) y la versión del RNF del 03/nov dice 10. Igualarlos.
-- [ ] Característica 3: elegir un solo nombre, Robustez (lámina U13) o Disponibilidad (comentarios del código).
-- [ ] `front/vistas/comunes/MensajeHecho.js`: ningún componente lo renderiza. Usarlo o borrarlo.
+- [x] Reorganizar el back en los 2 supracomponentes (commit `39d254f`).
+- [x] IA usadas: Claude Code (programación) y Claude (documentación y diagramas). Ver el punto 2.
+- [x] RNF 3: el sensor se da por caído a los **30 minutos**, igual que `MonitorDeSensores`. Hay que cambiar el texto del RNF en el Trello (de 10 a 30 minutos).
+- [x] Característica 3: **Robustez** (lámina U13). Ver el punto 4.
+- [ ] `front/vistas/comunes/MensajeHecho.js`: ningún componente lo renderiza. Decidir si se borra.
 - [ ] Correo de la profesora: las instrucciones dicen `mperezpu@ucab.edu.com` y nuestros documentos `mperezpu@ucab.edu.ve`. Confirmar antes de darle permiso de edición al tablero.
-- [ ] Probar los enlaces de draw.io en una ventana privada antes de pegarlos en el Trello.
+- [ ] Exportar cada página del `.drawio` final como PNG y subirla a su tarjeta.
 
 ## Qué pidió la profesora en clase (notas de Samuel)
 
@@ -54,43 +46,43 @@ Si eres un asistente de IA revisando este PR: lee esta guía completa, compara c
 
 ### Trazabilidad
 
-Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UCAB`, rama `sprint-1-completo`, commit `9438990` (16/nov/26). Las rutas son dentro de `RadarEstacionamientos_code/`. Las HU son las 12 de la Tabla 3 del Brief (Iteración 1).
+Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UCAB`, rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Las rutas son dentro de `RadarEstacionamientos_code/`. Las HU son las 12 de la Tabla 3 del Brief (Iteración 1).
 
 ### Clases del diagrama → HU → código
 
 | Clase del diagrama | HU del Sprint 1 | Archivo del código | Evidencia |
 |---|---|---|---|
-| Usuario | 1.1 | `back/modelos/Usuario.js` | `export class Usuario` (correo, rol, contraseña cifrada) |
-| Sesion | 1.1 | `back/modelos/Sesion.js` | `export class Sesion`, `#correo` (línea 9) |
-| Vehiculo | 2.1 | `back/modelos/Vehiculo.js` | `export class Vehiculo`, `#dueno` (línea 11), `#placa` (línea 12) |
-| Movimiento | 3.1 | `back/modelos/Movimiento.js` | `export class Movimiento`, `#estacionamientoId` (línea 12) |
-| LecturaDePlaca | 3.2 | `back/modelos/LecturaDePlaca.js` | `export class LecturaDePlaca`, `#placa` (línea 12) |
-| AvisoRechazado | 4.1 | `back/modelos/AvisoRechazado.js` | `export class AvisoRechazado`, `#estacionamientoId` (línea 9) |
-| Estacionamiento | 4.1, 4.2, 5.1, 5.4 | `back/modelos/Estacionamiento.js` | `export class Estacionamiento` (capacidad, ocupados, activo, polígono) |
-| Edificio | 6.1 | `back/modelos/Edificio.js` | `export class Edificio`, `#ubicacion` (línea 9) |
-| Incidencia | 9.1 | `back/modelos/Incidencia.js` | `export class Incidencia`, `#estacionamientoId` (línea 17), `#reportadaPor` (línea 21) |
+| Usuario | 1.1 | `back/logica/modelos/Usuario.js` | `export class Usuario` (correo, rol, contraseña cifrada) |
+| Sesion | 1.1 | `back/logica/modelos/Sesion.js` | `export class Sesion`, `#correo` (línea 9) |
+| Vehiculo | 2.1 | `back/logica/modelos/Vehiculo.js` | `export class Vehiculo`, `#dueno` (línea 11), `#placa` (línea 12) |
+| Movimiento | 3.1 | `back/logica/modelos/Movimiento.js` | `export class Movimiento`, `#estacionamientoId` (línea 12) |
+| LecturaDePlaca | 3.2 | `back/logica/modelos/LecturaDePlaca.js` | `export class LecturaDePlaca`, `#placa` (línea 12) |
+| AvisoRechazado | 4.1 | `back/logica/modelos/AvisoRechazado.js` | `export class AvisoRechazado`, `#estacionamientoId` (línea 9) |
+| Estacionamiento | 4.1, 4.2, 5.1, 5.4 | `back/logica/modelos/Estacionamiento.js` | `export class Estacionamiento` (capacidad, ocupados, activo, polígono) |
+| Edificio | 6.1 | `back/logica/modelos/Edificio.js` | `export class Edificio`, `#ubicacion` (línea 9) |
+| Incidencia | 9.1 | `back/logica/modelos/Incidencia.js` | `export class Incidencia`, `#estacionamientoId` (línea 17), `#reportadaPor` (línea 21) |
 
 ### Relaciones del diagrama → código
 
 | Relación | Cardinalidad | HU | Evidencia en el código |
 |---|---|---|---|
-| Usuario **abre** Sesion | 1 — 0..* | 1.1 | `Sesion.#correo` (`Sesion.js`, línea 9); `CuentaServicio.abrirSesion(usuario)` (`back/servicios/CuentaServicio.js`, línea 39) |
-| Usuario **registra** Vehiculo | 1 — 0..* | 2.1 | `Vehiculo.#dueno` (`Vehiculo.js`, línea 11); `VehiculoServicio.registrar(dueno, …)` y `listarDe(dueno)` (`back/servicios/VehiculoServicio.js`, líneas 17 y 26) |
-| Usuario **reporta** Incidencia | 1 — 0..* | 9.1 | `Incidencia.#reportadaPor` (`Incidencia.js`, línea 21); `IncidenciaServicio` crea la incidencia con `reportadaPor: usuario?.correo` (`back/servicios/IncidenciaServicio.js`, línea 24) |
+| Usuario **abre** Sesion | 1 — 0..* | 1.1 | `Sesion.#correo` (`Sesion.js`, línea 9); `CuentaServicio.abrirSesion(usuario)` (`back/logica/servicios/CuentaServicio.js`, línea 39) |
+| Usuario **registra** Vehiculo | 1 — 0..* | 2.1 | `Vehiculo.#dueno` (`Vehiculo.js`, línea 11); `VehiculoServicio.registrar(dueno, …)` y `listarDe(dueno)` (`back/logica/servicios/VehiculoServicio.js`, líneas 17 y 26) |
+| Usuario **reporta** Incidencia | 1 — 0..* | 9.1 | `Incidencia.#reportadaPor` (`Incidencia.js`, línea 21); `IncidenciaServicio` crea la incidencia con `reportadaPor: usuario?.correo` (`back/logica/servicios/IncidenciaServicio.js`, línea 24) |
 | Estacionamiento **tiene** Incidencia | 1 — 0..* | 9.1 | `Incidencia.#estacionamientoId` (`Incidencia.js`, línea 17) |
 | Estacionamiento **registra** Movimiento | 1 — 0..* | 3.1, 4.1 | `Movimiento.#estacionamientoId` (`Movimiento.js`, línea 12) |
-| Estacionamiento **rechaza** AvisoRechazado | 0..1 — 0..* | 4.1 | `AvisoRechazado.#estacionamientoId` (`AvisoRechazado.js`, línea 9). Es 0..1 porque un aviso de un estacionamiento que no existe se guarda con motivo `no_existe` (`back/tacticas/FiltroDeAvisos.js`, línea 31) |
+| Estacionamiento **rechaza** AvisoRechazado | 0..1 — 0..* | 4.1 | `AvisoRechazado.#estacionamientoId` (`AvisoRechazado.js`, línea 9). Es 0..1 porque un aviso de un estacionamiento que no existe se guarda con motivo `no_existe` (`back/logica/tacticas/FiltroDeAvisos.js`, línea 31) |
 | Vehiculo **es identificado en** LecturaDePlaca | 0..1 — 0..* | 2.1, 3.2 | Las dos clases usan la misma clase `Placa` (`Vehiculo.js`, línea 21; `LecturaDePlaca.js`, línea 19). El comentario de `Vehiculo.js` (línea 3) dice que «el lector de la garita identifica al vehículo por ella». Es 0..1 porque la garita puede leer una placa que nadie registró |
-| Usuario **elige como destino** Edificio | 0..* — 0..* | 7.2 | `SugerenciaServicio.sugerir(edificioId)` (`back/servicios/SugerenciaServicio.js`, línea 21): el usuario elige el edificio al que va |
+| Usuario **elige como destino** Edificio | 0..* — 0..* | 7.2 | `SugerenciaServicio.sugerir(edificioId)` (`back/logica/servicios/SugerenciaServicio.js`, línea 21): el usuario elige el edificio al que va |
 | Edificio **está cerca de** Estacionamiento | 0..* — 0..* | 7.2 | `SugerenciaServicio.candidatos(edificio, estacionamientos)` (línea 30): calcula la distancia del edificio a cada estacionamiento |
 
 ### Clases del código que no van en el modelo de dominio
 
 | Clase | Archivo | Por qué no va |
 |---|---|---|
-| Placa | `back/modelos/Placa.js` | Es un dato (valor) de Vehiculo y de LecturaDePlaca, no un concepto propio del negocio |
-| Semaforo | `back/modelos/Semaforo.js` | Se calcula a partir del Estacionamiento (libres y estado); no se guarda |
-| ErrorDeNegocio | `back/modelos/ErrorDeNegocio.js` | Es un mecanismo técnico para avisar que una regla no se cumplió |
+| Placa | `back/logica/modelos/Placa.js` | Es un dato (valor) de Vehiculo y de LecturaDePlaca, no un concepto propio del negocio |
+| Semaforo | `back/logica/modelos/Semaforo.js` | Se calcula a partir del Estacionamiento (libres y estado); no se guarda |
+| ErrorDeNegocio | `back/logica/modelos/ErrorDeNegocio.js` | Es un mecanismo técnico para avisar que una regla no se cumplió |
 | Notificacion (HU 8.1) | `front/modelos/Notificacion.js` | Es del front; por la nota de React, el front va en el árbol de componentes |
 
 ### Cobertura de las 12 HU del Sprint 1
@@ -118,7 +110,7 @@ Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UC
 
 **Dónde va en el Trello:** Lista «Planificación» → tarjeta «Herramientas de Software»: pegar la tabla (o una lista con herramienta y para qué se usó).
 
-Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UCAB`, rama `sprint-1-completo`, commit `9438990` (16/nov/26). Solo se listan herramientas con evidencia en el repositorio. Las marcadas «por confirmar» las debe validar el equipo.
+Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UCAB`, rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Solo se listan herramientas con evidencia en el repositorio. Las marcadas «por confirmar» las debe validar el equipo.
 
 ### Lenguaje, frameworks y librerías
 
@@ -130,7 +122,7 @@ Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UC
 | React 19 | Componentes de la interfaz (front) | `front/package.json` (`"react": "^19.1.0"`, `"react-dom"`) |
 | Three.js | Maqueta 3D del campus en el simulador | `RadarEstacionamientos_simulador/package.json` (`"three": "^0.186.1"`) |
 | node:test | Pruebas automáticas de unidad, integración y aceptación | `"test": "node --test"`; carpetas `back/pruebas/unidad`, `integracion`, `aceptacion` |
-| node:crypto (scrypt) | Cifrado de la contraseña con sal | `back/modelos/Usuario.js` (`scryptSync`, `randomBytes`) |
+| node:crypto (scrypt) | Cifrado de la contraseña con sal | `back/logica/modelos/Usuario.js` (`scryptSync`, `randomBytes`) |
 | Service Worker / PWA | Notificaciones del navegador (HU 8.1) y app instalable | `front/public/sw.js`; decisión D-008 |
 
 ### Datos
@@ -138,7 +130,7 @@ Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UC
 | Herramienta | Para qué se usa | Evidencia |
 |---|---|---|
 | OpenStreetMap y SRTM | Forma y relieve del campus en la maqueta 3D | `docs/stack_y_arquitectura.md` (sección «Dos sistemas (D-006)»); `RadarEstacionamientos_simulador/mapa_3d/Relieve.js` |
-| Almacén en memoria | Guarda los datos mientras se elige la base de datos | `back/basedatos/AlmacenEnMemoria.js`; «Por decidir: Base de datos» en `docs/stack_y_arquitectura.md` |
+| Almacén en memoria | Guarda los datos mientras se elige la base de datos | `back/datos/basedatos/AlmacenEnMemoria.js`; «Por decidir: Base de datos» en `docs/stack_y_arquitectura.md` |
 
 ### Desarrollo, pruebas y colaboración
 
@@ -159,8 +151,8 @@ Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UC
 
 | Herramienta | Para qué se usó | Evidencia |
 |---|---|---|
-| Claude (Anthropic) | Asistente de programación y documentación | Commits del repositorio con `Co-Authored-By: Claude Opus 5.5` (por ejemplo `0406843`, «App por capas (MVC)…») |
-| Otras IA (por confirmar) | — | Si el equipo usó otras (ChatGPT, Gemini, Copilot…), agregarlas aquí; no hay evidencia en el repositorio |
+| Claude Code (Anthropic) | Asistente de programación: código, pruebas, reorganización por capas y documentación | Commits del repositorio con `Co-Authored-By: Claude Opus 5.5` (por ejemplo `0406843` «App por capas (MVC)…» y `39d254f` «Back en 2 supracomponentes») |
+| Claude (Anthropic) | Revisión de la trazabilidad, diagramas de arquitectura y guía de la Cuarta Entrega | Commit `07930e9` (PR #63) con `Co-Authored-By: Claude Opus 5.5` |
 
 ### Restricciones que imponen a la arquitectura
 
@@ -185,15 +177,15 @@ Revisado contra el repositorio `sebastianmoreno1793/Proyecto-Estacionamientos-UC
 
 ### Trazabilidad
 
-Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas dentro de `RadarEstacionamientos_code/` salvo que se indique otra carpeta.
+Revisado contra la rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Rutas dentro de `RadarEstacionamientos_code/` salvo que se indique otra carpeta.
 
 | Elemento del diagrama | Tipo | Origen (Brief / HU) | Evidencia en el código |
 |---|---|---|---|
-| Conductor (Estudiante o Profesor) | Persona | Brief, Mapa de Impacto: «Estudiantes y profesores»; HU 1.1, 2.1, 4.2, 5.1, 7.2, 8.1, 9.1 | Roles `estudiante` y `profesor` en `back/modelos/Usuario.js` (`rolSegunCorreo`) |
+| Conductor (Estudiante o Profesor) | Persona | Brief, Mapa de Impacto: «Estudiantes y profesores»; HU 1.1, 2.1, 4.2, 5.1, 7.2, 8.1, 9.1 | Roles `estudiante` y `profesor` en `back/logica/modelos/Usuario.js` (`rolSegunCorreo`) |
 | Administrador | Persona | Brief, Mapa de Impacto: «Administración»; HU 3.1/3.2/4.1 (vista de garita), 5.4, 6.1 | Rol `administrador` en `Usuario.js`; pantallas `front/app/admin/puestos`, `admin/edificios`, `admin/garita` |
 | Radar de Estacionamientos Libres UCAB [Sistema web] | Nuestro sistema | Brief, Restricciones: «únicamente mediante navegador web» | Carpeta `RadarEstacionamientos_code/` (Next.js) |
-| Sensores de acceso (simulados) | Sistema externo | Brief, Restricciones: sensores simulados; HU 3.1 y 4.1; D-002 | Entrada `POST /api/avisos` (`front/app/api/avisos/route.js`); `back/controladores/AvisoControlador.js`; clave del sensor en `back/tacticas/AutenticadorDeSensores.js` |
-| Lector de placas de la garita (simulado) | Sistema externo | Brief, Restricciones: lector de placas simulado; HU 3.2; D-002 | Entrada `POST /api/garita/lecturas` (`front/app/api/garita/lecturas/route.js`); `back/controladores/GaritaControlador.js` |
+| Sensores de acceso (simulados) | Sistema externo | Brief, Restricciones: sensores simulados; HU 3.1 y 4.1; D-002 | Entrada `POST /api/avisos` (`front/app/api/avisos/route.js`); `back/logica/controladores/AvisoControlador.js`; clave del sensor en `back/logica/tacticas/AutenticadorDeSensores.js` |
+| Lector de placas de la garita (simulado) | Sistema externo | Brief, Restricciones: lector de placas simulado; HU 3.2; D-002 | Entrada `POST /api/garita/lecturas` (`front/app/api/garita/lecturas/route.js`); `back/logica/controladores/GaritaControlador.js` |
 | Conductor → Radar «Usa» | Relación | HU de la persona | Pantallas `front/app/` (registro, entrar, mapa, perfil, sugerencia, reportar) |
 | Administrador → Radar «Usa» | Relación | HU 5.4, 6.1 y vista de garita | Pantallas `front/app/admin/` |
 | Sensores → Radar «Envía avisos de entrada y salida» | Relación | HU 3.1 y 4.1 | `POST /api/avisos` |
@@ -216,25 +208,25 @@ Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas
 
 **Dónde va en el Trello:** Lista «Planificación» → tarjeta «Características de la Arquitectura»: la característica y de qué RNF sale.
 
-Cadena de trazabilidad que pidió la profesora: **Rango de Calidad (Brief) → RNF (Segunda Entrega) → Característica de la arquitectura**. Los nombres de las características son los de su lámina U13 (Gandhi, Richards y Ford: operacionales, estructurales y transversales). Evidencia revisada en la rama `sprint-1-completo`, commit `9438990` (16/nov/26).
+Cadena de trazabilidad que pidió la profesora: **Rango de Calidad (Brief) → RNF (Segunda Entrega) → Característica de la arquitectura**. Los nombres de las características son los de su lámina U13 (Gandhi, Richards y Ford: operacionales, estructurales y transversales). Evidencia revisada en la rama `sprint-1-completo`, commit `39d254f` (24/nov/26).
 
 Según la lámina 9 de U13, las características «tienen que ser las menos posible», por eso son solo las cuatro que salen de los RNF.
 
 | # | Característica de la arquitectura | Tipo (U13) | Sale del RNF | Sale del Rango de Calidad del Brief | Dónde la atiende la arquitectura (código) |
 |---|---|---|---|---|---|
-| 1 | **Usabilidad** | Transversal | RNF 1 · Facilidad de interacción → Auto-descriptividad | Rango 2: la información se entiende de un vistazo, con los colores del semáforo y lenguaje claro | `back/modelos/Semaforo.js` (dos estados con texto: «Hay puesto», «No hay puesto», «Cerrado», D-009); `front/vistas/comunes/ColoresSemaforo.js` |
-| 2 | **Rendimiento** | Operacional | RNF 2 · Eficiencia de desempeño → Comportamiento temporal | Rango 1: el mapa carga y se actualiza en pocos segundos | Canal en vivo `back/servicios/EventosEnVivoServicio.js` (`GET /api/eventos`, Server-Sent Events): el mapa cambia sin recargar |
-| 3 | **Robustez** | Operacional | RNF 3 · Fiabilidad → Tolerancia a fallos | Rango 3: si un sensor falla, se oculta solo ese estacionamiento y el sistema sigue con los demás | Tácticas `back/tacticas/MonitorDeSensores.js` (detecta el sensor que dejó de avisar) y `back/tacticas/FiltroDeAvisos.js` (ignora avisos defectuosos sin detener el sistema) |
-| 4 | **Autorización** | Transversal | RNF 4 · Seguridad → Confidencialidad | Rango 4: cada usuario solo accede a lo permitido para su rol; placas y vehículos solo los ve su dueño y el personal autorizado | Táctica `back/tacticas/ControlDeAcceso.js` (sesión y rol, 401/403); `VehiculoRepositorio.listarDe(dueno)`; las placas leídas solo en `admin/garita` y nunca en el canal en vivo |
+| 1 | **Usabilidad** | Transversal | RNF 1 · Facilidad de interacción → Auto-descriptividad | Rango 2: la información se entiende de un vistazo, con los colores del semáforo y lenguaje claro | `back/logica/modelos/Semaforo.js` (dos estados con texto: «Hay puesto», «No hay puesto», «Cerrado», D-009); `front/vistas/comunes/ColoresSemaforo.js` |
+| 2 | **Rendimiento** | Operacional | RNF 2 · Eficiencia de desempeño → Comportamiento temporal | Rango 1: el mapa carga y se actualiza en pocos segundos | Canal en vivo `back/logica/servicios/EventosEnVivoServicio.js` (`GET /api/eventos`, Server-Sent Events): el mapa cambia sin recargar |
+| 3 | **Robustez** | Operacional | RNF 3 · Fiabilidad → Tolerancia a fallos | Rango 3: si un sensor falla, se oculta solo ese estacionamiento y el sistema sigue con los demás | Tácticas `back/logica/tacticas/MonitorDeSensores.js` (detecta el sensor que dejó de avisar) y `back/logica/tacticas/FiltroDeAvisos.js` (ignora avisos defectuosos sin detener el sistema) |
+| 4 | **Autorización** | Transversal | RNF 4 · Seguridad → Confidencialidad | Rango 4: cada usuario solo accede a lo permitido para su rol; placas y vehículos solo los ve su dueño y el personal autorizado | Táctica `back/logica/tacticas/ControlDeAcceso.js` (sesión y rol, 401/403); `VehiculoRepositorio.listarDe(dueno)`; las placas leídas solo en `admin/garita` y nunca en el canal en vivo |
 
 Nota sobre el orden de los rangos: es el orden de la sección 4 del Brief (1 · carga en pocos segundos, 2 · se entiende de un vistazo, 3 · si un sensor falla, 4 · seguro con los datos).
 
-### Puntos para que el equipo revise
+### Decisiones tomadas por el equipo
 
-- **Robustez o Disponibilidad (característica 3).** En la lámina U13, «Robustez» es manejar errores mientras el sistema sigue funcionando, que es exactamente el Rango 3. Pero los comentarios del código llaman a esas tácticas «de DISPONIBILIDAD» (`MonitorDeSensores.js` y `FiltroDeAvisos.js`, primera línea de comentario). No es un error: las tácticas vienen del catálogo de disponibilidad. Conviene decidir un solo nombre y usarlo igual en el Trello y en el código.
-- **Tiempo del sensor caído.** `MonitorDeSensores.js` usa 30 minutos por defecto (`TIEMPO_LIMITE_SENSOR_MIN`). La versión del RNF 3 que está en el repositorio (03/nov) dice 10 minutos. Si el RNF actual de Trello sigue diciendo 10, hay que igualarlos.
-- **Autenticación.** También existe (`AutenticadorDeSensores.js`, sesión con correo UCAB), pero viene de una restricción del Brief (solo la comunidad UCAB), no de un Rango de Calidad. Por eso no la puse como característica: va en las decisiones arquitectónicas.
-- **Texto en el Trello.** Según tus notas, en la tarjeta no se copia el texto del Brief: basta con el nombre de la característica y de qué RNF sale.
+- **Característica 3 = Robustez.** En la lámina U13 de la profesora, Robustez es la «capacidad para manejar errores y condiciones de límite mientras se ejecuta», que es exactamente el Rango 3: si un sensor falla, se oculta solo ese estacionamiento y el sistema sigue con los demás. Disponibilidad, en cambio, habla de cuánto tiempo está disponible el sistema (24/7). Los comentarios del código llaman a `FiltroDeAvisos` y `MonitorDeSensores` «tácticas de disponibilidad» porque vienen de ese catálogo de tácticas (Bass); la característica que atienden es la Robustez.
+- **Tiempo del sensor caído = 30 minutos.** El RNF 3 se ajusta a 30 minutos para coincidir con el código: `MonitorDeSensores.MINUTOS_POR_DEFECTO = 30` (`back/logica/tacticas/MonitorDeSensores.js`, línea 8), configurable con `TIEMPO_LIMITE_SENSOR_MIN`.
+- **Autenticación** también existe (`AutenticadorDeSensores.js`, sesión con correo UCAB), pero viene de una restricción del Brief (solo la comunidad UCAB), no de un Rango de Calidad. Por eso va en las decisiones arquitectónicas.
+- **Texto en el Trello:** no se copia el texto del Brief; basta con el nombre de la característica y de qué RNF sale.
 
 ---
 
@@ -252,16 +244,16 @@ Nota sobre el orden de los rangos: es el orden de la sección 4 del Brief (1 · 
 
 ### Trazabilidad
 
-Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas dentro de `RadarEstacionamientos_code/` salvo que se indique otra carpeta.
+Revisado contra la rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Rutas dentro de `RadarEstacionamientos_code/` salvo que se indique otra carpeta.
 
 | Elemento del diagrama | Tipo | Evidencia en el código |
 |---|---|---|
-| Conductor (Estudiante o Profesor) | Persona | Roles `estudiante` y `profesor` en `back/modelos/Usuario.js` |
+| Conductor (Estudiante o Profesor) | Persona | Roles `estudiante` y `profesor` en `back/logica/modelos/Usuario.js` |
 | Administrador | Persona | Rol `administrador` en `Usuario.js`; pantallas `front/app/admin/` |
 | Límite «Radar de Estacionamientos Libres UCAB» | Límite del sistema | Carpeta `RadarEstacionamientos_code/` |
 | Front [Next.js + React] | Contenedor | Carpeta `front/` (`front/package.json`: next 15, react 19) |
 | Back [JavaScript] | Contenedor | Carpeta `back/` (clases sin dependencia de Next; `back/Fabrica.js` las conecta) |
-| Base de datos (almacén en memoria, temporal) | Base de datos | `back/basedatos/AlmacenEnMemoria.js`; «Por decidir: Base de datos» en `docs/stack_y_arquitectura.md` |
+| Base de datos (almacén en memoria, temporal) | Base de datos | `back/datos/basedatos/AlmacenEnMemoria.js`; «Por decidir: Base de datos» en `docs/stack_y_arquitectura.md` |
 | Sensores de acceso (simulados) | Sistema externo | Simulados por `RadarEstacionamientos_simulador/` (D-002, D-006) |
 | Lector de placas de la garita (simulado) | Sistema externo | Simulado por `RadarEstacionamientos_simulador/` (D-002, D-006) |
 
@@ -269,9 +261,9 @@ Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas
 |---|---|
 | Conductor / Administrador → Front «Usa [navegador]» | Pantallas en `front/app/` (Brief: solo navegador web, D-003) |
 | Front → Back «Pide y envía datos [HTTP/JSON · /api]» | **Único hilo de comunicación:** `front/servicios/ClienteHttp.js` («hablan con el back SOLO por fetch, a las mismas URL /api/...»); canal en vivo `front/servicios/EventosEnVivoServicio.js` (`GET /api/eventos`). Las rutas `front/app/api/**/route.js` son la única parte del front que importa el back (`@back/Fabrica.js`) |
-| Back → Base de datos «Lee y escribe» | Los repositorios (`back/repositorios/*Repositorio.js`) leen y escriben en `AlmacenEnMemoria` |
-| Sensores → Back «Envía avisos [POST /api/avisos]» | `front/app/api/avisos/route.js` → `back/controladores/AvisoControlador.js`; clave en `back/tacticas/AutenticadorDeSensores.js` |
-| Lector de placas → Back «Envía placas leídas [POST /api/garita/lecturas]» | `front/app/api/garita/lecturas/route.js` → `back/controladores/GaritaControlador.js` |
+| Back → Base de datos «Lee y escribe» | Los repositorios (`back/datos/repositorios/*Repositorio.js`) leen y escriben en `AlmacenEnMemoria` |
+| Sensores → Back «Envía avisos [POST /api/avisos]» | `front/app/api/avisos/route.js` → `back/logica/controladores/AvisoControlador.js`; clave en `back/logica/tacticas/AutenticadorDeSensores.js` |
+| Lector de placas → Back «Envía placas leídas [POST /api/garita/lecturas]» | `front/app/api/garita/lecturas/route.js` → `back/logica/controladores/GaritaControlador.js` |
 
 ### Para explicar en la defensa
 
@@ -293,25 +285,25 @@ Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas
 
 ### Trazabilidad
 
-Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas dentro de `RadarEstacionamientos_code/back/`.
+Revisado contra la rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Rutas dentro de `RadarEstacionamientos_code/back/`.
 
-**Importante:** el diagrama muestra los 2 supracomponentes que pidió la profesora (`logica/` y `datos/`). Hoy esas dos carpetas no existen: las 7 carpetas están directamente en `back/`. Para que el diagrama y el código coincidan, el equipo debe aplicar la reorganización del final. Esa reorganización ya se probó en una copia local: las 144 pruebas del back y las 54 del front pasan.
+**La reorganización ya está aplicada:** commit `39d254f` de Sebastián (24/nov/26, D-018). Las carpetas del diagrama son las del código.
 
 ### Supracomponentes y componentes → carpetas
 
-| Elemento del diagrama | Tipo | Carpeta propuesta | Carpeta actual | Archivos |
+| Elemento del diagrama | Tipo | Carpeta | Carpeta antes del commit `39d254f` | Archivos |
 |---|---|---|---|---|
 | Back | Contenedor | `back/` | `back/` | — |
 | Fábrica (clase central) | Componente | `back/Fabrica.js` | `back/Fabrica.js` (no se mueve) | `Fabrica.js` |
 | Lógica de negocio | Supracomponente | `back/logica/` | (no existe) | — |
-| Controladores | Componente | `back/logica/controladores/` | `back/controladores/` | Controlador, AvisoControlador, CuentaControlador, EdificioControlador, EstacionamientoControlador, EventoControlador, GaritaControlador, IncidenciaControlador, PruebasControlador, SugerenciaControlador, VehiculoControlador |
-| Tácticas | Componente | `back/logica/tacticas/` | `back/tacticas/` | AutenticadorDeSensores, ControlDeAcceso, FiltroDeAvisos, MonitorDeSensores |
-| Servicios | Componente | `back/logica/servicios/` | `back/servicios/` | AforoServicio, CuentaServicio, EdificioServicio, EstacionamientoServicio, EventosEnVivoServicio, GaritaServicio, IncidenciaServicio, PruebasServicio, SugerenciaServicio, VehiculoServicio |
-| DTO | Componente | `back/logica/dto/` | `back/dto/` | AvisoDTO, AvisoRechazadoDTO, CredencialesDTO, EdificioDTO, EstacionamientoDTO, IncidenciaDTO, LecturaDePlacaDTO, MovimientoDTO, SugerenciaDTO, UsuarioDTO, VehiculoDTO |
-| Modelos | Componente | `back/logica/modelos/` | `back/modelos/` | AvisoRechazado, Edificio, ErrorDeNegocio, Estacionamiento, Incidencia, LecturaDePlaca, Movimiento, Placa, Semaforo, Sesion, Usuario, Vehiculo |
+| Controladores | Componente | `back/logica/controladores/` | `back/logica/controladores/` | Controlador, AvisoControlador, CuentaControlador, EdificioControlador, EstacionamientoControlador, EventoControlador, GaritaControlador, IncidenciaControlador, PruebasControlador, SugerenciaControlador, VehiculoControlador |
+| Tácticas | Componente | `back/logica/tacticas/` | `back/logica/tacticas/` | AutenticadorDeSensores, ControlDeAcceso, FiltroDeAvisos, MonitorDeSensores |
+| Servicios | Componente | `back/logica/servicios/` | `back/logica/servicios/` | AforoServicio, CuentaServicio, EdificioServicio, EstacionamientoServicio, EventosEnVivoServicio, GaritaServicio, IncidenciaServicio, PruebasServicio, SugerenciaServicio, VehiculoServicio |
+| DTO | Componente | `back/logica/dto/` | `back/logica/dto/` | AvisoDTO, AvisoRechazadoDTO, CredencialesDTO, EdificioDTO, EstacionamientoDTO, IncidenciaDTO, LecturaDePlacaDTO, MovimientoDTO, SugerenciaDTO, UsuarioDTO, VehiculoDTO |
+| Modelos | Componente | `back/logica/modelos/` | `back/logica/modelos/` | AvisoRechazado, Edificio, ErrorDeNegocio, Estacionamiento, Incidencia, LecturaDePlaca, Movimiento, Placa, Semaforo, Sesion, Usuario, Vehiculo |
 | Acceso a datos | Supracomponente | `back/datos/` | (no existe) | — |
-| Repositorios | Componente | `back/datos/repositorios/` | `back/repositorios/` | Repositorio, AvisoRechazadoRepositorio, EdificioRepositorio, EstacionamientoRepositorio, IncidenciaRepositorio, LecturaDePlacaRepositorio, MovimientoRepositorio, SesionRepositorio, UsuarioRepositorio, VehiculoRepositorio |
-| Base de datos (almacén en memoria) | Base de datos | `back/datos/basedatos/` | `back/basedatos/` | AlmacenEnMemoria, `datos_iniciales/` (capacidad_inicial, edificios, estacionamientos, usuarios_de_prueba) |
+| Repositorios | Componente | `back/datos/repositorios/` | `back/datos/repositorios/` | Repositorio, AvisoRechazadoRepositorio, EdificioRepositorio, EstacionamientoRepositorio, IncidenciaRepositorio, LecturaDePlacaRepositorio, MovimientoRepositorio, SesionRepositorio, UsuarioRepositorio, VehiculoRepositorio |
+| Base de datos (almacén en memoria) | Base de datos | `back/datos/basedatos/` | `back/datos/basedatos/` | AlmacenEnMemoria, `datos_iniciales/` (capacidad_inicial, edificios, estacionamientos, usuarios_de_prueba) |
 
 Las pruebas (`back/pruebas/`) no son un componente de la arquitectura y no se mueven.
 
@@ -357,7 +349,7 @@ confirme: al terminar, muéstrame el resumen de git y el resultado de npm test.
 
 2. Corrige todos los import relativos que cambian por el movimiento, en back/ (incluidas
    back/pruebas/) y en RadarEstacionamientos_simulador/pruebas_automaticas/mapa3d.test.js, que
-   importa ../../RadarEstacionamientos_code/back/basedatos/datos_iniciales/estacionamientos.js
+   importa ../../RadarEstacionamientos_code/back/datos/basedatos/datos_iniciales/estacionamientos.js
    (ahora es back/datos/basedatos/...). Las rutas del front usan "@back/Fabrica.js" y no cambian.
 
 3. Agrega back/logica/LEEME.md y back/datos/LEEME.md con una línea cada uno:
@@ -368,7 +360,7 @@ confirme: al terminar, muéstrame el resumen de git y el resultado de npm test.
 4. Actualiza las rutas que cambiaron en la documentación (.md): back/LEEME.md, los LEEME.md de cada
    carpeta movida, RadarEstacionamientos_code/README.md, CONTEXTO.md, docs/mapa_HU_codigo.md,
    front/app/LEEME.md, RadarEstacionamientos_simulador/README.md y los comentarios que digan
-   «back/controladores/», «back/modelos/», etc. (por ejemplo en front/app/api/**/route.js y en
+   «back/logica/controladores/», «back/logica/modelos/», etc. (por ejemplo en front/app/api/**/route.js y en
    back/datos/basedatos/datos_iniciales/estacionamientos.js). No toques las láminas de la profesora.
 
 5. Corre npm test en RadarEstacionamientos_code (back y front) y node --test en
@@ -390,7 +382,7 @@ confirme: al terminar, muéstrame el resumen de git y el resultado de npm test.
 
 ### Trazabilidad
 
-Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas dentro de `RadarEstacionamientos_code/front/`.
+Revisado contra la rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Rutas dentro de `RadarEstacionamientos_code/front/`.
 
 Según la nota de las instrucciones («Los que hayan desarrollado usando ReactJS deben elaborar un árbol de componentes, en sustitución a todos los Diagramas del FRONT»), este árbol reemplaza los diagramas de componentes y de clases del front. El árbol se armó leyendo qué componente importa y renderiza cada archivo.
 
@@ -473,7 +465,7 @@ Como indicó la profesora, en el front sí aparecen personas: el Conductor (estu
 
 ### Trazabilidad
 
-Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas dentro de `RadarEstacionamientos_code/back/`, con las carpetas ya agrupadas en los 2 supracomponentes propuestos (`logica/` y `datos/`, ver la trazabilidad del diagrama 6).
+Revisado contra la rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Rutas dentro de `RadarEstacionamientos_code/back/`, con las carpetas de los 2 supracomponentes (`logica/` y `datos/`), aplicadas en el commit `39d254f` (24/nov/26).
 
 ### Cómo se armó
 
@@ -549,7 +541,7 @@ Otras asociaciones entre modelos que están en el código: `Vehiculo` y `Lectura
 
 **Dónde va en el Trello:** Lista «Ejecución» → tarjeta «Registro de Decisiones Arquitectónicas»: pegar la tabla (las 4 columnas de la profesora; la de evidencia es para nosotros).
 
-Formato de la tabla de la profesora (ID, Fecha, Descripción, Justificación), con una columna más de **evidencia** para la trazabilidad. Las decisiones D-001 a D-009 son las fichas del equipo en `RadarEstacionamientos_code/docs/decisiones/`; las nuevas (D-010 en adelante) salen de los commits de la rama `sprint-1-completo` (commit `9438990`, 16/nov/26) y de esta entrega.
+Formato de la tabla de la profesora (ID, Fecha, Descripción, Justificación), con una columna más de **evidencia** para la trazabilidad. Las decisiones D-001 a D-009 son las fichas del equipo en `RadarEstacionamientos_code/docs/decisiones/`; las nuevas (D-010 en adelante) salen de los commits de la rama `sprint-1-completo` (commit `39d254f`, 24/nov/26) y de esta entrega.
 
 | ID | Fecha | Descripción | Justificación | Evidencia |
 |---|---|---|---|---|
@@ -567,7 +559,7 @@ Formato de la tabla de la profesora (ID, Fecha, Descripción, Justificación), c
 | D-015 | 16/nov/26 | Tácticas de arquitectura en su propia carpeta: seguridad (`ControlDeAcceso`, `AutenticadorDeSensores`) y robustez (`FiltroDeAvisos`, `MonitorDeSensores`) | Atienden las características de Autorización y Robustez que salen de los RNF 4 y 3 | `back/logica/tacticas/` |
 | D-016 | 16/nov/26 | Las validaciones de formato se hacen en el front; el back solo revisa las reglas de negocio (correo repetido, placa repetida, permisos) | Evita peticiones con datos mal escritos y le da al usuario el mensaje al instante | `front/validadores/`; comentario de `back/logica/controladores/Controlador.js` («NO valida los datos: eso lo hace el front») |
 | D-017 | Sprint 1 (vigente) | Los datos se guardan en un almacén en memoria, temporal, mientras el equipo elige la base de datos | Permite construir y probar el sprint sin depender de un servicio de base de datos; al cambiarla solo cambia el acceso a datos | `back/datos/basedatos/AlmacenEnMemoria.js`; «Por decidir: Base de datos» en `docs/stack_y_arquitectura.md` |
-| D-018 | 24/nov/26 (propuesta) | El back se agrupa en 2 supracomponentes: Lógica de negocio (`back/logica/`) y Acceso a datos (`back/datos/`) | Indicación de la profesora para la Cuarta Entrega; separa lo que decide de lo que guarda | Pendiente de aplicar con el prompt del diagrama 6 (probado: pasan las 144 pruebas del back y las 54 del front) |
+| D-018 | 24/nov/26 | El back se agrupa en 2 supracomponentes: Lógica de negocio (`back/logica/`) y Acceso a datos (`back/datos/`) | Indicación de la profesora para la Cuarta Entrega; separa lo que decide de lo que guarda | Commit `39d254f` «Back en 2 supracomponentes: logica/ y datos/ (D-018)»; pasan las 144 pruebas del back, las 54 del front y las 25 del simulador |
 
 ### Decisiones del equipo que no se incluyeron (no son de arquitectura)
 
@@ -580,7 +572,6 @@ Formato de la tabla de la profesora (ID, Fecha, Descripción, Justificación), c
 ### Puntos para revisar antes de subirlo
 
 - **D-016 (validación solo en el front):** si un sensor o Postman llama directo a la API, esas validaciones de formato no se aplican. Si la profesora pregunta, la respuesta es que el back sí aplica las reglas de negocio y los permisos.
-- **D-018 se registra como propuesta** hasta que el equipo aplique la reorganización; después se cambia la fecha a la del commit.
 - La numeración D-010 a D-018 continúa la del tablero del equipo (`docs/decisiones/README.md`). Si se suben como fichas al repositorio, conviene usar esos mismos números.
 
 ---
@@ -591,7 +582,7 @@ Formato de la tabla de la profesora (ID, Fecha, Descripción, Justificación), c
 
 **Dónde va en el Trello:** Lista «Ejecución» → tarjeta «Lista de Archivos»: pegar la tabla.
 
-Formato de la tabla de la profesora: Nombre del Contenedor, Nombre del Supracomponente, Nombre del Componente y Lista de archivos. Revisado contra la rama `sprint-1-completo`, commit `9438990` (16/nov/26). Rutas dentro de `RadarEstacionamientos_code/`. En el back se usan las carpetas de los 2 supracomponentes propuestos (`logica/` y `datos/`).
+Formato de la tabla de la profesora: Nombre del Contenedor, Nombre del Supracomponente, Nombre del Componente y Lista de archivos. Revisado contra la rama `sprint-1-completo`, commit `39d254f` (24/nov/26). Rutas dentro de `RadarEstacionamientos_code/`. En el back se usan las carpetas de los 2 supracomponentes (`logica/` y `datos/`), aplicadas en el commit `39d254f` (24/nov/26).
 
 ### Contenedor Back
 
