@@ -2,6 +2,23 @@
 
 **Estado:** 🟢 Vigente — una entrada por sesión de trabajo, la más reciente arriba.
 
+## 26/nov/26 — Táctica asignada al equipo 87 3
+
+- Módulo 7 asigna **Revocar Acceso (ID 6)** al equipo. Se actualizó la guía de la Cuarta Entrega con el esquema de tres láminas y el cierre de sesión como ejemplo del Radar. [Asignación oficial en Módulo 7, pág. 1](https://modulo7.ucab.edu.ve/courses/3675/modules/items/225743)
+
+## 26/nov/26 — Cuarta Entrega: versión final de los diagramas (rama `doc-diagramas-cuarta-entrega`)
+
+- Por WhatsApp circuló una versión de los diagramas hecha con Antigravity que **no estaba en GitHub**.
+  Se juntó con la del PR #63 (Samuel): de la versión del repo se mantuvo la estructura, y de la de WhatsApp se tomaron las descripciones y el detalle del diagrama de clases.
+- Se leyó en Módulo 7 la **instrucción oficial** («IS Instrucciones Cuarta entrega SEP 26.pdf»).
+  Pide aparte **«Diagramas de Supracomponentes (si aplica)»**, así que se agregó el diagrama `05b`.
+  También se leyó la lámina U10: «por cada componente: nombre, responsabilidades y detalles de implementación», y el diagrama de clases «contiene clases, métodos, atributos, paquetes».
+- Se corrigió el diagrama de clases: paquetes por carpeta, leyenda, tipos con su nombre real y flechas que faltaban.
+  Entre esas flechas están servicios → repositorios, `ControlDeAcceso → CuentaServicio` y `FiltroDeAvisos → AvisoRechazadoRepositorio`.
+  También se arregló la flecha «calcula», que apuntaba a `ErrorDeNegocio`, y se quitó un bloque duplicado.
+- Todo junto en `producto/cuarta_entrega/00_cuarta_entrega_completa.drawio` (7 páginas). El detalle está en la guía de la entrega.
+- Queda pendiente en el código: `ControlDeAcceso` importa directo los usuarios de prueba de `datos/` y se salta los repositorios.
+
 ## 09/nov/26 — Sprint 1 completo para la defensa (rama `sprint-1-completo`)
 
 - **HU 8.1 (Manuel):** su código del PR #45 entra limpio (sin el merge de la 2.1 ni su `sw.js`) y

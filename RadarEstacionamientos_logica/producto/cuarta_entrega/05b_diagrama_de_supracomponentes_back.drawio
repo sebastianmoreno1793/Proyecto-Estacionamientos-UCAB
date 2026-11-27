@@ -1,0 +1,77 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="supracomponentes-back" name="Supracomponentes · Back">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1320" pageHeight="770" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="Diagrama de Supracomponentes · Contenedor Back (Sprint 1)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="0" width="700" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lect" value="&lt;b&gt;Lector de placas de la garita&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Simulado por la Maqueta 3D y por Postman&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="45" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="front" value="&lt;b&gt;Front&lt;/b&gt;&lt;br&gt;[Contenedor · front/]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Pantallas y formularios en el navegador&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#76A5AF;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="520" y="45" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="sens" value="&lt;b&gt;Sensores de acceso&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Simulados por la Maqueta 3D y por Postman&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="790" y="45" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="back" value="Back  [Contenedor · back/]" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#E7F0F1;strokeColor=#45818E;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="40" y="175" width="1240" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="logica" value="&lt;b&gt;Supracomponente: Lógica de negocio&lt;/b&gt;&lt;br&gt;[back/logica/]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;&lt;b&gt;Responsabilidad:&lt;/b&gt; recibir cada petición, aplicar las reglas de negocio de las HU y las tácticas de seguridad y disponibilidad, y responder.&lt;br&gt;&lt;br&gt;&lt;b&gt;Contiene los componentes:&lt;/b&gt; controladores/ · dto/ · servicios/ · tacticas/ · modelos/&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#EAF1FB;strokeColor=#3C78D8;fontStyle=0;fontSize=13;spacing=14;" vertex="1" parent="1">
+          <mxGeometry x="90" y="300" width="620" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="datos" value="&lt;b&gt;Supracomponente: Acceso a datos&lt;/b&gt;&lt;br&gt;[back/datos/]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;&lt;b&gt;Responsabilidad:&lt;/b&gt; guardar y recuperar los datos; es lo único que toca el almacén.&lt;br&gt;&lt;br&gt;&lt;b&gt;Contiene los componentes:&lt;/b&gt; repositorios/ · basedatos/ (AlmacenEnMemoria y datos_iniciales/)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#EAF1FB;strokeColor=#3C78D8;fontStyle=0;fontSize=13;spacing=14;" vertex="1" parent="1">
+          <mxGeometry x="900" y="360" width="340" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="fab" value="&lt;b&gt;Fábrica&lt;/b&gt;&lt;br&gt;[back/Fabrica.js]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Clase central: crea una sola vez cada pieza de los dos supracomponentes y las conecta&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#A9C4EB;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="900" y="215" width="340" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="HTTP/JSON · /api" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;exitX=0.5;exitY=1;entryX=0.55;entryY=0;" edge="1" parent="1" source="front" target="logica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="POST /api/garita/lecturas" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;exitX=0.5;exitY=1;entryX=0.3;entryY=0;" edge="1" parent="1" source="lect" target="logica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="POST /api/avisos" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;exitX=0.3;exitY=1;entryX=0.8;entryY=0;" edge="1" parent="1" source="sens" target="logica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="Busca y guarda&lt;br&gt;(los servicios y FiltroDeAvisos&lt;br&gt;usan los repositorios)" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;exitX=1;exitY=0.45;entryX=0;entryY=0.35;" edge="1" parent="1" source="logica" target="datos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Crea los objetos de&lt;br&gt;logica/modelos/" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;exitX=0;exitY=0.8;entryX=1;entryY=0.85;" edge="1" parent="1" source="datos" target="logica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="Crea y conecta" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;exitX=0;exitY=0.5;entryX=0.85;entryY=0;" edge="1" parent="1" source="fab" target="logica">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="763" y="262" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" value="Crea y conecta" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="fab" target="datos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lt" value="Leyenda" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="670" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" value="Contenedor" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#76A5AF;strokeColor=#000000;fontStyle=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="700" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="Supracomponente" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#EAF1FB;strokeColor=#3C78D8;fontStyle=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="185" y="700" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="Componente" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#A9C4EB;strokeColor=#000000;fontStyle=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="700" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l4" value="Sistema externo" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="495" y="700" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l5" value="- · - ·&amp;gt;  Relación (depende de / llama a)" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="655" y="708" width="330" height="24" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

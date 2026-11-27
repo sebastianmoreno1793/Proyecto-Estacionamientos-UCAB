@@ -75,7 +75,7 @@ Puntaje esperado: 1 (card) + 3 (diagrama) + 4 × 2 (RNF) = **12**.
 
 - **Táctica arquitectónica (01/dic):** presentación de solo 3 láminas (nombre y descripción,
   usos frecuentes, ideas para su especificación), en ppt o video, enviada por correo. La
-  táctica asignada sale en un archivo anexo de Módulo 7 (todavía no publicado para esta sección).
+  táctica del equipo 87 3 es **Revocar Acceso (ID 6)**. [Asignación oficial en Módulo 7, pág. 1](https://modulo7.ucab.edu.ve/courses/3675/modules/items/225743)
 - **Casos de prueba (Unidad 19):** «Plantilla CP Ágil v2.0»: lista de ideas, escenarios por HU
   (flujo básico y alternos de la Conversación), casos de prueba funcionales y suplementarios.
   Por eso la Conversación y los RNF tienen que quedar bien escritos ahora.

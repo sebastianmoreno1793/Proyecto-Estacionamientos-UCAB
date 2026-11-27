@@ -1,8 +1,55 @@
-<mxfile host="app.diagrams.net"><diagram id="d1" name="Diagrama de Contexto"><mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="t" value="Diagrama de Contexto · Radar de Estacionamientos Libres UCAB (Sprint 1)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="40" y="10" width="760" height="30" as="geometry"/></mxCell><mxCell id="cond" value="Conductor
-(Estudiante o Profesor)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="90" y="90" width="60" height="80" as="geometry"/></mxCell><mxCell id="admin" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="90" y="340" width="60" height="80" as="geometry"/></mxCell><mxCell id="radar" value="Radar de Estacionamientos
-Libres UCAB
-[Sistema web]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD966;strokeColor=#000000;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="400" y="215" width="230" height="90" as="geometry"/></mxCell><mxCell id="sens" value="Sensores de acceso
-de los estacionamientos
-(simulados)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="820" y="90" width="230" height="80" as="geometry"/></mxCell><mxCell id="lect" value="Lector de placas
-de la garita
-(simulado)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="820" y="340" width="230" height="80" as="geometry"/></mxCell><mxCell id="lt" value="Leyenda" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="40" y="500" width="120" height="24" as="geometry"/></mxCell><mxCell id="lp" value="Persona" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="50" y="530" width="36" height="48" as="geometry"/></mxCell><mxCell id="ls" value="Nuestro sistema" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD966;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1"><mxGeometry x="170" y="540" width="150" height="40" as="geometry"/></mxCell><mxCell id="le" value="Sistema externo" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1"><mxGeometry x="340" y="540" width="150" height="40" as="geometry"/></mxCell><mxCell id="lr" value="- · - ·&gt;  Relación (usa / envía)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;" vertex="1" parent="1"><mxGeometry x="520" y="548" width="260" height="24" as="geometry"/></mxCell><mxCell id="e1" value="Usa" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="cond" target="radar"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell><mxCell id="e2" value="Usa" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="admin" target="radar"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell><mxCell id="e3" value="Envía avisos de entrada y salida" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="sens" target="radar"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell><mxCell id="e4" value="Envía las placas leídas" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="lect" target="radar"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell></root></mxGraphModel></diagram></mxfile>
+<mxfile host="app.diagrams.net">
+  <diagram id="d1" name="Diagrama de Contexto">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="Diagrama de Contexto · Radar de Estacionamientos Libres UCAB (Sprint 1)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="760" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cond" value="Conductor&#10;(Estudiante o Profesor)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="90" y="90" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="90" y="340" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="radar" value="&lt;b&gt;Radar de Estacionamientos Libres UCAB&lt;/b&gt;&lt;br&gt;[Sistema web]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Aplicación web instalable (PWA) que muestra en tiempo real los puestos libres de los estacionamientos del Campus Montalbán, sugiere dónde estacionar y gestiona vehículos e incidencias.&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD966;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="385" y="185" width="260" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sens" value="&lt;b&gt;Sensores de acceso de los estacionamientos&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Avisan cada entrada y salida. Hoy, simulados por la Maqueta 3D y por Postman.&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="80" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lect" value="&lt;b&gt;Lector de placas de la garita&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Lee la placa de cada carro que entra o sale del campus. Hoy, simulado por la Maqueta 3D y por Postman.&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="330" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lt" value="Leyenda" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lp" value="Persona" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="50" y="530" width="36" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="ls" value="Nuestro sistema" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD966;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="170" y="540" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="le" value="Sistema externo" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B4A7D6;strokeColor=#000000;fontStyle=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="340" y="540" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lr" value="- · - ·&gt;  Relación (usa / envía)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="520" y="548" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="Usa" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="cond" target="radar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="Usa" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="admin" target="radar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="Envía avisos de entrada y salida" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="sens" target="radar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="Envía las placas leídas" style="endArrow=open;endFill=0;endSize=10;html=1;rounded=0;fontSize=12;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4 2 4;" edge="1" parent="1" source="lect" target="radar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

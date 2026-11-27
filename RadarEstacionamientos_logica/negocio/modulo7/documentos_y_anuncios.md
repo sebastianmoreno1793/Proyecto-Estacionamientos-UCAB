@@ -44,6 +44,8 @@ b) usos frecuentes, c) ideas para su especificación. 4. Puede ser ppt o video. 
 correo institucional mperezpu@ucab.edu.ve. El material de apoyo es el «Libro de Tácticas»
 (enlace de Google Drive en la Unidad 16).
 
+La asignación SEP 26 confirma **Revocar Acceso (ID 6)** para el equipo **87 3**. [Asignación oficial en Módulo 7, pág. 1](https://modulo7.ucab.edu.ve/courses/3675/modules/items/225743)
+
 ### Unidad 9 · Diseño II · «Instrucciones v7» (26/oct/26)
 
 1. Leer el objetivo de la Unidad 9. 2. Estudiar las láminas de la Unidad 9. 3. Realizar la
